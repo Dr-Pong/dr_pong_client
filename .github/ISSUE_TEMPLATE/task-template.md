@@ -3,7 +3,7 @@ name: Task Template
 about: Custom issue template for doctors.
 title: "[Client / Server] Title "
 labels: ''
-assignees: tamagoyakii
+assignees: ''
 
 ---
 
