@@ -1,7 +1,7 @@
 ---
 name: Task Template
 about: Custom issue template for doctors.
-title: "[Client / Server] Title "
+title: "[] Title "
 labels: ''
 assignees: ''
 
