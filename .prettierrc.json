@@ -11,5 +11,20 @@
   "bracketSameLine": false,
   "arrowParens": "always",
   "proseWrap": "preserve",
-  "endOfLine": "auto"
+  "endOfLine": "auto",
+  "importOrder": [
+    "^next/(.*)$",
+    "^react(.*)$",
+    "^api/(.*)$",
+    "^recoils/(.*)$",
+    "^types/(.*)$",
+    "^hooks/(.*)$",
+    "^utils/(.*)$",
+    "^pages/(.*)$",
+    "^components/(.*)$",
+    "^styles/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }
