@@ -1,4 +1,14 @@
 {
-  "Usage":"Usage",
-  "Summary": "Summary"
+  "Usage": "Usage",
+  "Summary": "Summary",
+  "Win Rate": "Win Rate",
+  "W": "W",
+  "T": "T",
+  "L": "L",
+  "Rank": "Rank",
+  "History": "History",
+  "th": "th",
+  "st": "st",
+  "nd": "nd",
+  "rd": "rd"
 }
