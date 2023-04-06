@@ -1,0 +1,28 @@
+@import 'styles/common.scss';
+
+.navigationBarContainer {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  height: 5rem;
+  background: black;
+}
+
+.navigationButton {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  margin: 0.1rem;
+  color: white;
+  font-size: 2rem;
+  text-align: center;
+  background: $violet;
+  border-radius: 0.5rem;
+}
+
+.mainButton {
+  flex: 1.5;
+  font-size: 1.5rem;
+  background: $pink;
+}
