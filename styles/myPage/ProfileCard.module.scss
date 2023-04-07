@@ -12,13 +12,16 @@
 }
 
 .profileImgFrame {
-  width: 25%;
+  //width: 25%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
   margin-right: 1rem;
 }
 
 .profileImg {
+  object-fit: contain;
   width: 100%;
   border: solid;
 }
@@ -26,6 +29,7 @@
 .profileInfo {
   width: 75%;
   display: flex;
+  flex: 2;
   flex-direction: column;
   justify-content: center;
   border: solid;
@@ -33,7 +37,6 @@
 
 .captionContentBar {
   display: flex;
-  //margin-block: 0.36rem;
   margin-inline: 0.8rem;
 }
 
@@ -48,12 +51,15 @@
   padding: 2rem;
   border: solid;
 }
-//
-//.imgOverlay {
-//  position: absolute;
-//  width: 20vw;
-//  height: 20vw;
-//  display: flex;
-//  flex-direction: column;
-//  justify-content: space-between;
-//}
+
+.imgOverlay {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.closeButton {
+  display: flex;
+  flex-direction: row-reverse;
+}
