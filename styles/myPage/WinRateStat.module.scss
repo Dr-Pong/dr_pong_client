@@ -1,0 +1,37 @@
+.winRateStat {
+  display: flex;
+  flex-direction: column;
+  margin: 0.2rem;
+}
+
+.winRateText {
+  display: flex;
+  margin: 0.2rem;
+}
+
+.winRate {
+}
+
+.winTieLose {
+  justify-content: space-evenly;
+  margin-inline: 0.2rem;
+}
+
+.gaugeBar {
+  display: flex;
+  margin: 0.2rem;
+}
+
+.winTieLose span {
+  margin-inline: 0.1rem;
+}
+
+.winGauge {
+  height: 0.5rem;
+  background: blue;
+}
+
+.loseGauge {
+  height: 0.5rem;
+  background: red;
+}
