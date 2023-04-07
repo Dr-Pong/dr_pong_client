@@ -1,0 +1,60 @@
+.profileCard {
+  display: flex;
+  flex-direction: column;
+  margin-block: 1rem;
+  width: 90%;
+}
+
+.profileTag {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profileImgFrame {
+  width: 25%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  margin-right: 1rem;
+}
+
+.profileImg {
+  width: 100%;
+  border: solid;
+}
+
+.profileInfo {
+  width: 75%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: solid;
+}
+
+.captionContentBar {
+  display: flex;
+  margin-block: 0.36rem;
+  margin-inline: 0.8rem;
+}
+
+.caption {
+  width: 3rem;
+  margin-right: 1rem;
+}
+
+.statusMessage {
+  width: 100%;
+  margin-block: 1rem;
+  padding: 2rem;
+  border: solid;
+}
+//
+//.imgOverlay {
+//  position: absolute;
+//  width: 20vw;
+//  height: 20vw;
+//  display: flex;
+//  flex-direction: column;
+//  justify-content: space-between;
+//}
