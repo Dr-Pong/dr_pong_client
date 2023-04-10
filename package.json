@@ -19,7 +19,8 @@
     "react-icons": "^4.8.0",
     "react-query": "^3.39.3",
     "recoil": "^0.7.7",
-    "sass": "^1.60.0"
+    "sass": "^1.60.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
