@@ -11,7 +11,7 @@ export default function Profile() {
     <div className={styles.profile}>
       <ProfileCard />
       <StatCard />
-      <SelectedItems itemType={'achieve'} />
+      <SelectedItems itemType={'achieve'} isProfile={true} />
     </div>
   );
 } // SelectedItems에 업적 / 이모지 선택하는 프랍 넣기
