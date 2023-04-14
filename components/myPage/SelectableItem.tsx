@@ -14,14 +14,14 @@ export default function SelectableItem({
   itemType: string;
   item: Achievement | Emoji;
 }) {
-  const editableStatus = useRecoilValue(editableState);
+  const editable = useRecoilValue(editableState);
   const { name, imgUrl } = item;
   const handleItemClick = () => {
     return itemType == 'achieve' ? 'popupmodal' : 'nopopup';
   };
   return (
     <div className={styles.selectableItem}>
-      {!editableStatus && (
+      {!editable && (
         <img
           className={styles.itemImage}
           src={imgUrl}
@@ -29,7 +29,7 @@ export default function SelectableItem({
           alt={name}
         />
       )}
-      {editableStatus && (
+      {editable && (
         <img className={styles.itemImage} src={imgUrl} alt={name} />
         /* 수정 모드 구현 */
       )}
