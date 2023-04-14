@@ -1,7 +1,10 @@
+import { useRecoilValue } from 'recoil';
+
 import React from 'react';
 
 import styles from 'styles/myPage/SelectableItem.module.scss';
 
+import { editableState } from '../../recoils/myPage';
 import { EditableStatus } from './MyPageFrame';
 import { ItemType } from './Profile';
 import { Achievement, Emoji } from './SelectedItems';
@@ -9,16 +12,15 @@ import { Achievement, Emoji } from './SelectedItems';
 export default function SelectableItem({
   itemType,
   item,
-  editableStatus,
 }: {
   itemType: ItemType;
   item: Achievement | Emoji;
-  editableStatus: EditableStatus;
 }) {
+  const editableStatus = useRecoilValue(editableState);
   const { name, imgUrl } = item;
   return (
     <div className={styles.selectableItem}>
-      {editableStatus == EditableStatus.PLAIN && itemType == 'achieve' && (
+      {!editableStatus && itemType == 'achieve' && (
         <img
           className={styles.itemImage}
           src={imgUrl}
@@ -26,10 +28,10 @@ export default function SelectableItem({
           alt={name}
         />
       )}
-      {editableStatus == EditableStatus.PLAIN && itemType == 'emoji' && (
+      {!editableStatus && itemType == 'emoji' && (
         <img className={styles.itemImage} src={imgUrl} alt={name} />
       )}
-      {editableStatus == EditableStatus.EDIT && (
+      {editableStatus && (
         <img className={styles.itemImage} src={imgUrl} alt={name} />
         /* 수정 모드 구현 */
       )}

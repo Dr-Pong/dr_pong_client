@@ -5,25 +5,14 @@ import styles from 'styles/myPage/ItemsGrid.module.scss';
 import { EditableStatus } from './MyPageFrame';
 import { ItemType } from './Profile';
 import SelectableItem from './SelectableItem';
-import { Achievement, Emoji } from "./SelectedItems";
+import { Achievement, Emoji } from './SelectedItems';
 
-export default function ItemsGrid({
-  itemType,
-  editableStatus,
-}: {
-  itemType: ItemType;
-  editableStatus: EditableStatus;
-}) {
+export default function ItemsGrid({ itemType }: { itemType: ItemType }) {
   const items: Achievement[] | Emoji[] = emojis;
   return (
     <div className={styles.itemsGrid}>
       {items.map((item) => (
-        <SelectableItem
-          key={item.id}
-          itemType={itemType}
-          item={item}
-          editableStatus={editableStatus}
-        />
+        <SelectableItem key={item.id} itemType={itemType} item={item} />
       ))}
     </div>
   );

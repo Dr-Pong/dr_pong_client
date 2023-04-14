@@ -6,13 +6,7 @@ import ItemsGrid from './ItemsGrid';
 import { EditableStatus, MyPageTab } from './MyPageFrame';
 import SelectedItems from './SelectedItems';
 
-export default function SelectTab({
-  onWhichTab,
-  editableStatus,
-}: {
-  onWhichTab: MyPageTab;
-  editableStatus: EditableStatus;
-}) {
+export default function SelectTab({ onWhichTab }: { onWhichTab: MyPageTab }) {
   const itemType = () => {
     if (onWhichTab == MyPageTab.ACHIEVE) {
       return 'achieve';
@@ -22,8 +16,8 @@ export default function SelectTab({
   };
   return (
     <div className={styles.selectTab}>
-      <SelectedItems itemType={itemType()} editableStatus={editableStatus} />
-      <ItemsGrid itemType={itemType()} editableStatus={editableStatus} />
+      <SelectedItems itemType={itemType()} />
+      <ItemsGrid itemType={itemType()} />
     </div>
   );
 }

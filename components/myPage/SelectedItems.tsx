@@ -2,7 +2,6 @@ import React from 'react';
 
 import styles from 'styles/myPage/SelectedItems.module.scss';
 
-import { EditableStatus } from './MyPageFrame';
 import { ItemType } from './Profile';
 import SelectableItem from './SelectableItem';
 
@@ -65,23 +64,12 @@ const emojis: Emoji[] = [
     status: 'selected',
   },
 ];
-export default function SelectedItems({
-  itemType,
-  editableStatus,
-}: {
-  itemType: ItemType;
-  editableStatus: EditableStatus;
-}) {
+export default function SelectedItems({ itemType }: { itemType: ItemType }) {
   const selectedItems = itemType === 'achieve' ? achievements : emojis;
   return (
     <div className={styles.selectedItems}>
       {selectedItems.map((item) => (
-        <SelectableItem
-          key={item.id}
-          itemType={itemType}
-          item={item}
-          editableStatus={editableStatus}
-        />
+        <SelectableItem key={item.id} itemType={itemType} item={item} />
       ))}
     </div>
   );

@@ -1,11 +1,12 @@
+import { useRecoilValue } from 'recoil';
+
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { IoIosClose } from 'react-icons/io';
 
-import EditableContent from 'components/myPage/EditableContent';
-import { EditableStatus } from 'components/myPage/MyPageFrame';
-
 import styles from 'styles/myPage/ProfileCard.module.scss';
+
+import { editableState } from '../../recoils/myPage';
 
 export interface ProfileProps {
   nickname: string;
@@ -14,11 +15,8 @@ export interface ProfileProps {
   imgUrl: string;
   statusMessage: string;
 }
-export default function ProfileCard({
-  editableStatus,
-}: {
-  editableStatus: EditableStatus;
-}) {
+export default function ProfileCard() {
+  const editableStatus = useRecoilValue(editableState);
   const { t } = useTranslation(['page']);
   const profileProps: ProfileProps = {
     nickname: 'hakim',
@@ -36,45 +34,31 @@ export default function ProfileCard({
         <div className={styles.profileImgFrame}>
           <img className={styles.profileImg} src={imgUrl} alt='profileImg' />
           <div className={styles.imgOverlay}>
-            <div className={styles.closeButton}>
-              {/*<IoIosClose />*/}
-            </div>
+            <div className={styles.closeButton}>{/*<IoIosClose />*/}</div>
             {/*<div className={styles.uploadButton}>{t('upload file')}</div>*/}
           </div>
         </div>
         <div className={styles.profileInfo}>
           <div className={styles.captionContentBar}>
             <span className={styles.caption}>{t('Title')}</span>
-            <EditableContent
-              content={title}
-              editableStatus={
-                editableStatus == EditableStatus.PLAIN
-                  ? EditableStatus.PLAIN
-                  : EditableStatus.DROPDOWN
-              }
-            />
+            {editableStatus ? 'dropdown' : title}
           </div>
           <div className={styles.captionContentBar}>
             <span className={styles.caption}>{t('Level')}</span>
-            <EditableContent
-              content={level.toString()}
-              editableStatus={EditableStatus.PLAIN}
-            />
+            {level.toString()}
           </div>
           <div className={styles.captionContentBar}>
             <span className={styles.caption}>{t('Name')}</span>
-            <EditableContent
-              content={nickname}
-              editableStatus={editableStatus}
-            />
+            {nickname}
           </div>
         </div>
       </div>
       <div className={styles.statusMessage}>
-        <EditableContent
-          content={statusMessage}
-          editableStatus={editableStatus}
-        />
+        {editableStatus ? (
+          <input className={styles.content} type='text' value={statusMessage} />
+        ) : (
+          <div className={styles.content}>{statusMessage}</div>
+        )}
       </div>
     </div>
   );

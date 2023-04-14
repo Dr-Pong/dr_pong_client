@@ -9,18 +9,13 @@ import StatCard from './StatCard';
 
 export type ItemType = 'achieve' | 'emoji';
 
-export default function Profile({
-  editableStatus,
-}: {
-  editableStatus: EditableStatus;
-}) {
+export default function Profile() {
   return (
     <div className={styles.profile}>
-      <ProfileCard editableStatus={editableStatus} />
+      <ProfileCard />
       <StatCard />
       <SelectedItems
         itemType={'achieve'}
-        editableStatus={EditableStatus.PLAIN}
       />
     </div>
   );

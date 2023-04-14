@@ -1,18 +1,14 @@
+import { useRecoilState } from 'recoil';
+
 import React from 'react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import styles from 'styles/MyPage/MyPageFrame.module.scss';
 
+import { editableState } from '../../recoils/myPage';
 import Profile from './Profile';
 import SelectTab from './SelectTab';
-
-export enum EditableStatus {
-  PLAIN,
-  EDIT,
-  DROPDOWN,
-  REMOVABLE,
-}
 
 export enum MyPageTab {
   PROFILE,
@@ -21,15 +17,9 @@ export enum MyPageTab {
 }
 export default function MyPageFrame() {
   const [onWhichTab, setOnWhichTab] = useState<MyPageTab>(MyPageTab.PROFILE);
-  const [editableStatus, setEditableStatus] = useState<EditableStatus>(
-    EditableStatus.PLAIN
-  );
+  const [editableStatus, setEditableStatus] = useRecoilState(editableState);
   const toggleEditableStatus = () => {
-    if (editableStatus == EditableStatus.PLAIN) {
-      setEditableStatus(EditableStatus.EDIT);
-    } else if (editableStatus == EditableStatus.EDIT) {
-      setEditableStatus(EditableStatus.PLAIN);
-    }
+    setEditableStatus(!editableStatus);
   };
 
   const { t } = useTranslation(['page']);
@@ -38,8 +28,7 @@ export default function MyPageFrame() {
       <div className={styles.pageTitle}>{t('My Page')}</div>
       <div className={styles.editButtonContainer}>
         <div className={styles.editButton} onClick={toggleEditableStatus}>
-          {editableStatus == EditableStatus.PLAIN && t('edit')}
-          {editableStatus == EditableStatus.EDIT && t('save')}
+          {editableStatus ? t('save') : t('edit')}
         </div>
       </div>
       <div className={styles.goToContainer}>
@@ -63,15 +52,11 @@ export default function MyPageFrame() {
         </div>
       </div>
       <div className={styles.tabContainer}>
-        {onWhichTab == MyPageTab.PROFILE && (
-          <Profile editableStatus={editableStatus} />
-        )}
+        {onWhichTab == MyPageTab.PROFILE && <Profile />}
         {onWhichTab == MyPageTab.ACHIEVE && (
-          <SelectTab onWhichTab={onWhichTab} editableStatus={editableStatus} />
+          <SelectTab onWhichTab={onWhichTab} />
         )}
-        {onWhichTab == MyPageTab.EMOJI && (
-          <SelectTab onWhichTab={onWhichTab} editableStatus={editableStatus} />
-        )}
+        {onWhichTab == MyPageTab.EMOJI && <SelectTab onWhichTab={onWhichTab} />}
       </div>
     </div>
   );
