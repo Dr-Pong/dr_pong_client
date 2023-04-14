@@ -13,7 +13,7 @@ import SelectTab from './SelectTab';
 export default function MyPageFrame() {
   const [tab, setTab] = useState<string>('profile');
   const [editableStatus, setEditableStatus] = useRecoilState(editableState);
-  const toggleEditableStatus = () => {
+  const handleEditButtonClick = () => {
     setEditableStatus(!editableStatus);
   };
 
@@ -29,7 +29,7 @@ export default function MyPageFrame() {
     <div className={styles.myPageFrame}>
       <div className={styles.pageTitle}>{t('My Page')}</div>
       <div className={styles.editButtonContainer}>
-        <div className={styles.editButton} onClick={toggleEditableStatus}>
+        <div className={styles.editButton} onClick={handleEditButtonClick}>
           {editableStatus ? t('save') : t('edit')}
         </div>
       </div>

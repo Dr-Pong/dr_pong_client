@@ -1,10 +1,7 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
-
 import React from 'react';
 
 import styles from 'styles/myPage/SelectedItems.module.scss';
 
-import { editableState } from '../../recoils/myPage';
 import SelectableItem from './SelectableItem';
 
 export interface Achievement {
@@ -66,24 +63,12 @@ const emojis: Emoji[] = [
     status: 'selected',
   },
 ];
-export default function SelectedItems({
-  itemType,
-  isProfile,
-}: {
-  itemType: string;
-  isProfile: boolean;
-}) {
-  const editableStatus = isProfile ? false : useRecoilValue(editableState);
+export default function SelectedItems({ itemType }: { itemType: string }) {
   const selectedItems = itemType === 'achieve' ? achievements : emojis;
   return (
     <div className={styles.selectedItems}>
       {selectedItems.map((item) => (
-        <SelectableItem
-          key={item.id}
-          itemType={itemType}
-          item={item}
-          editableStatus={editableStatus}
-        />
+        <SelectableItem key={item.id} itemType={itemType} item={item} />
       ))}
     </div>
   );
