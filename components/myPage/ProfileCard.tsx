@@ -24,13 +24,15 @@ export default function ProfileCard() {
       'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
     statusMessage: '내가 최고다 사실 아니다...',
   };
-  const editableStatus = useRecoilValue(editableState);
+  const editable = useRecoilValue(editableState);
   const [statusMessage, setStatusMessage] = useState<string>(
     profileProps.statusMessage
   );
   const statusMessageHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setStatusMessage(event.target.value);
   };
+  const handleDeleteButtonClick = () => {};
+  const handleUploadButtonClick = () => {};
   const { t } = useTranslation(['page']);
   const { nickname, title, level, imgUrl } = profileProps;
 
@@ -39,15 +41,27 @@ export default function ProfileCard() {
       <div className={styles.profileTag}>
         <div className={styles.profileImgFrame}>
           <img className={styles.profileImg} src={imgUrl} alt='profileImg' />
-          <div className={styles.imgOverlay}>
-            <div className={styles.closeButton}>{/*<IoIosClose />*/}</div>
-            {/*<div className={styles.uploadButton}>{t('upload file')}</div>*/}
-          </div>
+          {editable && (
+            <div className={styles.imgOverlay}>
+              <div
+                className={styles.deleteButton}
+                onClick={handleDeleteButtonClick}
+              >
+                <IoIosClose />
+              </div>
+              <div
+                className={styles.uploadButton}
+                onClick={handleUploadButtonClick}
+              >
+                {t('upload file')}
+              </div>
+            </div>
+          )}
         </div>
         <div className={styles.profileInfo}>
           <div className={styles.captionContentBar}>
             <span className={styles.caption}>{t('Title')}</span>
-            {editableStatus ? 'dropdown' : title}
+            {editable ? 'dropdown' : title}
           </div>
           <div className={styles.captionContentBar}>
             <span className={styles.caption}>{t('Level')}</span>
@@ -60,7 +74,7 @@ export default function ProfileCard() {
         </div>
       </div>
       <div className={styles.statusMessage}>
-        {editableStatus ? (
+        {editable ? (
           <input
             className={styles.content}
             type='text'
