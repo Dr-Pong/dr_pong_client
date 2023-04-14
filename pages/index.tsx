@@ -6,7 +6,6 @@ import MyPageFrame from "../components/myPage/MyPageFrame";
 export default function Home() {
   return (
     <div>
-      <MyPageFrame />
     </div>
   );
 }
