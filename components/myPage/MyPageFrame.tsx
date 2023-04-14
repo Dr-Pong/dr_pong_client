@@ -10,19 +10,21 @@ import { editableState } from '../../recoils/myPage';
 import Profile from './Profile';
 import SelectTab from './SelectTab';
 
-export enum MyPageTab {
-  PROFILE,
-  ACHIEVE,
-  EMOJI,
-}
 export default function MyPageFrame() {
-  const [onWhichTab, setOnWhichTab] = useState<MyPageTab>(MyPageTab.PROFILE);
+  const [tab, setTab] = useState<string>('profile');
   const [editableStatus, setEditableStatus] = useRecoilState(editableState);
   const toggleEditableStatus = () => {
     setEditableStatus(!editableStatus);
   };
 
+  const tabs: { [key: string]: JSX.Element } = {
+    profile: <Profile />,
+    achieve: <SelectTab onWhichTab={'achieve'} />,
+    emoji: <SelectTab onWhichTab={'emoji'} />,
+  };
+
   const { t } = useTranslation(['page']);
+
   return (
     <div className={styles.myPageFrame}>
       <div className={styles.pageTitle}>{t('My Page')}</div>
@@ -32,32 +34,19 @@ export default function MyPageFrame() {
         </div>
       </div>
       <div className={styles.goToContainer}>
-        <div
-          className={styles.goTo}
-          onClick={() => setOnWhichTab(MyPageTab.PROFILE)}
-        >
-          {t('profile')}
-        </div>
-        <div
-          className={styles.goTo}
-          onClick={() => setOnWhichTab(MyPageTab.ACHIEVE)}
-        >
-          {t('achieve')}
-        </div>
-        <div
-          className={styles.goTo}
-          onClick={() => setOnWhichTab(MyPageTab.EMOJI)}
-        >
-          {t('emoji')}
-        </div>
+        {Object.keys(tabs).map((tabName) => {
+          return (
+            <div
+              key={tabName}
+              className={styles.goTo}
+              onClick={() => setTab(tabName)}
+            >
+              {t(tabName)}
+            </div>
+          );
+        })}
       </div>
-      <div className={styles.tabContainer}>
-        {onWhichTab == MyPageTab.PROFILE && <Profile />}
-        {onWhichTab == MyPageTab.ACHIEVE && (
-          <SelectTab onWhichTab={onWhichTab} />
-        )}
-        {onWhichTab == MyPageTab.EMOJI && <SelectTab onWhichTab={onWhichTab} />}
-      </div>
+      <div className={styles.tabContainer}>{tabs[tab]}</div>
     </div>
   );
 }

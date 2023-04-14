@@ -5,15 +5,13 @@ import React from 'react';
 import styles from 'styles/myPage/SelectableItem.module.scss';
 
 import { editableState } from '../../recoils/myPage';
-import { EditableStatus } from './MyPageFrame';
-import { ItemType } from './Profile';
 import { Achievement, Emoji } from './SelectedItems';
 
 export default function SelectableItem({
   itemType,
   item,
 }: {
-  itemType: ItemType;
+  itemType: string;
   item: Achievement | Emoji;
 }) {
   const editableStatus = useRecoilValue(editableState);

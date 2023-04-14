@@ -2,12 +2,10 @@ import React from 'react';
 
 import styles from 'styles/myPage/ItemsGrid.module.scss';
 
-import { EditableStatus } from './MyPageFrame';
-import { ItemType } from './Profile';
 import SelectableItem from './SelectableItem';
 import { Achievement, Emoji } from './SelectedItems';
 
-export default function ItemsGrid({ itemType }: { itemType: ItemType }) {
+export default function ItemsGrid({ itemType }: { itemType: string }) {
   const items: Achievement[] | Emoji[] = emojis;
   return (
     <div className={styles.itemsGrid}>
