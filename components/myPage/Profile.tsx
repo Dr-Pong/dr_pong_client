@@ -15,7 +15,10 @@ export default function Profile() {
     <div className={styles.profile}>
       <ProfileCard />
       <StatCard />
-      <div style={!editableStatus ? {} : { pointerEvents: 'none' }}>
+      <div
+        className={styles.selectedItemsContainer}
+        style={!editableStatus ? {} : { pointerEvents: 'none' }}
+      >
         <SelectedItems itemType={'achieve'} />
       </div>
     </div>
