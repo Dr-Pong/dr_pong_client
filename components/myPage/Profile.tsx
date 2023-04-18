@@ -9,17 +9,17 @@ import ProfileCard from './ProfileCard';
 import SelectedItems from './SelectedItems';
 import StatCard from './StatCard';
 
-export default function Profile() {
+export default function Profile({ userName }: { userName: string }) {
   const editableStatus = useRecoilValue(editableState);
   return (
     <div className={styles.profile}>
-      <ProfileCard />
-      <StatCard />
+      <ProfileCard userName={userName} />
+      <StatCard userName={userName} />
       <div
         className={styles.selectedItemsContainer}
         style={!editableStatus ? {} : { pointerEvents: 'none' }}
       >
-        <SelectedItems itemType={'achieve'} />
+        <SelectedItems userName={userName} itemType={'achieve'} />
       </div>
     </div>
   );

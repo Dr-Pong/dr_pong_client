@@ -3,27 +3,39 @@ import { useRecoilState } from 'recoil';
 import React from 'react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useQuery } from 'react-query';
 
 import styles from 'styles/MyPage/MyPageFrame.module.scss';
 
 import { editableState } from '../../recoils/myPage';
+import { User } from '../../types/myPageTypes';
+import instance from '../../utils/axios';
 import Profile from './Profile';
 import SelectTab from './SelectTab';
 
 export default function MyPageFrame() {
+  const { t } = useTranslation(['page']);
   const [tab, setTab] = useState<string>('profile');
   const [editable, setEditable] = useRecoilState(editableState);
+  const fetchUser = async (): Promise<User> => {
+    const res = await instance.get(`/users/me`);
+    return res.data;
+  };
+  const { data, isLoading, isError } = useQuery('user', fetchUser); // 추후 리코일 스테이트로 변경
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error...</div>;
+  const { nickname } = data as User;
   const handleEditButtonClick = () => {
     setEditable(!editable);
   };
 
   const tabs: { [key: string]: JSX.Element } = {
-    profile: <Profile />,
-    achieve: <SelectTab onWhichTab={'achieve'} />,
-    emoji: <SelectTab onWhichTab={'emoji'} />,
+    profile: <Profile userName={nickname} key={'profile'} />,
+    achieve: (
+      <SelectTab userName={nickname} onWhichTab={'achieve'} key={'achieve'} />
+    ),
+    emoji: <SelectTab userName={nickname} onWhichTab={'emoji'} key={'emoji'} />,
   };
-
-  const { t } = useTranslation(['page']);
 
   return (
     <div className={styles.myPageFrame}>
@@ -39,7 +51,9 @@ export default function MyPageFrame() {
             <div
               key={tabName}
               className={styles.goTo}
-              onClick={() => setTab(tabName)}
+              onClick={() => {
+                setTab(tabName);
+              }}
             >
               {t(tabName)}
             </div>
@@ -50,3 +64,8 @@ export default function MyPageFrame() {
     </div>
   );
 }
+
+// const initVal: User = {
+//   nickname: '',
+//   imgUrl: '',
+// };

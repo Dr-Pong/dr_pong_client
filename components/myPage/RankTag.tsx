@@ -8,19 +8,7 @@ import styles from 'styles/myPage/RankTag.module.scss';
 export default function RankTag({ rankProps }: { rankProps: RankProps }) {
   const { t } = useTranslation(['page']);
   const { record, rank, isBestRecord } = rankProps;
-  const rankSignSelector = (firstDigit: string): string => {
-    switch (firstDigit) {
-      case '1':
-        return 'st';
-      case '2':
-        return 'nd';
-      case '3':
-        return 'rd';
-      default:
-        return 'th';
-    }
-  };
-  const rankSign = rankSignSelector(rank.toString().slice(-1));
+  const rankSign = rankSignSelector(rank);
   return (
     <div
       className={styles.rankTag}
@@ -34,3 +22,16 @@ export default function RankTag({ rankProps }: { rankProps: RankProps }) {
     </div>
   );
 }
+const rankSignSelector = (rank: number): string => {
+  const firstDigit = rank.toString().slice(-1);
+  switch (firstDigit) {
+    case '1':
+      return 'st';
+    case '2':
+      return 'nd';
+    case '3':
+      return 'rd';
+    default:
+      return 'th';
+  }
+};

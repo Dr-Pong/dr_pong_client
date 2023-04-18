@@ -11,15 +11,15 @@ export default function WinRateStat({
   winRateInfo: WinRateStatProps;
 }) {
   const { t } = useTranslation(['page']);
-  const { winRate, wins, ties, losses } = winRateInfo;
+  const { winRate, win, ties, lose } = winRateInfo;
   return (
     <div className={styles.winRateStat}>
       <div className={styles.winRateText}>
         <div className={styles.winRate}>{`${t('Win Rate')} ${winRate}%`}</div>
         <div className={styles.winTieLose}>
-          (<span>{`${wins}${t('W')}`}</span>
+          (<span>{`${win}${t('W')}`}</span>
           <span>{`${ties}${t('T')}`}</span>
-          <span>{`${losses}${t('L')}`}</span>)
+          <span>{`${lose}${t('L')}`}</span>)
         </div>
       </div>
       <div className={styles.gaugeBar}>

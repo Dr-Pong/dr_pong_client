@@ -1,50 +1,62 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { IoIosArrowForward } from 'react-icons/io';
+import { useQuery } from 'react-query';
 
 import RankTag from 'components/myPage/RankTag';
 import WinRateStat from 'components/myPage/WinRateStat';
 
 import styles from 'styles/myPage/StatCard.module.scss';
 
+import { UserStat } from '../../types/myPageTypes';
+import instance from '../../utils/axios';
+
 export interface WinRateStatProps {
   winRate: number;
-  wins: number;
+  win: number;
   ties: number;
-  losses: number;
+  lose: number;
 }
-
 export interface RankProps {
   record: number;
   rank: number;
   isBestRecord?: boolean;
 }
-
-export default function StatCard() {
+export default function StatCard({ userName }: { userName: string }) {
   const { t } = useTranslation(['page']);
+  const fetchUserStat = async (): Promise<UserStat> => {
+    const res = await instance.get(`/users/${userName}/stat`);
+    return res.data;
+  };
+  const { data, isLoading, isError } = useQuery('userStat', fetchUserStat);
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error...</div>;
+
+  const userStat = data as UserStat;
+
   const totalWinRateInfo: WinRateStatProps = {
-    winRate: 50,
-    wins: 10,
-    ties: 5,
-    losses: 10,
-  }; // 나중에 서버에서 받아오는 정보로 바꿔야함
+    winRate: userStat.totalStat.winRate,
+    win: userStat.totalStat.win,
+    ties: userStat.totalStat.ties,
+    lose: userStat.totalStat.lose,
+  };
   const seasonWinRateInfo: WinRateStatProps = {
-    winRate: 50,
-    wins: 10,
-    ties: 5,
-    losses: 10,
+    winRate: userStat.seasonStat.winRate,
+    win: userStat.seasonStat.win,
+    ties: userStat.seasonStat.ties,
+    lose: userStat.seasonStat.lose,
   };
   const currentRankProps: RankProps = {
-    record: 3400,
-    rank: 128,
+    record: userStat.seasonStat.currentRecord,
+    rank: userStat.seasonStat.currentRank,
     isBestRecord: false,
   };
   const bestRankProps: RankProps = {
-    record: 5000,
-    rank: 1,
+    record: userStat.seasonStat.bestRecord,
+    rank: userStat.seasonStat.bestRank,
     isBestRecord: true,
   };
-  // 버튼은 나중에 공용버튼으로 바갈아버리기
+  // // 버튼은 나중에 공용버튼으로 바갈아버리기
   return (
     <div className={styles.statCard}>
       <div className={styles.container} id={styles.summary}>
@@ -70,3 +82,22 @@ export default function StatCard() {
     </div>
   );
 }
+
+// const initVal: UserStat = {
+//   totalStat: {
+//     winRate: 0,
+//     win: 0,
+//     ties: 0,
+//     lose: 0,
+//   },
+//   seasonStat: {
+//     winRate: 0,
+//     win: 0,
+//     ties: 0,
+//     lose: 0,
+//     currentRecord: 0,
+//     currentRank: 0,
+//     bestRecord: 0,
+//     bestRank: 0,
+//   },
+// };

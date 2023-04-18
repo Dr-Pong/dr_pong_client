@@ -1,12 +1,28 @@
 import React from 'react';
+import { useQuery } from 'react-query';
 
 import styles from 'styles/myPage/ItemsGrid.module.scss';
 
+import { Achievement, Emoji } from '../../types/myPageTypes';
+import instance from '../../utils/axios';
 import SelectableItem from './SelectableItem';
-import { Achievement, Emoji } from './SelectedItems';
 
-export default function ItemsGrid({ itemType }: { itemType: string }) {
-  const items: Achievement[] | Emoji[] = emojis;
+export default function ItemsGrid({
+  userName,
+  itemType,
+}: {
+  userName: string;
+  itemType: string;
+}) {
+  const itemsQuery = itemType === 'achieve' ? 'achievements' : 'emojies';
+  const fetchItems = async (): Promise<Achievement[] | Emoji[]> => {
+    const res = await instance.get(`/users/${userName}/${itemsQuery}`);
+    return res.data;
+  };
+  const { data, isLoading, isError } = useQuery(['item'], fetchItems);
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error...</div>;
+  const items = data as Achievement[] | Emoji[];
   return (
     <div className={styles.itemsGrid}>
       {items.map((item) => (
@@ -16,77 +32,8 @@ export default function ItemsGrid({ itemType }: { itemType: string }) {
   );
 }
 
-const emojis: Emoji[] = [
-  {
-    id: 1,
-    name: '빵긋',
-    imgUrl: 'https://i.imgur.com/GcllAAB.jpeg',
-    status: 'achieved',
-  },
-  {
-    id: 2,
-    name: '눈물',
-    imgUrl: 'https://i.imgur.com/GcllAAB.jpeg',
-    status: 'achieved',
-  },
-  {
-    id: 3,
-    name: '화남',
-    imgUrl: 'https://i.imgur.com/GcllAAB.jpeg',
-    status: 'achieved',
-  },
-  {
-    id: 4,
-    name: '빵긋',
-    imgUrl: 'https://i.imgur.com/GcllAAB.jpeg',
-    status: 'achieved',
-  },
-  {
-    id: 5,
-    name: '눈물',
-    imgUrl: 'https://i.imgur.com/GcllAAB.jpeg',
-    status: 'achieved',
-  },
-  {
-    id: 6,
-    name: '화남',
-    imgUrl: 'https://i.imgur.com/GcllAAB.jpeg',
-    status: 'achieved',
-  },
-  {
-    id: 7,
-    name: '빵긋',
-    imgUrl: 'https://i.imgur.com/GcllAAB.jpeg',
-    status: 'achieved',
-  },
-  {
-    id: 8,
-    name: '눈물',
-    imgUrl: 'https://i.imgur.com/GcllAAB.jpeg',
-    status: 'achieved',
-  },
-  {
-    id: 9,
-    name: '화남',
-    imgUrl: 'https://i.imgur.com/GcllAAB.jpeg',
-    status: 'achieved',
-  },
-  {
-    id: 10,
-    name: '빵긋',
-    imgUrl: 'https://i.imgur.com/GcllAAB.jpeg',
-    status: 'achieved',
-  },
-  {
-    id: 11,
-    name: '눈물',
-    imgUrl: 'https://i.imgur.com/GcllAAB.jpeg',
-    status: 'achieved',
-  },
-  {
-    id: 12,
-    name: '화남',
-    imgUrl: 'https://i.imgur.com/GcllAAB.jpeg',
-    status: 'achieved',
-  },
-];
+// const initVal: Emoji[] | Achievement[] = [
+//   { id: 1, name: '', imgUrl: '', content: '', status: '' },
+//   { id: 2, name: '', imgUrl: '', content: '', status: '' },
+//   { id: 3, name: '', imgUrl: '', content: '', status: '' },
+// ];

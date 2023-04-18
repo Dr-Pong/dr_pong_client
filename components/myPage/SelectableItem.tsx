@@ -4,8 +4,8 @@ import React from 'react';
 
 import styles from 'styles/myPage/SelectableItem.module.scss';
 
-import { Achievement, Emoji } from './SelectedItems';
-import { editableState } from "../../recoils/myPage";
+import { editableState } from '../../recoils/myPage';
+import { Achievement, Emoji } from '../../types/myPageTypes';
 
 export default function SelectableItem({
   itemType,
@@ -15,10 +15,10 @@ export default function SelectableItem({
   item: Achievement | Emoji;
 }) {
   const editable = useRecoilValue(editableState);
-  const { name, imgUrl } = item;
   const handleItemClick = () => {
     return itemType == 'achieve' ? 'popupmodal' : 'nopopup';
   };
+  const { name, imgUrl } = item;
   return (
     <div className={styles.selectableItem}>
       {!editable && (
