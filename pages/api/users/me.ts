@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { User } from "../../../types/myPageTypes";
+
+import { User } from 'types/myPageTypes';
 
 type Error = {
   message: string;

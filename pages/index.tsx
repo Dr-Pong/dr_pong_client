@@ -1,7 +1,6 @@
 import React from 'react';
 
-import Stat from '../components/myPage/Stat';
-import '../i18n';
+import 'i18n';
 
 export default function Home() {
   return (
