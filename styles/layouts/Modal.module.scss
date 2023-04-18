@@ -1,7 +1,13 @@
+@import 'styles/common.scss';
+
 .modalBackdrop {
   position: fixed;
   top: 0;
   left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);
@@ -11,7 +17,22 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  justify-content: space-evenly;
+  width: 80vw;
+  max-width: 20rem;
+  padding: 2rem 1.5rem;
   background: white;
-  border-radius: 0.5rem;
+  border-radius: $basic-radius;
+}
+
+.blank {
+  height: 1.5rem;
+}
+.modalTitle {
+  font-weight: 600;
+}
+
+.modalPhrase {
+  line-height: 200%;
+  text-align: center;
+  margin-block: 1rem;
 }
