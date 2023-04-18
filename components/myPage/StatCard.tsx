@@ -3,13 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { IoIosArrowForward } from 'react-icons/io';
 import { useQuery } from 'react-query';
 
+import { UserStat } from 'types/myPageTypes';
+
+import instance from 'utils/axios';
+
 import RankTag from 'components/myPage/RankTag';
 import WinRateStat from 'components/myPage/WinRateStat';
 
 import styles from 'styles/myPage/StatCard.module.scss';
-
-import { UserStat } from '../../types/myPageTypes';
-import instance from '../../utils/axios';
 
 export interface WinRateStatProps {
   winRate: number;

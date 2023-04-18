@@ -1,11 +1,13 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 
-import styles from 'styles/myPage/SelectedItems.module.scss';
+import { Achievement, Emoji } from 'types/myPageTypes';
 
-import { Achievement, Emoji } from '../../types/myPageTypes';
-import instance from '../../utils/axios';
-import SelectableItem from './SelectableItem';
+import instance from 'utils/axios';
+
+import SelectableItem from 'components/myPage/SelectableItem';
+
+import styles from 'styles/myPage/SelectedItems.module.scss';
 
 export default function SelectedItems({
   userName,

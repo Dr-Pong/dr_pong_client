@@ -5,13 +5,16 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 
-import styles from 'styles/MyPage/MyPageFrame.module.scss';
+import { editableState } from 'recoils/myPage';
 
-import { editableState } from '../../recoils/myPage';
-import { User } from '../../types/myPageTypes';
-import instance from '../../utils/axios';
-import Profile from './Profile';
-import SelectTab from './SelectTab';
+import { User } from 'types/myPageTypes';
+
+import instance from 'utils/axios';
+
+import Profile from 'components/myPage/Profile';
+import SelectTab from 'components/myPage/SelectTab';
+
+import styles from 'styles/MyPage/MyPageFrame.module.scss';
 
 export default function MyPageFrame() {
   const { t } = useTranslation(['page']);

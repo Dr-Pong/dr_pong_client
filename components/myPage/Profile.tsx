@@ -2,12 +2,13 @@ import { useRecoilValue } from 'recoil';
 
 import React from 'react';
 
-import styles from 'styles/myPage/Profile.module.scss';
+import { editableState } from 'recoils/myPage';
 
-import { editableState } from '../../recoils/myPage';
-import ProfileCard from './ProfileCard';
-import SelectedItems from './SelectedItems';
-import StatCard from './StatCard';
+import ProfileCard from 'components/myPage/ProfileCard';
+import SelectedItems from 'components/myPage/SelectedItems';
+import StatCard from 'components/myPage/StatCard';
+
+import styles from 'styles/myPage/Profile.module.scss';
 
 export default function Profile({ userName }: { userName: string }) {
   const editableStatus = useRecoilValue(editableState);

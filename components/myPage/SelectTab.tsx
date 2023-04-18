@@ -1,9 +1,9 @@
 import React from 'react';
 
-import styles from 'styles/myPage/SelectTab.module.scss';
+import ItemsGrid from 'components/myPage/ItemsGrid';
+import SelectedItems from 'components/myPage/SelectedItems';
 
-import ItemsGrid from './ItemsGrid';
-import SelectedItems from './SelectedItems';
+import styles from 'styles/myPage/SelectTab.module.scss';
 
 export default function SelectTab({
   userName,

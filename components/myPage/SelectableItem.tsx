@@ -2,10 +2,11 @@ import { useRecoilValue } from 'recoil';
 
 import React from 'react';
 
-import styles from 'styles/myPage/SelectableItem.module.scss';
+import { editableState } from 'recoils/myPage';
 
-import { editableState } from '../../recoils/myPage';
-import { Achievement, Emoji } from '../../types/myPageTypes';
+import { Achievement, Emoji } from 'types/myPageTypes';
+
+import styles from 'styles/myPage/SelectableItem.module.scss';
 
 export default function SelectableItem({
   itemType,

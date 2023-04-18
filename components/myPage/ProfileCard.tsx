@@ -6,11 +6,13 @@ import { useTranslation } from 'react-i18next';
 import { IoIosClose } from 'react-icons/io';
 import { useQuery } from 'react-query';
 
-import styles from 'styles/myPage/ProfileCard.module.scss';
+import { editableState } from 'recoils/myPage';
 
-import { editableState } from '../../recoils/myPage';
-import { UserDetail } from '../../types/myPageTypes';
-import instance from '../../utils/axios';
+import { UserDetail } from 'types/myPageTypes';
+
+import instance from 'utils/axios';
+
+import styles from 'styles/myPage/ProfileCard.module.scss';
 
 export default function ProfileCard({ userName }: { userName: string }) {
   const { t } = useTranslation(['page']);
