@@ -1,4 +1,10 @@
-export default (req: any, res: any) => {
+import { NextApiRequest, NextApiResponse } from 'next';
+import { User } from "../../../types/myPageTypes";
+
+type Error = {
+  message: string;
+};
+export default (req: NextApiRequest, res: NextApiResponse<User | Error>) => {
   if (req.method === 'GET') {
     res.status(200).json({
       nickname: 'hakim',

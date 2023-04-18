@@ -1,10 +1,29 @@
-export default (req: any, res: any) => {
+import { NextApiRequest, NextApiResponse } from 'next';
+
+import {
+  Achievement,
+  Emoji,
+  Title,
+  UserDetail,
+  UserStat,
+} from '../../../types/myPageTypes';
+
+export default (
+  req: NextApiRequest,
+  res: NextApiResponse<
+    UserDetail | UserStat | Emoji[] | Achievement[] | Title[]
+  >
+) => {
   const {
     query: { nickname, selected },
   } = req;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   switch (nickname[1]) {
     case 'detail':
       res.status(200).json({
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         nickname: nickname[0],
         imgUrl:
           'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
@@ -23,7 +42,7 @@ export default (req: any, res: any) => {
         res.status(200).json(achievements);
       }
       return;
-    case 'emojis':
+    case 'emojies':
       if (selected) {
         res.status(200).json(selectedEmojis);
       } else {
@@ -38,15 +57,15 @@ export default (req: any, res: any) => {
 const stat = {
   totalStat: {
     win: 100,
-    lose: 50,
     ties: 5,
+    lose: 50,
     winRate: 67.5,
   },
   seasonStat: {
     winRate: 72,
     win: 10,
-    lose: 4,
     ties: 1,
+    lose: 4,
     currentRecord: 3190,
     currentRank: 120,
     bestRecord: 5000,
