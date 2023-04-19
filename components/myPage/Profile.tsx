@@ -18,7 +18,7 @@ export default function Profile({ userName }: { userName: string }) {
       <StatCard userName={userName} />
       <div
         className={styles.selectedItemsContainer}
-        style={!editableStatus ? {} : { pointerEvents: 'none' }}
+        style={editableStatus ? { pointerEvents: 'none' } : {}}
       >
         <SelectedItems userName={userName} itemType={'achieve'} />
       </div>
