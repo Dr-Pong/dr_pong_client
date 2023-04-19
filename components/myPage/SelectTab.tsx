@@ -7,15 +7,15 @@ import styles from 'styles/myPage/SelectTab.module.scss';
 
 export default function SelectTab({
   userName,
-  onWhichTab,
+  itemType,
 }: {
   userName: string;
-  onWhichTab: string;
+  itemType: string;
 }) {
   return (
     <div className={styles.selectTab}>
-      <SelectedItems userName={userName} itemType={onWhichTab} />
-      <ItemsGrid userName={userName} itemType={onWhichTab} />
+      <SelectedItems userName={userName} itemType={itemType} />
+      <ItemsGrid userName={userName} itemType={itemType} />
     </div>
   );
 }
