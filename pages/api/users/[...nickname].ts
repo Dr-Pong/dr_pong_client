@@ -47,10 +47,14 @@ const stat = {
     win: 10,
     lose: 4,
     ties: 1,
-    currentRecord: 3190,
-    currentRank: 120,
-    bestRecord: 5000,
-    bestRank: 1,
+    current: {
+      record: 3190,
+      rank: 120,
+    },
+    best: {
+      record: 5000,
+      rank: 1,
+    },
   },
 };
 

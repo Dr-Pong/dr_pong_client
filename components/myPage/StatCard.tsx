@@ -33,37 +33,16 @@ export default function StatCard({ userName }: { userName: string }) {
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
 
-  const userStat = data as UserStat;
-
-  const totalWinRateInfo: WinRateStatProps = {
-    winRate: userStat.totalStat.winRate,
-    win: userStat.totalStat.win,
-    ties: userStat.totalStat.ties,
-    lose: userStat.totalStat.lose,
-  };
-  const seasonWinRateInfo: WinRateStatProps = {
-    winRate: userStat.seasonStat.winRate,
-    win: userStat.seasonStat.win,
-    ties: userStat.seasonStat.ties,
-    lose: userStat.seasonStat.lose,
-  };
-  const currentRankProps: RankProps = {
-    record: userStat.seasonStat.currentRecord,
-    rank: userStat.seasonStat.currentRank,
-    isBestRecord: false,
-  };
-  const bestRankProps: RankProps = {
-    record: userStat.seasonStat.bestRecord,
-    rank: userStat.seasonStat.bestRank,
-    isBestRecord: true,
-  };
+  const { totalStat, seasonStat } = data as UserStat;
+  const currentRank = { isBestRecord: false, ...seasonStat.current };
+  const bestRank = { isBestRecord: true, ...seasonStat.best };
   // // 버튼은 나중에 공용버튼으로 바갈아버리기
   return (
     <div className={styles.statCard}>
       <div className={styles.container} id={styles.summary}>
         <div className={styles.box} id={styles.info}>
           <div className={styles.boxName}>{t('Summary')}</div>
-          <WinRateStat winRateInfo={totalWinRateInfo} />
+          <WinRateStat winRateInfo={totalStat} />
         </div>
         <div className={styles.box} id={styles.history}>
           <div className={styles.historyButton}>{t('History')}</div>
@@ -73,11 +52,11 @@ export default function StatCard({ userName }: { userName: string }) {
       <div className={styles.container} id={styles.rank}>
         <div className={styles.box} id={styles.info}>
           <div className={styles.boxName}>{t('Rank')}</div>
-          <RankTag rankProps={currentRankProps} />
-          <WinRateStat winRateInfo={seasonWinRateInfo} />
+          <RankTag rankProps={currentRank} />
+          <WinRateStat winRateInfo={seasonStat} />
         </div>
         <div className={styles.box} id={styles.bestRecord}>
-          <RankTag rankProps={bestRankProps} />
+          <RankTag rankProps={bestRank} />
         </div>
       </div>
     </div>
