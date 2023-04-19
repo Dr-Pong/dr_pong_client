@@ -9,7 +9,7 @@ import styles from 'styles/layouts/Modal.module.scss';
 
 export default function Modal() {
   const [openModal, setOpenModal] = useRecoilState(openModalState);
-  const modalParts = useRecoilValue(modalPartsState);
+  const { head, body, tail } = useRecoilValue(modalPartsState);
 
   const handleBackdropClick = () => {
     // 조건 추가해야함
@@ -25,9 +25,11 @@ export default function Modal() {
             e.stopPropagation();
           }}
         >
-          <div>{modalParts.head}</div>
-          <div>{modalParts.body}</div>
-          <div>{modalParts.tail}</div>
+          <div>{head}</div>
+          {head && body && <div className={styles.blank}></div>}
+          <div>{body}</div>
+          {(head || body) && tail && <div className={styles.blank}></div>}
+          <div>{tail}</div>
         </div>
       </div>,
       document.getElementById('modalRoot') as HTMLElement
