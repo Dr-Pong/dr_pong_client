@@ -22,17 +22,16 @@ export default function SelectableItem({
   const { name, imgUrl } = item;
   return (
     <div className={styles.selectableItem}>
-      {!editable && (
+      {editable ? (
+        <img className={styles.itemImage} src={imgUrl} alt={name} />
+      ) : (
+        /* 수정 모드 구현 */
         <img
           className={styles.itemImage}
           src={imgUrl}
           onClick={handleItemClick}
           alt={name}
         />
-      )}
-      {editable && (
-        <img className={styles.itemImage} src={imgUrl} alt={name} />
-        /* 수정 모드 구현 */
       )}
     </div>
   );
