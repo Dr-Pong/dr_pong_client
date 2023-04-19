@@ -1,0 +1,31 @@
+.statCard {
+  width: 90%;
+  border: solid;
+}
+
+.container {
+  justify-content: space-between;
+}
+
+.boxName {
+  margin: 0.5rem;
+}
+
+.container, #rank {
+  display: flex;
+  flex-direction: row;
+}
+
+#info {
+  width: 70%;
+}
+
+#history {
+  display: flex;
+  align-items: center;
+  margin: 1rem;
+}
+
+.historyButton {
+
+}
