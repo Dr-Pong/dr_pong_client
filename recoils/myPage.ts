@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 import { v1 } from 'uuid';
 
-import { User } from '../types/myPageTypes';
+import { User } from 'types/myPageTypes';
 
 export const editableState = atom<boolean>({
   key: `editableState/${v1()}`,
