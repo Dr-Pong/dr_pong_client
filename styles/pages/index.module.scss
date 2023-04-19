@@ -1,0 +1,21 @@
+.homeContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  background: black;
+}
+.pageList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-inline: 2rem;
+}
+
+.pageLink {
+  margin-bottom: 3rem;
+  color: white;
+  font-weight: 700;
+  font-size: 1.8rem;
+}
