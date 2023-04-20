@@ -1,3 +1,14 @@
+import { useTranslation } from 'react-i18next';
+
+import PageHeader from 'components/global/pageHeader';
+
+import styles from 'styles/pages/friends.module.scss';
+
 export default function friends() {
-  return <></>;
+  const { t } = useTranslation(['page']);
+  return (
+    <div className={styles.friendsPageContainer}>
+      <PageHeader title={t('Friends')} button={null} />
+    </div>
+  );
 }
