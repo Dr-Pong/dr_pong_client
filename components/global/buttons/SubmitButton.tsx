@@ -1,8 +1,8 @@
 import styles from 'styles/global/Button.module.scss';
 
 type SubmitButtonProps = {
-  style: string;
-  color: string;
+  style: 'basic';
+  color: 'black' | 'white';
   value: string;
   handleButtonClick: React.FormEventHandler<HTMLFormElement>;
 };

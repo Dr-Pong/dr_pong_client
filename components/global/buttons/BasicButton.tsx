@@ -5,8 +5,8 @@ import { modalPartsState, openModalState } from 'recoils/modal';
 import styles from 'styles/global/Button.module.scss';
 
 type CancelButtonProps = {
-  style: string;
-  color: string;
+  style: 'basic';
+  color: 'black' | 'white';
   value: string;
   handleButtonClick: React.FormEventHandler<HTMLFormElement> | null;
 };
