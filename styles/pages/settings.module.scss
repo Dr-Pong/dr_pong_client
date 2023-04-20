@@ -1,0 +1,5 @@
+@import 'styles/common.scss';
+
+.settingsPageContainer {
+  @include pageContainer;
+}
