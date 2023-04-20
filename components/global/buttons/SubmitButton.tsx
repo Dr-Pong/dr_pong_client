@@ -1,20 +1,16 @@
-import styles from 'styles/global/Button.module.scss';
+import { ButtonProps } from 'types/buttonTypes';
 
-type SubmitButtonProps = {
-  style: 'basic';
-  color: 'black' | 'white';
-  value: string;
-  handleButtonClick: React.FormEventHandler<HTMLFormElement>;
-};
+import styles from 'styles/global/Button.module.scss';
 
 export default function SubmitButton({
   style,
   color,
   value,
   handleButtonClick,
-}: SubmitButtonProps) {
+}: ButtonProps) {
+  const handleSubmit = () => {};
   return (
-    <form onSubmit={handleButtonClick}>
+    <form onSubmit={handleButtonClick || handleSubmit}>
       <button className={`${styles[style]} ${styles[color]}`} type='submit'>
         {value}
       </button>

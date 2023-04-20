@@ -2,21 +2,16 @@ import { useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import { modalPartsState, openModalState } from 'recoils/modal';
 
-import styles from 'styles/global/Button.module.scss';
+import { ButtonProps } from 'types/buttonTypes';
 
-type CancelButtonProps = {
-  style: 'basic';
-  color: 'black' | 'white';
-  value: string;
-  handleButtonClick: React.FormEventHandler<HTMLFormElement> | null;
-};
+import styles from 'styles/global/Button.module.scss';
 
 export default function BasicButton({
   style,
   color,
   value,
   handleButtonClick,
-}: CancelButtonProps) {
+}: ButtonProps) {
   const setOpenModal = useSetRecoilState(openModalState);
   const resetModalParts = useResetRecoilState(modalPartsState);
   const handleModalClose = () => {
