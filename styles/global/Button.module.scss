@@ -1,0 +1,22 @@
+@import 'styles/common.scss';
+
+.buttonRowContainer {
+  display: flex;
+  justify-content: space-around;
+}
+
+.basic {
+  width: 6rem;
+  height: 2rem;
+  border-radius: $basic-radius;
+}
+
+.black {
+  color: white;
+  background: black;
+}
+
+.white {
+  color: black;
+  background: white;
+}
