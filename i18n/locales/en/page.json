@@ -22,5 +22,10 @@
   "Name": "Name",
   "save": "save",
   "edit": "edit",
-  "My Page": "My Page"
+  "My Page": "My Page",
+  "Channels": "Channels",
+  "Friends": "Friends",
+  "Leaderboard": "Leaderboard",
+  "Match History": "Match History",
+  "Settings": "Settings"
 }

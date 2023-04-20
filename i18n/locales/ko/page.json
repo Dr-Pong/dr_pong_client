@@ -22,5 +22,10 @@
   "Name": "닉네임",
   "save": "저장",
   "edit": "수정",
-  "My Page": "마이페이지"
+  "My Page": "마이페이지",
+  "Channels": "대화 채널",
+  "Friends": "친구",
+  "Leaderboard": "랭킹",
+  "Match History": "전적",
+  "Settings": "설정"
 }
