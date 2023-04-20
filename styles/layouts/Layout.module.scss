@@ -12,3 +12,17 @@
   overflow-x: hidden;
   overflow-y: scroll;
 }
+
+.pageContainer::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.pageContainer::-webkit-scrollbar-track {
+  background: black;
+}
+
+.pageContainer::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 8px;
+}
