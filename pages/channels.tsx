@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import PageHeader from 'components/global/pageHeader';
+import PageHeader from 'components/global/PageHeader';
 
 import styles from 'styles/pages/channels.module.scss';
 
