@@ -4,11 +4,14 @@ import React, { useState } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 import { useQuery } from 'react-query';
 
-import { editableState } from '../../recoils/myPage';
-import { Title } from '../../types/myPageTypes';
-import instance from '../../utils/axios';
-import Dropdown from '../global/Dropdown';
-import { DetailDto } from './ProfileCard';
+import { editableState } from 'recoils/myPage';
+
+import { Title } from 'types/myPageTypes';
+
+import instance from 'utils/axios';
+
+import Dropdown from 'components/global/Dropdown';
+import { DetailDto } from 'components/myPage/ProfileCard';
 
 export default function TitleDropdown({
   detailDto,
