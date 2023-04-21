@@ -1,9 +1,9 @@
-import 'i18n';
+// import 'i18n';
+import useTranslation from 'next-translate/useTranslation';
 
 import Link from 'next/link';
 
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 import styles from 'styles/pages/index.module.scss';
 
@@ -13,7 +13,7 @@ type page = {
 };
 
 export default function Home() {
-  const { t } = useTranslation(['page']);
+  const { t } = useTranslation('home');
   const pages: page[] = [
     { content: t('Leaderboard'), route: '/leaderboard' },
     { content: t('Match History'), route: '/matchHistory' },
