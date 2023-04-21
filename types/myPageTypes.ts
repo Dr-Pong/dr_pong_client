@@ -53,3 +53,9 @@ export interface Title {
   id: number;
   title: string;
 }
+
+export interface PatchDetail {
+  imgUrl: string | null;
+  title: number;
+  message: string;
+}

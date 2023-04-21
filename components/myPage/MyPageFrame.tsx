@@ -1,11 +1,11 @@
 import { useRecoilState } from 'recoil';
 
-import React from 'react';
+import React, { useRef } from 'react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 
-import { editableState } from 'recoils/myPage';
+import { editableState, tabState } from "recoils/myPage";
 
 import { User } from 'types/myPageTypes';
 
@@ -18,7 +18,7 @@ import styles from 'styles/MyPage/MyPageFrame.module.scss';
 
 export default function MyPageFrame() {
   const { t } = useTranslation(['page']);
-  const [tab, setTab] = useState<string>('profile');
+  const [tab, setTab] = useRecoilState(tabState);
   const [editable, setEditable] = useRecoilState(editableState);
   const fetchUser = async (): Promise<User> => {
     const res = await instance.get(`/users/me`);

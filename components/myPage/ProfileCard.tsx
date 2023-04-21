@@ -1,39 +1,94 @@
-import { init } from 'i18next';
 import { useRecoilValue } from 'recoil';
 
-import React, { useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IoIosClose } from 'react-icons/io';
-import { useQuery } from 'react-query';
+import { IoIosArrowDown, IoIosClose } from 'react-icons/io';
+import { useMutation, useQueries } from 'react-query';
 
-import { editableState } from 'recoils/myPage';
+import { editableState, tabState } from 'recoils/myPage';
 
-import { UserDetail } from 'types/myPageTypes';
+import { PatchDetail, Title, UserDetail } from 'types/myPageTypes';
 
 import instance from 'utils/axios';
 
+import Dropdown from 'components/myPage/Dropdown';
+
 import styles from 'styles/myPage/ProfileCard.module.scss';
 
-export default function ProfileCard({ userName }: { userName: string }) {
+function ProfileCard({ userName }: { userName: string }) {
   const { t } = useTranslation(['page']);
-  const [statusMessage, setStatusMessage] = useState<string>('');
   const editable = useRecoilValue(editableState);
+  const tab = useRecoilValue(tabState);
+  const [dropdownVisibility, setDropdownVisibility] = useState<boolean>(false);
+  const [statusMessage, setStatusMessage] = useState<string>('');
+  const [imgUrl, setImgUrl] = useState<string>('');
+  const [title, setTitle] = useState<Title>({ id: 0, title: '' });
+  useEffect(() => {
+    if (!editable && tab === 'profile') {
+      mutate({ imgUrl, title: title.id, message: statusMessage });
+    }
+  }, [editable]);
   const fetchProfile = async (): Promise<UserDetail> => {
     const res = await instance.get(`/users/${userName}/detail`);
+    setImgUrl(res.data.imgUrl);
+    setTitle({ id: 0, title: res.data.title });
     setStatusMessage(res.data.statusMessage);
     return res.data;
   };
-  const { data, isLoading, isError } = useQuery('userProfile', fetchProfile);
+  const fetchTitles = async (): Promise<Title[]> => {
+    const res = await instance.get(`/users/${userName}/titles`);
+    return res.data;
+  };
+
+  const queries = useQueries([
+    {
+      queryKey: 'userDetail',
+      queryFn: fetchProfile,
+    },
+    {
+      queryKey: 'userTitles',
+      queryFn: fetchTitles,
+    },
+  ]);
+
+  const patchDetail = async (detail: PatchDetail): Promise<PatchDetail> => {
+    const { data } = await instance.patch<PatchDetail>(
+      `/users/${userName}/detail`,
+      detail
+    );
+    console.log(detail);
+    return data;
+  };
+
+  const {
+    mutate,
+    isLoading: isUpdateLoading,
+    isError: isUpdateError,
+    // isSuccess: isUpdateSuccess,
+  } = useMutation(patchDetail);
+
+  const [userDetail, userTitles] = queries.map((query) => query.data);
+
+  const isLoading = queries.some((query) => query.isLoading);
+  const isError = queries.some((query) => query.isError);
 
   const statusMessageHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setStatusMessage(event.target.value);
   };
-  const handleDeleteClick = () => {};
+  const handleDropdownClick = () => {
+    setDropdownVisibility(!dropdownVisibility);
+  };
+  const handleDeleteClick = () => {
+    //정말 삭제하시겠습니까?
+    setImgUrl('');
+  };
   const handleUploadClick = () => {};
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
-  const { nickname, title, level, imgUrl } = data as UserDetail;
-
+  // if (isUpdateLoading) return <div>Updating...</div>;
+  // if (isUpdateError) return <div>Error updating details...</div>;
+  const { nickname, level } = userDetail as UserDetail;
+  const titles = userTitles as Title[];
   return (
     <div className={styles.profileCard}>
       <div className={styles.profileTag}>
@@ -53,7 +108,27 @@ export default function ProfileCard({ userName }: { userName: string }) {
         <div className={styles.profileInfo}>
           <div className={styles.captionContentBar}>
             <span className={styles.caption}>{t('Title')}</span>
-            {editable ? 'dropdown' : title}
+            {title.title}
+            {editable && (
+              <div onClick={handleDropdownClick}>
+                <IoIosArrowDown />
+              </div>
+            )}
+            <Dropdown visibility={editable && dropdownVisibility}>
+              <ul>
+                {titles.map(({ id, title }) => (
+                  <li
+                    key={id}
+                    onClick={() => {
+                      setTitle({ id, title });
+                      setDropdownVisibility(false);
+                    }}
+                  >
+                    {title}
+                  </li>
+                ))}
+              </ul>
+            </Dropdown>
           </div>
           <div className={styles.captionContentBar}>
             <span className={styles.caption}>{t('Level')}</span>
@@ -81,10 +156,4 @@ export default function ProfileCard({ userName }: { userName: string }) {
   );
 }
 
-// const initVal: UserDetail = {
-//   nickname: '',
-//   title: '',
-//   level: 0,
-//   statusMessage: '',
-//   imgUrl: '',
-// };
+export default forwardRef(ProfileCard);

@@ -1,0 +1,46 @@
+
+/* fade in */
+
+@keyframes fadeInAnimation {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.fadeIn > ul {
+  animation: fadeInAnimation .4s ease;
+  list-style: none;
+}
+
+/* fade out */
+
+@keyframes fadeOutAnimation {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+.fadeOut > ul {
+  animation: fadeOutAnimation 0.4s ease;
+  animation-fill-mode: forwards;
+  list-style: none;
+}
+
+.dropdown {
+  overflow: hidden;
+  position: absolute;
+  top: 100%;
+  left: 4rem;
+  transform: translate(0%, 0%);
+  z-index: 99;
+  max-height: 6rem;
+  overflow-y: scroll;
+}

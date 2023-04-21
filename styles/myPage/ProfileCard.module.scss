@@ -18,10 +18,11 @@
   flex: 1;
   justify-content: space-between;
   margin-right: 1rem;
+  position: relative;
 }
 
 .profileImg {
-  object-fit: contain;
+  object-fit: fill;
   width: 100%;
   border: solid;
 }
@@ -36,6 +37,7 @@
 }
 
 .captionContentBar {
+  position: relative;
   display: flex;
   margin-inline: 0.8rem;
 }
@@ -54,12 +56,23 @@
 
 .imgOverlay {
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+
+.uploadButton {
+  display: flex;
+  justify-content: center;
 }
 
 .deleteButton {
   display: flex;
   flex-direction: row-reverse;
 }
+

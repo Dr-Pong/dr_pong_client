@@ -309,4 +309,28 @@ const titles = [
     id: 6,
     title: 'I am the idiot',
   },
+  {
+    id: 7,
+    title: 'the beginner',
+  },
+  {
+    id: 8,
+    title: 'the intermediate',
+  },
+  {
+    id: 9,
+    title: 'the advanced',
+  },
+  {
+    id: 10,
+    title: 'the legend',
+  },
+  {
+    id: 11,
+    title: 'the master',
+  },
+  {
+    id: 12,
+    title: 'Dr. Pong',
+  },
 ];
