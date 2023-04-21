@@ -62,8 +62,8 @@ export interface PatchAchievements {
   achievements: number[];
 }
 
-export interface PatchEmojies {
-  emojies: number[];
+export interface PatchEmojis {
+  emojis: number[];
 }
 
-export type PatchSelectables = PatchAchievements | PatchEmojies;
+export type PatchSelectables = PatchAchievements | PatchEmojis;
