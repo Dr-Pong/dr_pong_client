@@ -17,7 +17,7 @@ export default function SelectedItems({
   itemType: string;
 }) {
   const selectedItemsQuery =
-    itemType === 'achieve' ? 'achievements' : 'emojies';
+    itemType === 'achieve' ? 'achievements' : 'emojis';
   const fetchItems = async (): Promise<Achievement[] | Emoji[]> => {
     const res = await instance.get(
       `/users/${userName}/${selectedItemsQuery}?selected=true`

@@ -16,7 +16,7 @@ export default function ItemsGrid({
   userName: string;
   itemType: string;
 }) {
-  const itemsQuery = itemType === 'achieve' ? 'achievements' : 'emojies';
+  const itemsQuery = itemType === 'achieve' ? 'achievements' : 'emojis';
   const fetchItems = async (): Promise<Achievement[] | Emoji[]> => {
     const res = await instance.get(`/users/${userName}/${itemsQuery}`);
     return res.data;
