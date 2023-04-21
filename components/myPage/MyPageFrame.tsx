@@ -41,7 +41,6 @@ export default function MyPageFrame() {
 
   return (
     <div className={styles.myPageFrame}>
-      <div className={styles.pageTitle}>{t('My Page')}</div>
       <div className={styles.editButtonContainer}>
         <div className={styles.editButton} onClick={handleEditButtonClick}>
           {editable ? t('save') : t('edit')}
