@@ -5,15 +5,15 @@ import { useQuery } from 'react-query';
 
 import { editableState } from 'recoils/myPage';
 
+import { Achievement, Emoji } from 'types/myPageTypes';
+
+import instance from 'utils/axios';
+
 import ProfileCard from 'components/myPage/ProfileCard';
+import SelectableItem from 'components/myPage/SelectableItem';
 import StatCard from 'components/myPage/StatCard';
 
 import styles from 'styles/myPage/Profile.module.scss';
-
-import { Achievement, Emoji } from '../../types/myPageTypes';
-import instance from '../../utils/axios';
-import SelectTab from './SelectTab';
-import SelectableItem from './SelectableItem';
 
 export default function Profile({ userName }: { userName: string }) {
   const editableStatus = useRecoilValue(editableState);
