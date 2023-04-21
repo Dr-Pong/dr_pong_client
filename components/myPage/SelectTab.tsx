@@ -90,7 +90,11 @@ export default function SelectTab({
     },
     deselect: (item: Achievement | Emoji) => {
       item.status = 'achieved';
-      setAll([...all.filter((i) => i.id !== item.id), item]);
+      setAll(
+        [...all.filter((i) => i.id !== item.id), item].sort(
+          (a, b) => a.id - b.id
+        )
+      );
       setSelected(selected.filter((i) => i.id !== item.id));
       console.log('deselect!');
     },
