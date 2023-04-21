@@ -44,9 +44,9 @@ export default (
       return;
     case 'emojis':
       if (selected) {
-        res.status(200).json(selectedEmojies);
+        res.status(200).json(selectedEmojis);
       } else {
-        res.status(200).json(emojies);
+        res.status(200).json(emojis);
       }
       return;
     case 'titles':
@@ -186,7 +186,7 @@ const achievements = [
   },
 ];
 
-const selectedEmojies = [
+const selectedEmojis = [
   {
     id: 1,
     name: '빵긋',
@@ -207,7 +207,7 @@ const selectedEmojies = [
   },
 ];
 
-const emojies = [
+const emojis = [
   {
     id: 1,
     name: '빵긋',
