@@ -28,11 +28,13 @@ export default function SelectableItem({
   const handleEditClick = () => {
     switch (status) {
       case 'unachieved':
-        return {};
+        break;
       case 'achieved':
-        return clickHandler?.select(item);
+        clickHandler?.select(item);
+        break;
       case 'selected':
-        return clickHandler?.deselect(item);
+        clickHandler?.deselect(item);
+        break;
     }
   };
   const imgStyle = () => {

@@ -27,8 +27,6 @@ export default function Profile({ userName }: { userName: string }) {
     'selectedAchievements',
     fetchSelectedAchievements
   );
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error</div>;
   const achievements = data as Achievement[];
   return (
     <div className={styles.profile}>
@@ -38,16 +36,18 @@ export default function Profile({ userName }: { userName: string }) {
         className={styles.selectedItemsContainer}
         style={editableStatus ? { pointerEvents: 'none' } : {}}
       >
-        <div className={styles.selectedItems}>
-          {achievements.map((item) => (
-            <SelectableItem
-              key={item.id}
-              itemType={'achieve'}
-              item={item}
-              clickHandler={null}
-            />
-          ))}
-        </div>
+        {!isLoading && !isError && (
+          <div className={styles.selectedItems}>
+            {achievements.map((item) => (
+              <SelectableItem
+                key={item.id}
+                itemType={'achieve'}
+                item={item}
+                clickHandler={null}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

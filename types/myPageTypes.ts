@@ -27,10 +27,10 @@ export interface UserStat {
       record: number;
       rank: number;
     };
-  };
-  best: {
-    record: number;
-    rank: number;
+    best: {
+      record: number;
+      rank: number;
+    };
   };
 }
 
@@ -40,7 +40,6 @@ export interface Achievement {
   imgUrl: string;
   content: string;
   status: string;
-  isSelected: boolean;
 }
 
 export interface Emoji {

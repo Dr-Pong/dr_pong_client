@@ -30,7 +30,9 @@ export default function SelectTab({
   const [all, setAll] = useState<Achievement[] | Emoji[]>([]);
   const queryKey = itemType === 'achieve' ? 'achievements' : 'emojies';
   useEffect(() => {
-    if (!editable && tab === 'achieve') {
+    if (selected.length === 0) {
+      return;
+    } else if (!editable && tab === 'achieve') {
       mutate({ achievements: selected.map((item) => item.id) });
     } else if (!editable && tab === 'emoji') {
       mutate({ emojies: selected.map((item) => item.id) });
@@ -88,9 +90,7 @@ export default function SelectTab({
     },
     deselect: (item: Achievement | Emoji) => {
       item.status = 'achieved';
-      const a = all.find((i) => i.id === item.id);
-      if (a) a.status = 'achieved';
-      setAll(all);
+      setAll([...all.filter((i) => i.id !== item.id), item]);
       setSelected(selected.filter((i) => i.id !== item.id));
       console.log('deselect!');
     },
@@ -107,18 +107,16 @@ export default function SelectTab({
           />
         ))}
       </div>
-      {tab !== 'profile' && (
-        <div className={styles.allItems}>
-          {all.map((item) => (
-            <SelectableItem
-              key={item.id}
-              itemType={itemType}
-              item={item}
-              clickHandler={clickHandler}
-            />
-          ))}
-        </div>
-      )}
+      <div className={styles.allItems}>
+        {all.map((item) => (
+          <SelectableItem
+            key={item.id}
+            itemType={itemType}
+            item={item}
+            clickHandler={clickHandler}
+          />
+        ))}
+      </div>
     </div>
   );
 }

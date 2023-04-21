@@ -10,7 +10,7 @@ export default function MyPage() {
   const { t } = useTranslation(['page']);
   return (
     <div className={styles.myPageContainer}>
-      <PageHeader title={t('MyPage')} button={null} />
+      <PageHeader title={t('My Page')} button={null} />
       <MyPageFrame />
     </div>
   );
