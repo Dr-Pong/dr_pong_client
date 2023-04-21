@@ -15,3 +15,8 @@ export const userState = atom<User>({
     imgUrl: '',
   },
 });
+
+export const tabState = atom<string>({
+  key: `tabState/${v1()}`,
+  default: 'profile',
+});

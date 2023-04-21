@@ -44,9 +44,9 @@ export default (
       return;
     case 'emojies':
       if (selected) {
-        res.status(200).json(selectedEmojis);
+        res.status(200).json(selectedEmojies);
       } else {
-        res.status(200).json(emojis);
+        res.status(200).json(emojies);
       }
       return;
     case 'titles':
@@ -188,7 +188,7 @@ const achievements = [
   },
 ];
 
-const selectedEmojis = [
+const selectedEmojies = [
   {
     id: 1,
     name: '빵긋',
@@ -209,24 +209,24 @@ const selectedEmojis = [
   },
 ];
 
-const emojis = [
+const emojies = [
   {
     id: 1,
     name: '빵긋',
     imgUrl: 'https://i.imgur.com/GcllAAB.jpeg',
-    status: 'achieved',
+    status: 'selected',
   },
   {
     id: 2,
     name: '눈물',
     imgUrl: 'https://i.imgur.com/GcllAAB.jpeg',
-    status: 'achieved',
+    status: 'selected',
   },
   {
     id: 3,
     name: '화남',
     imgUrl: 'https://i.imgur.com/GcllAAB.jpeg',
-    status: 'achieved',
+    status: 'selected',
   },
   {
     id: 4,
@@ -308,5 +308,29 @@ const titles = [
   {
     id: 6,
     title: 'I am the idiot',
+  },
+  {
+    id: 7,
+    title: 'the beginner',
+  },
+  {
+    id: 8,
+    title: 'the intermediate',
+  },
+  {
+    id: 9,
+    title: 'the advanced',
+  },
+  {
+    id: 10,
+    title: 'the legend',
+  },
+  {
+    id: 11,
+    title: 'the master',
+  },
+  {
+    id: 12,
+    title: 'Dr. Pong',
   },
 ];

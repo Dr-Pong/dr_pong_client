@@ -53,3 +53,19 @@ export interface Title {
   id: number;
   title: string;
 }
+
+export interface PatchDetail {
+  imgUrl: string | null;
+  title: number;
+  message: string;
+}
+
+export interface PatchAchievements {
+  achievements: number[];
+}
+
+export interface PatchEmojies {
+  emojies: number[];
+}
+
+export type PatchSelectables = PatchAchievements | PatchEmojies;
