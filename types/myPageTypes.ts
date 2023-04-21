@@ -23,14 +23,12 @@ export interface UserStat {
     win: number;
     ties: number;
     lose: number;
-    current: {
-      record: number;
-      rank: number;
-    };
-    best: {
-      record: number;
-      rank: number;
-    };
+    record: number;
+    rank: number;
+  };
+  bestStat: {
+    record: number;
+    rank: number;
   };
 }
 

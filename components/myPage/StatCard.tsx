@@ -33,9 +33,9 @@ export default function StatCard({ userName }: { userName: string }) {
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
 
-  const { totalStat, seasonStat } = data as UserStat;
-  const currentRank = { isBestRecord: false, ...seasonStat.current };
-  const bestRank = { isBestRecord: true, ...seasonStat.best };
+  const { totalStat, seasonStat, bestStat } = data as UserStat;
+  const currentRank = { isBestRecord: false, rank: seasonStat.rank, record: seasonStat.record};
+  const bestRank = { isBestRecord: true, ...bestStat };
   // // 버튼은 나중에 공용버튼으로 바갈아버리기
   return (
     <div className={styles.statCard}>

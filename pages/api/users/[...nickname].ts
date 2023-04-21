@@ -42,7 +42,7 @@ export default (
         res.status(200).json(achievements);
       }
       return;
-    case 'emojies':
+    case 'emojis':
       if (selected) {
         res.status(200).json(selectedEmojis);
       } else {
@@ -66,14 +66,12 @@ const stat = {
     win: 10,
     ties: 1,
     lose: 4,
-    current: {
-      record: 3190,
-      rank: 120,
-    },
-    best: {
-      record: 5000,
-      rank: 1,
-    },
+    record: 3190,
+    rank: 120,
+  },
+  bestStat: {
+    record: 5000,
+    rank: 1,
   },
 };
 
