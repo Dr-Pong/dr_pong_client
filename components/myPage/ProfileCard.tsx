@@ -60,12 +60,7 @@ function ProfileCard({ userName }: { userName: string }) {
     return data;
   };
 
-  const {
-    mutate,
-    isLoading: isUpdateLoading,
-    isError: isUpdateError,
-    // isSuccess: isUpdateSuccess,
-  } = useMutation(patchDetail);
+  const { mutate } = useMutation(patchDetail);
 
   const [userDetail, userTitles] = queries.map((query) => query.data);
 
@@ -85,8 +80,6 @@ function ProfileCard({ userName }: { userName: string }) {
   const handleUploadClick = () => {};
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
-  // if (isUpdateLoading) return <div>Updating...</div>;
-  // if (isUpdateError) return <div>Error updating details...</div>;
   const { nickname, level } = userDetail as UserDetail;
   const titles = userTitles as Title[];
   return (

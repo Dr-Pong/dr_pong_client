@@ -27,10 +27,10 @@ export interface UserStat {
       record: number;
       rank: number;
     };
-    best: {
-      record: number;
-      rank: number;
-    };
+  };
+  best: {
+    record: number;
+    rank: number;
   };
 }
 
@@ -40,6 +40,7 @@ export interface Achievement {
   imgUrl: string;
   content: string;
   status: string;
+  isSelected: boolean;
 }
 
 export interface Emoji {
@@ -59,3 +60,13 @@ export interface PatchDetail {
   title: number;
   message: string;
 }
+
+export interface PatchAchievements {
+  achievements: number[];
+}
+
+export interface PatchEmojies {
+  emojies: number[];
+}
+
+export type PatchSelectables = PatchAchievements | PatchEmojies;

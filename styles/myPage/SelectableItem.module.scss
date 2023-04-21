@@ -9,3 +9,12 @@
   aspect-ratio: 1/1;
   object-fit: cover;
 }
+
+.selected {
+  border: solid blue;
+}
+
+.unachieved {
+  filter: grayscale(100%);
+  opacity: 0.5;
+}
