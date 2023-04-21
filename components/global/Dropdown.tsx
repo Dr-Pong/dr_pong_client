@@ -1,30 +1,31 @@
 import React, { useEffect, useState } from 'react';
 
-import styles from 'styles/myPage/Dropdown.module.scss';
+import styles from 'styles/global/Dropdown.module.scss';
 
-export interface DropdownProps {
+const Dropdown = ({
+  visibility,
+  children,
+}: {
   visibility: boolean;
   children: React.ReactNode;
-}
-
-const Dropdown = (props: DropdownProps) => {
+}) => {
   const [visibilityAnimation, setVisibilityAnimation] = useState(false);
   useEffect(() => {
-    if (props.visibility) {
+    if (visibility) {
       setVisibilityAnimation(true);
     } else {
       setTimeout(() => {
         setVisibilityAnimation(false);
       }, 400);
     }
-  }, [props.visibility]);
+  }, [visibility]);
   return (
     <article
       className={`${styles.dropdown} ${
-        props.visibility ? styles.fadeIn : styles.fadeOut
+        visibility ? styles.fadeIn : styles.fadeOut
       }`}
     >
-      {visibilityAnimation && props.children}
+      {visibilityAnimation && children}
     </article>
   );
 };

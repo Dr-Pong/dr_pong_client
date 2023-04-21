@@ -11,22 +11,6 @@
   justify-content: space-between;
 }
 
-.profileImgFrame {
-  //width: 25%;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  justify-content: space-between;
-  margin-right: 1rem;
-  position: relative;
-}
-
-.profileImg {
-  object-fit: fill;
-  width: 100%;
-  border: solid;
-}
-
 .profileInfo {
   width: 75%;
   display: flex;
@@ -47,32 +31,4 @@
   margin-right: 1rem;
 }
 
-.statusMessage {
-  width: 100%;
-  margin-block: 1rem;
-  padding: 2rem;
-  border: solid;
-}
-
-.imgOverlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 100%;
-  height: 100%;
-}
-
-.uploadButton {
-  display: flex;
-  justify-content: center;
-}
-
-.deleteButton {
-  display: flex;
-  flex-direction: row-reverse;
-}
 
