@@ -65,28 +65,42 @@ export default function ProfileCard({ userName }: { userName: string }) {
   if (isError) return <div>Error...</div>;
   const { nickname, level } = userDetail as UserDetail;
 
+  const captionContent = (
+    key: number,
+    label: string,
+    content: string,
+    child: React.ReactNode = <></>
+  ) => {
+    return (
+      <div key={key} className={styles.captionContentBar}>
+        <span className={styles.caption}>{label}</span>
+        {content}
+        {child}
+      </div>
+    );
+  };
+
+  const captionContents = [
+    captionContent(
+      1,
+      t('Title'),
+      detailDto.title.title,
+      <TitleDropdown
+        detailDto={detailDto}
+        setDetailDto={setDetailDto}
+        userName={userName}
+      />
+    ),
+    captionContent(2, t('Level'), level.toString()),
+    captionContent(3, t('Name'), nickname),
+  ];
+
   return (
     <div className={styles.profileCard}>
       <div className={styles.profileTag}>
         <ProfileImage detailDto={detailDto} setDetailDto={setDetailDto} />
         <div className={styles.profileInfo}>
-          <div className={styles.captionContentBar}>
-            <span className={styles.caption}>{t('Title')}</span>
-            {detailDto.title.title}
-            <TitleDropdown
-              detailDto={detailDto}
-              setDetailDto={setDetailDto}
-              userName={userName}
-            />
-          </div>
-          <div className={styles.captionContentBar}>
-            <span className={styles.caption}>{t('Level')}</span>
-            {level.toString()}
-          </div>
-          <div className={styles.captionContentBar}>
-            <span className={styles.caption}>{t('Name')}</span>
-            {nickname}
-          </div>
+          {captionContents.map((captionContent) => captionContent)}
         </div>
       </div>
       <ProfileStatusMessage detailDto={detailDto} setDetailDto={setDetailDto} />
