@@ -1,8 +1,4 @@
-import { useRecoilValue } from 'recoil';
-
 import React, { useEffect, useState } from 'react';
-
-import { editableState } from 'recoils/myPage';
 
 import styles from 'styles/myPage/Dropdown.module.scss';
 

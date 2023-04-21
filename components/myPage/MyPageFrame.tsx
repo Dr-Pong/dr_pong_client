@@ -1,11 +1,10 @@
 import { useRecoilState } from 'recoil';
 
-import React, { useRef } from 'react';
-import { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 
-import { editableState, tabState } from "recoils/myPage";
+import { editableState, tabState } from 'recoils/myPage';
 
 import { User } from 'types/myPageTypes';
 
