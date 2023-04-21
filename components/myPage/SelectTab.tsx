@@ -28,14 +28,14 @@ export default function SelectTab({
   const tab = useRecoilValue(tabState);
   const [selected, setSelected] = useState<Achievement[] | Emoji[]>([]);
   const [all, setAll] = useState<Achievement[] | Emoji[]>([]);
-  const queryKey = itemType === 'achieve' ? 'achievements' : 'emojies';
+  const queryKey = itemType === 'achieve' ? 'achievements' : 'emojis';
   useEffect(() => {
     if (selected.length === 0) {
       return;
     } else if (!editable && tab === 'achieve') {
       mutate({ achievements: selected.map((item) => item.id) });
     } else if (!editable && tab === 'emoji') {
-      mutate({ emojies: selected.map((item) => item.id) });
+      mutate({ emojis: selected.map((item) => item.id) });
     }
   }, [editable]);
   const patchSelectables = async (
@@ -90,7 +90,11 @@ export default function SelectTab({
     },
     deselect: (item: Achievement | Emoji) => {
       item.status = 'achieved';
-      setAll([...all.filter((i) => i.id !== item.id), item]);
+      setAll(
+        [...all.filter((i) => i.id !== item.id), item].sort(
+          (a, b) => a.id - b.id
+        )
+      );
       setSelected(selected.filter((i) => i.id !== item.id));
       console.log('deselect!');
     },

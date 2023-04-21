@@ -42,11 +42,11 @@ export default (
         res.status(200).json(achievements);
       }
       return;
-    case 'emojies':
+    case 'emojis':
       if (selected) {
-        res.status(200).json(selectedEmojies);
+        res.status(200).json(selectedEmojis);
       } else {
-        res.status(200).json(emojies);
+        res.status(200).json(emojis);
       }
       return;
     case 'titles':
@@ -66,14 +66,12 @@ const stat = {
     win: 10,
     ties: 1,
     lose: 4,
-    current: {
-      record: 3190,
-      rank: 120,
-    },
-    best: {
-      record: 5000,
-      rank: 1,
-    },
+    record: 3190,
+    rank: 120,
+  },
+  bestStat: {
+    record: 5000,
+    rank: 1,
   },
 };
 
@@ -188,7 +186,7 @@ const achievements = [
   },
 ];
 
-const selectedEmojies = [
+const selectedEmojis = [
   {
     id: 1,
     name: '빵긋',
@@ -209,7 +207,7 @@ const selectedEmojies = [
   },
 ];
 
-const emojies = [
+const emojis = [
   {
     id: 1,
     name: '빵긋',

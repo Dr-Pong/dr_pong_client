@@ -23,14 +23,12 @@ export interface UserStat {
     win: number;
     ties: number;
     lose: number;
-    current: {
-      record: number;
-      rank: number;
-    };
-    best: {
-      record: number;
-      rank: number;
-    };
+    record: number;
+    rank: number;
+  };
+  bestStat: {
+    record: number;
+    rank: number;
   };
 }
 
@@ -64,8 +62,8 @@ export interface PatchAchievements {
   achievements: number[];
 }
 
-export interface PatchEmojies {
-  emojies: number[];
+export interface PatchEmojis {
+  emojis: number[];
 }
 
-export type PatchSelectables = PatchAchievements | PatchEmojies;
+export type PatchSelectables = PatchAchievements | PatchEmojis;
