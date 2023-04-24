@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import React from 'react';
 
-import styles from 'styles/pages/index.module.scss';
+import styles from 'styles/index/Home.module.scss';
 
 type page = {
   value: string;

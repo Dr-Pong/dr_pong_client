@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import RadioButtons from 'components/global/RadioButtons';
 import BasicButton from 'components/global/buttons/BasicButton';
 
-import styles from 'styles/settings/settings.module.scss';
+import styles from 'styles/settings/Settings.module.scss';
 
 export default function SettingsFrame() {
   const { t } = useTranslation('settings');
