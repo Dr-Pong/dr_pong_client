@@ -1,9 +1,8 @@
-import { UseQueryResult, useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 
-import { PatchDetail, UserDetail } from 'types/myPageTypes';
+import { UserDetail } from 'types/myPageTypes';
 
-import { DetailDto } from '../components/myPage/ProfileCard';
-import instance from '../utils/axios';
+import instance from 'utils/axios';
 
 const useCustomQuery = () => {
   const get = (api: string, setter?: (a: any) => void) => {
