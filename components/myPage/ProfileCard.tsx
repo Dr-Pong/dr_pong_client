@@ -7,7 +7,7 @@ import { editableState, tabState } from 'recoils/myPage';
 
 import { Title, UserDetail } from 'types/myPageTypes';
 
-import useMyPageQuery from 'hooks/myPageQuery';
+import useCustomQuery from 'hooks/useCustomQuery';
 
 import ProfileImage from 'components/myPage/ProfileImage';
 import ProfileStatusMessage from 'components/myPage/ProfileStatusMessage';
@@ -22,22 +22,40 @@ export interface DetailDto {
 }
 export default function ProfileCard({ userName }: { userName: string }) {
   const { t } = useTranslation(['page']);
-  const { getProfile, patchProfile } = useMyPageQuery(userName);
   const editable = useRecoilValue(editableState);
   const tab = useRecoilValue(tabState);
   const [detailDto, setDetailDto] = useState<DetailDto>(defaultDetailDto);
   useEffect(() => {
     if (detailDto === defaultDetailDto) return;
     if (!editable && tab === 'profile') {
+      const title = detailDto.title.id == 0 ? null : detailDto.title.id;
       mutate({
         imgUrl: detailDto.imgUrl,
-        title: detailDto.title.id,
+        title: title,
         message: detailDto.statusMessage,
       });
     }
   }, [editable]);
-  const { isLoading, isError, data: userDetail } = getProfile(setDetailDto);
-  const { mutate } = patchProfile();
+  const fetchProfile = async (): Promise<UserDetail> => {
+    const res = await instance.get(`/users/${userName}/detail`);
+    setDetailDto(res.data);
+    return res.data;
+  };
+  const {
+    isLoading,
+    isError,
+    data: userDetail,
+  } = useQuery('userDetail', fetchProfile);
+  const patchDetail = async (detail: PatchDetail): Promise<PatchDetail> => {
+    const { data } = await instance.patch<PatchDetail>(
+      `/users/${userName}/detail`,
+      detail
+    );
+    console.log(detail);
+    return data;
+  };
+
+  const { mutate } = useMutation(patchDetail);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
@@ -52,8 +70,10 @@ export default function ProfileCard({ userName }: { userName: string }) {
     return (
       <div key={key} className={styles.captionContentBar}>
         <span className={styles.caption}>{label}</span>
-        {content}
-        {child}
+        <div className={styles.content}>
+          {content}
+          {child}
+        </div>
       </div>
     );
   };
@@ -62,7 +82,7 @@ export default function ProfileCard({ userName }: { userName: string }) {
     captionContent(
       1,
       t('Title'),
-      detailDto.title.title,
+      detailDto.title?.title ?? '',
       <TitleDropdown
         detailDto={detailDto}
         setDetailDto={setDetailDto}

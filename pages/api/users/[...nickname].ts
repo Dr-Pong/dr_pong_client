@@ -28,7 +28,10 @@ export default (
         imgUrl:
           'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
         level: 30,
-        title: 'the Boss',
+        title: {
+          id: 0,
+          title: 'the Boss',
+        },
         statusMessage: 'I am the boss',
       });
       return;
