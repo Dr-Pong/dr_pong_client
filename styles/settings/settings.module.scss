@@ -1,0 +1,29 @@
+@import 'styles/common.scss';
+
+.settingsPageContainer {
+  @include pageContainer;
+}
+
+.settingListContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-inline: 1rem;
+  ul {
+    margin-bottom: 2rem;
+    list-style: none;
+  }
+  li {
+    margin-bottom: 2rem;
+  }
+}
+
+.listTopic {
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.saveButton {
+  align-self: center;
+}
