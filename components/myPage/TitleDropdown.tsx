@@ -29,7 +29,6 @@ export default function TitleDropdown({
   };
   const fetchTitles = async (): Promise<Title[]> => {
     const res = await instance.get(`/users/${userName}/titles`);
-    console.log(unshiftEmptyTitle(res.data));
     return unshiftEmptyTitle(res.data);
   };
 

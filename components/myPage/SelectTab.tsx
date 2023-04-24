@@ -45,7 +45,6 @@ export default function SelectTab({
       `/users/${userName}/${queryKey}`,
       selectables
     );
-    console.log(selectables);
     return data;
   };
 
@@ -96,7 +95,6 @@ export default function SelectTab({
         )
       );
       setSelected(selected.filter((i) => i.id !== item.id));
-      console.log('deselect!');
     },
   };
   return (
