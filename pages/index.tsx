@@ -22,11 +22,11 @@ export default function Home() {
   return (
     <div className={styles.homePageContainer}>
       <div className={styles.pageList}>
-        {pages.map(({ value, route }) => {
+        {pages.map(({ value, route }, i) => {
           return (
-            <Link href={route} className={styles.pageLink}>
-              {value}
-            </Link>
+            <div key={i} className={styles.pageLink}>
+              <Link href={route}>{value}</Link>
+            </div>
           );
         })}
       </div>

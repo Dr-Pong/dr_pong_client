@@ -21,14 +21,14 @@ export default function NavigationBar() {
   ];
   return (
     <div className={styles.navigationBarContainer}>
-      {navigations.map(({ value, route, style }) => {
+      {navigations.map(({ value, route, style }, i) => {
         return (
-          <Link
-            href={route}
+          <div
+            key={i}
             className={`${styles.navigationButton} ${styles[style]}`}
           >
-            {value}
-          </Link>
+            <Link href={route}>{value}</Link>
+          </div>
         );
       })}
     </div>
