@@ -1,0 +1,15 @@
+{
+  "locales": ["ko", "en"],
+  "defaultLocale": "en",
+  "pages": {
+    "*": ["common"],
+    "/": ["home"],
+    "/channels": ["channels"],
+    "/friends": ["friends"],
+    "/game": ["game"],
+    "/leaderboard": ["leaderboard"],
+    "/matchHistory": ["matchHistory"],
+    "/myPage": ["myPage"],
+    "/settings": ["settings"]
+  }
+}

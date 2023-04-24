@@ -6,29 +6,29 @@ import { IoMdChatboxes, IoMdHome, IoMdPerson } from 'react-icons/io';
 import styles from 'styles/layouts/NavigationBar.module.scss';
 
 type navigation = {
-  content: string | React.ReactNode;
+  value: string | React.ReactNode;
   route: string;
   style: 'basic' | 'big';
 };
 
 export default function NavigationBar() {
   const navigations: navigation[] = [
-    { content: <IoMdHome />, route: '/', style: 'basic' },
-    { content: <IoMdChatboxes />, route: '/channels', style: 'basic' },
-    { content: 'Game\nStart', route: '/game', style: 'big' },
-    { content: <FaHandsHelping />, route: '/friends', style: 'basic' },
-    { content: <IoMdPerson />, route: '/myPage', style: 'basic' },
+    { value: <IoMdHome />, route: '/', style: 'basic' },
+    { value: <IoMdChatboxes />, route: '/channels', style: 'basic' },
+    { value: 'Game\nStart', route: '/game', style: 'big' },
+    { value: <FaHandsHelping />, route: '/friends', style: 'basic' },
+    { value: <IoMdPerson />, route: '/myPage', style: 'basic' },
   ];
   return (
     <div className={styles.navigationBarContainer}>
-      {navigations.map(({ content, route, style }) => {
+      {navigations.map(({ value, route, style }, i) => {
         return (
-          <Link
-            href={route}
+          <div
+            key={i}
             className={`${styles.navigationButton} ${styles[style]}`}
           >
-            {content}
-          </Link>
+            <Link href={route}>{value}</Link>
+          </div>
         );
       })}
     </div>
