@@ -29,20 +29,17 @@ export default function ProfileCard({ userName }: { userName: string }) {
   useEffect(() => {
     if (detailDto === defaultDetailDto) return;
     if (!editable && tab === 'profile') {
+      const title = detailDto.title.id == 0 ? null : detailDto.title.id;
       mutate({
         imgUrl: detailDto.imgUrl,
-        title: detailDto.title.id,
+        title: title,
         message: detailDto.statusMessage,
       });
     }
   }, [editable]);
   const fetchProfile = async (): Promise<UserDetail> => {
     const res = await instance.get(`/users/${userName}/detail`);
-    setDetailDto({
-      imgUrl: res.data.imgUrl,
-      title: { id: 0, title: res.data.title },
-      statusMessage: res.data.statusMessage,
-    });
+    setDetailDto(res.data);
     return res.data;
   };
   const {
@@ -74,8 +71,10 @@ export default function ProfileCard({ userName }: { userName: string }) {
     return (
       <div key={key} className={styles.captionContentBar}>
         <span className={styles.caption}>{label}</span>
-        {content}
-        {child}
+        <div className={styles.content}>
+          {content}
+          {child}
+        </div>
       </div>
     );
   };
@@ -84,7 +83,7 @@ export default function ProfileCard({ userName }: { userName: string }) {
     captionContent(
       1,
       t('Title'),
-      detailDto.title.title,
+      detailDto.title?.title ?? '',
       <TitleDropdown
         detailDto={detailDto}
         setDetailDto={setDetailDto}
