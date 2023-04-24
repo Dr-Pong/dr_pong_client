@@ -65,8 +65,3 @@ export default function MyPageFrame() {
     </div>
   );
 }
-
-// const initVal: User = {
-//   nickname: '',
-//   imgUrl: '',
-// };

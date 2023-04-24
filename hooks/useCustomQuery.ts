@@ -1,17 +1,17 @@
-import { useMutation, useQuery } from 'react-query';
+import { QueryKey, useMutation, useQuery } from "react-query";
 
 import { UserDetail } from 'types/myPageTypes';
 
 import instance from 'utils/axios';
 
 const useCustomQuery = () => {
-  const get = (api: string, setter?: (a: any) => void) => {
-    const fetch = async (): Promise<UserDetail> => {
+  const get = (key: QueryKey, api: string, setter?: (a: any) => void) => {
+    const fetch = async (): Promise<any> => {
       const { data } = await instance.get(api);
       setter?.(data);
       return data;
     };
-    return useQuery(api, fetch);
+    return useQuery(key, fetch);
   };
 
   const patch = (api: string) => {

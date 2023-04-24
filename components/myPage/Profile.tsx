@@ -1,13 +1,12 @@
 import { useRecoilValue } from 'recoil';
 
 import React from 'react';
-import { useQuery } from 'react-query';
 
 import { editableState } from 'recoils/myPage';
 
-import { Achievement, Emoji } from 'types/myPageTypes';
+import { Achievement } from 'types/myPageTypes';
 
-import instance from 'utils/axios';
+import useMyPageQuery from 'hooks/useMyPageQuery';
 
 import ProfileCard from 'components/myPage/ProfileCard';
 import SelectableItem from 'components/myPage/SelectableItem';
@@ -16,17 +15,9 @@ import StatCard from 'components/myPage/StatCard';
 import styles from 'styles/myPage/Profile.module.scss';
 
 export default function Profile({ userName }: { userName: string }) {
+  const { getSelected } = useMyPageQuery(userName, 'achievements');
   const editableStatus = useRecoilValue(editableState);
-  const fetchSelectedAchievements = async (): Promise<Achievement[]> => {
-    const res = await instance.get(
-      `/users/${userName}/achievements?selected=true`
-    );
-    return res.data;
-  };
-  const { data, isLoading, isError } = useQuery(
-    'selectedAchievements',
-    fetchSelectedAchievements
-  );
+  const { data, isLoading, isError } = getSelected();
   const achievements = data as Achievement[];
   return (
     <div className={styles.profile}>
