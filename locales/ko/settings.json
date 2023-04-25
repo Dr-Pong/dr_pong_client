@@ -3,5 +3,7 @@
   "Language": "언어",
   "2nd Authentication": "2차 인증",
   "enable": "사용",
-  "disable": "사용 안함"
+  "disable": "사용 안함",
+  "save": "저장",
+  "logout": "로그아웃"
 }
