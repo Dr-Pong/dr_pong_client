@@ -1,4 +1,4 @@
-type ButtonStyle = 'basic' | 'long';
+type ButtonStyle = 'basic' | 'big';
 
 type ButtonColor = 'black' | 'white';
 
