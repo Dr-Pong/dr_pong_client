@@ -31,12 +31,7 @@ export default function LoginFrame() {
     <div className={styles.loginFrame}>
       {oauths.map(({ name, logo, value, link }) => {
         return (
-          <BasicButton
-            key={name}
-            style='big'
-            color='white'
-            handleButtonClick={null}
-          >
+          <BasicButton key={name} style='big' color='white'>
             <a href={link}>
               <span>{logo}</span>
               <span>{value}</span>

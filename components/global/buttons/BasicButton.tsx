@@ -9,7 +9,7 @@ export default function BasicButton({
   children,
 }: ButtonProps) {
   return (
-    <form onClick={handleButtonClick ?? (() => {})}>
+    <form onClick={handleButtonClick}>
       <button className={`${styles[style]} ${styles[color]}`} type='button'>
         {children}
       </button>
