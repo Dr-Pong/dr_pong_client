@@ -9,8 +9,8 @@ import styles from 'styles/global/Button.module.scss';
 export default function BasicButton({
   style,
   color,
-  value,
   handleButtonClick,
+  children,
 }: ButtonProps) {
   const setOpenModal = useSetRecoilState(openModalState);
   const resetModalParts = useResetRecoilState(modalPartsState);
@@ -22,7 +22,7 @@ export default function BasicButton({
   return (
     <form onClick={handleButtonClick || handleModalClose}>
       <button className={`${styles[style]} ${styles[color]}`} type='button'>
-        {value}
+        {children}
       </button>
     </form>
   );

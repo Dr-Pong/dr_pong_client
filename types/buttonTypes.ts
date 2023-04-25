@@ -1,10 +1,10 @@
-type ButtonStyle = 'basic';
+type ButtonStyle = 'basic' | 'long';
 
 type ButtonColor = 'black' | 'white';
 
 export interface ButtonProps {
   style: ButtonStyle;
   color: ButtonColor;
-  value: string;
-  handleButtonClick: React.FormEventHandler<HTMLFormElement>;
+  handleButtonClick: React.FormEventHandler<HTMLFormElement> | null;
+  children: React.ReactNode;
 }
