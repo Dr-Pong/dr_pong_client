@@ -1,5 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 
+import Link from 'next/link';
+
 import React from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 
@@ -37,7 +39,6 @@ export default function StatCard({ userName }: { userName: string }) {
     record: seasonStat.record,
   };
   const bestRank = { isBestRecord: true, ...bestStat };
-  // // 버튼은 나중에 공용버튼으로 바갈아버리기
   return (
     <div className={styles.statCard}>
       <div className={styles.container} id={styles.summary}>
@@ -46,8 +47,10 @@ export default function StatCard({ userName }: { userName: string }) {
           <WinRateStat winRateInfo={totalStat} />
         </div>
         <div className={styles.box} id={styles.history}>
-          <div className={styles.historyButton}>{t('History')}</div>
-          <IoIosArrowForward />
+          <Link href={`matchHistory?${userName}`}>
+            <div className={styles.historyButton}>{t('History')}</div>
+            <IoIosArrowForward />
+          </Link>
         </div>
       </div>
       <div className={styles.container} id={styles.rank}>
