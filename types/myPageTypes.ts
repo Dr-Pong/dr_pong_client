@@ -70,3 +70,5 @@ export interface PatchEmojis {
 }
 
 export type PatchSelectables = PatchAchievements | PatchEmojis;
+export type Achievements = (Achievement | null)[];
+export type Emojis = (Emoji | null)[];

@@ -16,10 +16,14 @@ export default function SelectableItem({
   clickHandler,
 }: {
   itemType: string;
-  item: Achievement | Emoji;
+  item: Achievement | Emoji | null;
   clickHandler: SelectHandler | null;
 }) {
-  const { name, imgUrl, status } = item;
+  const { name, imgUrl, status } = item ?? {
+    name: 'none',
+    imgUrl: 'empty',
+    status: 'selected',
+  };
   const editable = useRecoilValue(editableState);
   const tab = useRecoilValue(tabState);
   const handleItemClick = () => {
@@ -37,30 +41,44 @@ export default function SelectableItem({
         break;
     }
   };
-  const imgStyle = () => {
+  const itemStyle = () => {
     if (editable && tab !== 'profile' && status === 'selected') {
       return styles.selected;
     } else if (status === 'unachieved') {
       return styles.unachieved;
     }
   };
-  return (
-    <div className={`${styles.selectableItem} ${imgStyle()}`}>
-      {editable ? (
+
+  const imgStyle = () => {
+    if (item === null) return styles.empty;
+    else return styles.itemImage;
+  };
+
+  const imgSelector = () => {
+    if (item === null) {
+      return <div className={styles.empty}></div>;
+    } else {
+      return editable ? (
         <img
-          className={styles.itemImage}
+          className={`${imgStyle()}`}
           src={imgUrl}
           alt={name}
           onClick={handleEditClick}
         />
       ) : (
         <img
-          className={styles.itemImage}
+          className={`${imgStyle()}`}
           src={imgUrl}
-          onClick={handleItemClick}
           alt={name}
+          onClick={handleItemClick}
         />
-      )}
+      );
+    }
+  };
+
+  return (
+    <div className={`${styles.selectableItem} ${itemStyle()}`}>
+      {imgSelector()}
     </div>
   );
 }
