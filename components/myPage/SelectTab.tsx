@@ -64,11 +64,8 @@ export default function SelectTab({
       if (selected.includes(null) && !selected.some((i) => i?.id === item.id)) {
         const idx = selected.findIndex((i) => i === null);
         item.status = 'selected';
-        setSelected([
-          ...selected.slice(0, idx),
-          item,
-          ...selected.slice(idx + 1),
-        ]);
+        selected.splice(idx, 1, item);
+        setSelected([...selected]);
       }
     },
     deselect: (item: Achievement | Emoji | null) => {
@@ -82,11 +79,8 @@ export default function SelectTab({
       );
       const idx = selected.findIndex((i) => i?.id === item?.id);
       if (idx !== -1) {
-        setSelected([
-          ...selected.slice(0, idx),
-          null,
-          ...selected.slice(idx + 1),
-        ]);
+        selected.splice(idx, 1, null);
+        setSelected([...selected]);
       }
     },
   };
