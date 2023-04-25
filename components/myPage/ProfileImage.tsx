@@ -1,7 +1,7 @@
+import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue } from 'recoil';
 
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { IoIosClose } from 'react-icons/io';
 
 import { editableState } from 'recoils/myPage';
@@ -17,7 +17,7 @@ export default function ProfileImage({
   detailDto: DetailDto;
   setDetailDto: React.Dispatch<React.SetStateAction<DetailDto>>;
 }) {
-  const { t } = useTranslation(['page']);
+  const { t } = useTranslation('myPage');
   const editable = useRecoilValue(editableState);
   const handleDeleteClick = () => {
     //정말 삭제하시겠습니까?

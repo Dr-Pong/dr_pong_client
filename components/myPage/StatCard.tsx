@@ -1,5 +1,6 @@
+import useTranslation from 'next-translate/useTranslation';
+
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { IoIosArrowForward } from 'react-icons/io';
 
 import { UserStat } from 'types/myPageTypes';
@@ -24,7 +25,7 @@ export interface RankProps {
 }
 export default function StatCard({ userName }: { userName: string }) {
   const { getStat } = useMyPageQuery(userName);
-  const { t } = useTranslation(['page']);
+  const { t } = useTranslation('myPage');
   const { data, isLoading, isError } = getStat();
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
