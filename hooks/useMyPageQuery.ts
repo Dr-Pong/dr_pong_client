@@ -11,7 +11,7 @@ const useMyPageQuery = (userName: string, type?: string) => {
     return get('userDetail', `/users/${userName}/detail`, setter);
   };
   const patchProfile = () => {
-    return patch(`/users/${userName}/detail`);
+    return patch(`/users/${userName}/detail`, 'userDetail');
   };
   const getAll = (setter: (selectable: Achievement[] | Emoji[]) => void) => {
     return get([`all${type}`], `/users/${userName}/${type}`, setter);
@@ -26,7 +26,10 @@ const useMyPageQuery = (userName: string, type?: string) => {
     );
   };
   const patchSelectables = () => {
-    return patch(`/users/${userName}/${type}`);
+    return patch(`/users/${userName}/${type}`, [
+      [`all${type}`],
+      [`selected${type}`],
+    ]);
   };
   const getStat = () => {
     return get(`userStat`, `/users/${userName}/stat`);
