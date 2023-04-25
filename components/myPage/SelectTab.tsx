@@ -1,17 +1,16 @@
 import { useRecoilValue } from 'recoil';
 
 import React, { useEffect, useState } from 'react';
-import { useMutation, useQueries } from 'react-query';
 
 import { editableState, tabState } from 'recoils/myPage';
 
 import { Achievement, Emoji, PatchSelectables } from 'types/myPageTypes';
 
-import instance from 'utils/axios';
-
 import SelectableItem from 'components/myPage/SelectableItem';
 
 import styles from 'styles/myPage/SelectTab.module.scss';
+
+import useMyPageQuery from 'hooks/useMyPageQuery';
 
 export interface SelectHandler {
   select: (item: Achievement | Emoji) => void;
@@ -24,11 +23,15 @@ export default function SelectTab({
   userName: string;
   itemType: string;
 }) {
+  const queryKey = itemType === 'achieve' ? 'achievements' : 'emojis';
+  const { getAll, getSelected, patchSelectables } = useMyPageQuery(
+    userName,
+    queryKey
+  );
   const editable = useRecoilValue(editableState);
   const tab = useRecoilValue(tabState);
   const [selected, setSelected] = useState<Achievement[] | Emoji[]>([]);
   const [all, setAll] = useState<Achievement[] | Emoji[]>([]);
-  const queryKey = itemType === 'achieve' ? 'achievements' : 'emojis';
   useEffect(() => {
     if (selected.length === 0) {
       return;
@@ -38,49 +41,23 @@ export default function SelectTab({
       mutate({ emojis: selected.map((item) => item.id) });
     }
   }, [editable]);
-  const patchSelectables = async (
-    selectables: PatchSelectables
-  ): Promise<PatchSelectables> => {
-    const { data } = await instance.patch<PatchSelectables>(
-      `/users/${userName}/${queryKey}`,
-      selectables
-    );
-    console.log(selectables);
-    return data;
-  };
-
-  const { mutate } = useMutation(patchSelectables);
-  const fetchSelectedItems = async (): Promise<Achievement[] | Emoji[]> => {
-    const res = await instance.get(
-      `/users/${userName}/${queryKey}?selected=true`
-    );
-    setSelected(res.data);
-    return res.data;
-  };
-  const fetchAllItems = async (): Promise<Achievement[] | Emoji[]> => {
-    const res = await instance.get(`/users/${userName}/${queryKey}`);
-    const data: Achievement[] | Emoji[] = res.data;
+  const setAllItems = (itemType: string) => {
     if (itemType === 'achieve') {
-      setAll(data);
-    } else if (itemType === 'emoji') {
-      setAll(data.filter((i) => i.status !== 'unachieved'));
+      return setAll;
+    } else {
+      return (emojis: Emoji[]) => {
+        setAll(emojis.filter((i) => i.status !== 'unachieved'));
+      };
     }
-    return res.data;
   };
-  const queries = useQueries([
-    {
-      queryKey: ['selected'],
-      queryFn: fetchSelectedItems,
-    },
-    {
-      queryKey: ['item'],
-      queryFn: fetchAllItems,
-    },
-  ]);
-  const isLoading = queries.some((query) => query.isLoading);
-  const isError = queries.some((query) => query.isError);
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error...</div>;
+  const { mutate } = patchSelectables();
+  const { isLoading: isSelectedLoading, isError: isSelectedError } =
+    getSelected(setSelected);
+  const { isLoading: isAllLoading, isError: isAllError } = getAll(
+    setAllItems(itemType)
+  );
+  if (isSelectedLoading || isAllLoading) return <div>Loading...</div>;
+  if (isSelectedError || isAllError) return <div>Error...</div>;
   const clickHandler: SelectHandler = {
     select: (item: Achievement | Emoji) => {
       if (selected.length < 3 && !selected.some((i) => i.id === item.id)) {
@@ -96,7 +73,6 @@ export default function SelectTab({
         )
       );
       setSelected(selected.filter((i) => i.id !== item.id));
-      console.log('deselect!');
     },
   };
   return (

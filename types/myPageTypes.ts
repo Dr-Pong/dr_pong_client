@@ -7,7 +7,10 @@ export interface UserDetail {
   nickname: string;
   imgUrl: string;
   level: number;
-  title: string | null;
+  title: {
+    id: number;
+    title: string;
+  } | null;
   statusMessage: string;
 }
 
@@ -54,7 +57,7 @@ export interface Title {
 
 export interface PatchDetail {
   imgUrl: string | null;
-  title: number;
+  title: number | null;
   message: string;
 }
 

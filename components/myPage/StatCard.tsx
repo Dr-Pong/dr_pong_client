@@ -1,11 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { IoIosArrowForward } from 'react-icons/io';
-import { useQuery } from 'react-query';
 
 import { UserStat } from 'types/myPageTypes';
 
-import instance from 'utils/axios';
+import useMyPageQuery from 'hooks/useMyPageQuery';
 
 import RankTag from 'components/myPage/RankTag';
 import WinRateStat from 'components/myPage/WinRateStat';
@@ -24,17 +23,18 @@ export interface RankProps {
   isBestRecord?: boolean;
 }
 export default function StatCard({ userName }: { userName: string }) {
+  const { getStat } = useMyPageQuery(userName);
   const { t } = useTranslation(['page']);
-  const fetchUserStat = async (): Promise<UserStat> => {
-    const res = await instance.get(`/users/${userName}/stat`);
-    return res.data;
-  };
-  const { data, isLoading, isError } = useQuery('userStat', fetchUserStat);
+  const { data, isLoading, isError } = getStat();
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
 
   const { totalStat, seasonStat, bestStat } = data as UserStat;
-  const currentRank = { isBestRecord: false, rank: seasonStat.rank, record: seasonStat.record};
+  const currentRank = {
+    isBestRecord: false,
+    rank: seasonStat.rank,
+    record: seasonStat.record,
+  };
   const bestRank = { isBestRecord: true, ...bestStat };
   // // 버튼은 나중에 공용버튼으로 바갈아버리기
   return (
@@ -62,22 +62,3 @@ export default function StatCard({ userName }: { userName: string }) {
     </div>
   );
 }
-
-// const initVal: UserStat = {
-//   totalStat: {
-//     winRate: 0,
-//     win: 0,
-//     ties: 0,
-//     lose: 0,
-//   },
-//   seasonStat: {
-//     winRate: 0,
-//     win: 0,
-//     ties: 0,
-//     lose: 0,
-//     currentRecord: 0,
-//     currentRank: 0,
-//     bestRecord: 0,
-//     bestRank: 0,
-//   },
-// };

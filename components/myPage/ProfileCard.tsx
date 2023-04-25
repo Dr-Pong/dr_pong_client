@@ -2,13 +2,12 @@ import { useRecoilValue } from 'recoil';
 
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useMutation, useQuery } from 'react-query';
 
 import { editableState, tabState } from 'recoils/myPage';
 
-import { PatchDetail, Title, UserDetail } from 'types/myPageTypes';
+import { Title, UserDetail } from 'types/myPageTypes';
 
-import instance from 'utils/axios';
+import useMyPageQuery from 'hooks/useMyPageQuery';
 
 import ProfileImage from 'components/myPage/ProfileImage';
 import ProfileStatusMessage from 'components/myPage/ProfileStatusMessage';
@@ -23,6 +22,7 @@ export interface DetailDto {
 }
 export default function ProfileCard({ userName }: { userName: string }) {
   const { t } = useTranslation(['page']);
+  const { getProfile, patchProfile } = useMyPageQuery(userName);
   const editable = useRecoilValue(editableState);
   const tab = useRecoilValue(tabState);
   const [detailDto, setDetailDto] = useState<DetailDto>(defaultDetailDto);
@@ -37,26 +37,9 @@ export default function ProfileCard({ userName }: { userName: string }) {
       });
     }
   }, [editable]);
-  const fetchProfile = async (): Promise<UserDetail> => {
-    const res = await instance.get(`/users/${userName}/detail`);
-    setDetailDto(res.data);
-    return res.data;
-  };
-  const {
-    isLoading,
-    isError,
-    data: userDetail,
-  } = useQuery('userDetail', fetchProfile);
-  const patchDetail = async (detail: PatchDetail): Promise<PatchDetail> => {
-    const { data } = await instance.patch<PatchDetail>(
-      `/users/${userName}/detail`,
-      detail
-    );
-    console.log(detail);
-    return data;
-  };
 
-  const { mutate } = useMutation(patchDetail);
+  const { isLoading, isError, data: userDetail } = getProfile(setDetailDto);
+  const { mutate } = patchProfile();
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
