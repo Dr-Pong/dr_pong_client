@@ -39,7 +39,6 @@ export default function StatCard({ userName }: { userName: string }) {
     record: seasonStat.record,
   };
   const bestRank = { isBestRecord: true, ...bestStat };
-  // // 버튼은 나중에 공용버튼으로 바갈아버리기
   return (
     <div className={styles.statCard}>
       <div className={styles.container} id={styles.summary}>
