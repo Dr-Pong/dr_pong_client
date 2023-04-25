@@ -30,11 +30,15 @@ export default function SettingsFrame() {
     // patch
   };
 
-  const saveSettings = () => {
+  const handleSettingSave = () => {
     changeLocale(
       document.querySelector('input[type=radio][name=locale]:checked')?.id
     );
     changeSecondAuth();
+  };
+
+  const handleLogout = () => {
+    //
   };
 
   return (
@@ -57,13 +61,21 @@ export default function SettingsFrame() {
           />
         </li>
       </ul>
-      <div className={styles.saveButton}>
+      <div className={styles.buttons}>
         <BasicButton
           style='basic'
           color='black'
-          value='저장'
-          handleButtonClick={saveSettings}
-        />
+          handleButtonClick={handleSettingSave}
+        >
+          {t('save')}
+        </BasicButton>
+        <BasicButton
+          style='basic'
+          color='black'
+          handleButtonClick={handleLogout}
+        >
+          {t('logout')}
+        </BasicButton>
       </div>
     </div>
   );

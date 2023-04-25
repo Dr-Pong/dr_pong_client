@@ -3,12 +3,12 @@ import { RecoilRoot } from 'recoil';
 import type { AppProps } from 'next/app';
 
 import React from 'react';
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 import Layout from 'components/layouts/Layout';
 
 import 'styles/globals.css';
-import { ReactQueryDevtools } from "react-query/devtools";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </Layout>
         <div id='modalRoot'></div>
       </RecoilRoot>
-      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+      <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
     </QueryClientProvider>
   );
 }
