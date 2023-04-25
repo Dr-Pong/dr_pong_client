@@ -1,12 +1,13 @@
+import useTranslation from 'next-translate/useTranslation';
+
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { RankProps } from 'components/myPage/StatCard';
 
 import styles from 'styles/myPage/RankTag.module.scss';
 
 export default function RankTag({ rankProps }: { rankProps: RankProps }) {
-  const { t } = useTranslation(['page']);
+  const { t } = useTranslation('myPage');
   const { record, rank, isBestRecord } = rankProps;
   const rankSign = rankSignSelector(rank);
   return (

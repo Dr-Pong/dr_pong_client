@@ -1,7 +1,7 @@
+import useTranslation from 'next-translate/useTranslation';
 import { useRecoilState } from 'recoil';
 
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 
 import { editableState, tabState } from 'recoils/myPage';
@@ -16,7 +16,7 @@ import SelectTab from 'components/myPage/SelectTab';
 import styles from 'styles/MyPage/MyPageFrame.module.scss';
 
 export default function MyPageFrame() {
-  const { t } = useTranslation(['page']);
+  const { t } = useTranslation('myPage');
   const [tab, setTab] = useRecoilState(tabState);
   const [editable, setEditable] = useRecoilState(editableState);
   const fetchUser = async (): Promise<User> => {

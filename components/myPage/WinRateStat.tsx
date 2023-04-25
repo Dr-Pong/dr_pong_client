@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import useTranslation from 'next-translate/useTranslation';
 
 import { WinRateStatProps } from 'components/myPage/StatCard';
 
@@ -10,7 +10,7 @@ export default function WinRateStat({
 }: {
   winRateInfo: WinRateStatProps;
 }) {
-  const { t } = useTranslation(['page']);
+  const { t } = useTranslation('myPage');
   const { winRate, win, ties, lose } = winRateInfo;
   return (
     <div className={styles.winRateStat}>

@@ -1,7 +1,7 @@
+import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue } from 'recoil';
 
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { editableState, tabState } from 'recoils/myPage';
 
@@ -21,7 +21,7 @@ export interface DetailDto {
   statusMessage: string;
 }
 export default function ProfileCard({ userName }: { userName: string }) {
-  const { t } = useTranslation(['page']);
+  const { t } = useTranslation('myPage');
   const { getProfile, patchProfile } = useMyPageQuery(userName);
   const editable = useRecoilValue(editableState);
   const tab = useRecoilValue(tabState);
