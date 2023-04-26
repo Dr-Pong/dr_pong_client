@@ -7,7 +7,7 @@ import { editableState, tabState } from 'recoils/myPage';
 
 import { Achievement, Emoji } from 'types/myPageTypes';
 
-import BasicButton from 'components/global/buttons/BasicButton';
+import ModalButton from 'components/global/buttons/CloseModalButton';
 import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
 import ModalTitle from 'components/modals/modalParts/ModalTitle';
 import { SelectHandler } from 'components/myPage/SelectTab';
@@ -37,11 +37,20 @@ export default function SelectableItem({
     const achievement = item as Achievement;
     setModalParts({
       head: <ModalTitle title={name} />,
-      body: <ModalPhrase phrase={achievement.content} />,
+      body: (
+        <ModalPhrase>
+          {
+            <div className={styles.modalPhrase}>
+              <img className={styles.itemImage} src={imgUrl} alt={name} />
+              <div>{achievement.content}</div>
+            </div>
+          }
+        </ModalPhrase>
+      ),
       tail: (
-        <BasicButton handleButtonClick={() => setOpenModal(false)}>
+        <ModalButton style={'basic'} color={'black'}>
           {'close'}
-        </BasicButton>
+        </ModalButton>
       ),
     });
     setOpenModal(true);
@@ -66,25 +75,20 @@ export default function SelectableItem({
     }
   };
 
-  const imgStyle = () => {
-    if (item === null) return styles.empty;
-    else return styles.itemImage;
-  };
-
   const imgSelector = () => {
     if (item === null) {
       return <div className={styles.empty}></div>;
     } else {
       return editable ? (
         <img
-          className={`${imgStyle()}`}
+          className={styles.itemImage}
           src={imgUrl}
           alt={name}
           onClick={handleEditClick}
         />
       ) : (
         <img
-          className={`${imgStyle()}`}
+          className={styles.itemImage}
           src={imgUrl}
           alt={name}
           onClick={handleItemClick}
