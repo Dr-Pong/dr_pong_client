@@ -1,9 +1,9 @@
 import styles from 'styles/layouts/Modal.module.scss';
 
 type ModalPhraseProps = {
-  phrase: string;
+  children: React.ReactNode;
 };
 
-export default function ModalPhrase({ phrase }: ModalPhraseProps) {
-  return <div className={styles.modalPhrase}>{phrase}</div>;
+export default function ModalPhrase({ children }: ModalPhraseProps) {
+  return <div className={styles.modalPhrase}>{children}</div>;
 }
