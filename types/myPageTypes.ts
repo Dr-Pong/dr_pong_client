@@ -54,6 +54,9 @@ export interface Title {
   id: number;
   title: string;
 }
+export interface Titles {
+  titles: Title[];
+}
 
 export interface PatchDetail {
   imgUrl: string | null;
@@ -70,5 +73,9 @@ export interface PatchEmojis {
 }
 
 export type PatchSelectables = PatchAchievements | PatchEmojis;
-export type Achievements = (Achievement | null)[];
-export type Emojis = (Emoji | null)[];
+export interface Achievements {
+  achievements: (Achievement | null)[];
+}
+export interface Emojis {
+  emojis: (Emoji | null)[];
+}

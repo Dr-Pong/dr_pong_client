@@ -4,7 +4,7 @@ import React from 'react';
 
 import { editableState } from 'recoils/myPage';
 
-import { Achievement } from 'types/myPageTypes';
+import { Achievement, Achievements } from 'types/myPageTypes';
 
 import useMyPageQuery from 'hooks/useMyPageQuery';
 
@@ -18,7 +18,7 @@ export default function Profile({ userName }: { userName: string }) {
   const { getSelected } = useMyPageQuery(userName, 'achievements');
   const editableStatus = useRecoilValue(editableState);
   const { data, isLoading, isError } = getSelected();
-  const achievements = data as Achievement[];
+  const achievements = data as Achievements;
   return (
     <div className={styles.profile}>
       <ProfileCard userName={userName} />
@@ -29,9 +29,9 @@ export default function Profile({ userName }: { userName: string }) {
       >
         {!isLoading && !isError && (
           <div className={styles.selectedItems}>
-            {achievements.map((item) => (
+            {achievements.achievements.map((item: Achievement | null) => (
               <SelectableItem
-                key={item.id}
+                key={item?.id}
                 itemType={'achieve'}
                 item={item}
                 clickHandler={null}

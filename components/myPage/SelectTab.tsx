@@ -30,29 +30,45 @@ export default function SelectTab({
   );
   const editable = useRecoilValue(editableState);
   const tab = useRecoilValue(tabState);
-  const [selected, setSelected] = useState<Achievements | Emojis>(NULLARR);
-  const [all, setAll] = useState<Achievements | Emojis>(NULLARR);
+  const [selected, setSelected] =
+    useState<(Achievement | Emoji | null)[]>(NULLARR);
+  const [all, setAll] = useState<(Achievement | Emoji | null)[]>(NULLARR);
   useEffect(() => {
     if (selected.length === 0) {
       return;
     } else if (!editable && tab === 'achieve') {
-      mutate({ achievements: selected });
+      mutate({ achievements: selected.map((item) => item?.id ?? null) });
     } else if (!editable && tab === 'emoji') {
-      mutate({ emojis: selected });
+      mutate({ emojis: selected.map((item) => item?.id ?? null) });
     }
   }, [editable]);
-  const setAllItems = (itemType: string) => {
+
+  const setSelectedItems = (itemType: string) => {
     if (itemType === 'achieve') {
-      return setAll;
+      return (achievements: Achievements) => {
+        setSelected(achievements.achievements);
+      };
     } else {
-      return (emojis: Emoji[]) => {
-        setAll(emojis.filter((i) => i.status !== 'unachieved'));
+      return (emojis: Emojis) => {
+        setSelected(emojis.emojis);
       };
     }
   };
+  const setAllItems = (itemType: string) => {
+    if (itemType === 'achieve') {
+      return (achievements: Achievements) => {
+        setAll(achievements.achievements);
+      };
+    } else {
+      return (emojis: Emojis) => {
+        setAll(emojis.emojis.filter((i) => i?.status !== 'unachieved'));
+      };
+    }
+  };
+
   const { mutate } = patchSelectables();
   const { isLoading: isSelectedLoading, isError: isSelectedError } =
-    getSelected(setSelected);
+    getSelected(setSelectedItems(itemType));
   const { isLoading: isAllLoading, isError: isAllError } = getAll(
     setAllItems(itemType)
   );

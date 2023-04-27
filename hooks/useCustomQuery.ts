@@ -17,6 +17,7 @@ const useCustomQuery = () => {
 
   const patch = (api: string, invalidateQueryKey?: QueryKey) => {
     const patchDetail = async (toPatch: any): Promise<any> => {
+      console.log(toPatch);
       const { data } = await instance.patch<any>(api, toPatch);
       return data;
     };

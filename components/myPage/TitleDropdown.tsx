@@ -27,10 +27,10 @@ export default function TitleDropdown({
   const handleDropdownClick = () => {
     setDropdownVisibility(!dropdownVisibility);
   };
-  const { isLoading, isError, data: userTitles } = getTitles();
+  const { isLoading, isError, data } = getTitles();
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
-  const titles = userTitles as Title[];
+  const titles = data.titles as Title[];
   return (
     <div>
       {editable && (
