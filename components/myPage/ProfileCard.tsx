@@ -29,11 +29,11 @@ export default function ProfileCard({ userName }: { userName: string }) {
   useEffect(() => {
     if (detailDto === defaultDetailDto) return;
     if (!editable && tab === 'profile') {
-      const title = detailDto.title.id == 0 ? null : detailDto.title.id;
+      const { imgUrl, title, statusMessage } = detailDto;
       mutate({
-        imgUrl: detailDto.imgUrl,
-        title: title,
-        message: detailDto.statusMessage,
+        imgUrl: imgUrl,
+        title: title?.id || null,
+        message: statusMessage,
       });
     }
   }, [editable]);

@@ -211,6 +211,12 @@ const selectedEmojis = {
       imgUrl: 'https://i.imgur.com/GcllAAB.jpeg',
       status: 'selected',
     },
+    {
+      id: 4,
+      name: '빵긋',
+      imgUrl: 'https://i.imgur.com/GcllAAB.jpeg',
+      status: 'selected',
+    },
   ],
 };
 
@@ -238,7 +244,7 @@ const emojis = {
       id: 4,
       name: '빵긋',
       imgUrl: 'https://i.imgur.com/GcllAAB.jpeg',
-      status: 'achieved',
+      status: 'selected',
     },
     {
       id: 5,
