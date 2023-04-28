@@ -34,7 +34,7 @@ export default function SelectTab({
     useState<(Achievement | Emoji | null)[]>(NULLARR);
   const [all, setAll] = useState<(Achievement | Emoji | null)[]>(NULLARR);
   useEffect(() => {
-    if (selected.length === 0) {
+    if (selected === NULLARR) {
       return;
     } else if (!editable && tab === 'achieve') {
       mutate({ achievements: selected.map((item) => item?.id ?? null) });
