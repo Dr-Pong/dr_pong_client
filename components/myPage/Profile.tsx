@@ -2,9 +2,9 @@ import { useRecoilValue } from 'recoil';
 
 import React from 'react';
 
-import { editableState } from 'recoils/myPage';
+import { editableState } from 'recoils/user';
 
-import { Achievement, Achievements } from 'types/myPageTypes';
+import { Achievement, Achievements } from 'types/userTypes';
 
 import useMyPageQuery from 'hooks/useMyPageQuery';
 

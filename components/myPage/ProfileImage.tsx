@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import React from 'react';
 import { IoIosClose } from 'react-icons/io';
 
-import { editableState } from 'recoils/myPage';
+import { editableState } from 'recoils/user';
 
 import { DetailDto } from 'components/myPage/ProfileCard';
 

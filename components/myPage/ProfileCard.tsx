@@ -3,9 +3,9 @@ import { useRecoilValue } from 'recoil';
 
 import React, { useEffect, useState } from 'react';
 
-import { editableState, tabState } from 'recoils/myPage';
+import { editableState, tabState } from 'recoils/user';
 
-import { Title, UserDetail } from 'types/myPageTypes';
+import { Title, UserDetail } from 'types/userTypes';
 
 import useMyPageQuery from 'hooks/useMyPageQuery';
 
