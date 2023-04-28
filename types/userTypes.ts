@@ -1,6 +1,8 @@
 export interface User {
   nickname: string;
   imgUrl: string;
+  isSecondAuthOn: boolean;
+  roleType: 'guest' | 'noname' | 'member' | 'admin';
 }
 
 export interface UserDetail {
@@ -56,6 +58,14 @@ export interface Title {
 }
 export interface Titles {
   titles: Title[];
+}
+
+export interface UserImages {
+  images: Image[];
+}
+export interface Image {
+  id: number;
+  imgUrl: string;
 }
 
 export interface PatchDetail {
