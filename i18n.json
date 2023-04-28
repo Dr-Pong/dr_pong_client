@@ -10,6 +10,8 @@
     "/leaderboard": ["leaderboard"],
     "/matchHistory": ["matchHistory"],
     "/myPage": ["myPage"],
-    "/settings": ["settings"]
+    "/settings": ["settings"],
+    "/login": ["login"],
+    "/signUp": ["signUp"]
   }
 }
