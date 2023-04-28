@@ -6,7 +6,7 @@ import {
   Titles,
   UserDetail,
   UserStat,
-} from 'types/myPageTypes';
+} from 'types/userTypes';
 
 export default (
   req: NextApiRequest,
