@@ -98,7 +98,7 @@ export default function SelectableItem({
   };
 
   return (
-    <div className={`${styles.selectableItem} ${itemStyle()}`}>
+    <div className={`${styles[itemType]} ${itemStyle()}`}>
       {imgSelector()}
     </div>
   );
