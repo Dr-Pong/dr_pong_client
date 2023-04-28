@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from 'react-query';
 
 import { modalPartsState, openModalState } from 'recoils/modal';
@@ -26,6 +26,12 @@ export default function MyPageFrame() {
   const setModalParts = useSetRecoilState(modalPartsState);
   const resetModalParts = useResetRecoilState(modalPartsState);
   const setOpenModal = useSetRecoilState(openModalState);
+
+  useEffect(() => {
+    return () => {
+      setEditable(false);
+    };
+  }, []);
   const fetchUser = async (): Promise<User> => {
     const res = await instance.get(`/users/me`);
     return res.data;
@@ -36,14 +42,6 @@ export default function MyPageFrame() {
   const { nickname } = data as User;
   const handleEditButtonClick = () => {
     setEditable(!editable);
-  };
-  const handleTabClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (tab === event.target.id) return;
-    if (editable)
-      warnBeforeMovingWhenEditable(() => {
-        setTab(event.target.id);
-      });
-    else setTab(event.target.id);
   };
   const warnBeforeMovingWhenEditable = (callback?: () => void) => {
     setModalParts({
@@ -71,6 +69,15 @@ export default function MyPageFrame() {
     });
     setOpenModal(true);
   };
+  const handleTabClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (tab === event.target.id) return;
+    if (editable)
+      warnBeforeMovingWhenEditable(() => {
+        setTab(event.target.id);
+      });
+    else setTab(event.target.id);
+  };
+
   const tabs: { [key: string]: JSX.Element } = {
     profile: <Profile userName={nickname} key={'profile'} />,
     achieve: (
