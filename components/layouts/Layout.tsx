@@ -1,3 +1,11 @@
+import { useRecoilState } from 'recoil';
+
+import { userState } from 'recoils/user';
+
+import useCustomQuery from 'hooks/useCustomQuery';
+
+import SignUp from 'pages/signUp';
+
 import NavigationBar from 'components/layouts/NavigationBar';
 import Modal from 'components/modals/Modal';
 
@@ -8,6 +16,15 @@ type LayoutProps = {
 };
 
 export default function Layout({ children }: LayoutProps) {
+  const [user, setUser] = useRecoilState(userState);
+  const { mutationGet } = useCustomQuery();
+  const { isFetching, isLoading, error, data } = mutationGet(
+    'user_key',
+    '/users/me',
+    setUser
+  );
+
+  if (user.roleType === 'noname') return <SignUp />;
   return (
     <div id='layoutRoot'>
       <Modal />
