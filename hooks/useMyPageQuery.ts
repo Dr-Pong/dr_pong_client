@@ -1,4 +1,4 @@
-import { Achievement, Emoji, Title } from 'types/myPageTypes';
+import { Achievements, Emojis, Titles } from 'types/myPageTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
@@ -13,12 +13,10 @@ const useMyPageQuery = (userName: string, type?: string) => {
   const patchProfile = () => {
     return patch(`/users/${userName}/detail`, 'userDetail');
   };
-  const getAll = (setter: (selectable: Achievement[] | Emoji[]) => void) => {
+  const getAll = (setter?: AchievementsSetter | EmojisSetter) => {
     return get([`all${type}`], `/users/${userName}/${type}`, setter);
   };
-  const getSelected = (
-    setter?: (selectable: Achievement[] | Emoji[]) => void
-  ) => {
+  const getSelected = (setter?: AchievementsSetter | EmojisSetter) => {
     return get(
       [`selected${type}`],
       `/users/${userName}/${type}?selected=true`,
@@ -38,8 +36,8 @@ const useMyPageQuery = (userName: string, type?: string) => {
     return get(
       `userTitles`,
       `/users/${userName}/titles`,
-      (titles: Title[]): void => {
-        titles.unshift(empty);
+      (titles: Titles): void => {
+        titles.titles.unshift(empty);
       }
     );
   };
@@ -54,3 +52,6 @@ const useMyPageQuery = (userName: string, type?: string) => {
   };
 };
 export default useMyPageQuery;
+
+type AchievementsSetter = (selectable: Achievements) => void;
+type EmojisSetter = (selectable: Emojis) => void;
