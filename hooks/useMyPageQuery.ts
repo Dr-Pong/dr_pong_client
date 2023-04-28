@@ -1,4 +1,4 @@
-import { Achievements, Emojis, Titles } from 'types/myPageTypes';
+import { Achievements, Emojis, Titles } from 'types/userTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 

@@ -1,11 +1,13 @@
-import { QueryKey, useMutation, useQuery, useQueryClient } from 'react-query';
+import { useSetRecoilState } from 'recoil';
 
-import { UserDetail } from 'types/myPageTypes';
+import React from 'react';
+import { QueryKey, useMutation, useQuery, useQueryClient } from 'react-query';
 
 import instance from 'utils/axios';
 
 const useCustomQuery = () => {
   const queryClient = useQueryClient();
+
   const get = (key: QueryKey, api: string, setter?: (a: any) => void) => {
     const fetch = async (): Promise<any> => {
       const { data } = await instance.get(api);
@@ -27,7 +29,32 @@ const useCustomQuery = () => {
       },
     });
   };
-  return { get, patch };
+
+  const mutationGet = (
+    queryKey: QueryKey,
+    path: string,
+    setState?: React.Dispatch<React.SetStateAction<any>>
+  ) => {
+    return useQuery(
+      [queryKey],
+      async () => {
+        const { data } = await instance.get(path);
+        setState?.(data);
+      },
+      {
+        retry: 0,
+        refetchOnWindowFocus: false,
+        keepPreviousData: true,
+      }
+    );
+  };
+
+  const mutationPost = useMutation(
+    ({ path, data }: { path: string; data?: object }) =>
+      instance.post(path, data)
+  );
+
+  return { get, patch, mutationGet, mutationPost };
 };
 
 export default useCustomQuery;

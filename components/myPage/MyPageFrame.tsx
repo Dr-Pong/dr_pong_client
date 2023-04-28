@@ -5,9 +5,9 @@ import React, { useEffect } from 'react';
 import { useQuery } from 'react-query';
 
 import { modalPartsState, openModalState } from 'recoils/modal';
-import { editableState, tabState } from 'recoils/myPage';
+import { editableState, tabState } from 'recoils/user';
 
-import { User } from 'types/myPageTypes';
+import { User } from 'types/userTypes';
 
 import instance from 'utils/axios';
 

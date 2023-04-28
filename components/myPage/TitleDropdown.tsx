@@ -3,9 +3,9 @@ import { useRecoilValue } from 'recoil';
 import React, { useState } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 
-import { editableState } from 'recoils/myPage';
+import { editableState } from 'recoils/user';
 
-import { Title } from 'types/myPageTypes';
+import { Title } from 'types/userTypes';
 
 import useMyPageQuery from 'hooks/useMyPageQuery';
 

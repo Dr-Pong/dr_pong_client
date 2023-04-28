@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { User } from 'types/myPageTypes';
+import { User } from 'types/userTypes';
 
 type Error = {
   message: string;
@@ -11,6 +11,8 @@ export default (req: NextApiRequest, res: NextApiResponse<User | Error>) => {
       nickname: 'hakim',
       imgUrl:
         'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
+      isSecondAuthOn: false,
+      roleType: 'member',
     });
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });

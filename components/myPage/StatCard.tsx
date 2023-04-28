@@ -5,7 +5,7 @@ import Link from 'next/link';
 import React from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 
-import { UserStat } from 'types/myPageTypes';
+import { UserStat } from 'types/userTypes';
 
 import useMyPageQuery from 'hooks/useMyPageQuery';
 

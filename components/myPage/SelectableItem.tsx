@@ -3,9 +3,9 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import React from 'react';
 
 import { modalPartsState, openModalState } from 'recoils/modal';
-import { editableState, tabState } from 'recoils/myPage';
+import { editableState, tabState } from 'recoils/user';
 
-import { Achievement, Emoji } from 'types/myPageTypes';
+import { Achievement, Emoji } from 'types/userTypes';
 
 import ModalButton from 'components/global/buttons/CloseModalButton';
 import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
