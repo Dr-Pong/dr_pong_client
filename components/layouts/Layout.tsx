@@ -1,5 +1,7 @@
 import { useRecoilState } from 'recoil';
 
+import { useRouter } from 'next/router';
+
 import { userState } from 'recoils/user';
 
 import useCustomQuery from 'hooks/useCustomQuery';
@@ -16,6 +18,7 @@ type LayoutProps = {
 };
 
 export default function Layout({ children }: LayoutProps) {
+  const router = useRouter();
   const [user, setUser] = useRecoilState(userState);
   const { mutationGet } = useCustomQuery();
   const { isFetching, isLoading, error, data } = mutationGet(
@@ -25,12 +28,14 @@ export default function Layout({ children }: LayoutProps) {
   );
 
   if (user.roleType === 'noname') return <SignUp />;
+
   return (
     <div id='layoutRoot'>
       <Modal />
       <div className={styles.layoutContainer}>
         <div className={styles.pageContainer}>{children}</div>
-        <NavigationBar />
+        {!router.asPath.includes('login') &&
+          !router.asPath.includes('signUp') && <NavigationBar />}
       </div>
     </div>
   );
