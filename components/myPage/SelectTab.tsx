@@ -43,7 +43,7 @@ export default function SelectTab({
     }
   }, [editable]);
 
-  const setSelectedItems = (itemType: string) => {
+  const setSelectedItems = () => {
     if (itemType === 'achieve') {
       return (achievements: Achievements) => {
         setSelected(achievements.achievements);
@@ -54,7 +54,7 @@ export default function SelectTab({
       };
     }
   };
-  const setAllItems = (itemType: string) => {
+  const setAllItems = () => {
     if (itemType === 'achieve') {
       return (achievements: Achievements) => {
         setAll(achievements.achievements);
@@ -68,9 +68,9 @@ export default function SelectTab({
 
   const { mutate } = patchSelectables();
   const { isLoading: isSelectedLoading, isError: isSelectedError } =
-    getSelected(setSelectedItems(itemType));
+    getSelected(setSelectedItems());
   const { isLoading: isAllLoading, isError: isAllError } = getAll(
-    setAllItems(itemType)
+    setAllItems()
   );
   if (isSelectedLoading || isAllLoading) return <div>Loading...</div>;
   if (isSelectedError || isAllError) return <div>Error...</div>;

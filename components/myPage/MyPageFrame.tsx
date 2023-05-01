@@ -1,15 +1,15 @@
 import useTranslation from 'next-translate/useTranslation';
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
+import {
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState,
+} from 'recoil';
 
 import React, { useEffect } from 'react';
-import { useQuery } from 'react-query';
 
 import { modalPartsState, openModalState } from 'recoils/modal';
-import { editableState, tabState } from 'recoils/user';
-
-import { User } from 'types/userTypes';
-
-import instance from 'utils/axios';
+import { editableState, tabState, userState } from 'recoils/user';
 
 import BasicButton from 'components/global/buttons/BasicButton';
 import ModalButton from 'components/global/buttons/CloseModalButton';
@@ -23,23 +23,16 @@ export default function MyPageFrame() {
   const { t } = useTranslation('myPage');
   const [tab, setTab] = useRecoilState(tabState);
   const [editable, setEditable] = useRecoilState(editableState);
+  const user = useRecoilValue(userState);
   const setModalParts = useSetRecoilState(modalPartsState);
   const resetModalParts = useResetRecoilState(modalPartsState);
   const setOpenModal = useSetRecoilState(openModalState);
-
+  const { nickname } = user;
   useEffect(() => {
     return () => {
       setEditable(false);
     };
   }, []);
-  const fetchUser = async (): Promise<User> => {
-    const res = await instance.get(`/users/me`);
-    return res.data;
-  };
-  const { data, isLoading, isError } = useQuery('user', fetchUser); // 추후 리코일 스테이트로 변경
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error...</div>;
-  const { nickname } = data as User;
   const handleEditButtonClick = () => {
     setEditable(!editable);
   };
@@ -70,12 +63,12 @@ export default function MyPageFrame() {
     setOpenModal(true);
   };
   const handleTabClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (tab === event.target.id) return;
+    if (tab === event.currentTarget.id) return;
     if (editable)
       warnBeforeMovingWhenEditable(() => {
-        setTab(event.target.id);
+        setTab(event.currentTarget.id);
       });
-    else setTab(event.target.id);
+    else setTab(event.currentTarget.id);
   };
 
   const tabs: { [key: string]: JSX.Element } = {
