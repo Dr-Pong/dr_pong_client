@@ -7,14 +7,9 @@ import {
 } from 'recoil';
 
 import React, { useEffect } from 'react';
-import { useQuery } from 'react-query';
 
 import { modalPartsState, openModalState } from 'recoils/modal';
 import { editableState, tabState, userState } from 'recoils/user';
-
-import { User } from 'types/userTypes';
-
-import instance from 'utils/axios';
 
 import BasicButton from 'components/global/buttons/BasicButton';
 import ModalButton from 'components/global/buttons/CloseModalButton';
