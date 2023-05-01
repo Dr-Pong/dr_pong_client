@@ -20,12 +20,12 @@ export default function UserImage() {
 
   return (
     <div className={styles.profileImageField}>
-      {userImages.images.map(({ id, imgUrl }, i) => {
+      {userImages.images.map(({ id, url }, i) => {
         return (
           <span key={i} className={styles.profileImage}>
             <input type='radio' id={`${id}`} name='userImage' value={id} />
             <label htmlFor={`${id}`}>
-              <img src={imgUrl} alt='img' />
+              <img src={url} alt='img' />
             </label>
           </span>
         );
@@ -38,7 +38,7 @@ const defaultUserImages: UserImages = {
   images: [
     {
       id: 0,
-      imgUrl: '',
+      url: '',
     },
   ],
 };

@@ -1,13 +1,13 @@
 export interface User {
   nickname: string;
-  imgUrl: string;
+  image: Image;
   isSecondAuthOn: boolean;
   roleType: 'guest' | 'noname' | 'member' | 'admin';
 }
 
 export interface UserDetail {
   nickname: string;
-  imgUrl: string;
+  image: Image;
   level: number;
   title: {
     id: number;
@@ -65,11 +65,11 @@ export interface UserImages {
 }
 export interface Image {
   id: number;
-  imgUrl: string;
+  url: string;
 }
 
 export interface PatchDetail {
-  imgUrl: string | null;
+  imgId: number;
   title: number | null;
   message: string;
 }
