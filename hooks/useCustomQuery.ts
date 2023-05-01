@@ -50,8 +50,8 @@ const useCustomQuery = () => {
   };
 
   const mutationPost = useMutation(
-    ({ path, data }: { path: string; data?: object }) =>
-      instance.post(path, data)
+    ({ path, body }: { path: string; body?: object }) =>
+      instance.post(path, body)
   );
 
   return { get, patch, mutationGet, mutationPost };
