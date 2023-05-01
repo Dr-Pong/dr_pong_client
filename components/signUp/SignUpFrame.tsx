@@ -1,8 +1,6 @@
 import useTranslation from 'next-translate/useTranslation';
-import { Value } from 'sass';
 
 import { useState } from 'react';
-import { useQueryClient } from 'react-query';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
