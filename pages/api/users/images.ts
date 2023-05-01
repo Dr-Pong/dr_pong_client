@@ -21,11 +21,11 @@ const userImages = {
   images: [
     {
       id: 1,
-      url: '',
+      url: 'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
     },
     {
       id: 2,
-      url: 'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
+      url: '',
     },
     {
       id: 3,
