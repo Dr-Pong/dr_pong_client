@@ -8,7 +8,7 @@ import useCustomQuery from 'hooks/useCustomQuery';
 
 import styles from 'styles/signUp/SignUp.module.scss';
 
-export default function UserImage() {
+export default function UserImage({ selectedId }: { selectedId?: number }) {
   const { t } = useTranslation('signUp');
   const { get } = useCustomQuery();
   const [userImages, setUserImages] = useState<UserImages>(defaultUserImages);
@@ -23,7 +23,13 @@ export default function UserImage() {
       {userImages.images.map(({ id, url }, i) => {
         return (
           <span key={i} className={styles.profileImage}>
-            <input type='radio' id={`${id}`} name='userImage' value={id} />
+            <input
+              type='radio'
+              id={`${id}`}
+              name='userImage'
+              value={id}
+              defaultChecked={id === selectedId}
+            />
             <label htmlFor={`${id}`}>
               <img src={url} alt='img' />
             </label>
