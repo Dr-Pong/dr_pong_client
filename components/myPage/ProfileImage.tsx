@@ -62,7 +62,7 @@ export default function ProfileImage({
     setDetailDto((prevDetailDto) => ({
       ...prevDetailDto,
       image: {
-        id: imgId ?? originId,
+        id: imgId || originId,
         url: url,
       },
     }));
