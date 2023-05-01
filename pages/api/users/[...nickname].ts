@@ -23,8 +23,10 @@ export default (
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         nickname: nickname[0],
-        imgUrl:
-          'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
+        image: {
+          id: 1,
+          url: 'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
+        },
         level: 30,
         title: {
           id: 1,

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 
 import { editableState, tabState } from 'recoils/user';
 
-import { Title, UserDetail } from 'types/userTypes';
+import { Image, Title, UserDetail } from 'types/userTypes';
 
 import useMyPageQuery from 'hooks/useMyPageQuery';
 
@@ -16,7 +16,7 @@ import TitleDropdown from 'components/myPage/TitleDropdown';
 import styles from 'styles/myPage/ProfileCard.module.scss';
 
 export interface DetailDto {
-  imgUrl: string | null;
+  image: Image;
   title: Title;
   statusMessage: string;
 }
@@ -29,9 +29,9 @@ export default function ProfileCard({ userName }: { userName: string }) {
   useEffect(() => {
     if (detailDto === defaultDetailDto) return;
     if (!editable && tab === 'profile') {
-      const { imgUrl, title, statusMessage } = detailDto;
+      const { image, title, statusMessage } = detailDto;
       mutate({
-        imgUrl: imgUrl,
+        imgId: image.id,
         title: title?.id || null,
         message: statusMessage,
       });
@@ -91,7 +91,10 @@ export default function ProfileCard({ userName }: { userName: string }) {
 }
 
 const defaultDetailDto: DetailDto = {
-  imgUrl: '',
+  image: {
+    id: 0,
+    url: '',
+  },
   title: { id: 0, title: '' },
   statusMessage: '',
 };
