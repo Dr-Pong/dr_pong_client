@@ -2,19 +2,17 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import React from 'react';
-import { IoIosClose } from 'react-icons/io';
 
+import { modalPartsState, openModalState } from 'recoils/modal';
 import { editableState } from 'recoils/user';
 
+import BasicButton from 'components/global/buttons/BasicButton';
+import ModalButton from 'components/global/buttons/CloseModalButton';
+import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
 import { DetailDto } from 'components/myPage/ProfileCard';
+import UserImage from 'components/signUp/UserImage';
 
 import styles from 'styles/myPage/ProfileImage.module.scss';
-
-import { modalPartsState, openModalState } from '../../recoils/modal';
-import BasicButton from '../global/buttons/BasicButton';
-import ModalButton from '../global/buttons/CloseModalButton';
-import ModalPhrase from '../modals/modalParts/ModalPhrase';
-import UserImage from '../signUp/UserImage';
 
 export default function ProfileImage({
   detailDto,
@@ -30,24 +28,6 @@ export default function ProfileImage({
   const setOpenModal = useSetRecoilState(openModalState);
   const { id: originId, url: imgUrl } = detailDto.image;
   const handleChangeClick = () => {
-    const handleSubmitClick = () => {
-      const selectedRadio = document.querySelector(
-        'input[type=radio][name=userImage]:checked'
-      );
-      const imgId = selectedRadio?.id ? parseInt(selectedRadio.id) : 0;
-      const selectedImg = document.querySelector(`label[for="${imgId}"] img`);
-      const url = selectedImg?.getAttribute('src') ?? '';
-      setDetailDto((prevDetailDto) => ({
-        ...prevDetailDto,
-        image: {
-          id: imgId ?? originId,
-          url: url,
-        },
-      }));
-      resetModalParts();
-      setOpenModal(false);
-    };
-
     setModalParts({
       head: null,
       body: (
@@ -71,6 +51,23 @@ export default function ProfileImage({
       ),
     });
     setOpenModal(true);
+  };
+  const handleSubmitClick = () => {
+    const selectedRadio = document.querySelector(
+      'input[type=radio][name=userImage]:checked'
+    );
+    const imgId = selectedRadio?.id ? parseInt(selectedRadio.id) : 0;
+    const selectedImg = document.querySelector(`label[for="${imgId}"] img`);
+    const url = selectedImg?.getAttribute('src') ?? '';
+    setDetailDto((prevDetailDto) => ({
+      ...prevDetailDto,
+      image: {
+        id: imgId ?? originId,
+        url: url,
+      },
+    }));
+    resetModalParts();
+    setOpenModal(false);
   };
   return (
     <div className={styles.profileImgFrame}>
