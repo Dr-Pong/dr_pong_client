@@ -1,7 +1,6 @@
 import useTranslation from 'next-translate/useTranslation';
 
 import { useState } from 'react';
-import { useQueryClient } from 'react-query';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
@@ -14,7 +13,6 @@ import Warnings from './Warnings';
 
 export default function SignUpFrame() {
   const { t } = useTranslation('signUp');
-  const queryClient = useQueryClient();
   const { mutationPost } = useCustomQuery();
   const [wrongFields, setWrongFields] = useState<string[]>([]);
 
@@ -34,6 +32,7 @@ export default function SignUpFrame() {
     const imgId = document.querySelector(
       'input[type=radio][name=userImage]:checked'
     )?.id;
+
     if (!nickname || !imgId) {
       console.log('invalid profile');
       return;
@@ -46,7 +45,7 @@ export default function SignUpFrame() {
     mutationPost.mutate(
       {
         path: '/signup',
-        data: {
+        body: {
           nickname: nickname,
           imgId: imgId,
         },
@@ -54,7 +53,6 @@ export default function SignUpFrame() {
       {
         onSuccess: () => {
           console.log(nickname, imgId);
-          queryClient.invalidateQueries(['signup_key']);
         },
         onError: () => {
           console.log('error');

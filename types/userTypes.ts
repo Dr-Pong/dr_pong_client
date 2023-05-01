@@ -1,6 +1,6 @@
 export interface User {
   nickname: string;
-  image: Image;
+  imgUrl: string;
   isSecondAuthOn: boolean;
   roleType: 'guest' | 'noname' | 'member' | 'admin';
 }
