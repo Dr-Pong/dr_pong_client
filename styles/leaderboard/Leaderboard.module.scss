@@ -3,3 +3,9 @@
 .leaderboardPageContainer {
   @include pageContainer;
 }
+
+.leaderboardFrame {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
