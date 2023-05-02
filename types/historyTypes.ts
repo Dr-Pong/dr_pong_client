@@ -7,11 +7,16 @@ export interface Record {
   result: 'win' | 'lose' | 'tie';
 }
 
+export interface Records {
+  records: Record[];
+  isLastPage: boolean;
+}
+
 export interface RecordDetail {
   duration: number;
   me: LpResult;
   you: LpResult;
-  rounds: [Round] | [];
+  rounds: Round[];
 }
 
 export interface PlayerResult {
