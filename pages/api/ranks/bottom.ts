@@ -109,4 +109,89 @@ const bottomRankers = [
     nickname: 'jihyukim',
     lp: 3000,
   },
+  {
+    rank: 4,
+    nickname: 'jihyukim',
+    lp: 3000,
+  },
+  {
+    rank: 5,
+    nickname: 'jihyukim',
+    lp: 3000,
+  },
+  {
+    rank: 6,
+    nickname: 'jihyukim',
+    lp: 3000,
+  },
+  {
+    rank: 7,
+    nickname: 'jihyukim',
+    lp: 3000,
+  },
+  {
+    rank: 8,
+    nickname: 'jihyukim',
+    lp: 3000,
+  },
+  {
+    rank: 9,
+    nickname: 'jihyukim',
+    lp: 3000,
+  },
+  {
+    rank: 10,
+    nickname: 'jihyukim',
+    lp: 3000,
+  },
+  {
+    rank: 11,
+    nickname: 'jihyukim',
+    lp: 3000,
+  },
+  {
+    rank: 12,
+    nickname: 'jihyukim',
+    lp: 3000,
+  },
+  {
+    rank: 13,
+    nickname: 'jihyukim',
+    lp: 3000,
+  },
+  {
+    rank: 14,
+    nickname: 'jihyukim',
+    lp: 3000,
+  },
+  {
+    rank: 15,
+    nickname: 'jihyukim',
+    lp: 3000,
+  },
+  {
+    rank: 16,
+    nickname: 'jihyukim',
+    lp: 3000,
+  },
+  {
+    rank: 17,
+    nickname: 'jihyukim',
+    lp: 3000,
+  },
+  {
+    rank: 18,
+    nickname: 'jihyukim',
+    lp: 3000,
+  },
+  {
+    rank: 19,
+    nickname: 'jihyukim',
+    lp: 3000,
+  },
+  {
+    rank: 20,
+    nickname: 'jihyukim',
+    lp: 3000,
+  },
 ];
