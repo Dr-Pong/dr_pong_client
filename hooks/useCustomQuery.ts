@@ -1,5 +1,3 @@
-import { useSetRecoilState } from 'recoil';
-
 import React from 'react';
 import { QueryKey, useMutation, useQuery, useQueryClient } from 'react-query';
 
@@ -36,10 +34,11 @@ const useCustomQuery = () => {
     setState?: React.Dispatch<React.SetStateAction<any>>
   ) => {
     return useQuery(
-      [queryKey],
+      queryKey,
       async () => {
         const { data } = await instance.get(path);
         setState?.(data);
+        return data;
       },
       {
         retry: 0,
