@@ -23,13 +23,13 @@ export default (
           isLastPage: false,
         });
         return;
-      case '1':
+      case '5':
         res.status(200).json({
           records: [records[3], records[2]],
           isLastPage: false,
         });
         return;
-      case '2':
+      case '3':
         res.status(200).json({
           records: [records[1], records[0]],
           isLastPage: true,
