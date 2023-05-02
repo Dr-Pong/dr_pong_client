@@ -4,7 +4,7 @@ import PageHeader from 'components/global/PageHeader';
 
 import styles from 'styles/friends/Friends.module.scss';
 
-export default function friends() {
+export default function Friends() {
   const { t } = useTranslation('friends');
   return (
     <div className={styles.friendsPageContainer}>

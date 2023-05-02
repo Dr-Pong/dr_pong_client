@@ -5,7 +5,7 @@ import SettingsFrame from 'components/settings/SettingsFrame';
 
 import styles from 'styles/settings/Settings.module.scss';
 
-export default function settings() {
+export default function Settings() {
   const { t } = useTranslation('settings');
 
   return (

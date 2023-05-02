@@ -4,7 +4,7 @@ import PageHeader from 'components/global/PageHeader';
 
 import styles from 'styles/channels/Channels.module.scss';
 
-export default function channels() {
+export default function Channels() {
   const { t } = useTranslation('channels');
   return (
     <div className={styles.channelsPageContainer}>
