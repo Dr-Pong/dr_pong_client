@@ -25,7 +25,7 @@ export default function SignUpFrame() {
   };
 
   const isValidNickname = (nickname: string) => {
-    const loginIdRex = /^[a-zA-Z0-9]{2,12}$/g;
+    const loginIdRex = /^[a-zA-Z0-9]{3,15}$/g;
 
     if (!loginIdRex.test(nickname)) {
       setWrongFields(['nickname']);
