@@ -29,6 +29,10 @@ export default function TopLeaders({ topLeaderCount }: TopLeadersProps) {
     },
   ];
 
+  const handleNicknameClick = () => {
+    // 프로필 모달 띄우기
+  };
+
   if (isLoading) return null;
 
   return (
@@ -42,7 +46,7 @@ export default function TopLeaders({ topLeaderCount }: TopLeadersProps) {
             </div>
             <div className={styles.leaderProfile}>
               <img src={imgUrl} alt='profile' />
-              <div>{nickname}</div>
+              <div onClick={handleNicknameClick}>{nickname}</div>
               <div>{lp}</div>
             </div>
           </div>
