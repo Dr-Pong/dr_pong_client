@@ -2,8 +2,9 @@ import React from 'react';
 
 import { RecordDetail } from 'types/historyTypes';
 
+import useRecordsQuery from 'hooks/useRecordsQuery';
+
 import styles from 'styles/matchHistory/MatchDetail.module.scss';
-import useMatchHistoryQuery from "../../hooks/useMatchHistoryQuery";
 
 export default function MatchDetail({
   nickname,
@@ -14,10 +15,10 @@ export default function MatchDetail({
   gameId: number;
   onUnfoldClick: () => void;
 }) {
-  const { getMatchDetail } = useMatchHistoryQuery(nickname);
-  const { data: matchDetail, isLoading } = getMatchDetail(gameId);
-  const { duration, me, you, rounds } = matchDetail;
+  const { getMatchDetail } = useRecordsQuery(nickname);
+  const { data, isLoading } = getMatchDetail(gameId);
   if (isLoading) return <div>loading...</div>;
+  const { duration, me, you, rounds } = data as RecordDetail;
   return (
     <div className={styles.matchDetail}>
       <div className={styles.leftBar}>

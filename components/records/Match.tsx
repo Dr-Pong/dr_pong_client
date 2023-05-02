@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Record } from 'types/historyTypes';
 
-import MatchDetail from 'components/matchHistory/MatchDetail';
-import Player from 'components/matchHistory/Player';
+import MatchDetail from 'components/records/MatchDetail';
+import Player from 'components/records/Player';
 
 import styles from 'styles/matchHistory/Match.module.scss';
 
