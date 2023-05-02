@@ -10,7 +10,7 @@ export default function SignUpFields() {
     {
       name: 'userImage',
       label: t('Profile picture'),
-      input: <UserImages key='userUmage' />,
+      input: <UserImages />,
     },
     {
       name: 'nickname',
