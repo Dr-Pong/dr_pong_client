@@ -8,8 +8,8 @@ import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/signUp/SignUp.module.scss';
 
-import SignUpFields from './SignUpFields';
-import Warnings from './Warnings';
+import SignUpFields from 'components/signUp/SignUpFields';
+import Warnings from 'components/signUp/Warnings';
 
 export default function SignUpFrame() {
   const { t } = useTranslation('signUp');

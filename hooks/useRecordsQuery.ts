@@ -1,4 +1,4 @@
-import { Record, Records } from 'types/historyTypes';
+import { Records } from 'types/historyTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
