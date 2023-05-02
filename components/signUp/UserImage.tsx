@@ -1,26 +1,18 @@
-import useTranslation from 'next-translate/useTranslation';
-
-import { useState } from 'react';
-
-import { UserImages } from 'types/userTypes';
+import { Image } from 'types/userTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
 import styles from 'styles/signUp/SignUp.module.scss';
 
 export default function UserImage({ selectedId }: { selectedId?: number }) {
-  const { t } = useTranslation('signUp');
   const { get } = useCustomQuery();
-  const [userImages, setUserImages] = useState<UserImages>(defaultUserImages);
-  const { isError, isLoading } = get(
-    'userImage',
-    `users/images`,
-    setUserImages
-  );
+  const { data, isError, isLoading } = get('user_image', `users/images`);
+
+  if (isLoading) return null;
 
   return (
     <div className={styles.profileImageField}>
-      {userImages.images.map(({ id, url }, i) => {
+      {data.images.map(({ id, url }: Image, i: number) => {
         return (
           <span key={i} className={styles.profileImage}>
             <input
@@ -39,12 +31,3 @@ export default function UserImage({ selectedId }: { selectedId?: number }) {
     </div>
   );
 }
-
-const defaultUserImages: UserImages = {
-  images: [
-    {
-      id: 0,
-      url: '',
-    },
-  ],
-};

@@ -6,29 +6,7 @@ import instance from 'utils/axios';
 const useCustomQuery = () => {
   const queryClient = useQueryClient();
 
-  const get = (key: QueryKey, api: string, setter?: (a: any) => void) => {
-    const fetch = async (): Promise<any> => {
-      const { data } = await instance.get(api);
-      setter?.(data);
-      return data;
-    };
-    return useQuery(key, fetch);
-  };
-
-  const patch = (api: string, invalidateQueryKey?: QueryKey) => {
-    const patchDetail = async (toPatch: any): Promise<any> => {
-      const { data } = await instance.patch<any>(api, toPatch);
-      return data;
-    };
-    return useMutation(patchDetail, {
-      onSuccess: () => {
-        if (invalidateQueryKey)
-          queryClient.invalidateQueries(invalidateQueryKey);
-      },
-    });
-  };
-
-  const mutationGet = (
+  const get = (
     queryKey: QueryKey,
     path: string,
     setState?: React.Dispatch<React.SetStateAction<any>>
@@ -48,12 +26,27 @@ const useCustomQuery = () => {
     );
   };
 
+  const patch = (path: string, invalidateQueryKey?: QueryKey) => {
+    return useMutation(
+      async (body: object): Promise<object> => {
+        const { data } = await instance.patch(path, body);
+        return data;
+      },
+      {
+        onSuccess: () => {
+          if (invalidateQueryKey)
+            queryClient.invalidateQueries(invalidateQueryKey);
+        },
+      }
+    );
+  };
+
   const mutationPost = useMutation(
     ({ path, body }: { path: string; body?: object }) =>
       instance.post(path, body)
   );
 
-  return { get, patch, mutationGet, mutationPost };
+  return { get, patch, mutationPost };
 };
 
 export default useCustomQuery;

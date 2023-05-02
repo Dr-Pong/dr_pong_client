@@ -20,12 +20,8 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps) {
   const router = useRouter();
   const [user, setUser] = useRecoilState(userState);
-  const { mutationGet } = useCustomQuery();
-  const { isFetching, isLoading, error, data } = mutationGet(
-    ['user_key'],
-    '/users/me',
-    setUser
-  );
+  const { get } = useCustomQuery();
+  const { data, isLoading, isError } = get(['user_key'], '/users/me', setUser);
 
   if (isLoading) return null;
 

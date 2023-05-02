@@ -13,8 +13,8 @@ export default function BottomLeaders({
   topLeaderCount,
   bottomLeaderCount,
 }: LeadersProps) {
-  const { mutationGet } = useCustomQuery();
-  const { data, isLoading, isError } = mutationGet(
+  const { get } = useCustomQuery();
+  const { data, isLoading, isError } = get(
     ['bottomRank_key'],
     `/ranks/bottom?count=${bottomLeaderCount}&offset=${topLeaderCount + 1}`
   );

@@ -9,8 +9,8 @@ type TopLeadersProps = {
 };
 
 export default function TopLeaders({ topLeaderCount }: TopLeadersProps) {
-  const { mutationGet } = useCustomQuery();
-  const { data, isLoading, isError } = mutationGet(
+  const { get } = useCustomQuery();
+  const { data, isLoading, isError } = get(
     ['topRank_key'],
     `/ranks/top?count=${topLeaderCount}`
   );
