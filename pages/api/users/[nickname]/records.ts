@@ -19,25 +19,19 @@ export default (
         return;
       case '0':
         res.status(200).json({
-          records: records.slice(0, Number(lastGameId)),
+          records: [records[5], records[4]],
           isLastPage: false,
         });
         return;
       case '1':
         res.status(200).json({
-          records: records.slice(Number(lastGameId), Number(lastGameId) + 1),
+          records: [records[3], records[2]],
           isLastPage: false,
         });
         return;
       case '2':
         res.status(200).json({
-          records: records.slice(Number(lastGameId), Number(lastGameId) + 1),
-          isLastPage: false,
-        });
-        return;
-      case '3':
-        res.status(200).json({
-          records: records.slice(Number(lastGameId), Number(lastGameId) + 1),
+          records: [records[1], records[0]],
           isLastPage: true,
         });
         return;
@@ -122,5 +116,41 @@ const records: Record[] = [
       score: 5,
     },
     result: 'win',
+  },
+  {
+    gameId: 5,
+    gameType: 'normal',
+    playedAt: '2020-08-05T00:00:00.000Z',
+    me: {
+      imgUrl:
+        'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
+      nickname: 'hakim',
+      score: 3,
+    },
+    you: {
+      imgUrl:
+        'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/him.jpeg?imwidth=100',
+      nickname: 'him',
+      score: 3,
+    },
+    result: 'tie',
+  },
+  {
+    gameId: 6,
+    gameType: 'rank',
+    playedAt: '2020-08-05T00:00:00.000Z',
+    me: {
+      imgUrl:
+        'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
+      nickname: 'hakim',
+      score: 3,
+    },
+    you: {
+      imgUrl:
+        'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/donghyuk.jpeg?imwidth=100',
+      nickname: 'donghyuk',
+      score: 3,
+    },
+    result: 'tie',
   },
 ];
