@@ -2,7 +2,7 @@ import { Record, Records } from 'types/historyTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
-import instance from '../utils/axios';
+import instance from 'utils/axios';
 
 const useRecordsQuery = (userName: string) => {
   const { get } = useCustomQuery();

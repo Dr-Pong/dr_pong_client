@@ -1,7 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { randomInt } from 'next/dist/shared/lib/bloom-filter/utils';
-
 import { Record, RecordDetail, Records } from 'types/historyTypes';
 
 type Error = {
