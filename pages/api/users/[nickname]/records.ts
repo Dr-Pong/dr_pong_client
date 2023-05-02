@@ -13,6 +13,12 @@ export default (
 ) => {
   const { count, lastGameId } = req.query;
   if (req.method === 'GET') {
+    if (req.query.nickname !== 'hakim') {
+      res.status(200).json({
+        records: [],
+        isLastPage: true,
+      });
+    }
     switch (lastGameId) {
       case undefined:
         res.status(400).json({ message: 'Bad Request' });
