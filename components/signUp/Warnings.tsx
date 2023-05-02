@@ -1,6 +1,6 @@
 import useTranslation from 'next-translate/useTranslation';
 
-import styles from 'styles/signUp/SignUp.module.scss';
+import styles from 'styles/signUp/Warnings.module.scss';
 
 type WarningsProps = {
   wrongFields: string[];
@@ -9,14 +9,14 @@ type WarningsProps = {
 export default function Warnings({ wrongFields }: WarningsProps) {
   const { t } = useTranslation('signUp');
   const warnings: { [key: string]: string } = {
-    nickname: t('wrong name'),
+    nickname: t('wrong nickname'),
     imgId: t('wrong image'),
   };
 
   return (
     <div className={styles.warnings}>
-      {wrongFields.map((field) => {
-        return <div>{warnings[field]}</div>;
+      {wrongFields.map((field, i) => {
+        return <div key={i}>{warnings[field]}</div>;
       })}
     </div>
   );
