@@ -1,0 +1,62 @@
+@import 'styles/common.scss';
+
+.topLeadersContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+  padding-bottom: 1.5rem;
+  column-gap: 0.8rem;
+  border-bottom: solid 2px white;
+}
+
+.leaderBox {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  align-items: end;
+  justify-items: center;
+  width: 100%;
+  img {
+    width: 3rem;
+  }
+}
+
+.leaderRank {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  margin-bottom: 1rem;
+  padding-top: 0.2rem;
+  font-weight: 700;
+  background: $purple;
+}
+
+.leaderProfile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img {
+    width: 3rem;
+    height: 3rem;
+  }
+  div {
+    margin-top: 0.7rem;
+    font-size: 1.2rem;
+  }
+}
+
+.first {
+  font-size: 3rem;
+  margin-block: 0.7rem;
+}
+
+.second {
+  font-size: 2.2rem;
+  margin-block: 0.5rem;
+}
+
+.third {
+  font-size: 1.8rem;
+  margin-block: 0.3rem;
+}
