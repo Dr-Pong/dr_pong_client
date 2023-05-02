@@ -2,19 +2,23 @@ import { Image } from 'types/userTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
-import styles from 'styles/signUp/SignUp.module.scss';
+import styles from 'styles/global/UserImages.module.scss';
 
-export default function UserImage({ selectedId }: { selectedId?: number }) {
+export default function UserImages({
+  selectedId = 1,
+}: {
+  selectedId?: number;
+}) {
   const { get } = useCustomQuery();
   const { data, isError, isLoading } = get('user_image', `users/images`);
 
   if (isLoading) return null;
 
   return (
-    <div className={styles.profileImageField}>
+    <div className={styles.userImagesContainer}>
       {data.images.map(({ id, url }: Image, i: number) => {
         return (
-          <span key={i} className={styles.profileImage}>
+          <span key={i} className={styles.userImage}>
             <input
               type='radio'
               id={`${id}`}

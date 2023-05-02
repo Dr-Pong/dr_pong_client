@@ -8,7 +8,7 @@ import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/signUp/SignUp.module.scss';
 
-import ProfileFields from './ProfileFields';
+import SignUpFields from './SignUpFields';
 import Warnings from './Warnings';
 
 export default function SignUpFrame() {
@@ -16,31 +16,39 @@ export default function SignUpFrame() {
   const { mutationPost } = useCustomQuery();
   const [wrongFields, setWrongFields] = useState<string[]>([]);
 
-  // const validateNickname = (nickname: string | undefined) => {
-  //   if (!nickname) setWrongFields([...wrongFields, 'nickname']);
-  // };
+  const isValidImgId = (imgId: string | undefined) => {
+    if (!imgId) {
+      setWrongFields(['imgId']);
+      return false;
+    }
+    return true;
+  };
 
-  // const validateImgId = (imgId: string | undefined) => {
-  //   if (!imgId) setWrongFields([...wrongFields, 'imgId']);
-  // };
+  const isValidNickname = (nickname: string) => {
+    const loginIdRex = /^[a-zA-Z0-9]{2,10}$/g;
+
+    if (!loginIdRex.test(nickname)) {
+      setWrongFields(['nickname']);
+      return false;
+    }
+    return true;
+  };
 
   const signUp = () => {
-    setWrongFields([]);
-    const nickname = document.querySelector(
-      'input[type=text][name=nickname]'
-    )?.value;
-    const imgId = document.querySelector(
-      'input[type=radio][name=userImage]:checked'
+    const imgId = (
+      document.querySelector(
+        'input[type=radio][name=userImage]:checked'
+      ) as HTMLInputElement
     )?.id;
+    const nickname = (
+      document.querySelector(
+        'input[type=text][name=nickname]'
+      ) as HTMLInputElement
+    )?.value;
 
-    if (!nickname || !imgId) {
-      console.log('invalid profile');
-      return;
-    }
-    // validateNickname(nickname);
-    // validateImgId(imgId);
-    // console.log(wrongFields);
-    // if (wrongFields.length) return;
+    if (!isValidImgId(imgId)) return;
+    if (!isValidNickname(nickname)) return;
+    setWrongFields([]);
 
     mutationPost.mutate(
       {
@@ -63,7 +71,7 @@ export default function SignUpFrame() {
 
   return (
     <div className={styles.signUpFrame}>
-      <ProfileFields />
+      <SignUpFields />
       <Warnings wrongFields={wrongFields} />
       <BasicButton style='basic' color='black' handleButtonClick={signUp}>
         {t('sign up')}

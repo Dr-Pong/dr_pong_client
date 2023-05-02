@@ -6,11 +6,11 @@ import React from 'react';
 import { modalPartsState, openModalState } from 'recoils/modal';
 import { editableState } from 'recoils/user';
 
+import UserImages from 'components/global/UserImages';
 import BasicButton from 'components/global/buttons/BasicButton';
 import ModalButton from 'components/global/buttons/CloseModalButton';
 import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
 import { DetailDto } from 'components/myPage/ProfileCard';
-import UserImage from 'components/signUp/UserImage';
 
 import styles from 'styles/myPage/ProfileImage.module.scss';
 
@@ -32,7 +32,7 @@ export default function ProfileImage({
       head: null,
       body: (
         <ModalPhrase>
-          <UserImage selectedId={originId} />
+          <UserImages selectedId={originId} />
         </ModalPhrase>
       ),
       tail: (
