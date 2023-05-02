@@ -22,10 +22,12 @@ export default function Layout({ children }: LayoutProps) {
   const [user, setUser] = useRecoilState(userState);
   const { mutationGet } = useCustomQuery();
   const { isFetching, isLoading, error, data } = mutationGet(
-    'user_key',
+    ['user_key'],
     '/users/me',
     setUser
   );
+
+  if (isLoading) return null;
 
   if (user.roleType === 'noname') return <SignUp />;
 
