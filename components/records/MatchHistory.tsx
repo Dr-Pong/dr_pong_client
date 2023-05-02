@@ -17,8 +17,8 @@ export default function MatchHistory({ query }: { query: string }) {
   useEffect(() => {
     const loadData = async () => {
       const data = await fetchMatchHistory(lastGameId);
-      setIsLastPage(data?.isLastPage);
-      const records = data?.records;
+      setIsLastPage(data.isLastPage);
+      const { records } = data;
       if (records) setMatches((prev) => [...prev, ...records]);
     };
     loadData();
