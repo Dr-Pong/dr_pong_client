@@ -1,16 +1,16 @@
 import useTranslation from 'next-translate/useTranslation';
 
+import UserImages from 'components/global/UserImages';
+
 import styles from 'styles/signUp/SignUp.module.scss';
 
-import UserImage from './UserImage';
-
-export default function ProfileFields() {
+export default function SignUpFields() {
   const { t } = useTranslation('signUp');
-  const profiles = [
+  const fields = [
     {
       name: 'userImage',
       label: t('Profile picture'),
-      input: <UserImage key='userUmage' />,
+      input: <UserImages />,
     },
     {
       name: 'nickname',
@@ -22,10 +22,10 @@ export default function ProfileFields() {
   ];
 
   return (
-    <div className={styles.profileFields}>
-      {profiles.map(({ name, label, input }, i) => {
+    <div className={styles.signUpFields}>
+      {fields.map(({ name, label, input }, i) => {
         return (
-          <div key={i} className={styles.field}>
+          <div key={i} className={styles.signUpField}>
             <label htmlFor={name}>{label}</label>
             {input}
           </div>
