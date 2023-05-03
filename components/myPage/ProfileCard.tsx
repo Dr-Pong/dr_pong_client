@@ -20,9 +20,9 @@ export interface DetailDto {
   title: Title;
   statusMessage: string;
 }
-export default function ProfileCard({ userName }: { userName: string }) {
+export default function ProfileCard({ nickname }: { nickname: string }) {
   const { t } = useTranslation('myPage');
-  const { getProfile, patchProfile } = useMyPageQuery(userName);
+  const { getProfile, patchProfile } = useMyPageQuery(nickname);
   const editable = useRecoilValue(editableState);
   const tab = useRecoilValue(tabState);
   const [detailDto, setDetailDto] = useState<DetailDto>(defaultDetailDto);
@@ -43,7 +43,7 @@ export default function ProfileCard({ userName }: { userName: string }) {
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
-  const { nickname, level } = userDetail as UserDetail;
+  const { level } = userDetail as UserDetail;
 
   const captionContent = (
     key: number,
@@ -70,7 +70,7 @@ export default function ProfileCard({ userName }: { userName: string }) {
       <TitleDropdown
         detailDto={detailDto}
         setDetailDto={setDetailDto}
-        userName={userName}
+        nickname={nickname}
       />
     ),
     captionContent(2, t('Level'), level.toString()),

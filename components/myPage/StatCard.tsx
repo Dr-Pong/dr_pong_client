@@ -25,8 +25,8 @@ export interface RankProps {
   rank: number;
   isBestRecord?: boolean;
 }
-export default function StatCard({ userName }: { userName: string }) {
-  const { getStat } = useMyPageQuery(userName);
+export default function StatCard({ nickname }: { nickname: string }) {
+  const { getStat } = useMyPageQuery(nickname);
   const { t } = useTranslation('myPage');
   const { data, isLoading, isError } = getStat();
   if (isLoading) return <div>Loading...</div>;
@@ -47,7 +47,7 @@ export default function StatCard({ userName }: { userName: string }) {
           <WinRateStat winRateInfo={totalStat} />
         </div>
         <div className={styles.box} id={styles.history}>
-          <Link href={`records/${userName}`}>
+          <Link href={`records/${nickname}`}>
             <div className={styles.historyButton}>{t('History')}</div>
             <IoIosArrowForward />
           </Link>

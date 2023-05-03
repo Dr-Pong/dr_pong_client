@@ -5,37 +5,37 @@ import useCustomQuery from 'hooks/useCustomQuery';
 import { DetailDto } from 'components/myPage/ProfileCard';
 import { empty } from 'components/myPage/TitleDropdown';
 
-const useMyPageQuery = (userName: string, type?: string) => {
+const useMyPageQuery = (nickname: string, type?: string) => {
   const { get, patch } = useCustomQuery();
   const getProfile = (setter: (detailDto: DetailDto) => void) => {
-    return get('userDetail', `/users/${userName}/detail`, setter);
+    return get('userDetail', `/users/${nickname}/detail`, setter);
   };
   const patchProfile = () => {
-    return patch(`/users/${userName}/detail`, 'userDetail');
+    return patch(`/users/${nickname}/detail`, 'userDetail');
   };
   const getAll = (setter?: AchievementsSetter | EmojisSetter) => {
-    return get([`all${type}`], `/users/${userName}/${type}`, setter);
+    return get([`all${type}`], `/users/${nickname}/${type}`, setter);
   };
   const getSelected = (setter?: AchievementsSetter | EmojisSetter) => {
     return get(
       [`selected${type}`],
-      `/users/${userName}/${type}?selected=true`,
+      `/users/${nickname}/${type}?selected=true`,
       setter
     );
   };
   const patchSelectables = () => {
-    return patch(`/users/${userName}/${type}`, [
+    return patch(`/users/${nickname}/${type}`, [
       [`all${type}`],
       [`selected${type}`],
     ]);
   };
   const getStat = () => {
-    return get(`userStat`, `/users/${userName}/stat`);
+    return get(`userStat`, `/users/${nickname}/stat`);
   };
   const getTitles = () => {
     return get(
       `userTitles`,
-      `/users/${userName}/titles`,
+      `/users/${nickname}/titles`,
       (titles: Titles): void => {
         titles.titles.unshift(empty);
       }
