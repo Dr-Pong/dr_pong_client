@@ -27,7 +27,7 @@ export default function Match({ record }: { record: Record }) {
     <div className={`${styles.match} ${styles[result]}`}>
       <div className={styles.matchBrief}>
         <div className={styles.matchText}>
-          <div className={styles.gameType}>{gameType}</div>
+          <div className={styles.gameType}>{t(gameType)}</div>
           <div className={styles.playedAt}>{getTimeAgo(playedAt, t)}</div>
           {isFolded && (
             <div className={styles.unfold} onClick={handleFoldedClick}>
@@ -45,6 +45,7 @@ export default function Match({ record }: { record: Record }) {
         <MatchDetail
           nickname={me.nickname}
           gameId={gameId}
+          gameType={gameType}
           onUnfoldClick={handleUnfoldedClick}
         />
       )}

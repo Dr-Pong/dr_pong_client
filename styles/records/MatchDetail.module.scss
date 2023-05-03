@@ -1,0 +1,70 @@
+@import 'styles/records/Match.module';
+
+.matchDetail {
+  @include matchContent;
+}
+
+.leftBar {
+  @include matchLeft;
+}
+
+.duration {
+  font-size: 0.7rem;
+  margin-block: 0.5rem;
+}
+
+.infographics {
+  display: flex;
+  flex-direction: column;
+}
+
+.ladderPoints {
+  @include matchRight;
+}
+
+.lpBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.yesChange {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row-reverse;
+}
+
+.noChange {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.lpChange {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  padding-left: 0.5rem;
+}
+
+.lpChange > span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.plus {
+  width: 0;
+  height: 0;
+  border-bottom: calc(0.3rem * 1.732) solid $blue;
+  border-left: 0.3rem solid transparent;
+  border-right: 0.3rem solid transparent;
+}
+
+.minus {
+  width: 0;
+  height: 0;
+  border-top: calc(0.3rem * 1.732) solid $red;
+  border-left: 0.3rem solid transparent;
+  border-right: 0.3rem solid transparent;
+}

@@ -1,3 +1,13 @@
 {
-  "Match History": "Match History"
+  "Match History": "Match History",
+  "year": "y",
+  "month": "m",
+  "day": "d",
+  "hour": "h",
+  "minute": "min",
+  "second": "s",
+  "ago": "ago",
+  "a moment ago": "a moment ago",
+  "rank": "rank",
+  "normal": "normal"
 }

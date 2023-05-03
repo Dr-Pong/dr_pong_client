@@ -1,3 +1,5 @@
+@import 'styles/common';
+
 .winRateStat {
   display: flex;
   flex-direction: column;
@@ -28,10 +30,10 @@
 
 .winGauge {
   height: 0.5rem;
-  background: blue;
+  background: $blue;
 }
 
 .loseGauge {
   height: 0.5rem;
-  background: red;
+  background: $red;
 }

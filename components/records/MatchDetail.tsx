@@ -1,20 +1,42 @@
 import React from 'react';
 
-import { RecordDetail } from 'types/historyTypes';
+import { Record, RecordDetail } from 'types/historyTypes';
 
 import useRecordsQuery from 'hooks/useRecordsQuery';
 
 import styles from 'styles/records/MatchDetail.module.scss';
+import useTranslation from "next-translate/useTranslation";
+import MatchRecords from "./MatchRecords";
+
+function LpBar({ lp, lpChange }: { lp: number; lpChange: number }) {
+  const sign = lpChange > 0 ? 'plus' : 'minus';
+  const absChange = Math.abs(lpChange);
+  const lpStyle = lpChange === 0 ? 'noChange' : `yesChange`;
+  return (
+    <div className={styles.lpBar}>
+      <span className={styles[lpStyle]}>{`${lp} `}</span>
+      {lpChange === 0 || (
+        <span className={styles.lpChange}>
+          <span className={styles[sign]}></span>
+          <span className={styles.absChange}>{` ${absChange}`}</span>
+        </span>
+      )}
+    </div>
+  );
+}
 
 export default function MatchDetail({
   nickname,
   gameId,
+  gameType,
   onUnfoldClick,
 }: {
   nickname: string;
   gameId: number;
+  gameType: Record['gameType'];
   onUnfoldClick: () => void;
 }) {
+  const { t } = useTranslation('records');
   const { getMatchDetail } = useRecordsQuery(nickname);
   const { data, isLoading } = getMatchDetail(gameId);
 
@@ -25,33 +47,26 @@ export default function MatchDetail({
   return (
     <div className={styles.matchDetail}>
       <div className={styles.leftBar}>
-        <div className={styles.duration}>{duration}</div>
+        <div className={styles.duration}>{convertDuration(duration)}</div>
         <div className={styles.fold} onClick={onUnfoldClick}>
           {'▲'}
         </div>
       </div>
       <div className={styles.infographics}>
-        <div className={styles.ladderPoints}>
-          <div className={styles.lpBar}>
-            <span className={styles.lp}>{`${me.lp}`}</span>
-            <span className={styles.lpChange}>{`(${me.lpChange})`}</span>
+        {gameType === 'rank' && (
+          <div className={styles.ladderPoints}>
+            <LpBar lp={me.lp} lpChange={me.lpChange} />
+            <div className={styles.spacer}></div>
+            <LpBar lp={you.lp} lpChange={you.lpChange} />
           </div>
-          <div className={styles.spacer}></div>
-          <div className={styles.lpBar}>
-            <span className={styles.lp}>{`${you.lp}`}</span>
-            <span className={styles.lpChange}>{`(${you.lpChange})`}</span>
-          </div>
-        </div>
-        <div className={styles.rounds}>
-          {rounds.map((r, i) => {
-            return (
-              <div key={i} className={r.meWin ? styles.win : styles.lose}>
-                {r.bounces}
-              </div>
-            );
-          })}
-        </div>
+        )}
+        <MatchRecords rounds={rounds} />
       </div>
     </div>
   );
+  function convertDuration(duration: number) {
+    const minutes = Math.floor(duration / 60);
+    const seconds = duration % 60;
+    return `${minutes}${t('minute')} ${seconds}${t('second')}`;
+  }
 }

@@ -1,3 +1,13 @@
 {
-  "Match History": "전적"
+  "Match History": "전적",
+  "year": "년",
+  "month": "개월",
+  "day": "일",
+  "hour": "시간",
+  "minute": "분",
+  "second": "초",
+  "ago": "전",
+  "a moment ago": "방금 전",
+  "rank": "랭크",
+  "normal": "일반"
 }
