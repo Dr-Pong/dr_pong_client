@@ -47,7 +47,7 @@ export default function StatCard({ userName }: { userName: string }) {
           <WinRateStat winRateInfo={totalStat} />
         </div>
         <div className={styles.box} id={styles.history}>
-          <Link href={`matchHistory?${userName}`}>
+          <Link href={`records/${userName}`}>
             <div className={styles.historyButton}>{t('History')}</div>
             <IoIosArrowForward />
           </Link>

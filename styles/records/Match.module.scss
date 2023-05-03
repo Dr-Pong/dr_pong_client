@@ -1,0 +1,35 @@
+.match {
+
+}
+
+.win {
+
+}
+
+.lose {
+
+}
+
+.tie {
+
+}
+
+.matchBrief {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+.playedAt {
+  font-size: 0.8rem;
+}
+
+.matchText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.matchVisual {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr;
+}
