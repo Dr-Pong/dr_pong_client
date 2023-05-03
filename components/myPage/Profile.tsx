@@ -14,15 +14,15 @@ import StatCard from 'components/myPage/StatCard';
 
 import styles from 'styles/myPage/Profile.module.scss';
 
-export default function Profile({ userName }: { userName: string }) {
-  const { getSelected } = useMyPageQuery(userName, 'achievements');
+export default function Profile({ nickname }: { nickname: string }) {
+  const { getSelected } = useMyPageQuery(nickname, 'achievements');
   const editableStatus = useRecoilValue(editableState);
   const { data, isLoading, isError } = getSelected();
   const achievements = data as Achievements;
   return (
     <div className={styles.profile}>
-      <ProfileCard userName={userName} />
-      <StatCard userName={userName} />
+      <ProfileCard nickname={nickname} />
+      <StatCard nickname={nickname} />
       <div
         className={styles.selectedItemsContainer}
         style={editableStatus ? { pointerEvents: 'none' } : {}}

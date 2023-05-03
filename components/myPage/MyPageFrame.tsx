@@ -72,11 +72,11 @@ export default function MyPageFrame() {
   };
 
   const tabs: { [key: string]: JSX.Element } = {
-    profile: <Profile userName={nickname} key={'profile'} />,
+    profile: <Profile nickname={nickname} key={'profile'} />,
     achieve: (
-      <SelectTab userName={nickname} itemType={'achieve'} key={'achieve'} />
+      <SelectTab nickname={nickname} itemType={'achieve'} key={'achieve'} />
     ),
-    emoji: <SelectTab userName={nickname} itemType={'emoji'} key={'emoji'} />,
+    emoji: <SelectTab nickname={nickname} itemType={'emoji'} key={'emoji'} />,
   };
 
   return (

@@ -17,15 +17,15 @@ export interface SelectHandler {
   deselect: (item: Achievement | Emoji | null) => void;
 }
 export default function SelectTab({
-  userName,
+  nickname,
   itemType,
 }: {
-  userName: string;
+  nickname: string;
   itemType: string;
 }) {
   const queryKey = itemType === 'achieve' ? 'achievements' : 'emojis';
   const { getAll, getSelected, patchSelectables } = useMyPageQuery(
-    userName,
+    nickname,
     queryKey
   );
   const editable = useRecoilValue(editableState);

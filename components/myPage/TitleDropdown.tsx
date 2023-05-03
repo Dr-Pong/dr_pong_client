@@ -15,13 +15,13 @@ import { DetailDto } from 'components/myPage/ProfileCard';
 export default function TitleDropdown({
   detailDto,
   setDetailDto,
-  userName,
+  nickname,
 }: {
   detailDto: DetailDto;
   setDetailDto: React.Dispatch<React.SetStateAction<DetailDto>>;
-  userName: string;
+  nickname: string;
 }) {
-  const { getTitles } = useMyPageQuery(userName);
+  const { getTitles } = useMyPageQuery(nickname);
   const editable = useRecoilValue(editableState);
   const [dropdownVisibility, setDropdownVisibility] = useState<boolean>(false);
   const handleDropdownClick = () => {

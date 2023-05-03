@@ -42,7 +42,7 @@ export default function TopLeaders({ topLeaderCount }: TopLeadersProps) {
     const nickname = (e.target as HTMLElement).innerHTML;
     setModalParts({
       head: null,
-      body: <Profile userName={nickname} />,
+      body: <Profile nickname={nickname} />,
       tail: <ProfileButtons target={nickname} />,
     });
     setOpenModal(true);
