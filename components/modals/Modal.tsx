@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 
 import { modalPartsState, openModalState } from 'recoils/modal';
 
-import styles from 'styles/layouts/Modal.module.scss';
+import styles from 'styles/modals/Modal.module.scss';
 
 export default function Modal() {
   const [openModal, setOpenModal] = useRecoilState(openModalState);
@@ -29,7 +29,7 @@ export default function Modal() {
         >
           <div>{head}</div>
           {head && body && <div className={styles.blank}></div>}
-          <div>{body}</div>
+          <div className={styles.modalBody}>{body}</div>
           {(head || body) && tail && <div className={styles.blank}></div>}
           <div>{tail}</div>
         </div>
