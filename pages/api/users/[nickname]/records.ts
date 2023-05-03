@@ -52,7 +52,7 @@ const records: Record[] = [
   {
     gameId: 1,
     gameType: 'rank',
-    playedAt: '2020-08-01T00:00:00.000Z',
+    playedAt: '2023-04-25T00:00:00.000Z',
     me: {
       imgUrl:
         'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
@@ -70,7 +70,7 @@ const records: Record[] = [
   {
     gameId: 2,
     gameType: 'normal',
-    playedAt: '2020-08-02T00:00:00.000Z',
+    playedAt: '2023-05-02T00:00:00.000Z',
     me: {
       imgUrl:
         'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
@@ -88,7 +88,7 @@ const records: Record[] = [
   {
     gameId: 3,
     gameType: 'rank',
-    playedAt: '2020-08-03T00:00:00.000Z',
+    playedAt: '2023-05-02T17:00:00.000Z',
     me: {
       imgUrl:
         'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
@@ -106,7 +106,7 @@ const records: Record[] = [
   {
     gameId: 4,
     gameType: 'normal',
-    playedAt: '2020-08-04T00:00:00.000Z',
+    playedAt: '2023-05-02T20:00:00.000Z',
     me: {
       imgUrl:
         'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
@@ -124,7 +124,7 @@ const records: Record[] = [
   {
     gameId: 5,
     gameType: 'normal',
-    playedAt: '2020-08-05T00:00:00.000Z',
+    playedAt: '2023-05-03T09:00:00.000Z',
     me: {
       imgUrl:
         'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
@@ -142,7 +142,7 @@ const records: Record[] = [
   {
     gameId: 6,
     gameType: 'rank',
-    playedAt: '2020-08-05T00:00:00.000Z',
+    playedAt: '2023-05-03T10:00:00.000Z',
     me: {
       imgUrl:
         'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
