@@ -1,3 +1,5 @@
+@import 'styles/records/Match.module';
+
 .winRateStat {
   display: flex;
   flex-direction: column;
@@ -28,10 +30,10 @@
 
 .winGauge {
   height: 0.5rem;
-  background: #3355dd;
+  background: $blue;
 }
 
 .loseGauge {
   height: 0.5rem;
-  background: #dd3344;
+  background: $red;
 }
