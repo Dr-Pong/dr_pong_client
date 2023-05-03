@@ -1,0 +1,17 @@
+.player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+.player img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.player div {
+  padding-top: 0.5rem;
+}

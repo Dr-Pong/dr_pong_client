@@ -1,0 +1,55 @@
+@import 'styles/records/Match.module';
+
+.rounds {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  background: white;
+  color: black;
+  justify-content: space-between;
+  align-items: center;
+  height: 3rem;
+  border: 1px solid black;
+  margin: 0.3rem;
+}
+
+.rounds::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: black;
+}
+
+.rounds .win,
+.rounds .lose {
+  position: relative;
+  background: transparent;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rounds .win::before,
+.rounds .lose::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.rounds .win::before {
+  border-color: $blue transparent transparent transparent;
+  border-width: calc(0.5rem * 1.732) 0.5rem 0 0.5rem;
+  bottom: 2rem;
+}
+
+.rounds .lose::before {
+  border-color: transparent transparent $red transparent;
+  border-width: 0 0.5rem calc(0.5rem * 1.732) 0.5rem;
+  top: 2rem;
+}
