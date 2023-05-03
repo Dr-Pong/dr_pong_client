@@ -2,7 +2,9 @@ import React from 'react';
 
 import { RecordDetail } from 'types/historyTypes';
 
-import styles from 'styles/matchHistory/MatchDetail.module.scss';
+import useRecordsQuery from 'hooks/useRecordsQuery';
+
+import styles from 'styles/records/MatchDetail.module.scss';
 
 export default function MatchDetail({
   nickname,
@@ -13,8 +15,13 @@ export default function MatchDetail({
   gameId: number;
   onUnfoldClick: () => void;
 }) {
-  const matchDetail: RecordDetail = exampleDetail; // TODO: get matchDetail from api
-  const { duration, me, you, rounds } = matchDetail;
+  const { getMatchDetail } = useRecordsQuery(nickname);
+  const { data, isLoading } = getMatchDetail(gameId);
+
+  if (isLoading) return <div>loading...</div>;
+
+  const { duration, me, you, rounds } = data as RecordDetail;
+
   return (
     <div className={styles.matchDetail}>
       <div className={styles.leftBar}>
@@ -25,8 +32,15 @@ export default function MatchDetail({
       </div>
       <div className={styles.infographics}>
         <div className={styles.ladderPoints}>
-          <div className={styles.me}>{`${me.lp} (${me.lpChange})`}</div>
-          <div className={styles.you}>{`${you.lp} (${you.lpChange})`}</div>
+          <div className={styles.lpBar}>
+            <span className={styles.lp}>{`${me.lp}`}</span>
+            <span className={styles.lpChange}>{`(${me.lpChange})`}</span>
+          </div>
+          <div className={styles.spacer}></div>
+          <div className={styles.lpBar}>
+            <span className={styles.lp}>{`${you.lp}`}</span>
+            <span className={styles.lpChange}>{`(${you.lpChange})`}</span>
+          </div>
         </div>
         <div className={styles.rounds}>
           {rounds.map((r, i) => {
@@ -41,16 +55,3 @@ export default function MatchDetail({
     </div>
   );
 }
-
-const exampleDetail = {
-  duration: 0,
-  me: {
-    lp: 0,
-    lpChange: 0,
-  },
-  you: {
-    lp: 0,
-    lpChange: 0,
-  },
-  rounds: [],
-};

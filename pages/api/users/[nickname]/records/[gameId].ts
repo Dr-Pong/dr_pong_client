@@ -13,7 +13,6 @@ export default (
 ) => {
   const { gameId } = req.query;
   if (req.method === 'GET') {
-    console.log('in get');
     switch (gameId) {
       case '1':
         res.status(200).json({
