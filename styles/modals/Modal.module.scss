@@ -19,12 +19,16 @@
   align-items: stretch;
   width: 80vw;
   max-width: 20rem;
+  max-height: 80vh;
   padding: 2rem 1.5rem;
+  color: black;
   background: white;
   border-radius: $basic-radius;
-  color: black;
 }
 
+.modalBody {
+  overflow-y: scroll;
+}
 .blank {
   height: 1.5rem;
 }

@@ -1,4 +1,4 @@
-import styles from 'styles/layouts/Modal.module.scss';
+import styles from 'styles/modals/Modal.module.scss';
 
 type ModalPhraseProps = {
   children: React.ReactNode;
