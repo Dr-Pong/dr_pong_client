@@ -1,4 +1,7 @@
 import React from 'react';
+
+import styles from 'styles/records/Player.module.scss';
+
 export default function Player({
   nickname,
   imgUrl,
@@ -7,7 +10,7 @@ export default function Player({
   imgUrl: string;
 }) {
   return (
-    <div>
+    <div className={styles.player}>
       <img src={imgUrl}></img>
       <div>{nickname}</div>
     </div>
