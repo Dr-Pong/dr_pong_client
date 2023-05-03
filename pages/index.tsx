@@ -1,6 +1,6 @@
 // import 'i18n';
 import useTranslation from 'next-translate/useTranslation';
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import Link from 'next/link';
 
