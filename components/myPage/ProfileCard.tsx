@@ -30,16 +30,20 @@ export default function ProfileCard({ nickname }: { nickname: string }) {
     if (detailDto === defaultDetailDto) return;
     if (!editable && tab === 'profile') {
       const { image, title, statusMessage } = detailDto;
-      mutate({
+      patchImage.mutate({
         imgId: image.id,
+      });
+      patchTitle.mutate({
         title: title?.id || null,
+      });
+      patchMessage.mutate({
         message: statusMessage,
       });
     }
   }, [editable]);
 
   const { isLoading, isError, data: userDetail } = getProfile(setDetailDto);
-  const { mutate } = patchProfile();
+  const { patchImage, patchTitle, patchMessage } = patchProfile();
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
