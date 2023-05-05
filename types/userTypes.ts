@@ -37,21 +37,6 @@ export interface UserStat {
   };
 }
 
-export interface Achievement {
-  id: number;
-  name: string;
-  imgUrl: string;
-  content: string;
-  status: string;
-}
-
-export interface Emoji {
-  id: number;
-  name: string;
-  imgUrl: string;
-  status: string;
-}
-
 export interface Title {
   id: number;
   title: string;
@@ -68,11 +53,26 @@ export interface Image {
   url: string;
 }
 
-export interface PatchDetail {
-  imgId: number;
-  title: number | null;
-  message: string;
+export type Selectable = {
+  id: number;
+  name: string;
+  imgUrl: string;
+  status: string;
+};
+export interface Achievement extends Selectable {
+  content: string;
 }
+
+export interface Achievements {
+  achievements: (Achievement | null)[];
+}
+export interface Emoji extends Selectable {}
+
+export interface Emojis {
+  emojis: (Emoji | null)[];
+}
+
+export type Selectables = Achievements | Emojis;
 
 export interface PatchAchievements {
   achievements: number[];
@@ -83,9 +83,137 @@ export interface PatchEmojis {
 }
 
 export type PatchSelectables = PatchAchievements | PatchEmojis;
-export interface Achievements {
-  achievements: (Achievement | null)[];
+
+export interface SelectablesClass {
+  getSelectables(): (Selectable | null)[];
+  getSelected(): (number | null)[];
+  isEmpty(): boolean;
+  copyJSON(other: Selectables): SelectablesClass;
+  copyArray(other: (Selectable | null)[]): SelectablesClass;
+  selectItem(item: Selectable): SelectablesClass;
+  deselectItem(item: Selectable): SelectablesClass;
+  replaceWithNull(item: Selectable): SelectablesClass;
+  clone(): SelectablesClass;
 }
-export interface Emojis {
-  emojis: (Emoji | null)[];
+
+export class AchievementsClass implements SelectablesClass {
+  private achievements: (Achievement | null)[];
+  constructor(selectables: (Selectable | null)[]) {
+    this.achievements = selectables as (Achievement | null)[];
+  }
+
+  static getQuery(): string {
+    return 'achievements';
+  }
+  getSelectables(): (Achievement | null)[] {
+    return this.achievements;
+  }
+  getSelected(): (number | null)[] {
+    return this.achievements.map((item) => item?.id ?? null);
+  }
+  isEmpty(): boolean {
+    return this.achievements.length === 0;
+  }
+  copyJSON(other: Selectables): AchievementsClass {
+    const achievements = other as Achievements;
+    this.achievements = achievements.achievements;
+    return this;
+  }
+  copyArray(other: (Selectable | null)[]): AchievementsClass {
+    this.achievements = other as (Achievement | null)[];
+    return this;
+  }
+  selectItem(item: Selectable): AchievementsClass {
+    if (
+      this.achievements.includes(null) &&
+      !this.achievements.some((achievement) => achievement?.id === item.id)
+    ) {
+      item.status = 'selected';
+      this.achievements[this.achievements.indexOf(null)] = item as Achievement;
+    }
+    return this;
+  }
+  deselectItem(item: Selectable): AchievementsClass {
+    const index = this.achievements.findIndex(
+      (achievement) => achievement?.id === item.id
+    );
+    if (index !== -1) {
+      item.status = 'achieved';
+      this.achievements[index] = item as Achievement;
+    }
+    return this;
+  }
+  replaceWithNull(item: Selectable): AchievementsClass {
+    const index = this.achievements.findIndex(
+      (achievement) => achievement?.id === item.id
+    );
+    if (index !== -1) {
+      this.achievements[index] = null;
+    }
+    return this;
+  }
+  clone(): AchievementsClass {
+    const clone = new AchievementsClass([]);
+    clone.copyArray(this.achievements);
+    return clone;
+  }
+}
+
+export class EmojisClass implements SelectablesClass {
+  private emojis: (Emoji | null)[];
+  constructor(emojis: (Selectable | null)[]) {
+    this.emojis = emojis as (Emoji | null)[];
+    this.emojis = this.emojis.filter((i) => i?.status !== 'unachieved');
+  }
+
+  static getQuery(): string {
+    return 'emojis';
+  }
+  getSelectables(): (Emoji | null)[] {
+    return this.emojis;
+  }
+  getSelected(): (number | null)[] {
+    return this.emojis.map((item) => item?.id ?? null);
+  }
+  isEmpty(): boolean {
+    return this.emojis.length === 0;
+  }
+  copyJSON(other: Selectables): EmojisClass {
+    const emojis = other as Emojis;
+    this.emojis = emojis.emojis.filter((i) => i?.status !== 'unachieved');
+    return this;
+  }
+  copyArray(other: (Selectable | null)[]): EmojisClass {
+    this.emojis = other as (Emoji | null)[];
+    return this;
+  }
+  selectItem(item: Selectable): EmojisClass {
+    if (
+      this.emojis.includes(null) &&
+      !this.emojis.some((emoji) => emoji?.id === item.id)
+    ) {
+      item.status = 'selected';
+      this.emojis[this.emojis.indexOf(null)] = item as Emoji;
+    }
+    return this;
+  }
+  deselectItem(item: Selectable): EmojisClass {
+    const index = this.emojis.findIndex((emoji) => emoji?.id === item.id);
+    if (index !== -1) {
+      this.emojis[index] = item as Emoji;
+    }
+    return this;
+  }
+  replaceWithNull(item: Selectable): EmojisClass {
+    const index = this.emojis.findIndex((emoji) => emoji?.id === item.id);
+    if (index !== -1) {
+      this.emojis[index] = null;
+    }
+    return this;
+  }
+  clone(): EmojisClass {
+    const clone = new EmojisClass([]);
+    clone.copyArray(this.emojis);
+    return clone;
+  }
 }
