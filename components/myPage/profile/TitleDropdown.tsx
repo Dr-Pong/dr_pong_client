@@ -10,7 +10,7 @@ import { Title } from 'types/userTypes';
 import useMyPageQuery from 'hooks/useMyPageQuery';
 
 import Dropdown from 'components/global/Dropdown';
-import { DetailDto } from 'components/myPage/ProfileCard';
+import { DetailDto } from 'components/myPage/profile/ProfileCard';
 
 export default function TitleDropdown({
   detailDto,

@@ -9,9 +9,9 @@ import { Image, Title, UserDetail } from 'types/userTypes';
 
 import useMyPageQuery from 'hooks/useMyPageQuery';
 
-import ProfileImage from 'components/myPage/ProfileImage';
-import ProfileStatusMessage from 'components/myPage/ProfileStatusMessage';
-import TitleDropdown from 'components/myPage/TitleDropdown';
+import ProfileImage from 'components/myPage/profile/ProfileImage';
+import ProfileStatusMessage from 'components/myPage/profile/ProfileStatusMessage';
+import TitleDropdown from 'components/myPage/profile/TitleDropdown';
 
 import styles from 'styles/myPage/ProfileCard.module.scss';
 

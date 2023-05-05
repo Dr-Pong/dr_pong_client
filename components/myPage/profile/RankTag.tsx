@@ -2,7 +2,7 @@ import useTranslation from 'next-translate/useTranslation';
 
 import React from 'react';
 
-import { RankProps } from 'components/myPage/StatCard';
+import { RankProps } from 'components/myPage/profile/StatCard';
 
 import styles from 'styles/myPage/RankTag.module.scss';
 

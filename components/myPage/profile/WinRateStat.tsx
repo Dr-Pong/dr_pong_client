@@ -1,7 +1,7 @@
 import React from 'react';
 import useTranslation from 'next-translate/useTranslation';
 
-import { WinRateStatProps } from 'components/myPage/StatCard';
+import { WinRateStatProps } from 'components/myPage/profile/StatCard';
 
 import styles from 'styles/myPage/WinRateStat.module.scss';
 

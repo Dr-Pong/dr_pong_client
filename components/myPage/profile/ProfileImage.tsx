@@ -10,7 +10,7 @@ import UserImages from 'components/global/UserImages';
 import BasicButton from 'components/global/buttons/BasicButton';
 import ModalButton from 'components/global/buttons/CloseModalButton';
 import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
-import { DetailDto } from 'components/myPage/ProfileCard';
+import { DetailDto } from 'components/myPage/profile/ProfileCard';
 
 import styles from 'styles/myPage/ProfileImage.module.scss';
 
