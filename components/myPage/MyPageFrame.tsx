@@ -14,8 +14,8 @@ import { editableState, tabState, userState } from 'recoils/user';
 import BasicButton from 'components/global/buttons/BasicButton';
 import ModalButton from 'components/global/buttons/CloseModalButton';
 import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
-import Profile from 'components/myPage/Profile';
 import SelectTab from 'components/myPage/SelectTab';
+import Profile from 'components/myPage/profile/Profile';
 
 import styles from 'styles/MyPage/MyPageFrame.module.scss';
 
@@ -63,12 +63,13 @@ export default function MyPageFrame() {
     setOpenModal(true);
   };
   const handleTabClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (tab === event.currentTarget.id) return;
+    const div = event.target as HTMLDivElement;
+    if (tab === div.id) return;
     if (editable)
       warnBeforeMovingWhenEditable(() => {
-        setTab(event.currentTarget.id);
+        setTab(div.id);
       });
-    else setTab(event.currentTarget.id);
+    else setTab(div.id);
   };
 
   const tabs: { [key: string]: JSX.Element } = {
