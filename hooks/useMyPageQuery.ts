@@ -11,7 +11,11 @@ const useMyPageQuery = (nickname: string, type?: string) => {
     return get('userDetail', `/users/${nickname}/detail`, setter);
   };
   const patchProfile = () => {
-    return patch(`/users/${nickname}/detail`, 'userDetail');
+    return {
+      patchImage: patch(`/users/${nickname}/image`, 'userDetail'),
+      patchTitle: patch(`/users/${nickname}/title`, 'userDetail'),
+      patchMessage: patch(`/users/${nickname}/message`, 'userDetail'),
+    };
   };
   const getAll = (setter?: AchievementsSetter | EmojisSetter) => {
     return get([`all${type}`], `/users/${nickname}/${type}`, setter);
