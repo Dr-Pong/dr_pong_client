@@ -75,18 +75,18 @@ export interface Emojis {
 export type Selectables = Achievements | Emojis;
 
 export interface PatchAchievements {
-  achievements: number[];
+  ids: number[];
 }
 
 export interface PatchEmojis {
-  emojis: number[];
+  ids: number[];
 }
 
 export type PatchSelectables = PatchAchievements | PatchEmojis;
 
 export interface SelectablesClass {
   getSelectables(): (Selectable | null)[];
-  getSelected(): (number | null)[];
+  getSelected(): { ids: (number | null)[] };
   isEmpty(): boolean;
   copyJSON(other: Selectables): SelectablesClass;
   copyArray(other: (Selectable | null)[]): SelectablesClass;
@@ -102,16 +102,18 @@ export class AchievementsClass implements SelectablesClass {
     this.achievements = selectables as (Achievement | null)[];
   }
 
-  static getQuery(): string {
+  static getQuery() {
     return 'achievements';
   }
   getSelectables(): (Achievement | null)[] {
     return this.achievements;
   }
-  getSelected(): (number | null)[] {
-    return this.achievements.map((item) => item?.id ?? null);
+  getSelected() {
+    return {
+      ids: this.achievements.map((item) => item?.id ?? null),
+    };
   }
-  isEmpty(): boolean {
+  isEmpty() {
     return this.achievements.length === 0;
   }
   copyJSON(other: Selectables): AchievementsClass {
@@ -166,16 +168,18 @@ export class EmojisClass implements SelectablesClass {
     this.emojis = this.emojis.filter((i) => i?.status !== 'unachieved');
   }
 
-  static getQuery(): string {
+  static getQuery() {
     return 'emojis';
   }
   getSelectables(): (Emoji | null)[] {
     return this.emojis;
   }
-  getSelected(): (number | null)[] {
-    return this.emojis.map((item) => item?.id ?? null);
+  getSelected() {
+    return {
+      ids: this.emojis.map((item) => item?.id ?? null),
+    };
   }
-  isEmpty(): boolean {
+  isEmpty() {
     return this.emojis.length === 0;
   }
   copyJSON(other: Selectables): EmojisClass {

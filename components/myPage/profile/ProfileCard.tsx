@@ -31,10 +31,10 @@ export default function ProfileCard({ nickname }: { nickname: string }) {
     if (!editable && tab === 'profile') {
       const { image, title, statusMessage } = detailDto;
       patchImage.mutate({
-        imgId: image.id,
+        id: image.id,
       });
       patchTitle.mutate({
-        title: title?.id || null,
+        id: title?.id || null,
       });
       patchMessage.mutate({
         message: statusMessage,
