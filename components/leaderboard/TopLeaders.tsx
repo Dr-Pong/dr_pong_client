@@ -5,9 +5,10 @@ import { modalPartsState, openModalState } from 'recoils/modal';
 import { TopRanker } from 'types/rankTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
+import useModalProvider from 'hooks/useModalProvider';
 
 import ProfileButtons from 'components/global/buttons/buttonContainers/ProfileButtons';
-import Profile from 'components/myPage/Profile';
+import Profile from 'components/myPage/profile/Profile';
 
 import styles from 'styles/leaderboard/TopLeaders.module.scss';
 
@@ -16,9 +17,8 @@ type TopLeadersProps = {
 };
 
 export default function TopLeaders({ topLeaderCount }: TopLeadersProps) {
-  const setModalParts = useSetRecoilState(modalPartsState);
-  const setOpenModal = useSetRecoilState(openModalState);
   const { get } = useCustomQuery();
+  const { useProfileModal } = useModalProvider();
   const { data, isLoading, isError } = get(
     ['topRank_key'],
     `/ranks/top?count=${topLeaderCount}`
@@ -40,12 +40,7 @@ export default function TopLeaders({ topLeaderCount }: TopLeadersProps) {
 
   const handleNicknameClick = (e: React.MouseEvent<HTMLElement>) => {
     const nickname = (e.target as HTMLElement).innerHTML;
-    setModalParts({
-      head: null,
-      body: <Profile nickname={nickname} />,
-      tail: <ProfileButtons target={nickname} />,
-    });
-    setOpenModal(true);
+    useProfileModal(nickname);
   };
 
   if (isLoading) return null;
@@ -61,7 +56,12 @@ export default function TopLeaders({ topLeaderCount }: TopLeadersProps) {
             </div>
             <div className={styles.leaderProfile}>
               <img src={imgUrl} alt='profile' />
-              <div onClick={handleNicknameClick}>{nickname}</div>
+              <div
+                className={styles.leaderNickname}
+                onClick={handleNicknameClick}
+              >
+                {nickname}
+              </div>
               <div>{lp}</div>
             </div>
           </div>
