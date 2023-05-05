@@ -8,8 +8,8 @@ import { Achievement, Achievements } from 'types/userTypes';
 
 import useMyPageQuery from 'hooks/useMyPageQuery';
 
-import ProfileCard from 'components/myPage/profile/ProfileCard';
 import SelectableItem from 'components/myPage/SelectableItem';
+import ProfileCard from 'components/myPage/profile/ProfileCard';
 import StatCard from 'components/myPage/profile/StatCard';
 
 import styles from 'styles/myPage/Profile.module.scss';

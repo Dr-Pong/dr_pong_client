@@ -1,6 +1,7 @@
 import { Ranker } from 'types/rankTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
+import useModalProvider from 'hooks/useModalProvider';
 
 import styles from 'styles/leaderboard/BottomLeaders.module.scss';
 
@@ -14,13 +15,15 @@ export default function BottomLeaders({
   bottomLeaderCount,
 }: LeadersProps) {
   const { get } = useCustomQuery();
+  const { useProfileModal } = useModalProvider();
   const { data, isLoading, isError } = get(
     ['bottomRank_key'],
     `/ranks/bottom?count=${bottomLeaderCount}&offset=${topLeaderCount + 1}`
   );
 
-  const handleNicknameClick = () => {
-    // 프로필 모달 띄우기
+  const handleNicknameClick = (e: React.MouseEvent<HTMLElement>) => {
+    const nickname = (e.target as HTMLElement).innerHTML;
+    useProfileModal(nickname);
   };
 
   if (isLoading) return null;

@@ -1,7 +1,7 @@
-import styles from 'styles/leaderboard/Leaderboard.module.scss';
-
 import BottomLeaders from 'components/leaderboard/BottomLeaders';
 import TopLeaders from 'components/leaderboard/TopLeaders';
+
+import styles from 'styles/leaderboard/Leaderboard.module.scss';
 
 export default function LeaderboardFrame() {
   const [topLeaderCount, bottomLeaderCount] = [3, 197];

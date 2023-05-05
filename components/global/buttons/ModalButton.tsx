@@ -6,14 +6,19 @@ import { ButtonProps } from 'types/buttonTypes';
 
 import styles from 'styles/global/Button.module.scss';
 
-export default function CloseModalButton({ style, color, children }: ButtonProps) {
+export default function ModalButton({
+  style,
+  color,
+  handleButtonClick,
+  children,
+}: ButtonProps) {
   const setOpenModal = useSetRecoilState(openModalState);
-  const handleModalClose = () => {
+  const handleButtonClickAndClose = (e: React.FormEvent<HTMLFormElement>) => {
+    handleButtonClick?.(e);
     setOpenModal(false);
   };
-
   return (
-    <form onClick={handleModalClose}>
+    <form onClick={handleButtonClickAndClose}>
       <button className={`${styles[style]} ${styles[color]}`} type='button'>
         {children}
       </button>
