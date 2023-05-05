@@ -3,11 +3,14 @@ import { useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
 
 import { useLayoutEffect } from 'react';
+import { ReactElement } from 'react';
 import { useCookies } from 'react-cookie';
 
 import { loginState } from 'recoils/login';
 
 import useCustomQuery from 'hooks/useCustomQuery';
+
+import DefaultLayout from 'components/layouts/DefaultLayout';
 
 export default function Login() {
   const setLogin = useSetRecoilState(loginState);
@@ -45,3 +48,7 @@ export default function Login() {
 
   return <></>;
 }
+
+Login.getLayout = function getLayout(page: ReactElement) {
+  return <DefaultLayout>{page}</DefaultLayout>;
+};

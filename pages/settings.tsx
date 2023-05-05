@@ -1,6 +1,9 @@
 import useTranslation from 'next-translate/useTranslation';
 
+import { ReactElement } from 'react';
+
 import PageHeader from 'components/global/PageHeader';
+import NavigationLayout from 'components/layouts/NavigationLayout';
 import SettingsFrame from 'components/settings/SettingsFrame';
 
 import styles from 'styles/settings/Settings.module.scss';
@@ -15,3 +18,7 @@ export default function Settings() {
     </div>
   );
 }
+
+Settings.getLayout = function getLayout(page: ReactElement) {
+  return <NavigationLayout>{page}</NavigationLayout>;
+};

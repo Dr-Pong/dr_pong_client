@@ -3,15 +3,16 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 
 import React, { useState } from 'react';
+import { ReactElement } from 'react';
 
 import PageHeader from 'components/global/PageHeader';
+import SearchBar from 'components/global/SearchBar';
+import NavigationLayout from 'components/layouts/NavigationLayout';
 import MatchHistory from 'components/records/MatchHistory';
 
 import styles from 'styles/records/Records.module.scss';
 
-import SearchBar from '../../components/global/SearchBar';
-
-export default function MatchHistoryPage() {
+export default function Records() {
   const router = useRouter();
   const { t } = useTranslation('records');
   const defaultNickname = router.query.nickname as string; // TODO: nickname error handle when undefined or arr
@@ -25,3 +26,7 @@ export default function MatchHistoryPage() {
     </div>
   );
 }
+
+Records.getLayout = function getLayout(page: ReactElement) {
+  return <NavigationLayout>{page}</NavigationLayout>;
+};
