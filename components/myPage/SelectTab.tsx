@@ -41,17 +41,16 @@ export default function SelectTab({
       return;
     }
     if (!editable) {
-      console.log('patching');
       mutate({ ...selected.getSelected() });
     }
   }, [editable]);
 
-  const setSelectedItems = () => {
+  const setSelectedFromJson = () => {
     return (selectables: Selectables) => {
       setSelected(selected.copyJSON(selectables).clone());
     };
   };
-  const setAllItems = () => {
+  const setAllFromJSON = () => {
     return (selectables: Selectables) => {
       setAll(all.copyJSON(selectables).clone());
     };
@@ -69,9 +68,9 @@ export default function SelectTab({
   };
   const { mutate } = patchSelectables();
   const { isLoading: isSelectedLoading, isError: isSelectedError } =
-    getSelected(setSelectedItems());
+    getSelected(setSelectedFromJson());
   const { isLoading: isAllLoading, isError: isAllError } = getAll(
-    setAllItems()
+    setAllFromJSON()
   );
 
   if (isSelectedLoading || isAllLoading) return <div>Loading...</div>;
