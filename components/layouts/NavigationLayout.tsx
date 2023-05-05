@@ -6,34 +6,30 @@ import { userState } from 'recoils/user';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
-import SignUp from 'pages/signUp';
-
 import NavigationBar from 'components/layouts/NavigationBar';
 import Modal from 'components/modals/Modal';
 
 import styles from 'styles/layouts/Layout.module.scss';
 
-type LayoutProps = {
+type NavigationLayoutProps = {
   children: React.ReactNode;
 };
 
-export default function Layout({ children }: LayoutProps) {
-  const router = useRouter();
+export default function NavigationLayout({ children }: NavigationLayoutProps) {
   const [user, setUser] = useRecoilState(userState);
   const { get } = useCustomQuery();
   const { data, isLoading, isError } = get(['user_key'], '/users/me', setUser);
+  const router = useRouter();
 
   if (isLoading) return null;
-
-  if (user.roleType === 'noname') return <SignUp />;
+  if (user.roleType === 'noname') router.push('/signUp');
 
   return (
     <div id='layoutRoot'>
       <Modal />
       <div className={styles.layoutContainer}>
         <div className={styles.pageContainer}>{children}</div>
-        {!router.asPath.includes('login') &&
-          !router.asPath.includes('signUp') && <NavigationBar />}
+        <NavigationBar />
       </div>
     </div>
   );
