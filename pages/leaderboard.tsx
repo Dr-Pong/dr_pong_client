@@ -3,6 +3,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { ReactElement } from 'react';
 
 import PageHeader from 'components/global/PageHeader';
+import LoginFilter from 'components/layouts/LoginFilter';
 import NavigationLayout from 'components/layouts/NavigationLayout';
 import LeaderboardFrame from 'components/leaderboard/LeaderboardFrame';
 
@@ -19,5 +20,9 @@ export default function Leaderboard() {
 }
 
 Leaderboard.getLayout = function getLayout(page: ReactElement) {
-  return <NavigationLayout>{page}</NavigationLayout>;
+  return (
+    <LoginFilter>
+      <NavigationLayout>{page}</NavigationLayout>
+    </LoginFilter>
+  );
 };

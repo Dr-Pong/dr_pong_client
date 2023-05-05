@@ -4,12 +4,12 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import Link from 'next/link';
 
-import React from 'react';
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 
 import { loginState } from 'recoils/login';
 import { userState } from 'recoils/user';
 
+import LoginFilter from 'components/layouts/LoginFilter';
 import NavigationLayout from 'components/layouts/NavigationLayout';
 
 import styles from 'styles/index/Home.module.scss';
@@ -46,5 +46,9 @@ export default function Home() {
 }
 
 Home.getLayout = function getLayout(page: ReactElement) {
-  return <NavigationLayout>{page}</NavigationLayout>;
+  return (
+    <LoginFilter>
+      <NavigationLayout>{page}</NavigationLayout>
+    </LoginFilter>
+  );
 };

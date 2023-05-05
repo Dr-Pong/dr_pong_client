@@ -12,6 +12,10 @@ import 'styles/globals.css';
 
 const queryClient = new QueryClient();
 
+export type LayoutProps = {
+  children: React.ReactNode;
+};
+
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };

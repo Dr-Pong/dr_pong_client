@@ -8,7 +8,8 @@ import { useCookies } from 'react-cookie';
 
 import { loginState } from 'recoils/login';
 
-import DefaultLayout from 'components/layouts/DefaultLayout';
+import Layout from 'components/layouts/Layout';
+import LoginFilter from 'components/layouts/LoginFilter';
 import LoginButtons from 'components/login/LoginButtons';
 
 import styles from 'styles/login/Login.module.scss';
@@ -34,5 +35,9 @@ export default function Login() {
 }
 
 Login.getLayout = function getLayout(page: ReactElement) {
-  return <DefaultLayout>{page}</DefaultLayout>;
+  return (
+    <LoginFilter>
+      <Layout>{page}</Layout>
+    </LoginFilter>
+  );
 };

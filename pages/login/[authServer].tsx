@@ -10,7 +10,8 @@ import { loginState } from 'recoils/login';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
-import DefaultLayout from 'components/layouts/DefaultLayout';
+import Layout from 'components/layouts/Layout';
+import LoginFilter from 'components/layouts/LoginFilter';
 
 export default function Login() {
   const setLogin = useSetRecoilState(loginState);
@@ -50,5 +51,9 @@ export default function Login() {
 }
 
 Login.getLayout = function getLayout(page: ReactElement) {
-  return <DefaultLayout>{page}</DefaultLayout>;
+  return (
+    <LoginFilter>
+      <Layout>{page}</Layout>
+    </LoginFilter>
+  );
 };
