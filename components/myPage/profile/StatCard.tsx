@@ -9,8 +9,8 @@ import { UserStat } from 'types/userTypes';
 
 import useMyPageQuery from 'hooks/useMyPageQuery';
 
-import RankTag from 'components/myPage/RankTag';
-import WinRateStat from 'components/myPage/WinRateStat';
+import RankTag from 'components/myPage/profile/RankTag';
+import WinRateStat from 'components/myPage/profile/WinRateStat';
 
 import styles from 'styles/myPage/StatCard.module.scss';
 

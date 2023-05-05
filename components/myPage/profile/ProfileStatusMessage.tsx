@@ -4,7 +4,7 @@ import React from 'react';
 
 import { editableState } from 'recoils/user';
 
-import { DetailDto } from 'components/myPage/ProfileCard';
+import { DetailDto } from 'components/myPage/profile/ProfileCard';
 
 import styles from 'styles/myPage/ProfileStatusMessage.module.scss';
 
