@@ -2,8 +2,8 @@ import { Achievements, Emojis, Titles } from 'types/userTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
-import { DetailDto } from 'components/myPage/ProfileCard';
-import { empty } from 'components/myPage/TitleDropdown';
+import { DetailDto } from 'components/myPage/profile/ProfileCard';
+import { empty } from 'components/myPage/profile/TitleDropdown';
 
 const useMyPageQuery = (nickname: string, type?: string) => {
   const { get, patch } = useCustomQuery();
