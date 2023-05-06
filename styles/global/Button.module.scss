@@ -1,24 +1,19 @@
 @import 'styles/common.scss';
 
 .buttonRowContainer {
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20%, auto));
+  gap: 1.5rem;
 }
 
 .fourButtonsContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(30%, auto));
+  grid-template-columns: repeat(auto-fit, minmax(30%, auto));
   gap: 0.5rem;
   div:nth-child(1) {
     grid-row: 1 / span 1;
     grid-column: 1 / span 3;
   }
-}
-
-.twoButtonsContainer {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.5rem;
 }
 
 .small {
