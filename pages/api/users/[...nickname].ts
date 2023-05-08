@@ -8,9 +8,13 @@ import {
   UserStat,
 } from 'types/userTypes';
 
+type Error = {
+  message: string;
+};
+
 export default (
   req: NextApiRequest,
-  res: NextApiResponse<UserDetail | UserStat | Emojis | Achievements | Titles>
+  res: NextApiResponse<UserDetail | UserStat | Emojis | Achievements | Titles | Error>
 ) => {
   const {
     query: { nickname, selected },
@@ -35,9 +39,6 @@ export default (
         statusMessage: 'I am the boss',
       });
       return;
-    case 'stat':
-      res.status(200).json(stat);
-      return;
     case 'achievements':
       if (selected) {
         res.status(200).json(selectedAchievements);
@@ -55,27 +56,6 @@ export default (
     case 'titles':
       res.status(200).json(titles);
   }
-};
-
-const stat = {
-  totalStat: {
-    win: 100,
-    ties: 5,
-    lose: 50,
-    winRate: 67.5,
-  },
-  seasonStat: {
-    winRate: 72,
-    win: 10,
-    ties: 1,
-    lose: 4,
-    record: 3190,
-    rank: 120,
-  },
-  bestStat: {
-    record: 5000,
-    rank: 1,
-  },
 };
 
 const selectedAchievements = {
