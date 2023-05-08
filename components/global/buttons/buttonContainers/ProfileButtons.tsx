@@ -89,7 +89,7 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
     [key: string]: { style: string; buttons: string[] };
   } = {
     blocked: {
-      style: 'twoButtonsContainer',
+      style: 'buttonRowContainer',
       buttons: ['report', 'unblock'],
     },
     friend: {
