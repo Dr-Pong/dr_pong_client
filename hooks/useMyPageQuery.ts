@@ -34,7 +34,36 @@ const useMyPageQuery = (nickname: string, type?: string) => {
     ]);
   };
   const getStat = () => {
-    return get(`userStat`, `/users/${nickname}/stat`);
+    const {
+      data: totalStat,
+      isLoading: tsLoading,
+      isError: tsError,
+    } = get(`userTotalStat`, `/users/${nickname}/stats/total`);
+    const {
+      data: seasonStat,
+      isLoading: ssLoading,
+      isError: ssError,
+    } = get(`userSeasonStat`, `/users/${nickname}/stats/season`);
+    const {
+      data: totalRank,
+      isLoading: trLoading,
+      isError: trError,
+    } = get(`userTotalRank`, `/users/${nickname}/ranks/total`);
+    const {
+      data: seasonRank,
+      isLoading: srLoading,
+      isError: srError,
+    } = get(`userSeasonRank`, `/users/${nickname}/ranks/season`);
+    return {
+      data: {
+        totalStat,
+        seasonStat,
+        totalRank,
+        seasonRank,
+      },
+      isLoading: tsLoading || ssLoading || trLoading || srLoading,
+      isError: tsError || ssError || trError || srError,
+    };
   };
   const getTitles = () => {
     return get(
