@@ -2,28 +2,37 @@ import useTranslation from 'next-translate/useTranslation';
 
 import React from 'react';
 
-import { RankProps } from 'components/myPage/profile/StatCard';
+import { UserRank } from 'types/userTypes';
 
 import styles from 'styles/myPage/RankTag.module.scss';
 
-export default function RankTag({ rankProps }: { rankProps: RankProps }) {
+export default function RankTag({
+  rankProps,
+  isBest,
+}: {
+  rankProps: UserRank;
+  isBest: boolean;
+}) {
   const { t } = useTranslation('myPage');
-  const { record, rank, isBestRecord } = rankProps;
-  const rankSign = rankSignSelector(rank);
+  console.log(rankProps);
+  const { record, rank, tier } = rankProps;
   return (
-    <div
-      className={styles.rankTag}
-      id={isBestRecord ? styles.column : styles.row}
-    >
-      {isBestRecord && (
-        <span className={styles.bestRecord}>{t('Best Record')}</span>
+    <div className={styles.rankTag} id={isBest ? styles.column : styles.row}>
+      {isBest && <span className={styles.bestRecord}>{t('Best Record')}</span>}
+      <span className={styles.tier}>{tier}</span>
+      {tier === 'doctor' && (
+        <>
+          <span className={styles.record}>{`${record} LP`}</span>
+          <span className={styles.rank}>{`${rank}${t(
+            rankSignSelector(rank)
+          )}`}</span>
+        </>
       )}
-      <span className={styles.record}>{`${record} LP`}</span>
-      <span className={styles.rank}>{`${rank}${t(rankSign)}`}</span>
     </div>
   );
 }
-const rankSignSelector = (rank: number): string => {
+const rankSignSelector = (rank: number | null): string => {
+  if (rank === null) return '';
   const firstDigit = rank.toString().slice(-1);
   switch (firstDigit) {
     case '1':

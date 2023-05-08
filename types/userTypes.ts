@@ -17,24 +17,16 @@ export interface UserDetail {
 }
 
 export interface UserStat {
-  totalStat: {
-    winRate: number;
-    win: number;
-    ties: number;
-    lose: number;
-  };
-  seasonStat: {
-    winRate: number;
-    win: number;
-    ties: number;
-    lose: number;
-    record: number;
-    rank: number;
-  };
-  bestStat: {
-    record: number;
-    rank: number;
-  };
+  winRate: number;
+  wins: number;
+  ties: number;
+  loses: number;
+}
+
+export interface UserRank {
+  record: number | null;
+  rank: number | null;
+  tier: 'doctor' | 'master' | 'bachelor' | 'student' | 'egg';
 }
 
 export interface Title {
