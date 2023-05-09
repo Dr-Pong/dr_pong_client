@@ -7,7 +7,7 @@ const useRelationRequestQuery = () => {
     mutationPost.mutate({ path: `/users/friends/${nickname}`, body: {} });
   };
 
-  const friendDeleteRequest = (nickname: string) => {
+  const breakupRequest = (nickname: string) => {
     mutationDelete(`/users/friends/${nickname}`).mutate();
   };
 
@@ -15,14 +15,14 @@ const useRelationRequestQuery = () => {
     mutationPost.mutate({ path: `/users/blocks/${nickname}`, body: {} });
   };
 
-  const withdrawBlockRequest = (nickname: string) => {
+  const unblockRequest = (nickname: string) => {
     mutationDelete(`/users/blocks/${nickname}`).mutate();
   };
   return {
     friendRequest,
-    friendDeleteRequest,
+    breakupRequest,
     blockRequest,
-    withdrawBlockRequest,
+    unblockRequest,
   };
 };
 

@@ -23,9 +23,9 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
   const { get } = useCustomQuery();
   const {
     friendRequest,
-    friendDeleteRequest,
+    breakupRequest,
     blockRequest,
-    withdrawBlockRequest,
+    unblockRequest,
   } = useRelationRequestQuery();
   const { data, isLoading, isError } = get(
     '',
@@ -45,7 +45,7 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
   };
 
   const unblockUser = () => {
-    withdrawBlockRequest(target);
+    unblockRequest(target);
   };
 
   const addFriend = () => {
@@ -53,7 +53,7 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
   };
 
   const deleteFriend = () => {
-    friendDeleteRequest(target);
+    breakupRequest(target);
   };
 
   const buttons: { [key: string]: React.ReactNode } = {
