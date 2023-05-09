@@ -14,7 +14,6 @@ export default function RankTag({
   isBest: boolean;
 }) {
   const { t } = useTranslation('myPage');
-  console.log(rankProps);
   const { record, rank, tier } = rankProps;
   return (
     <div className={styles.rankTag} id={isBest ? styles.column : styles.row}>
@@ -22,10 +21,12 @@ export default function RankTag({
       <span className={styles.tier}>{tier}</span>
       {tier === 'doctor' && (
         <>
-          <span className={styles.record}>{`${record} LP`}</span>
-          <span className={styles.rank}>{`${rank}${t(
-            rankSignSelector(rank)
-          )}`}</span>
+          {record && <span className={styles.record}>{`${record} LP`}</span>}
+          {rank && (
+            <span className={styles.rank}>{`${rank}${t(
+              rankSignSelector(rank)
+            )}`}</span>
+          )}
         </>
       )}
     </div>
