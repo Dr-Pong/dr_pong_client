@@ -6,15 +6,15 @@ import { DetailDto } from 'components/myPage/profile/ProfileCard';
 import { empty } from 'components/myPage/profile/TitleDropdown';
 
 const useMyPageQuery = (nickname: string, type?: string) => {
-  const { get, patch } = useCustomQuery();
+  const { get, mutationPatch } = useCustomQuery();
   const getProfile = (setter: (detailDto: DetailDto) => void) => {
     return get('userDetail', `/users/${nickname}/detail`, setter);
   };
   const patchProfile = () => {
     return {
-      patchImage: patch(`/users/${nickname}/image`, 'userDetail'),
-      patchTitle: patch(`/users/${nickname}/title`, 'userDetail'),
-      patchMessage: patch(`/users/${nickname}/message`, 'userDetail'),
+      patchImage: mutationPatch(`/users/${nickname}/image`, 'userDetail'),
+      patchTitle: mutationPatch(`/users/${nickname}/title`, 'userDetail'),
+      patchMessage: mutationPatch(`/users/${nickname}/message`, 'userDetail'),
     };
   };
   const getAll = (setter?: AchievementsSetter | EmojisSetter) => {
@@ -28,7 +28,7 @@ const useMyPageQuery = (nickname: string, type?: string) => {
     );
   };
   const patchSelectables = () => {
-    return patch(`/users/${nickname}/${type}`, [
+    return mutationPatch(`/users/${nickname}/${type}`, [
       [`all${type}`],
       [`selected${type}`],
     ]);

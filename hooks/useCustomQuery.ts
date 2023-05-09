@@ -26,7 +26,7 @@ const useCustomQuery = () => {
     );
   };
 
-  const patch = (path: string, invalidateQueryKey?: QueryKey) => {
+  const mutationPatch = (path: string, invalidateQueryKey?: QueryKey) => {
     return useMutation(
       async (body: object): Promise<object> => {
         const { data } = await instance.patch(path, body);
@@ -46,7 +46,22 @@ const useCustomQuery = () => {
       instance.post(path, body)
   );
 
-  return { get, patch, mutationPost };
+  const mutationDelete = (path: string, invalidateQueryKey?: QueryKey) => {
+    return useMutation(
+      async (): Promise<object> => {
+        const { data } = await instance.delete(path);
+        return data;
+      },
+      {
+        onSuccess: () => {
+          if (invalidateQueryKey)
+            queryClient.invalidateQueries(invalidateQueryKey);
+        },
+      }
+    );
+  };
+
+  return { get, mutationPatch, mutationPost, mutationDelete };
 };
 
 export default useCustomQuery;
