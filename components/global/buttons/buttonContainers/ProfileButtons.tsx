@@ -11,7 +11,7 @@ import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/global/Button.module.scss';
 
-import useRelationRequestQuery from '../../../../hooks/useRelationRequestQuery';
+import useRelationRequestQuery from 'hooks/useRelationRequestQuery';
 
 type ProfileButtonsProps = {
   target: string;
