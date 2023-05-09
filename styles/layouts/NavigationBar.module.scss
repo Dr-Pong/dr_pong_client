@@ -8,13 +8,8 @@
   background: black;
 }
 
-.navigationButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.buttonBackground {
   margin: 0.1rem;
-  color: white;
-  text-align: center;
   border-radius: $basic-radius;
 }
 
@@ -28,4 +23,11 @@
   flex: 1.5;
   font-size: 1.5rem;
   background: $pink;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
