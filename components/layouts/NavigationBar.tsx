@@ -19,15 +19,18 @@ export default function NavigationBar() {
     { value: <FaHandsHelping />, route: '/friends', style: 'basic' },
     { value: <IoMdPerson />, route: '/myPage', style: 'basic' },
   ];
+
   return (
     <div className={styles.navigationBarContainer}>
       {navigations.map(({ value, route, style }, i) => {
         return (
           <div
             key={i}
-            className={`${styles.navigationButton} ${styles[style]}`}
+            className={`${styles.buttonBackground} ${styles[style]}`}
           >
-            <Link href={route}>{value}</Link>
+            <Link href={route} className={styles.button}>
+              {value}
+            </Link>
           </div>
         );
       })}
