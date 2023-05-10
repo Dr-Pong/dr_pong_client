@@ -6,7 +6,11 @@ import { ButtonProps } from 'types/buttonTypes';
 
 import styles from 'styles/global/Button.module.scss';
 
-export default function CloseModalButton({ style, color, children }: ButtonProps) {
+export default function CloseModalButton({
+  style,
+  color,
+  children,
+}: ButtonProps) {
   const setOpenModal = useSetRecoilState(openModalState);
   const handleModalClose = () => {
     setOpenModal(false);
@@ -14,7 +18,10 @@ export default function CloseModalButton({ style, color, children }: ButtonProps
 
   return (
     <form onClick={handleModalClose}>
-      <button className={`${styles[style]} ${styles[color]}`} type='button'>
+      <button
+        className={`${styles.button} ${styles[style]} ${styles[color]}`}
+        type='button'
+      >
         {children}
       </button>
     </form>

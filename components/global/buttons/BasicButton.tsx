@@ -10,7 +10,10 @@ export default function BasicButton({
 }: ButtonProps) {
   return (
     <form onClick={handleButtonClick}>
-      <button className={`${styles[style]} ${styles[color]}`} type='button'>
+      <button
+        className={`${styles.button} ${styles[style]} ${styles[color]}`}
+        type='button'
+      >
         {children}
       </button>
     </form>
