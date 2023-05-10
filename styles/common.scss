@@ -5,15 +5,24 @@ $pink: #ff00b6;
 $mint: #27cfdc;
 $yellow: #f8e71d;
 $blue: #3355dd;
-$blue-ish: #88AAff;
+$blue-ish: #88aaff;
 $red: #dd3344;
-$red-ish: #ff88AA;
+$red-ish: #ff88aa;
 $grey: #888888;
-$grey-ish: #BBBBBB;
+$grey-ish: #bbbbbb;
 /* border-radius */
 $basic-radius: 0.3rem;
 
 @mixin pageContainer {
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem;
+}
+
+@mixin pageWithHeaderContainer {
+  display: grid;
+  grid-template-rows: 2rem 1fr;
+  gap: 2rem;
   width: 100%;
   height: 100%;
   padding: 1.5rem;
