@@ -1,7 +1,7 @@
 @import 'styles/common.scss';
 
 .leaderboardPageContainer {
-  @include pageContainer;
+  @include pageWithHeaderContainer;
 }
 
 .leaderboardFrame {
