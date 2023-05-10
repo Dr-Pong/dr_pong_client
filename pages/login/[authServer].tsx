@@ -22,27 +22,20 @@ export default function Login() {
 
   useLayoutEffect(() => {
     if (code) {
-      setLogin(true);
-      mutationPost.mutate(
-        {
-          path: `/auth/${authServer}`,
-          body: {
-            authCode: code,
-          },
+      mutationPost(`/auth/${authServer}`, {
+        onSuccess: (res) => {
+          setCookie('Authorization', `Bearer ${res.data.token}`, {
+            path: '/',
+            httpOnly: true,
+          });
+          setLogin(true);
         },
-        {
-          onSuccess: (res) => {
-            setCookie('Authorization', `Bearer ${res.data.token}`, {
-              path: '/',
-              httpOnly: true,
-            });
-            setLogin(true);
-          },
-          onError: (e) => {
-            console.log(e);
-          },
-        }
-      );
+        onError: (e) => {
+          console.log(e);
+        },
+      }).mutate({
+        authCode: code,
+      });
       router.push('/');
     }
   }, []);
