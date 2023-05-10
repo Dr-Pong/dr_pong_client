@@ -11,7 +11,10 @@ export default function SubmitButton({
   const handleSubmit = () => {};
   return (
     <form onSubmit={handleButtonClick || handleSubmit}>
-      <button className={`${styles[style]} ${styles[color]}`} type='submit'>
+      <button
+        className={`${styles.button} ${styles[style]} ${styles[color]}`}
+        type='submit'
+      >
         {children}
       </button>
     </form>

@@ -19,7 +19,10 @@ export default function ModalButton({
   };
   return (
     <form onClick={handleButtonClickAndClose}>
-      <button className={`${styles[style]} ${styles[color]}`} type='button'>
+      <button
+        className={`${styles.button} ${styles[style]} ${styles[color]}`}
+        type='button'
+      >
         {children}
       </button>
     </form>
