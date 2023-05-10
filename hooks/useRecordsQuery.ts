@@ -6,6 +6,7 @@ import instance from 'utils/axios';
 
 const useRecordsQuery = (nickname: string) => {
   const { get } = useCustomQuery();
+
   const fetchMatchHistory = async (lastGameId: number): Promise<Records> => {
     const count = 10;
     return (
