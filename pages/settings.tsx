@@ -14,7 +14,7 @@ export default function Settings() {
 
   return (
     <div className={styles.settingsPageContainer}>
-      <PageHeader title={t('Settings')} button={null} />
+      <PageHeader title={t('Settings')} />
       <SettingsFrame />
     </div>
   );

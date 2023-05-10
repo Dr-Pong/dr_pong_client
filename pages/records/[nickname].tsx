@@ -20,7 +20,7 @@ export default function Records() {
 
   return (
     <div className={styles.recordsPageContainer}>
-      <PageHeader title={t('Match History')} button={null} />
+      <PageHeader title={t('Match History')} />
       <SearchBar onSubmit={setNickname} initValue={defaultNickname} />
       <MatchHistory key={nickname} nickname={nickname} />
     </div>

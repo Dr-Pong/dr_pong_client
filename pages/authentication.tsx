@@ -14,7 +14,7 @@ export default function Authentication() {
 
   return (
     <div className={styles.AuthenticationPageContainer}>
-      <PageHeader title={t('2fa')} button={null} />
+      <PageHeader title={t('2fa')} />
       <AuthenticationFrame />
     </div>
   );

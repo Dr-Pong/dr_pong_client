@@ -12,7 +12,7 @@ export default function Channels() {
   const { t } = useTranslation('channels');
   return (
     <div className={styles.channelsPageContainer}>
-      <PageHeader title={t('Channels')} button={null} />
+      <PageHeader title={t('Channels')} />
     </div>
   );
 }
