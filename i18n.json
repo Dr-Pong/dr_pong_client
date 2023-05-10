@@ -12,6 +12,7 @@
     "/myPage": ["myPage"],
     "/settings": ["settings"],
     "/login": ["login"],
-    "/signUp": ["signUp"]
+    "/signUp": ["signUp"],
+    "/authentication": ["authentication"]
   }
 }
