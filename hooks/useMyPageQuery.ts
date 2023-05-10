@@ -1,3 +1,5 @@
+import { QueryKey } from 'react-query';
+
 import { Achievements, Emojis, Titles } from 'types/userTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
@@ -6,15 +8,31 @@ import { DetailDto } from 'components/myPage/profile/ProfileCard';
 import { empty } from 'components/myPage/profile/TitleDropdown';
 
 const useMyPageQuery = (nickname: string, type?: string) => {
-  const { get, mutationPatch } = useCustomQuery();
+  const { get, mutationPatch, queryClient } = useCustomQuery();
   const getProfile = (setter: (detailDto: DetailDto) => void) => {
     return get('userDetail', `/users/${nickname}/detail`, setter);
   };
   const patchProfile = () => {
+    const options = (queryKey: QueryKey) => {
+      return {
+        onSuccess: () => {
+          queryClient.invalidateQueries(queryKey);
+        },
+      };
+    };
     return {
-      patchImage: mutationPatch(`/users/${nickname}/image`, 'userDetail'),
-      patchTitle: mutationPatch(`/users/${nickname}/title`, 'userDetail'),
-      patchMessage: mutationPatch(`/users/${nickname}/message`, 'userDetail'),
+      patchImage: mutationPatch(
+        `/users/${nickname}/image`,
+        options('userDetail')
+      ),
+      patchTitle: mutationPatch(
+        `/users/${nickname}/title`,
+        options('userDetail')
+      ),
+      patchMessage: mutationPatch(
+        `/users/${nickname}/message`,
+        options('userDetail')
+      ),
     };
   };
   const getAll = (setter?: AchievementsSetter | EmojisSetter) => {
@@ -28,10 +46,17 @@ const useMyPageQuery = (nickname: string, type?: string) => {
     );
   };
   const patchSelectables = () => {
-    return mutationPatch(`/users/${nickname}/${type}`, [
-      [`all${type}`],
-      [`selected${type}`],
-    ]);
+    const options = (queryKey: QueryKey) => {
+      return {
+        onSuccess: () => {
+          queryClient.invalidateQueries(queryKey);
+        },
+      };
+    };
+    return mutationPatch(
+      `/users/${nickname}/${type}`,
+      options([[`all${type}`], [`selected${type}`]])
+    );
   };
   const getStat = () => {
     const {

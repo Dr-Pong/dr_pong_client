@@ -5,11 +5,10 @@ import { useState } from 'react';
 import useCustomQuery from 'hooks/useCustomQuery';
 
 import BasicButton from 'components/global/buttons/BasicButton';
-
-import styles from 'styles/signUp/SignUp.module.scss';
-
 import SignUpFields from 'components/signUp/SignUpFields';
 import Warnings from 'components/signUp/Warnings';
+
+import styles from 'styles/signUp/SignUp.module.scss';
 
 export default function SignUpFrame() {
   const { t } = useTranslation('signUp');
@@ -50,23 +49,17 @@ export default function SignUpFrame() {
     if (!isValidNickname(nickname)) return;
     setWrongFields([]);
 
-    mutationPost.mutate(
-      {
-        path: '/signup',
-        body: {
-          nickname: nickname,
-          imgId: imgId,
-        },
+    mutationPost('/signup', {
+      onSuccess: () => {
+        console.log(nickname, imgId);
       },
-      {
-        onSuccess: () => {
-          console.log(nickname, imgId);
-        },
-        onError: () => {
-          console.log('error');
-        },
-      }
-    );
+      onError: () => {
+        console.log('error');
+      },
+    }).mutate({
+      nickname: nickname,
+      imgId: imgId,
+    });
   };
 
   return (

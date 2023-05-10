@@ -2,21 +2,23 @@ import useCustomQuery from 'hooks/useCustomQuery';
 
 const useRelationRequestQuery = () => {
   const { mutationPost, mutationDelete } = useCustomQuery();
+  const postDefaultOption = {};
+  const deleteDefaultOption = {};
 
   const friendRequest = (nickname: string) => {
-    mutationPost.mutate({ path: `/users/friends/${nickname}`, body: {} });
+    return mutationPost(`/users/friends/${nickname}`, postDefaultOption);
   };
 
   const breakupRequest = (nickname: string) => {
-    mutationDelete(`/users/friends/${nickname}`).mutate();
+    return mutationDelete(`/users/friends/${nickname}`, deleteDefaultOption);
   };
 
   const blockRequest = (nickname: string) => {
-    mutationPost.mutate({ path: `/users/blocks/${nickname}`, body: {} });
+    return mutationPost(`/users/blocks/${nickname}`, postDefaultOption);
   };
 
   const unblockRequest = (nickname: string) => {
-    mutationDelete(`/users/blocks/${nickname}`).mutate();
+    return mutationDelete(`/users/blocks/${nickname}`, deleteDefaultOption);
   };
   return {
     friendRequest,

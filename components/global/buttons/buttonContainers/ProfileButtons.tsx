@@ -6,12 +6,11 @@ import React from 'react';
 import { userState } from 'recoils/user';
 
 import useCustomQuery from 'hooks/useCustomQuery';
+import useRelationRequestQuery from 'hooks/useRelationRequestQuery';
 
 import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/global/Button.module.scss';
-
-import useRelationRequestQuery from 'hooks/useRelationRequestQuery';
 
 type ProfileButtonsProps = {
   target: string;
@@ -21,12 +20,8 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
   const { t } = useTranslation('common');
   const user = useRecoilValue(userState);
   const { get } = useCustomQuery();
-  const {
-    friendRequest,
-    breakupRequest,
-    blockRequest,
-    unblockRequest,
-  } = useRelationRequestQuery();
+  const { friendRequest, breakupRequest, blockRequest, unblockRequest } =
+    useRelationRequestQuery();
   const { data, isLoading, isError } = get(
     '',
     `/users/{nickname}/relations/${target}`
@@ -41,19 +36,19 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
   };
 
   const blockUser = () => {
-    blockRequest(target);
+    blockRequest(target).mutate({});
   };
 
   const unblockUser = () => {
-    unblockRequest(target);
+    unblockRequest(target).mutate();
   };
 
   const addFriend = () => {
-    friendRequest(target);
+    friendRequest(target).mutate({});
   };
 
   const deleteFriend = () => {
-    breakupRequest(target);
+    breakupRequest(target).mutate();
   };
 
   const buttons: { [key: string]: React.ReactNode } = {
