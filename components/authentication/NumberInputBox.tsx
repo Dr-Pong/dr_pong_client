@@ -10,7 +10,6 @@ export default function NumberInputBox({ boxNumber }: { boxNumber: number }) {
     const currentValue = e.target.value;
     const currentIdx = parseInt(e.target.id);
 
-    console.log(e.target.value);
     if (currentValue && currentIdx < boxNumber - 1) {
       inputRef.current[currentIdx + 1].focus();
     }
