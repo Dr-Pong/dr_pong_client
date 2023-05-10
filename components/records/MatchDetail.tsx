@@ -1,12 +1,14 @@
+import useTranslation from 'next-translate/useTranslation';
+
 import React from 'react';
 
 import { Record, RecordDetail } from 'types/historyTypes';
 
 import useRecordsQuery from 'hooks/useRecordsQuery';
 
+import MatchRecords from 'components/records/MatchRecords';
+
 import styles from 'styles/records/MatchDetail.module.scss';
-import useTranslation from "next-translate/useTranslation";
-import MatchRecords from "./MatchRecords";
 
 function LpBar({ lp, lpChange }: { lp: number; lpChange: number }) {
   const sign = lpChange > 0 ? 'plus' : 'minus';

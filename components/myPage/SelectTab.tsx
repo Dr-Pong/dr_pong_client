@@ -36,6 +36,7 @@ export default function SelectTab({
   const editable = useRecoilValue(editableState);
   const [selected, setSelected] = useState(new selectables([]));
   const [all, setAll] = useState(new selectables([]));
+  const { mutate } = patchSelectables();
   useEffect(() => {
     if (selected.isEmpty()) {
       return;
@@ -66,7 +67,7 @@ export default function SelectTab({
       setSelected(selected.replaceWithNull(item).clone());
     },
   };
-  const { mutate } = patchSelectables();
+
   const { isLoading: isSelectedLoading, isError: isSelectedError } =
     getSelected(setSelectedFromJson());
   const { isLoading: isAllLoading, isError: isAllError } = getAll(
