@@ -24,7 +24,7 @@ export default function NumberInputBox({ boxNumber }: { boxNumber: number }) {
             <input
               type='number'
               min='0'
-              max='1'
+              max='9' // TODO: 현재 작동 안해서 고쳐야함
               id={`${idx}`}
               className={styles.inputBox}
               ref={(el) => (inputRef.current[idx] = el)}
