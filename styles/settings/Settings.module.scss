@@ -1,7 +1,7 @@
 @import 'styles/common.scss';
 
 .settingsPageContainer {
-  @include pageContainer;
+  @include pageWithHeaderContainer;
 }
 
 .settingListContainer {

@@ -19,8 +19,8 @@ export default function Records() {
   const [nickname, setNickname] = useState(defaultNickname);
 
   return (
-    <div className={styles.matchHistoryPageContainer}>
-      <PageHeader title={t('Match History')} button={null} />
+    <div className={styles.recordsPageContainer}>
+      <PageHeader title={t('Match History')} />
       <SearchBar onSubmit={setNickname} initValue={defaultNickname} />
       <MatchHistory key={nickname} nickname={nickname} />
     </div>

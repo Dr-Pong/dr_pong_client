@@ -13,7 +13,7 @@ export default function Leaderboard() {
   const { t } = useTranslation('leaderboard');
   return (
     <div className={styles.leaderboardPageContainer}>
-      <PageHeader title={t('Leaderboard')} button={null} />
+      <PageHeader title={t('Leaderboard')} />
       <LeaderboardFrame />
     </div>
   );

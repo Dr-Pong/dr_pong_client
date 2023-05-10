@@ -12,7 +12,7 @@ export default function Friends() {
   const { t } = useTranslation('friends');
   return (
     <div className={styles.friendsPageContainer}>
-      <PageHeader title={t('Friends')} button={null} />
+      <PageHeader title={t('Friends')} />
     </div>
   );
 }

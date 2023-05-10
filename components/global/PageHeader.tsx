@@ -2,10 +2,10 @@ import styles from 'styles/global/PageHeader.module.scss';
 
 type pageHeaderProps = {
   title: string;
-  button: {
+  button?: {
     value: React.ReactNode;
     handleButtonClick: () => void;
-  } | null;
+  };
 };
 
 export default function PageHeader({ title, button }: pageHeaderProps) {
