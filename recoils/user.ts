@@ -13,7 +13,7 @@ export const userState = atom<User>({
   default: {
     nickname: '',
     imgUrl: '',
-    isSecondAuthOn: false,
+    tfaRequired: false,
     roleType: 'guest',
   },
 });
