@@ -1,42 +1,28 @@
-import { useSetRecoilState } from 'recoil';
-
 import { useRouter } from 'next/router';
 
 import { useLayoutEffect } from 'react';
 import { ReactElement } from 'react';
-import { useCookies } from 'react-cookie';
 
-import { loginState } from 'recoils/login';
-
+import useAuthHandler from 'hooks/useAuthHandler';
 import useCustomQuery from 'hooks/useCustomQuery';
 
 import Layout from 'components/layouts/Layout';
 import LoginFilter from 'components/layouts/LoginFilter';
 
 export default function Login() {
-  const setLogin = useSetRecoilState(loginState);
   const router = useRouter();
   const { code, authServer } = router.query;
   const { mutationPost } = useCustomQuery();
-  const [cookies, setCookie] = useCookies(['Authorization']);
+  const { onAuthSuccess, onAuthFailure } = useAuthHandler();
 
   useLayoutEffect(() => {
     if (code) {
       mutationPost(`/auth/${authServer}`, {
-        onSuccess: (res) => {
-          setCookie('Authorization', `Bearer ${res.data.token}`, {
-            path: '/',
-            httpOnly: true,
-          });
-          setLogin(true);
-        },
-        onError: (e) => {
-          console.log(e);
-        },
+        onSuccess: onAuthSuccess,
+        onError: onAuthFailure,
       }).mutate({
         authCode: code,
       });
-      router.push('/');
     }
   }, []);
 
