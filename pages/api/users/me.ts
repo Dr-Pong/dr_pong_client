@@ -11,7 +11,7 @@ export default (req: NextApiRequest, res: NextApiResponse<User | Error>) => {
       nickname: 'hakim',
       imgUrl:
         'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
-      isSecondAuthOn: false,
+      tfaRequired: false,
       roleType: 'member',
     });
   } else {
