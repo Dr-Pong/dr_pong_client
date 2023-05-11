@@ -1,8 +1,14 @@
-import React, { useRef } from 'react';
+import React, { Dispatch, SetStateAction, useRef } from 'react';
 
 import styles from 'styles/authentication/NumberInputBox.module.scss';
 
-export default function NumberInputBox({ boxNumber }: { boxNumber: number }) {
+export default function NumberInputBox({
+  setCode,
+  boxNumber,
+}: {
+  setCode: Dispatch<SetStateAction<string>>;
+  boxNumber: number;
+}) {
   const boxes: number[] = Array.from({ length: boxNumber }, (_, i) => i);
   const inputRef = useRef<any>([]);
 
@@ -13,6 +19,7 @@ export default function NumberInputBox({ boxNumber }: { boxNumber: number }) {
     if (currentValue && currentIdx < boxNumber - 1) {
       inputRef.current[currentIdx + 1].focus();
     }
+    setCode(boxes.toString());
   };
 
   return (
