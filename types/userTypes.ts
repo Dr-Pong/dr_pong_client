@@ -1,7 +1,7 @@
 export interface User {
   nickname: string;
   imgUrl: string;
-  isSecondAuthOn: boolean;
+  tfaRequired: boolean;
   roleType: 'guest' | 'noname' | 'member' | 'admin';
 }
 
