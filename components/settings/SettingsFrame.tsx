@@ -1,74 +1,55 @@
 import useTranslation from 'next-translate/useTranslation';
+import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
-import RadioButtons from 'components/global/RadioButtons';
+import { useCookies } from 'react-cookie';
+
+import { loginState } from 'recoils/login';
+
 import BasicButton from 'components/global/buttons/BasicButton';
+import LocaleField from 'components/settings/LocaleField';
+import TfaField from 'components/settings/TfaField';
 
 import styles from 'styles/settings/Settings.module.scss';
 
 export default function SettingsFrame() {
   const { t } = useTranslation('settings');
   const router = useRouter();
-  const { locale, defaultLocale, pathname } = router;
-  const currentLocale = locale || defaultLocale || 'en';
 
-  const localeOptions = [
-    { id: 'en', value: 'English' },
-    { id: 'ko', value: '한국어' },
+  const settingFields = [
+    {
+      topic: t('Language'),
+      field: <LocaleField />,
+    },
+    {
+      topic: t('2nd Authentication'),
+      field: <TfaField />,
+    },
   ];
-  const authOptions = [
-    { id: 'enable', value: t('enable') },
-    { id: 'disable', value: t('disable') },
-  ];
-
-  const changeLocale = (lang: string | undefined) => {
-    router.push(pathname, pathname, { locale: lang || defaultLocale });
-  };
-
-  const changeSecondAuth = () => {
-    // patch
-  };
-
-  const handleSettingSave = () => {
-    changeLocale(
-      document.querySelector('input[type=radio][name=locale]:checked')?.id
-    );
-    changeSecondAuth();
-  };
 
   const handleLogout = () => {
-    //
+    const [cookies, setCookie, removeCookie] = useCookies(['Authorization']);
+    const setLogin = useSetRecoilState(loginState);
+
+    removeCookie('Authorization');
+    setLogin(false);
+    router.push('/');
   };
 
   return (
     <div className={styles.settingListContainer}>
       <ul>
-        <li>
-          <div className={styles.listTopic}>{t('Language')}</div>
-          <RadioButtons
-            name='locale'
-            options={localeOptions}
-            currentId={currentLocale}
-          />
-        </li>
-        <li>
-          <div className={styles.listTopic}>{t('2nd Authentication')}</div>
-          <RadioButtons
-            name='secondAuth'
-            options={authOptions}
-            currentId='enable'
-          />
-        </li>
+        {settingFields.map(({ topic, field }, i) => {
+          return (
+            <li key={i}>
+              <div className={styles.listTopic}>{topic}</div>
+              {field}
+            </li>
+          );
+        })}
       </ul>
       <div className={styles.buttons}>
-        <BasicButton
-          style='basic'
-          color='black'
-          handleButtonClick={handleSettingSave}
-        >
-          {t('save')}
-        </BasicButton>
         <BasicButton
           style='basic'
           color='black'
