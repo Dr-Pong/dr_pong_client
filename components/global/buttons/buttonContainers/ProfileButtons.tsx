@@ -18,13 +18,13 @@ type ProfileButtonsProps = {
 
 export default function ProfileButtons({ target }: ProfileButtonsProps) {
   const { t } = useTranslation('common');
-  const user = useRecoilValue(userState);
+  const { nickname, roleType } = useRecoilValue(userState);
   const { get } = useCustomQuery();
   const { friendRequest, breakupRequest, blockRequest, unblockRequest } =
     useRelationRequestQuery();
   const { data, isLoading, isError } = get(
     '',
-    `/users/{nickname}/relations/${target}`
+    `/users/${nickname}/relations/${target}`
   );
 
   const inviteUserToTheGame = () => {
@@ -108,8 +108,8 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
   if (isLoading) return null;
   if (
     !profileButtonList.hasOwnProperty(data.status) ||
-    user.roleType === 'guest' ||
-    user.roleType === 'noname'
+    roleType === 'guest' ||
+    roleType === 'noname'
   )
     return null;
 
