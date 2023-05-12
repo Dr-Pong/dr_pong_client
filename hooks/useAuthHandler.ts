@@ -7,16 +7,22 @@ import { useCookies } from 'react-cookie';
 
 import { loginState } from 'recoils/login';
 
+interface TokenResponse {
+  accessToken: string;
+}
 const useAuthHandler = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['Authorization']);
   const setLogin = useSetRecoilState(loginState);
   const router = useRouter();
 
-  const onAuthSuccess = (res: AxiosResponse) => {
-    const { token } = res.data;
-    setCookie('Authorization', `Bearer ${token}`, {
+  const onAuthSuccess = (res: TokenResponse) => {
+    const { accessToken } = res;
+    const expires = new Date();
+    expires.setHours(expires.getHours() + 1);
+    setCookie('Authorization', `Bearer ${accessToken}`, {
       path: '/',
-      httpOnly: true,
+      expires,
+      // httpOnly: true,
     });
     setLogin(true);
     router.push('/');
