@@ -1,9 +1,4 @@
-import { useRecoilValue } from 'recoil';
-
-import { useLayoutEffect } from 'react';
-import { ReactElement } from 'react';
-
-import { loginState } from 'recoils/login';
+import { ReactElement, useLayoutEffect } from 'react';
 
 import useAuthHandler from 'hooks/useAuthHandler';
 
@@ -14,15 +9,10 @@ import LoginButtons from 'components/login/LoginButtons';
 import styles from 'styles/login/Login.module.scss';
 
 export default function Login() {
-  const login = useRecoilValue(loginState);
-  const { onAuthFailure } = useAuthHandler();
-
+  const { onDupLoginAttempt } = useAuthHandler();
   useLayoutEffect(() => {
-    if (login) {
-      onAuthFailure();
-    }
+    onDupLoginAttempt();
   }, []);
-
   return (
     <div className={styles.loginPageContainer}>
       <LoginButtons />

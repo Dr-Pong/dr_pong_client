@@ -1,5 +1,4 @@
-import { AxiosResponse } from 'axios';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
@@ -12,7 +11,7 @@ interface TokenResponse {
 }
 const useAuthHandler = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['Authorization']);
-  const setLogin = useSetRecoilState(loginState);
+  const [login, setLogin] = useRecoilState(loginState);
   const router = useRouter();
 
   const onAuthSuccess = (res: TokenResponse) => {
@@ -38,7 +37,16 @@ const useAuthHandler = () => {
     router.push('/authentication');
   };
 
-  return { onAuthSuccess, onAuthFailure, onSecondAuthFailure };
+  const onDupLoginAttempt = () => {
+    if (login) router.push('/');
+  };
+
+  return {
+    onAuthSuccess,
+    onAuthFailure,
+    onSecondAuthFailure,
+    onDupLoginAttempt,
+  };
 };
 
 export default useAuthHandler;
