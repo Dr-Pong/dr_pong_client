@@ -17,6 +17,7 @@ export default function LoginFilter({ children }: LayoutProps) {
   if (isLoading) return null;
   if (user.roleType === 'noname' && router.asPath !== '/signUp')
     router.push('/signUp');
-
+  if (user.tfaRequired && router.asPath !== '/authentication')
+    router.push('/authentication');
   return <>{children}</>;
 }
