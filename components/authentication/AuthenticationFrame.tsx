@@ -1,6 +1,6 @@
 import useTranslation from 'next-translate/useTranslation';
 
-import { useState } from 'react';
+import { useRef } from 'react';
 
 import useAuthHandler from 'hooks/useAuthHandler';
 import useCustomQuery from 'hooks/useCustomQuery';
@@ -13,19 +13,23 @@ import styles from 'styles/authentication/Authentication.module.scss';
 export default function AuthenticationFrame() {
   const { t } = useTranslation('authentication');
   const { mutationPost } = useCustomQuery();
-  const [code, setCode] = useState<string>('');
-  const { onAuthSuccess, onAuthFailure } = useAuthHandler();
-
+  const inputRef = useRef<any>([]);
+  const { onAuthSuccess, onSecondAuthFailure } = useAuthHandler();
+  const { mutate } = mutationPost('/auth/tfa/otp', {
+    onSuccess: onAuthSuccess,
+    onError: onSecondAuthFailure,
+  });
   const checkOTPValidity = () => {
-    mutationPost('/auth/tfa/otp', {
-      onSuccess: onAuthSuccess,
-      onError: onAuthFailure,
-    }).mutate({ password: code });
+    mutate({ password: extractOTP() });
+  };
+
+  const extractOTP = () => {
+    return inputRef.current.map((input: any) => input.value).join('');
   };
 
   return (
     <div className={styles.authenticationFrame}>
-      <NumberInputBox setCode={setCode} boxNumber={6} />
+      <NumberInputBox inputRef={inputRef} boxNumber={6} />
       <SubmitButton
         style='basic'
         color='black'

@@ -1,25 +1,26 @@
-import React, { Dispatch, SetStateAction, useRef } from 'react';
+import React, { MutableRefObject } from 'react';
 
 import styles from 'styles/authentication/NumberInputBox.module.scss';
 
 export default function NumberInputBox({
-  setCode,
+  inputRef,
   boxNumber,
 }: {
-  setCode: Dispatch<SetStateAction<string>>;
+  inputRef: MutableRefObject<any>;
   boxNumber: number;
 }) {
   const boxes: number[] = Array.from({ length: boxNumber }, (_, i) => i);
-  const inputRef = useRef<any>([]);
 
   const handleFocus = (e: React.ChangeEvent<HTMLInputElement>) => {
     const currentValue = e.target.value;
     const currentIdx = parseInt(e.target.id);
-
+    const regex = /^[0-9\b -]$/;
+    if (!regex.test(e.target.value)) {
+      e.target.value = e.target.value.slice(-1);
+    }
     if (currentValue && currentIdx < boxNumber - 1) {
       inputRef.current[currentIdx + 1].focus();
     }
-    setCode(boxes.toString());
   };
 
   return (
@@ -28,9 +29,7 @@ export default function NumberInputBox({
         return (
           <span key={idx} className={styles.inputBoxWrap}>
             <input
-              type='number'
-              min='0'
-              max='9' // TODO: 현재 작동 안해서 고쳐야함
+              type='text'
               id={`${idx}`}
               className={styles.inputBox}
               ref={(el) => (inputRef.current[idx] = el)}
