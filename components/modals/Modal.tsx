@@ -29,11 +29,11 @@ export default function Modal() {
             e.stopPropagation();
           }}
         >
-          <div>{head}</div>
+          {head}
           {head && body && <div className={styles.blank}></div>}
           <div className={styles.modalBody}>{body}</div>
           {(head || body) && tail && <div className={styles.blank}></div>}
-          <div>{tail}</div>
+          {tail}
         </div>
       </div>,
       document.getElementById('modalRoot') as HTMLElement
