@@ -1,6 +1,5 @@
-// import 'i18n';
 import useTranslation from 'next-translate/useTranslation';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import Link from 'next/link';
 
@@ -21,14 +20,14 @@ type page = {
 
 export default function Home() {
   const { t } = useTranslation('home');
-  const [login, setLogin] = useRecoilState(loginState);
+  const login = useRecoilValue(loginState);
   const user = useRecoilValue(userState);
   const pages: page[] = [
     { value: t('Leaderboard'), route: '/leaderboard' },
     { value: t('Match History'), route: `/records/${user.nickname}` },
     { value: t('Settings'), route: '/settings' },
-    { value: login ? t('Logout') : t('Login'), route: '/login' },
   ];
+  if (!login) pages.push({ value: t('Login'), route: '/login' });
 
   return (
     <div className={styles.homePageContainer}>

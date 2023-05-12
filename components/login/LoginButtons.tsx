@@ -24,7 +24,7 @@ export default function LoginButtons() {
       name: 'Google',
       logo: <FcGoogle />,
       value: t('Login with Google'),
-      link: '',
+      link: '/login/google?code=1234',
     },
   ];
   return (

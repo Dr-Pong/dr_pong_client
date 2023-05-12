@@ -14,13 +14,13 @@ export default function Login() {
   const { code, authServer } = router.query;
   const { mutationPost } = useCustomQuery();
   const { onAuthSuccess, onAuthFailure } = useAuthHandler();
-
+  const { mutate } = mutationPost(`/auth/${authServer}`, {
+    onSuccess: onAuthSuccess,
+    onError: onAuthFailure,
+  });
   useLayoutEffect(() => {
     if (code) {
-      mutationPost(`/auth/${authServer}`, {
-        onSuccess: onAuthSuccess,
-        onError: onAuthFailure,
-      }).mutate({
+      mutate({
         authCode: code,
       });
     }
