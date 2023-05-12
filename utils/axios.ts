@@ -1,26 +1,29 @@
 import axios from 'axios';
 
-// import { useCookies } from 'react-cookie';
-
 const baseURL = `http://localhost:3000/api`;
 
 const instance = axios.create({ baseURL });
+instance.interceptors.request.use(
+  function setConfig(parameter) {
+    const config = parameter;
+    const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+      const [name, value] = cookie.trim().split('=');
+      return {
+        ...acc,
+        [name]: value,
+      };
+    }, {});
 
-// const [cookies] = useCookies(['Authorization']) || [];
+    const token = cookies.Authorization || '';
 
-// instance.interceptors.request.use(
-//   function setConfig(parameter) {
-//     const config = parameter;
-//     const token = cookies?.Authorization;
+    config.headers['Content-Type'] = 'application/json';
+    if (token) config.headers.Authorization = `Bearer ${token}`;
 
-//     config.headers['Content-Type'] = 'application/json';
-//     if (token) config.headers.Authorization = `Bearer ${token}`;
-
-//     return config;
-//   },
-//   function getError(error) {
-//     return Promise.reject(error);
-//   }
-// );
+    return config;
+  },
+  function getError(error) {
+    return Promise.reject(error);
+  }
+);
 
 export default instance;
