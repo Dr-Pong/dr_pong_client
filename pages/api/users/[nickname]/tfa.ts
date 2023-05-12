@@ -17,5 +17,5 @@ export default (req: NextApiRequest, res: NextApiResponse<UserTfa | Error>) => {
 };
 
 const userTfa = {
-  tfaOn: true,
+  tfaOn: false,
 };
