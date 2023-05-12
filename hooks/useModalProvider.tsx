@@ -8,6 +8,7 @@ import { modalPartsState, openModalState } from 'recoils/modal';
 import { ModalParts } from 'types/modalTypes';
 import { Achievement } from 'types/userTypes';
 
+import RegisterCode from 'components/authentication/RegisterCode';
 import UserImages from 'components/global/UserImages';
 import CloseModalButton from 'components/global/buttons/CloseModalButton';
 import ModalButton from 'components/global/buttons/ModalButton';
@@ -26,6 +27,14 @@ const useModalProvider = () => {
   const useModal = (parts: ModalParts) => {
     setModalParts(parts);
     setOpenModal(true);
+  };
+
+  const useTfaRegisterModal = () => {
+    useModal({
+      head: <ModalTitle title='Google OTP' />,
+      body: <RegisterCode />,
+      tail: null,
+    });
   };
 
   const useProfileModal = (nickname: string) => {
@@ -107,6 +116,7 @@ const useModalProvider = () => {
     });
   };
   return {
+    useTfaRegisterModal,
     useProfileModal,
     useEditWarningModal,
     useImageChangeModal,
