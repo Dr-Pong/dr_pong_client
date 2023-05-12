@@ -7,5 +7,7 @@
   "block": "block",
   "unblock": "unblock",
   "add friend": "add friend",
-  "delete friend": "delete friend"
+  "delete friend": "delete friend",
+  "Google OTP": "Google OTP",
+  "authenticate": "authenticate"
 }
