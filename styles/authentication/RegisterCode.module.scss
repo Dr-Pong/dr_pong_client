@@ -1,0 +1,28 @@
+@import 'styles/common.scss';
+
+.CodeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.codeImage {
+  width: 10rem;
+  margin-bottom: 0.5rem;
+  background: white;
+}
+
+.codeNumbers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10rem;
+  height: 2rem;
+  padding-top: 0.2rem;
+  color: $blue;
+  font-size: 1.3rem;
+  letter-spacing: 0.2rem;
+  text-align: center;
+  background: white;
+}
