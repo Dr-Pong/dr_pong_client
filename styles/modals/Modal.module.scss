@@ -16,7 +16,7 @@
 .modalContainer {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center;
   width: 80vw;
   max-width: 20rem;
   max-height: 80vh;
@@ -27,12 +27,15 @@
 }
 
 .modalBody {
-  overflow-y: scroll;
+  overflow-y: auto;
 }
+
 .blank {
   height: 1.5rem;
 }
+
 .modalTitle {
+  align-self: start;
   font-weight: 600;
 }
 
