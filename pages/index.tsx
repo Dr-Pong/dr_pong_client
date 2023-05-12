@@ -27,6 +27,7 @@ export default function Home() {
     { value: t('Match History'), route: `/records/${user.nickname}` },
     { value: t('Settings'), route: '/settings' },
   ];
+  if (!login) pages.push({ value: t('Login'), route: '/login' });
 
   return (
     <div className={styles.homePageContainer}>
@@ -38,11 +39,6 @@ export default function Home() {
             </div>
           );
         })}
-        {!login && (
-          <div className={styles.pageLink}>
-            <Link href='/login'>{t('Login')}</Link>
-          </div>
-        )}
       </div>
     </div>
   );
