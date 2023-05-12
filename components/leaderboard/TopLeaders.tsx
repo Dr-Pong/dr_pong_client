@@ -1,14 +1,7 @@
-import { useSetRecoilState } from 'recoil';
-
-import { modalPartsState, openModalState } from 'recoils/modal';
-
 import { TopRanker } from 'types/rankTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 import useModalProvider from 'hooks/useModalProvider';
-
-import ProfileButtons from 'components/global/buttons/buttonContainers/ProfileButtons';
-import Profile from 'components/myPage/profile/Profile';
 
 import styles from 'styles/leaderboard/TopLeaders.module.scss';
 
