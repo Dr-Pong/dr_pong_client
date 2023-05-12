@@ -1,12 +1,6 @@
 import useTranslation from 'next-translate/useTranslation';
-import { useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import { useRouter } from 'next/router';
-
-import { useCookies } from 'react-cookie';
-
-import { loginState } from 'recoils/login';
-import { userState } from 'recoils/user';
+import useAuthHandler from 'hooks/useAuthHandler';
 
 import BasicButton from 'components/global/buttons/BasicButton';
 import LocaleField from 'components/settings/LocaleField';
@@ -16,10 +10,7 @@ import styles from 'styles/settings/Settings.module.scss';
 
 export default function SettingsFrame() {
   const { t } = useTranslation('settings');
-  const [cookies, setCookie, removeCookie] = useCookies(['Authorization']);
-  const setLogin = useSetRecoilState(loginState);
-  const resetUserState = useResetRecoilState(userState);
-  const router = useRouter();
+  const { onLogout } = useAuthHandler();
 
   const settingFields = [
     {
@@ -33,10 +24,7 @@ export default function SettingsFrame() {
   ];
 
   const handleLogout = () => {
-    removeCookie('Authorization');
-    setLogin(false);
-    resetUserState();
-    router.push('/');
+    onLogout();
   };
 
   return (
