@@ -39,11 +39,6 @@ export default function Home() {
             </div>
           );
         })}
-        {!login && (
-          <div className={styles.pageLink}>
-            <Link href='/login'>{t('Login')}</Link>
-          </div>
-        )}
       </div>
     </div>
   );
