@@ -7,7 +7,7 @@ import useCustomQuery from 'hooks/useCustomQuery';
 import styles from 'styles/authentication/RegisterCode.module.scss';
 
 export default function RegisterCode() {
-  const { get, queryClient } = useCustomQuery();
+  const { get } = useCustomQuery();
   const [registerCode, setRegisterCode] =
     useState<AuthCode>(defaultRegisterCode);
   const { data, isLoading, isError } = get(
