@@ -27,7 +27,12 @@ const useAuthHandler = () => {
     setLogin(false);
     router.push('/login');
   };
-  return { onAuthSuccess, onAuthFailure };
+
+  const onSecondAuthFailure = () => {
+    router.push('/authentication');
+  };
+
+  return { onAuthSuccess, onAuthFailure, onSecondAuthFailure };
 };
 
 export default useAuthHandler;
