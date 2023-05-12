@@ -1,11 +1,12 @@
-.radioButtonsContainer {
+.localeFieldContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;
   font-size: 1rem;
-  span {
-    display: flex;
-    align-items: center;
-  }
+}
+
+.radioButtonContainer {
+  display: flex;
+  align-items: center;
   input {
     width: 1.2rem;
     height: 1.2rem;

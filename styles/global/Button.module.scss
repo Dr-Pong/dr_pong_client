@@ -4,12 +4,14 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20%, auto));
   gap: 1.5rem;
+  width: 100%;
 }
 
 .fourButtonsContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(30%, auto));
   gap: 0.5rem;
+  width: 100%;
   div:nth-child(1) {
     grid-row: 1 / span 1;
     grid-column: 1 / span 3;

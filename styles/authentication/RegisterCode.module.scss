@@ -2,16 +2,9 @@
 
 .CodeContainer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
   margin-bottom: 2rem;
-  form {
-    align-self: flex-end;
-  }
-}
-
-.codeWrap {
-  margin-right: 0.5rem;
-  margin-left: 2.5rem;
 }
 
 .codeImage {

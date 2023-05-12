@@ -1,16 +1,19 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useSetRecoilState } from 'recoil';
 
-import React from 'react';
+import React, { MutableRefObject } from 'react';
 
 import { modalPartsState, openModalState } from 'recoils/modal';
 
 import { ModalParts } from 'types/modalTypes';
 import { Achievement } from 'types/userTypes';
 
+import NumberInputBox from 'components/authentication/NumberInputBox';
+import RegisterCode from 'components/authentication/RegisterCode';
 import UserImages from 'components/global/UserImages';
 import CloseModalButton from 'components/global/buttons/CloseModalButton';
 import ModalButton from 'components/global/buttons/ModalButton';
+import SubmitButton from 'components/global/buttons/SubmitButton';
 import ButtonRow from 'components/global/buttons/buttonContainers/ButtonRow';
 import ProfileButtons from 'components/global/buttons/buttonContainers/ProfileButtons';
 import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
@@ -26,6 +29,26 @@ const useModalProvider = () => {
   const useModal = (parts: ModalParts) => {
     setModalParts(parts);
     setOpenModal(true);
+  };
+
+  const useTfaRegisterModal = (
+    inputRef: MutableRefObject<any>,
+    callback: () => void
+  ) => {
+    useModal({
+      head: <ModalTitle title={t('Google OTP')} />,
+      body: (
+        <div>
+          <RegisterCode />
+          <NumberInputBox inputRef={inputRef} boxNumber={6} />
+        </div>
+      ),
+      tail: (
+        <SubmitButton style='basic' color='black' handleButtonClick={callback}>
+          {t('authenticate')}
+        </SubmitButton>
+      ),
+    });
   };
 
   const useProfileModal = (nickname: string) => {
@@ -107,6 +130,7 @@ const useModalProvider = () => {
     });
   };
   return {
+    useTfaRegisterModal,
     useProfileModal,
     useEditWarningModal,
     useImageChangeModal,
