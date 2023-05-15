@@ -18,7 +18,7 @@ export const userState = atom<User>({
   },
 });
 
-export const tabState = atom<string>({
+export const profileTabState = atom<string>({
   key: `tabState/${v1()}`,
   default: 'profile',
 });

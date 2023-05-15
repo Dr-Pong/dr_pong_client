@@ -1,32 +1,25 @@
-import useTranslation from 'next-translate/useTranslation';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { editableState, tabState, userState } from 'recoils/user';
+import { editableState, profileTabState, userState } from 'recoils/user';
 
 import useModalProvider from 'hooks/useModalProvider';
 
+import TabsViewProvider from 'components/global/TabsViewProvider';
 import SelectTab from 'components/myPage/SelectTab';
+import EditButton from 'components/myPage/profile/EditButton';
 import Profile from 'components/myPage/profile/Profile';
 
 import styles from 'styles/MyPage/MyPageFrame.module.scss';
 
 export default function MyPageFrame() {
-  const { t } = useTranslation('myPage');
-  const [tab, setTab] = useRecoilState(tabState);
+  const [tab, setTab] = useRecoilState(profileTabState);
   const [editable, setEditable] = useRecoilState(editableState);
   const user = useRecoilValue(userState);
   const { useEditWarningModal } = useModalProvider();
   const { nickname } = user;
-  useEffect(() => {
-    return () => {
-      setEditable(false);
-    };
-  }, []);
-  const handleEditButtonClick = () => {
-    setEditable(!editable);
-  };
+
   const handleTabClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const div = event.target as HTMLDivElement;
     if (tab === div.id) return;
@@ -49,25 +42,15 @@ export default function MyPageFrame() {
   return (
     <div className={styles.myPageFrame}>
       <div className={styles.editButtonContainer}>
-        <div className={styles.editButton} onClick={handleEditButtonClick}>
-          {editable ? t('save') : t('edit')}
-        </div>
+        <EditButton />
       </div>
-      <div className={styles.goToContainer}>
-        {Object.keys(tabs).map((tabName) => {
-          return (
-            <div
-              id={tabName}
-              key={tabName}
-              className={styles.goTo}
-              onClick={handleTabClick}
-            >
-              {t(tabName)}
-            </div>
-          );
-        })}
-      </div>
-      <div className={styles.tabContainer}>{tabs[tab]}</div>
+      <TabsViewProvider
+        namespace={'myPage'}
+        tabNames={Object.keys(tabs)}
+        handleTabClick={handleTabClick}
+      >
+        {tabs[tab]}
+      </TabsViewProvider>
     </div>
   );
 }
