@@ -1,9 +1,10 @@
 import useTranslation from 'next-translate/useTranslation';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import React, { MutableRefObject } from 'react';
 
 import { modalPartsState, openModalState } from 'recoils/modal';
+import { userState } from 'recoils/user';
 
 import { ModalParts } from 'types/modalTypes';
 import { Achievement } from 'types/userTypes';
@@ -26,6 +27,8 @@ const useModalProvider = () => {
   const { t } = useTranslation('common');
   const setModalParts = useSetRecoilState(modalPartsState);
   const setOpenModal = useSetRecoilState(openModalState);
+  const user = useRecoilValue(userState);
+
   const useModal = (parts: ModalParts) => {
     setModalParts(parts);
     setOpenModal(true);
@@ -55,7 +58,9 @@ const useModalProvider = () => {
     useModal({
       head: null,
       body: <Profile nickname={nickname} />,
-      tail: <ProfileButtons target={nickname} />,
+      tail: user.roleType !== 'guest' && user.roleType !== 'noname' && (
+        <ProfileButtons target={nickname} />
+      ),
     });
   };
 
@@ -104,6 +109,7 @@ const useModalProvider = () => {
       ),
     });
   };
+
   const useAchievementDetailModal = (achievement: Achievement) => {
     const { name, imgUrl, content } = achievement;
     useModal({
@@ -129,6 +135,7 @@ const useModalProvider = () => {
       ),
     });
   };
+
   return {
     useTfaRegisterModal,
     useProfileModal,

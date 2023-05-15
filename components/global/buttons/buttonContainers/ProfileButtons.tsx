@@ -31,10 +31,6 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
     // Todo
   };
 
-  const reportUser = () => {
-    // Todo
-  };
-
   const blockUser = () => {
     blockRequest(target).mutate({});
   };
@@ -51,6 +47,10 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
     breakupRequest(target).mutate();
   };
 
+  const sendMessage = () => {
+    // Todo
+  };
+
   const buttons: { [key: string]: React.ReactNode } = {
     invite: (
       <BasicButton
@@ -59,11 +59,6 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
         handleButtonClick={inviteUserToTheGame}
       >
         {t('invite to the game')}
-      </BasicButton>
-    ),
-    report: (
-      <BasicButton style='flex' color='black' handleButtonClick={reportUser}>
-        {t('report')}
       </BasicButton>
     ),
     block: (
@@ -86,6 +81,11 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
         {t('delete friend')}
       </BasicButton>
     ),
+    message: (
+      <BasicButton style='flex' color='black' handleButtonClick={sendMessage}>
+        {t('message')}
+      </BasicButton>
+    ),
   };
 
   const profileButtonList: {
@@ -93,25 +93,20 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
   } = {
     blocked: {
       style: 'buttonRowContainer',
-      buttons: ['report', 'unblock'],
+      buttons: ['unblock'],
     },
     friend: {
       style: 'fourButtonsContainer',
-      buttons: ['invite', 'report', 'block', 'delete'],
+      buttons: ['invite', 'block', 'message', 'delete'],
     },
     none: {
-      style: 'fourButtonsContainer',
-      buttons: ['invite', 'report', 'block', 'add'],
+      style: 'buttonRowContainer',
+      buttons: ['block', 'add'],
     },
   };
 
   if (isLoading) return null;
-  if (
-    !profileButtonList.hasOwnProperty(data.status) ||
-    roleType === 'guest' ||
-    roleType === 'noname'
-  )
-    return null;
+  if (!profileButtonList.hasOwnProperty(data.status)) return null;
 
   return (
     <div className={`${styles[profileButtonList[data.status].style]}`}>
