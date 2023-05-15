@@ -2,7 +2,7 @@ import { useRecoilValue } from 'recoil';
 
 import React from 'react';
 
-import { editableState, tabState } from 'recoils/user';
+import { editableState, profileTabState } from 'recoils/user';
 
 import { Achievement, Emoji } from 'types/userTypes';
 
@@ -27,7 +27,7 @@ export default function SelectableItem({
     status: 'selected',
   };
   const editable = useRecoilValue(editableState);
-  const tab = useRecoilValue(tabState);
+  const tab = useRecoilValue(profileTabState);
   const { useAchievementDetailModal } = useModalProvider();
   const handleItemClick = () => {
     if (itemType === 'emoji') return;

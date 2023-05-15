@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 
 import React, { useEffect, useState } from 'react';
 
-import { editableState, tabState } from 'recoils/user';
+import { editableState, profileTabState } from 'recoils/user';
 
 import { Image, Title, UserDetail } from 'types/userTypes';
 
@@ -24,7 +24,7 @@ export default function ProfileCard({ nickname }: { nickname: string }) {
   const { t } = useTranslation('myPage');
   const { getProfile, patchProfile } = useMyPageQuery(nickname);
   const editable = useRecoilValue(editableState);
-  const tab = useRecoilValue(tabState);
+  const tab = useRecoilValue(profileTabState);
   const [detailDto, setDetailDto] = useState<DetailDto>(defaultDetailDto);
   useEffect(() => {
     if (detailDto === defaultDetailDto) return;
