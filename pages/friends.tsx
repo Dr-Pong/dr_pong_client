@@ -1,7 +1,8 @@
 import useTranslation from 'next-translate/useTranslation';
 
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 
+import FriendsPageFrame from 'components/friends/FriendsPageFrame';
 import PageHeader from 'components/global/PageHeader';
 import LoginFilter from 'components/layouts/LoginFilter';
 import NavigationLayout from 'components/layouts/NavigationLayout';
@@ -13,6 +14,7 @@ export default function Friends() {
   return (
     <div className={styles.friendsPageContainer}>
       <PageHeader title={t('Friends')} />
+      <FriendsPageFrame />
     </div>
   );
 }
