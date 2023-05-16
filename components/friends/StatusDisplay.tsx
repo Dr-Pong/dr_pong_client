@@ -8,9 +8,12 @@ export default function StatusDisplay({
   status,
   children,
 }: {
-  status: Activity;
+  status?: Activity;
   children: React.ReactNode;
 }) {
+  if (!status) {
+    return <div>{children}</div>;
+  }
   return (
     <div className={styles.statusOverlay}>
       <div>{children}</div>

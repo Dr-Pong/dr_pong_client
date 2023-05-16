@@ -3,12 +3,13 @@ import React from 'react';
 import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/friends/FriendButtons.module.scss';
+import { FriendTab } from "types/friendTypes";
 
 export default function FriendButtons({
   tab,
   nickname,
 }: {
-  tab: string;
+  tab: FriendTab;
   nickname: string;
 }) {
   const goDM = () => {};
@@ -36,9 +37,14 @@ export default function FriendButtons({
   };
   return (
     <div className={styles.buttons}>
-      {buttons[tab].map(({ content: c, handler: h }) => (
-        <BasicButton color={'black'} style={'basic'} handleButtonClick={h}>
-          {c}
+      {buttons[tab].map(({ content, handler }) => (
+        <BasicButton
+          key={nickname + content}
+          color={'black'}
+          style={'basic'}
+          handleButtonClick={handler}
+        >
+          {content}
         </BasicButton>
       ))}
     </div>
