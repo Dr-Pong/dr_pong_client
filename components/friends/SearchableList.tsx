@@ -4,7 +4,7 @@ import styles from 'styles/friends/SearchableList.module.scss';
 
 export default function SearchableList({ units }: { units: JSX.Element[] }) {
   const [searchKey, setSearchKey] = useState<string>('');
-  console.log(units);
+
   return (
     <div className={styles.searchableList}>
       <div className={styles.searchBar}>

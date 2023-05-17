@@ -1,8 +1,8 @@
 import React from 'react';
 
-import styles from 'styles/friends/StatusDisplay.module.scss';
-
 import { Activity } from 'types/friendTypes';
+
+import styles from 'styles/friends/StatusDisplay.module.scss';
 
 export default function StatusDisplay({
   status,

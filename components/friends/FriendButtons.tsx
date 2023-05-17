@@ -1,9 +1,10 @@
 import React from 'react';
 
+import { FriendTab } from 'types/friendTypes';
+
 import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/friends/FriendButtons.module.scss';
-import { FriendTab } from "types/friendTypes";
 
 export default function FriendButtons({
   tab,
