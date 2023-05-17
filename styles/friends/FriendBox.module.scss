@@ -1,3 +1,14 @@
 .friendBox {
+  display: grid;
+  grid-template-columns: 1fr 3fr 2fr;
+}
 
+.img {
+
+}
+
+.nickname {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }

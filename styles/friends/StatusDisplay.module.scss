@@ -1,15 +1,30 @@
-.statusOverlay {
+@import 'styles/common';
 
+.statusOverlay {
+  position: relative;
+}
+
+@mixin signalLight {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 7%;
+  height: 7%;
+  border: thin solid white;
+  border-radius: 100%;
 }
 
 .online {
-
+  @include signalLight;
+  background: $green;
 }
 
 .offline {
-
+  @include signalLight;
+  background: $grey;
 }
 
 .inGame {
-
+  @include signalLight;
+  background: $violet;
 }

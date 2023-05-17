@@ -42,8 +42,14 @@
   text-align: center;
 }
 
+.gameDate {
+  background: #333333;
+  z-index: 5;
+  position: absolute;
+}
+
 .matchText {
-  @include matchLeft
+  @include matchLeft;
 }
 
 .matchVisual {
