@@ -7,7 +7,7 @@ export default function SearchableList({
   button,
 }: {
   haystack: JSX.Element[];
-  button?: JSX.Element;
+  button: JSX.Element | null;
 }) {
   const [searchKey, setSearchKey] = useState<string>('');
 

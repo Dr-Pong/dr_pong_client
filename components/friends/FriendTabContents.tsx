@@ -22,7 +22,7 @@ export default function FriendTabContents({ tab }: { tab: FriendTab }) {
       >
         <IoMdAdd />
       </BasicButton>
-    ) : undefined;
+    ) : null;
   const query = {
     friend: getFriendList,
     request: getRequestList,
