@@ -9,10 +9,13 @@ import styles from 'styles/global/SearchBar.module.scss';
 
 export default function SearchUser() {
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [nickname, setNickname] = useState<string>('');
   const [detailDto, setDetailDto] = useState<DetailDto | null>(null);
   const handleOnSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setDetailDto((await instance.get(`/users/${searchQuery}/detail`)).data);
+    const data = (await instance.get(`/users/${searchQuery}/detail`)).data;
+    setDetailDto(data);
+    if (data) setNickname(searchQuery);
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +41,7 @@ export default function SearchUser() {
             tab={'find'}
             key={searchQuery}
             friend={{
-              nickname: searchQuery,
+              nickname: nickname,
               imgUrl: detailDto.image.url,
             }}
           />
