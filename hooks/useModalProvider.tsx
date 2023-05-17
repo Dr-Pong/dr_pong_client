@@ -11,6 +11,7 @@ import { Achievement } from 'types/userTypes';
 
 import NumberInputBox from 'components/authentication/NumberInputBox';
 import RegisterCode from 'components/authentication/RegisterCode';
+import SearchUser from 'components/friends/SearchUser';
 import UserImages from 'components/global/UserImages';
 import CloseModalButton from 'components/global/buttons/CloseModalButton';
 import ModalButton from 'components/global/buttons/ModalButton';
@@ -136,12 +137,21 @@ const useModalProvider = () => {
     });
   };
 
+  const useFriendFinderModal = () => {
+    useModal({
+      head: <ModalTitle title={'Search User'} />,
+      body: <SearchUser />,
+      tail: null,
+    });
+  };
+
   return {
     useTfaRegisterModal,
     useProfileModal,
     useEditWarningModal,
     useImageChangeModal,
     useAchievementDetailModal,
+    useFriendFinderModal,
   };
 };
 

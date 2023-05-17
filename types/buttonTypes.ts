@@ -8,7 +8,7 @@ type ButtonStyle =
   | 'round'
   | 'square';
 
-type ButtonColor = 'black' | 'white';
+type ButtonColor = 'black' | 'white' | 'opaque';
 
 export interface ButtonProps {
   style: ButtonStyle;

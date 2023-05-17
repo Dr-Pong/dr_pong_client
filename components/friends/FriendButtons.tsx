@@ -1,12 +1,13 @@
 import React from 'react';
 import {
   IoIosChatboxes,
+  IoMdAdd,
   IoMdCheckmark,
   IoMdClose,
   IoMdMore,
 } from 'react-icons/io';
 
-import { FriendTab } from 'types/friendTypes';
+import { FriendTab, SearchUser } from 'types/friendTypes';
 
 import BasicButton from 'components/global/buttons/BasicButton';
 
@@ -16,7 +17,7 @@ export default function FriendButtons({
   tab,
   nickname,
 }: {
-  tab: FriendTab;
+  tab: FriendTab | SearchUser;
   nickname: string;
 }) {
   const goDM = () => {};
@@ -28,6 +29,8 @@ export default function FriendButtons({
   const reject = () => {};
 
   const unblock = () => {};
+
+  const add = () => {};
 
   const buttons: {
     [key: string]: { content: string | React.ReactNode; handler: () => void }[];
@@ -41,6 +44,7 @@ export default function FriendButtons({
       { content: <IoMdClose />, handler: reject },
     ],
     block: [{ content: <IoMdClose />, handler: unblock }],
+    find: [{ content: <IoMdAdd />, handler: add }],
   };
   return (
     <div className={styles.buttons}>
