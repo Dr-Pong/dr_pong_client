@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { IoMdAdd } from 'react-icons/io';
 
 import { Friend, FriendTab } from 'types/friendTypes';
 
@@ -6,10 +7,23 @@ import useFriendsQuery from 'hooks/useFriendsQuery';
 
 import FriendBox from 'components/friends/FriendBox';
 import SearchableList from 'components/friends/SearchableList';
+import BasicButton from 'components/global/buttons/BasicButton';
+
+import useModalProvider from '../../hooks/useModalProvider';
 
 export default function FriendTabContents({ tab }: { tab: FriendTab }) {
   const { getFriendList, getRequestList, getBlockList } = useFriendsQuery();
-
+  const { useFriendFinderModal } = useModalProvider();
+  const popModalButton =
+    tab === 'friend' ? (
+      <BasicButton
+        style={'square'}
+        color={'white'}
+        handleButtonClick={useFriendFinderModal}
+      >
+        <IoMdAdd />
+      </BasicButton>
+    ) : undefined;
   const query = {
     friend: getFriendList,
     request: getRequestList,
@@ -29,6 +43,7 @@ export default function FriendTabContents({ tab }: { tab: FriendTab }) {
         haystack={friends.map((friend) => (
           <FriendBox key={friend.nickname} tab={tab} friend={friend} />
         ))}
+        button={popModalButton}
       />
     </div>
   );

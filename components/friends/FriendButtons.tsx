@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   IoIosChatboxes,
+  IoMdAdd,
   IoMdCheckmark,
   IoMdClose,
   IoMdMore,
@@ -29,6 +30,8 @@ export default function FriendButtons({
 
   const unblock = () => {};
 
+  const add = () => {};
+
   const buttons: {
     [key: string]: { content: string | React.ReactNode; handler: () => void }[];
   } = {
@@ -41,6 +44,7 @@ export default function FriendButtons({
       { content: <IoMdClose />, handler: reject },
     ],
     block: [{ content: <IoMdClose />, handler: unblock }],
+    find: [{ content: <IoMdAdd />, handler: add }],
   };
   return (
     <div className={styles.buttons}>
