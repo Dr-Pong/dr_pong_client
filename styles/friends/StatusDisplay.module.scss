@@ -2,14 +2,16 @@
 
 .statusOverlay {
   position: relative;
+  width: 5rem;
+  height: 5rem;
 }
 
 @mixin signalLight {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 7%;
-  height: 7%;
+  width: 10%;
+  height: 10%;
   border: thin solid white;
   border-radius: 100%;
 }
