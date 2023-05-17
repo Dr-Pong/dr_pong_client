@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 
 import styles from 'styles/friends/SearchableList.module.scss';
 
-export default function SearchableList({ units }: { units: JSX.Element[] }) {
+export default function SearchableList({
+  haystack,
+}: {
+  haystack: JSX.Element[];
+}) {
   const [searchKey, setSearchKey] = useState<string>('');
 
   return (
@@ -16,7 +20,7 @@ export default function SearchableList({ units }: { units: JSX.Element[] }) {
         />
       </div>
       <div className={styles.list}>
-        {units.filter((u) => u.props.friend.nickname.includes(searchKey))}
+        {haystack.filter((u) => u.props.friend.nickname.includes(searchKey))}
       </div>
     </div>
   );

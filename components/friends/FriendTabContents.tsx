@@ -26,7 +26,7 @@ export default function FriendTabContents({ tab }: { tab: FriendTab }) {
   return (
     <div>
       <SearchableList
-        units={friends.map((friend) => (
+        haystack={friends.map((friend) => (
           <FriendBox key={friend.nickname} tab={tab} friend={friend} />
         ))}
       />
