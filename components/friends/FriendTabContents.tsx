@@ -4,12 +4,11 @@ import { IoMdAdd } from 'react-icons/io';
 import { Friend, FriendTab } from 'types/friendTypes';
 
 import useFriendsQuery from 'hooks/useFriendsQuery';
+import useModalProvider from 'hooks/useModalProvider';
 
 import FriendBox from 'components/friends/FriendBox';
 import SearchableList from 'components/friends/SearchableList';
 import BasicButton from 'components/global/buttons/BasicButton';
-
-import useModalProvider from '../../hooks/useModalProvider';
 
 export default function FriendTabContents({ tab }: { tab: FriendTab }) {
   const { getFriendList, getRequestList, getBlockList } = useFriendsQuery();
