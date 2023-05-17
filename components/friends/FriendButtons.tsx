@@ -7,7 +7,7 @@ import {
   IoMdMore,
 } from 'react-icons/io';
 
-import { FriendTab } from 'types/friendTypes';
+import { FriendTab, SearchUser } from 'types/friendTypes';
 
 import BasicButton from 'components/global/buttons/BasicButton';
 
@@ -17,7 +17,7 @@ export default function FriendButtons({
   tab,
   nickname,
 }: {
-  tab: FriendTab;
+  tab: FriendTab | SearchUser;
   nickname: string;
 }) {
   const goDM = () => {};

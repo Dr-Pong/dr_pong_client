@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Friend, FriendTab } from 'types/friendTypes';
+import { Friend, FriendTab, SearchUser } from 'types/friendTypes';
 
 import FriendButtons from 'components/friends/FriendButtons';
 import StatusDisplay from 'components/friends/StatusDisplay';
@@ -11,7 +11,7 @@ export default function FriendBox({
   tab,
   friend,
 }: {
-  tab: FriendTab;
+  tab: FriendTab | SearchUser;
   friend: Friend;
 }) {
   const { nickname, status, imgUrl } = friend;

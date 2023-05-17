@@ -1,5 +1,6 @@
 export type Activity = 'online' | 'offline' | 'inGame';
-export type FriendTab = 'friend' | 'request' | 'block' | 'find';
+export type FriendTab = 'friend' | 'request' | 'block';
+export type SearchUser = 'find';
 export type Friend = {
   nickname: string;
   imgUrl: string;
@@ -7,4 +8,4 @@ export type Friend = {
 };
 export type UserListResponse = {
   users: Friend[];
-}
+};
