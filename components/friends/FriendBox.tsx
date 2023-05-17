@@ -18,7 +18,7 @@ export default function FriendBox({
   return (
     <div className={styles.friendBox}>
       <StatusDisplay status={status}>
-        <img src={imgUrl} alt={`photo of ${nickname}`} />
+        <img className={styles.img} src={imgUrl} alt={`photo of ${nickname}`} />
       </StatusDisplay>
       <div className={styles.nickname}>{nickname}</div>
       <FriendButtons tab={tab} nickname={nickname} />

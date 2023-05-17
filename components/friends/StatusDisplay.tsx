@@ -9,7 +9,7 @@ export default function StatusDisplay({
   children,
 }: {
   status?: Activity;
-  children: React.ReactNode;
+  children: JSX.Element;
 }) {
   if (!status) {
     return <div>{children}</div>;

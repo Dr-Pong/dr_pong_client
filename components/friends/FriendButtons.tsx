@@ -1,4 +1,10 @@
 import React from 'react';
+import {
+  IoIosChatboxes,
+  IoMdCheckmark,
+  IoMdClose,
+  IoMdMore,
+} from 'react-icons/io';
 
 import { FriendTab } from 'types/friendTypes';
 
@@ -24,25 +30,25 @@ export default function FriendButtons({
   const unblock = () => {};
 
   const buttons: {
-    [key: string]: { content: string | JSX.Element; handler: () => void }[];
+    [key: string]: { content: string | React.ReactNode; handler: () => void }[];
   } = {
     friend: [
-      { content: 'DM', handler: goDM },
-      { content: 'Kebab', handler: dropDown },
+      { content: <IoIosChatboxes />, handler: goDM },
+      { content: <IoMdMore />, handler: dropDown },
     ],
     request: [
-      { content: 'Accept', handler: accept },
-      { content: 'Reject', handler: reject },
+      { content: <IoMdCheckmark />, handler: accept },
+      { content: <IoMdClose />, handler: reject },
     ],
-    block: [{ content: 'Unblock', handler: unblock }],
+    block: [{ content: <IoMdClose />, handler: unblock }],
   };
   return (
     <div className={styles.buttons}>
       {buttons[tab].map(({ content, handler }) => (
         <BasicButton
           key={nickname + content}
-          color={'black'}
-          style={'basic'}
+          color={'opaque'}
+          style={'round'}
           handleButtonClick={handler}
         >
           {content}
