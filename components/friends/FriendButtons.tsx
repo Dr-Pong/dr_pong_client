@@ -1,14 +1,16 @@
+import { useRecoilState, useSetRecoilState } from 'recoil';
+
 import React from 'react';
 import {
   IoIosChatboxes,
   IoMdAdd,
   IoMdCheckmark,
   IoMdClose,
-  IoMdMore,
 } from 'react-icons/io';
 
 import { FriendTab, SearchUser } from 'types/friendTypes';
 
+import FriendDropdown from 'components/friends/FriendDropdown';
 import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/friends/FriendButtons.module.scss';
@@ -22,8 +24,6 @@ export default function FriendButtons({
 }) {
   const goDM = () => {};
 
-  const dropDown = () => {};
-
   const accept = () => {};
 
   const reject = () => {};
@@ -33,31 +33,57 @@ export default function FriendButtons({
   const add = () => {};
 
   const buttons: {
-    [key: string]: { content: string | React.ReactNode; handler: () => void }[];
+    [key: string]: JSX.Element[];
   } = {
     friend: [
-      { content: <IoIosChatboxes />, handler: goDM },
-      { content: <IoMdMore />, handler: dropDown },
+      <BasicButton
+        key={nickname + 'DM'}
+        color={'opaque'}
+        style={'round'}
+        handleButtonClick={goDM}
+      >
+        {<IoIosChatboxes />}
+      </BasicButton>,
+      <FriendDropdown key={nickname + 'dropdown'} nickname={nickname} />,
     ],
     request: [
-      { content: <IoMdCheckmark />, handler: accept },
-      { content: <IoMdClose />, handler: reject },
+      <BasicButton
+        key={nickname + 'accept'}
+        color={'opaque'}
+        style={'round'}
+        handleButtonClick={accept}
+      >
+        {<IoMdCheckmark />}
+      </BasicButton>,
+      <BasicButton
+        key={nickname + 'reject'}
+        color={'opaque'}
+        style={'round'}
+        handleButtonClick={reject}
+      >
+        {<IoMdClose />}
+      </BasicButton>,
     ],
-    block: [{ content: <IoMdClose />, handler: unblock }],
-    find: [{ content: <IoMdAdd />, handler: add }],
+    block: [
+      <BasicButton
+        key={nickname + 'unblock'}
+        color={'opaque'}
+        style={'round'}
+        handleButtonClick={unblock}
+      >
+        {<IoMdClose />}
+      </BasicButton>,
+    ],
+    find: [
+      <BasicButton
+        key={nickname + 'add'}
+        color={'opaque'}
+        style={'round'}
+        handleButtonClick={add}
+      >
+        {<IoMdAdd />}
+      </BasicButton>,
+    ],
   };
-  return (
-    <div className={styles.buttons}>
-      {buttons[tab].map(({ content, handler }) => (
-        <BasicButton
-          key={nickname + content}
-          color={'opaque'}
-          style={'round'}
-          handleButtonClick={handler}
-        >
-          {content}
-        </BasicButton>
-      ))}
-    </div>
-  );
+  return <div className={styles.buttons}>{buttons[tab].map((c) => c)}</div>;
 }
