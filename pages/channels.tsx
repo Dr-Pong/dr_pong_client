@@ -5,6 +5,7 @@ import { ReactElement } from 'react';
 import PageHeader from 'components/global/PageHeader';
 import LoginFilter from 'components/layouts/LoginFilter';
 import NavigationLayout from 'components/layouts/NavigationLayout';
+import ChannelsFrame from 'components/channels/ChannelsFrame';
 
 import styles from 'styles/channels/Channels.module.scss';
 
@@ -13,6 +14,7 @@ export default function Channels() {
   return (
     <div className={styles.channelsPageContainer}>
       <PageHeader title={t('Channels')} />
+      <ChannelsFrame />
     </div>
   );
 }
