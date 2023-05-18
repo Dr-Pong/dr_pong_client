@@ -38,7 +38,7 @@ export default function TitleDropdown({
           <IoIosArrowDown />
         </div>
       )}
-      <Dropdown visibility={editable && dropdownVisibility}>
+      <Dropdown style={'title'} visibility={editable && dropdownVisibility}>
         <ul>
           {titles.map(({ id, title }) => (
             <li
