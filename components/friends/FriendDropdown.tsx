@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import React, { useEffect, useRef } from 'react';
 import { IoMdMore } from 'react-icons/io';
@@ -13,7 +13,7 @@ import buttonStyles from 'styles/global/Button.module.scss';
 
 export default function FriendDropdown({ nickname }: { nickname: string }) {
   const isDropdownVisibleFor = useRecoilValue(dropdownVisibilitySelector);
-  const [dropdownUser, setDropdownUser] = useRecoilState(dropdownUserState);
+  const setDropdownUser = useSetRecoilState(dropdownUserState);
   const dropdownRef = useRef<HTMLUListElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const handleClickOutside = (event: MouseEvent) => {
