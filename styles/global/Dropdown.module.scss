@@ -29,16 +29,27 @@
 }
 
 .fadeOut > ul {
-  animation: fadeOutAnimation 0.4s ease;
+  animation: fadeOutAnimation 0.15s ease;
   animation-fill-mode: forwards;
   list-style: none;
 }
 
-.dropdown {
+.title {
   overflow: hidden;
   position: absolute;
   top: 100%;
   left: 4rem;
+  transform: translate(0%, 0%);
+  z-index: 99;
+  max-height: 6rem;
+  overflow-y: scroll;
+}
+
+.friend {
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  right: 50%;
   transform: translate(0%, 0%);
   z-index: 99;
   max-height: 6rem;

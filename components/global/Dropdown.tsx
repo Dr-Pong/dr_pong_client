@@ -3,9 +3,11 @@ import React, { useEffect, useState } from 'react';
 import styles from 'styles/global/Dropdown.module.scss';
 
 const Dropdown = ({
+  style,
   visibility,
   children,
 }: {
+  style: string;
   visibility: boolean;
   children: React.ReactNode;
 }) => {
@@ -16,12 +18,12 @@ const Dropdown = ({
     } else {
       setTimeout(() => {
         setVisibilityAnimation(false);
-      }, 400);
+      }, 150);
     }
   }, [visibility]);
   return (
     <article
-      className={`${styles.dropdown} ${
+      className={`${styles[style]} ${
         visibility ? styles.fadeIn : styles.fadeOut
       }`}
     >
