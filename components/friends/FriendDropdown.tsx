@@ -49,7 +49,7 @@ export default function FriendDropdown({ nickname }: { nickname: string }) {
   ];
 
   const kebabClickHandler = () => {
-    if (dropdownUser === nickname) {
+    if (isDropdownVisibleFor(nickname)) {
       setDropdownUser('');
     } else {
       setDropdownUser(nickname);
