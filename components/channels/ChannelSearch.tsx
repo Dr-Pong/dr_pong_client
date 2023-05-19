@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, FormEvent, ChangeEvent } from 'react';
+import { useState, Dispatch, SetStateAction, FormEvent, ChangeEvent } from 'react';
 
 import BasicButton from 'components/global/buttons/BasicButton';
 
@@ -15,29 +15,34 @@ export default function ChannelSearch({
   keyword: string,
   setKeyword: Dispatch<SetStateAction<string>>
 }) {
+  const [channelTitle, setChannelTitle] = useState<string>('');
   const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setKeyword(channelTitle);
     onSubmit(keyword);
-    const newQuery = encodeURIComponent(keyword.trim());
+    // const newQuery = encodeURIComponent(keyword.trim());
   };
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setKeyword(event.target.value);
+    setChannelTitle(event.target.value);
   };
 
   return (
     <form className={styles.channelSearch} onSubmit={handleOnSubmit}>
       <input
         type='text'
-        value={keyword}
+        value={channelTitle}
         onChange={handleOnChange}
         placeholder='Search by channel title'
-        style={{ background: 'transparent' }}
+        style={{
+          color: 'white',
+          background: 'transparent'
+        }}
       />
       <BasicButton
         style={'short'}
         color={'opaque'}
-        handleButtonClick={() => { }}
+        handleButtonClick={handleOnSubmit}
       >
         <IoIosSearch />
       </BasicButton>
