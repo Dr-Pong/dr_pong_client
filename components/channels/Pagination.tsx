@@ -15,18 +15,32 @@ export default function Pagination({
   return (
     <>
       <nav className={styles.nav}>
+        <button
+          className={styles.pagination}
+          onClick={() => setPage(1)}
+          disabled={page === 1}
+        >
+          {'<<'}
+        </button>
         <button className={styles.pagination} onClick={() => setPage(page - 1)} disabled={page === 1}>
-          &lt;
+          {'<'}
         </button>
         {Array(total)
           .fill(null)
           .map((_, i) => (
-            <button className={styles.pagination} key={i + 1} onClick={() => setPage(i + 1)} aria-current={page === i + 1 ? "page" : undefined}>
+            <button className={styles.pagination} key={i + 1} onClick={() => setPage(i + 1)} aria-current={page === i + 1 ? 'page' : undefined}>
               {i + 1}
             </button>
           ))}
         <button className={styles.pagination} onClick={() => setPage(page + 1)} disabled={page === total}>
-          &gt;
+          {'>'}
+        </button>
+        <button
+          className={styles.pagination}
+          onClick={() => setPage(total ? total : page)}
+          disabled={page === total}
+        >
+          {'>>'}
         </button>
       </nav>
     </>
