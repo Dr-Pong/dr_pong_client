@@ -1,4 +1,4 @@
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 import { v1 } from 'uuid';
 
 import { FriendTab } from 'types/friendTypes';
@@ -8,7 +8,15 @@ export const friendsTabState = atom<FriendTab>({
   default: 'friend',
 });
 
-export const dropdownVisibilityState = atom<boolean>({
-  key: `dropdownVisibilityState/${v1()}`,
-  default: false,
+export const dropdownUserState = atom<string>({
+  key: `dropdownUserState/${v1()}`,
+  default: '',
+});
+export const dropdownVisibilitySelector = selector({
+  key: `dropdownVisibility/${v1()}`,
+  get: ({ get }) => {
+    const selectedUser = get(dropdownUserState);
+
+    return (user: string) => user === selectedUser;
+  },
 });
