@@ -1,0 +1,33 @@
+.nav {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem;
+}
+
+.pagination {
+  display: inline-block;
+  padding: 0.3rem;
+  color: #333;
+  background-color: #fff;
+  border: 0.1rem solid #ccc;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pagination:hover {
+  background-color: #f2f2f2;
+}
+
+.pagination[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.pagination[aria-current] {
+  font-weight: bold;
+  background: deeppink;
+  transform: revert;
+  cursor: revert;
+}
