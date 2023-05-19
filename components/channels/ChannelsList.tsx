@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 
-import ChannelBox from './ChannelBox';
-import Pagination from './Pagination';
+import ChannelBox from 'components/channels/ChannelBox';
+import Pagination from 'components/channels/Pagination';
 import { AllChannels } from 'types/channelTypes';
 
 export default function ChannelsList({
