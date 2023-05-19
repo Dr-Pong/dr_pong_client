@@ -1,4 +1,3 @@
-
 /* fade in */
 
 @keyframes fadeInAnimation {
@@ -12,8 +11,8 @@
 }
 
 .fadeIn > ul {
-  animation: fadeInAnimation .4s ease;
   list-style: none;
+  animation: fadeInAnimation 0.4s ease;
 }
 
 /* fade out */
@@ -29,29 +28,40 @@
 }
 
 .fadeOut > ul {
+  list-style: none;
   animation: fadeOutAnimation 0.15s ease;
   animation-fill-mode: forwards;
-  list-style: none;
 }
 
 .title {
-  overflow: hidden;
   position: absolute;
   top: 100%;
   left: 4rem;
-  transform: translate(0%, 0%);
   z-index: 99;
   max-height: 6rem;
+  overflow: hidden;
   overflow-y: scroll;
+  transform: translate(0%, 0%);
 }
 
 .friend {
-  overflow: hidden;
   position: absolute;
   top: 50%;
   right: 50%;
-  transform: translate(0%, 0%);
   z-index: 99;
   max-height: 6rem;
+  overflow: hidden;
   overflow-y: scroll;
+  transform: translate(0%, 0%);
+}
+
+.channel {
+  position: absolute;
+  top: 100%;
+  right: 0%;
+  z-index: 99;
+  max-height: 6rem;
+  overflow: hidden;
+  overflow-y: scroll;
+  transform: translate(0%, 0%);
 }
