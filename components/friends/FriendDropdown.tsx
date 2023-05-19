@@ -1,9 +1,12 @@
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import React, { useEffect, useRef } from 'react';
 import { IoMdMore } from 'react-icons/io';
 
 import { dropdownUserState, dropdownVisibilitySelector } from 'recoils/friends';
+
+import useModalProvider from 'hooks/useModalProvider';
+import useRelationRequestQuery from 'hooks/useRelationRequestQuery';
 
 import Dropdown from 'components/global/Dropdown';
 import BasicButton from 'components/global/buttons/BasicButton';
@@ -12,10 +15,13 @@ import styles from 'styles/friends/FriendDropdown.module.scss';
 import buttonStyles from 'styles/global/Button.module.scss';
 
 export default function FriendDropdown({ nickname }: { nickname: string }) {
+  const { useProfileModal } = useModalProvider();
+  const { breakupRequest, blockRequest } = useRelationRequestQuery(nickname);
   const isDropdownVisibleFor = useRecoilValue(dropdownVisibilitySelector);
   const setDropdownUser = useSetRecoilState(dropdownUserState);
   const dropdownRef = useRef<HTMLUListElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+
   const handleClickOutside = (event: MouseEvent) => {
     if (
       dropdownRef.current &&
@@ -36,10 +42,17 @@ export default function FriendDropdown({ nickname }: { nickname: string }) {
       document.removeEventListener('click', handleClickOutside);
     };
   }, [isDropdownVisibleFor(nickname)]);
-  const profile = () => {};
+
+  const profile = () => {
+    useProfileModal(nickname);
+  };
   const spectate = () => {};
-  const breakup = () => {};
-  const block = () => {};
+  const breakup = () => {
+    breakupRequest().mutate();
+  };
+  const block = () => {
+    blockRequest().mutate({});
+  };
 
   const buttons: { content: string; handler: () => void }[] = [
     { content: 'profile', handler: profile },
