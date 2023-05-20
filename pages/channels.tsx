@@ -22,7 +22,7 @@ export default function Channels() {
   const [page, setPage] = useState(1);
   const [order, setOrder] = useState<string>('recent');
   const [keyword, setKeyword] = useState<string>('');
-  const { get } = useCustomQuery();
+  const { get, queryClient } = useCustomQuery();
   const [url, setUrl] = useState<string>(`/channels?page=${page}&count=${count}&order=${order}&keyword=${keyword}`);
   const { data, isLoading } = get(
     ['channels_key', url],
@@ -31,11 +31,8 @@ export default function Channels() {
   );
 
   useEffect(() => {
-    // fetch(`http://localhost:3000/api/channels?page=${page}&count=${count}&order=${order}&keyword=${keyword}`)
-    //   .then((res) => res.json())
-    //   .then((data) => setChannel(data));
     setUrl(`/channels?page=${page}&count=${count}&order=${order}&keyword=${keyword}`);
-  }, [page, order, keyword]);
+  }, [page, order, count]);
 
   useEffect(() => {
     setUrl(`/channels?page=${1}&count=${count}&order=${order}&keyword=${keyword}`);
@@ -50,6 +47,7 @@ export default function Channels() {
         <ChannelSetting
           order={order}
           setOrder={setOrder}
+          queryClient={queryClient}
         />
         <ChannelSearch
           onSubmit={() => { }}
