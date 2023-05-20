@@ -6,6 +6,8 @@ import styles from 'styles/channels/ChannelBox.module.scss';
 
 export default function ChannelBox({ channel }: { channel: AllChannels | undefined }) {
   const onClickJoinChannel = () => {
+    // 변경된 useMutation 적용 예정
+    // mutation.('/channels/{roomId}/participants', {password: null | string});
   };
 
   return (
