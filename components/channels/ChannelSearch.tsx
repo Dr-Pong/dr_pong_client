@@ -16,23 +16,22 @@ export default function ChannelSearch({
   setKeyword: Dispatch<SetStateAction<string>>
 }) {
   const [channelTitle, setChannelTitle] = useState<string>('');
-  const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleKeywordSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setKeyword(channelTitle);
     onSubmit(keyword);
-    // const newQuery = encodeURIComponent(keyword.trim());
   };
 
-  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleKeywordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setChannelTitle(event.target.value);
   };
 
   return (
-    <form className={styles.channelSearch} onSubmit={handleOnSubmit}>
+    <form className={styles.channelSearch} onSubmit={handleKeywordSubmit}>
       <input
         type='text'
         value={channelTitle}
-        onChange={handleOnChange}
+        onChange={handleKeywordChange}
         placeholder='Search by channel title'
         style={{
           color: 'white',
@@ -42,7 +41,7 @@ export default function ChannelSearch({
       <BasicButton
         style={'short'}
         color={'opaque'}
-        handleButtonClick={handleOnSubmit}
+        handleButtonClick={handleKeywordSubmit}
       >
         <IoIosSearch />
       </BasicButton>
