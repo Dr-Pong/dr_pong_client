@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IoMdAdd } from 'react-icons/io';
+import { UseQueryResult } from 'react-query';
 
 import { Friend, FriendTab } from 'types/friendTypes';
 
@@ -23,7 +24,11 @@ export default function FriendTabContents({ tab }: { tab: FriendTab }) {
         <IoMdAdd />
       </BasicButton>
     ) : null;
-  const query = {
+  const query: {
+    [key: string]: (
+      setBlocks: (f: Friend[]) => void
+    ) => UseQueryResult<any, unknown>;
+  } = {
     friend: getFriendList,
     request: getRequestList,
     block: getBlockList,

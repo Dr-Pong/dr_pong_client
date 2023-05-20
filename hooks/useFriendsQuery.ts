@@ -13,7 +13,7 @@ const useFriendsQuery = () => {
 
   const getRequestList = (setRequests: (f: Friend[]) => void) => {
     const unboxer = (data: UserListResponse) => setRequests(data.users);
-    return get('requests', '/users/friends/pendings', unboxer);
+    return get('pendings', '/users/friends/pendings', unboxer);
   };
 
   const getBlockList = (setBlocks: (f: Friend[]) => void) => {
