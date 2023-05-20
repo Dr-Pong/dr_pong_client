@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 import ChannelDropdown from 'components/channels/ChannelDropdown';
 
-import { useQueryClient } from 'react-query';
+import { QueryClient } from 'react-query';
 
 import styles from 'styles/channels/ChannelSetting.module.scss';
 import { IoIosAdd } from 'react-icons/io';
@@ -12,16 +12,17 @@ import BasicButton from 'components/global/buttons/BasicButton';
 
 export default function ChannelSetting({
   order,
-  setOrder
+  setOrder,
+  queryClient
 }: {
   order: string,
-  setOrder: Dispatch<SetStateAction<string>>
+  setOrder: Dispatch<SetStateAction<string>>,
+  queryClient: QueryClient
 }) {
-  const queryClient = useQueryClient();
-  const onClickRefreshChannel = () => {
+  const RefreshChannel = () => {
     queryClient.invalidateQueries({ queryKey: ['channel_key'] });
   }
-  const onClickCreateChannel = () => {
+  const ChannelCreate = () => {
     // 변경된 useMutation 적용 예정
     // 모달 띄우고 title, password, maxCount 설정
     // mutaion.('/channels', {title: string, password: null | string, maxCount: number});
@@ -36,14 +37,14 @@ export default function ChannelSetting({
       <BasicButton
         style={'short'}
         color={'opaque'}
-        handleButtonClick={onClickRefreshChannel}
+        handleButtonClick={RefreshChannel}
       >
         <IoIosRefresh />
       </BasicButton>
       <BasicButton
         style={'short'}
         color={'opaque'}
-        handleButtonClick={onClickCreateChannel}
+        handleButtonClick={ChannelCreate}
       >
         <IoIosAdd />
       </BasicButton>
