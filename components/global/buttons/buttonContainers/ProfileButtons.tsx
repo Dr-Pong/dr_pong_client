@@ -21,7 +21,7 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
   const { nickname, roleType } = useRecoilValue(userState);
   const { get } = useCustomQuery();
   const { friendRequest, breakupRequest, blockRequest, unblockRequest } =
-    useRelationRequestQuery();
+    useRelationRequestQuery(target);
   const { data, isLoading, isError } = get(
     '',
     `/users/${nickname}/relations/${target}`
@@ -32,19 +32,19 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
   };
 
   const blockUser = () => {
-    blockRequest(target).mutate({});
+    blockRequest().mutate({});
   };
 
   const unblockUser = () => {
-    unblockRequest(target).mutate();
+    unblockRequest().mutate();
   };
 
   const addFriend = () => {
-    friendRequest(target).mutate({});
+    friendRequest().mutate({});
   };
 
   const deleteFriend = () => {
-    breakupRequest(target).mutate();
+    breakupRequest().mutate();
   };
 
   const sendMessage = () => {

@@ -1,5 +1,3 @@
-import { useRecoilState, useSetRecoilState } from 'recoil';
-
 import React from 'react';
 import {
   IoIosChatboxes,
@@ -9,6 +7,8 @@ import {
 } from 'react-icons/io';
 
 import { FriendTab, SearchUser } from 'types/friendTypes';
+
+import useRelationRequestQuery from 'hooks/useRelationRequestQuery';
 
 import FriendDropdown from 'components/friends/FriendDropdown';
 import BasicButton from 'components/global/buttons/BasicButton';
@@ -22,15 +22,30 @@ export default function FriendButtons({
   tab: FriendTab | SearchUser;
   nickname: string;
 }) {
+  const {
+    acceptFriendRequest,
+    rejectFriendRequest,
+    unblockRequest,
+    friendRequest,
+  } = useRelationRequestQuery(nickname);
+
   const goDM = () => {};
 
-  const accept = () => {};
+  const accept = () => {
+    acceptFriendRequest().mutate({});
+  };
 
-  const reject = () => {};
+  const reject = () => {
+    rejectFriendRequest().mutate();
+  };
 
-  const unblock = () => {};
+  const unblock = () => {
+    unblockRequest().mutate();
+  };
 
-  const add = () => {};
+  const add = () => {
+    friendRequest().mutate({});
+  };
 
   const buttons: {
     [key: string]: JSX.Element[];
