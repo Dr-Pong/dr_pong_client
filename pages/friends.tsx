@@ -31,7 +31,7 @@ export default function Friends() {
       <div className={styles.friendsPageFrame}>
         <TabsViewProvider
           namespace={'friends'}
-          tabNames={['friend', 'request', 'block']}
+          tabNames={['friend', 'pending', 'block']}
           handleTabClick={handleTabClick}
         >
           <FriendTabContents key={tab} tab={tab} />

@@ -25,12 +25,10 @@ export default function FriendTabContents({ tab }: { tab: FriendTab }) {
       </BasicButton>
     ) : null;
   const query: {
-    [key: string]: (
-      setBlocks: (f: Friend[]) => void
-    ) => UseQueryResult<any, unknown>;
+    [key: string]: (setBlocks: (f: Friend[]) => void) => UseQueryResult;
   } = {
     friend: getFriendList,
-    request: getRequestList,
+    pending: getRequestList,
     block: getBlockList,
   };
 

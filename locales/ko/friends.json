@@ -1,3 +1,9 @@
 {
-  "Friends": "친구"
+  "Friends": "친구",
+  "friend": "친구",
+  "pending": "요청",
+  "block": "차단",
+  "Search by nickname": "닉네임으로 검색"
 }
+
+
