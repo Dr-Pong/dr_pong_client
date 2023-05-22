@@ -22,7 +22,6 @@ export default function Friends() {
 
   const handleTabClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const div = event.target as HTMLDivElement;
-    console.log(div.id);
     setTab(div.id as FriendTab);
   };
 
