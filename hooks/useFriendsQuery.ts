@@ -5,15 +5,15 @@ import useCustomQuery from 'hooks/useCustomQuery';
 const useFriendsQuery = () => {
   const { get } = useCustomQuery();
 
-  const getFriendList = (setFriends: (f: Friend[]) => void) => {
+  const getAllList = (setFriends: (f: Friend[]) => void) => {
     const unboxer = (data: UserListResponse) =>
       setFriends(data.users.map((user) => ({ ...user, status: 'offline' })));
-    return get('friends', '/users/friends', unboxer);
+    return get('allfriends', '/users/friends', unboxer);
   };
 
-  const getRequestList = (setRequests: (f: Friend[]) => void) => {
+  const getPendingList = (setRequests: (f: Friend[]) => void) => {
     const unboxer = (data: UserListResponse) => setRequests(data.users);
-    return get('requests', '/users/friends/pendings', unboxer);
+    return get('pendings', '/users/friends/pendings', unboxer);
   };
 
   const getBlockList = (setBlocks: (f: Friend[]) => void) => {
@@ -21,7 +21,7 @@ const useFriendsQuery = () => {
     return get('blocks', '/blocks', unboxer);
   };
 
-  return { getFriendList, getRequestList, getBlockList };
+  return { getAllList, getPendingList: getPendingList, getBlockList };
 };
 
 export default useFriendsQuery;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IoMdAdd } from 'react-icons/io';
+import { UseQueryResult } from 'react-query';
 
 import { Friend, FriendTab } from 'types/friendTypes';
 
@@ -11,10 +12,10 @@ import SearchableList from 'components/friends/SearchableList';
 import BasicButton from 'components/global/buttons/BasicButton';
 
 export default function FriendTabContents({ tab }: { tab: FriendTab }) {
-  const { getFriendList, getRequestList, getBlockList } = useFriendsQuery();
+  const { getAllList, getPendingList, getBlockList } = useFriendsQuery();
   const { useFriendFinderModal } = useModalProvider();
   const popModalButton =
-    tab === 'friend' ? (
+    tab === 'all' ? (
       <BasicButton
         style={'square'}
         color={'white'}
@@ -23,9 +24,11 @@ export default function FriendTabContents({ tab }: { tab: FriendTab }) {
         <IoMdAdd />
       </BasicButton>
     ) : null;
-  const query = {
-    friend: getFriendList,
-    request: getRequestList,
+  const query: {
+    [key: string]: (setBlocks: (f: Friend[]) => void) => UseQueryResult;
+  } = {
+    all: getAllList,
+    pending: getPendingList,
     block: getBlockList,
   };
 

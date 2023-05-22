@@ -22,6 +22,7 @@ export default function Friends() {
 
   const handleTabClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const div = event.target as HTMLDivElement;
+    console.log(div.id);
     setTab(div.id as FriendTab);
   };
 
@@ -31,7 +32,7 @@ export default function Friends() {
       <div className={styles.friendsPageFrame}>
         <TabsViewProvider
           namespace={'friends'}
-          tabNames={['friend', 'request', 'block']}
+          tabNames={['all', 'pending', 'block']}
           handleTabClick={handleTabClick}
         >
           <FriendTabContents key={tab} tab={tab} />

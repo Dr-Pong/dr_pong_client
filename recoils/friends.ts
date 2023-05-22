@@ -5,7 +5,7 @@ import { FriendTab } from 'types/friendTypes';
 
 export const friendsTabState = atom<FriendTab>({
   key: `friendsTabState/${v1()}`,
-  default: 'friend',
+  default: 'all',
 });
 
 export const dropdownUserState = atom<string>({

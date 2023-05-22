@@ -1,3 +1,7 @@
 {
-  "Friends": "Friends"
+  "Friends": "Friends",
+  "all": "all",
+  "pending": "pending",
+  "block": "block",
+  "Search by nickname": "Search by nickname"
 }

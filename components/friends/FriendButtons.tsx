@@ -50,7 +50,7 @@ export default function FriendButtons({
   const buttons: {
     [key: string]: JSX.Element[];
   } = {
-    friend: [
+    all: [
       <BasicButton
         key={nickname + 'DM'}
         color={'opaque'}
@@ -61,7 +61,7 @@ export default function FriendButtons({
       </BasicButton>,
       <FriendDropdown key={nickname + 'dropdown'} nickname={nickname} />,
     ],
-    request: [
+    pending: [
       <BasicButton
         key={nickname + 'accept'}
         color={'opaque'}
