@@ -12,10 +12,10 @@ import SearchableList from 'components/friends/SearchableList';
 import BasicButton from 'components/global/buttons/BasicButton';
 
 export default function FriendTabContents({ tab }: { tab: FriendTab }) {
-  const { getFriendList, getRequestList, getBlockList } = useFriendsQuery();
+  const { getAllList, getPendingList, getBlockList } = useFriendsQuery();
   const { useFriendFinderModal } = useModalProvider();
   const popModalButton =
-    tab === 'friend' ? (
+    tab === 'all' ? (
       <BasicButton
         style={'square'}
         color={'white'}
@@ -27,8 +27,8 @@ export default function FriendTabContents({ tab }: { tab: FriendTab }) {
   const query: {
     [key: string]: (setBlocks: (f: Friend[]) => void) => UseQueryResult;
   } = {
-    friend: getFriendList,
-    pending: getRequestList,
+    all: getAllList,
+    pending: getPendingList,
     block: getBlockList,
   };
 

@@ -1,8 +1,8 @@
 {
   "Friends": "친구",
-  "friend": "친구",
-  "pending": "요청",
-  "block": "차단",
+  "all": "모든 친구",
+  "pending": "친구 요청",
+  "block": "차단 목록",
   "Search by nickname": "닉네임으로 검색"
 }
 

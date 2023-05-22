@@ -1,5 +1,5 @@
 export type Activity = 'online' | 'offline' | 'inGame';
-export type FriendTab = 'friend' | 'pending' | 'block';
+export type FriendTab = 'all' | 'pending' | 'block';
 export type SearchUser = 'find';
 export type Friend = {
   nickname: string;
