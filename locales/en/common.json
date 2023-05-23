@@ -9,5 +9,11 @@
   "delete friend": "delete friend",
   "message": "message",
   "Google OTP": "Google OTP",
-  "authenticate": "authenticate"
+  "authenticate": "authenticate",
+  "settings": "settings",
+  "Language": "Language",
+  "2nd Authentication": "2nd Authentication",
+  "enable": "enable",
+  "disable": "disable",
+  "logout": "logout"
 }
