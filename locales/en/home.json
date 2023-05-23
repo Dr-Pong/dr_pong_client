@@ -1,7 +1,6 @@
 {
+  "Game": "Game Start",
   "Leaderboard": "Leaderboard",
   "Match History": "Match History",
-  "Settings": "Settings",
-  "Login": "Login",
-  "Logout": "Logout"
+  "Login": "Login"
 }

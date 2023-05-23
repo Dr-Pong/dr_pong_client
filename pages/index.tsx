@@ -23,9 +23,9 @@ export default function Home() {
   const login = useRecoilValue(loginState);
   const user = useRecoilValue(userState);
   const pages: page[] = [
+    { value: t('Game'), route: '/game' },
     { value: t('Leaderboard'), route: '/leaderboard' },
     { value: t('Match History'), route: `/records/${user.nickname}` },
-    { value: t('Settings'), route: '/settings' },
   ];
   if (!login) pages.push({ value: t('Login'), route: '/login' });
 

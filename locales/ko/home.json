@@ -1,7 +1,6 @@
 {
+  "Game": "게임 시작",
   "Leaderboard": "랭킹",
   "Match History": "전적",
-  "Settings": "설정",
-  "Login": "로그인",
-  "Logout": "로그아웃"
+  "Login": "로그인"
 }
