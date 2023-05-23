@@ -7,6 +7,15 @@
   height: 100vh;
 }
 
+.utilLayoutContainer {
+  display: grid;
+  grid-template-rows: 3rem 1fr 5rem;
+  gap: 1rem;
+  width: 100vw;
+  height: 100vh;
+  padding-block: 1rem;
+}
+
 .pageContainer {
   height: 100%;
   overflow-x: hidden;
