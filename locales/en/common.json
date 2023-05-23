@@ -12,7 +12,7 @@
   "authenticate": "authenticate",
   "settings": "settings",
   "Language": "Language",
-  "2nd Authentication": "2nd Authentication",
+  "2fa": "Two-Factor Authentication",
   "enable": "enable",
   "disable": "disable",
   "logout": "logout"

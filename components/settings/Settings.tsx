@@ -18,7 +18,7 @@ export default function Settings() {
       field: <LocaleField />,
     },
     {
-      topic: t('2nd Authentication'),
+      topic: t('2fa'),
       field: <TfaField />,
     },
   ];

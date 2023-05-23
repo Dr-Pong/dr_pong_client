@@ -12,7 +12,7 @@
   "authenticate": "인증하기",
   "settings": "설정",
   "Language": "언어",
-  "2nd Authentication": "2차 인증",
+  "2fa": "2차 인증",
   "enable": "활성화",
   "disable": "비활성화",
   "logout": "로그아웃"
