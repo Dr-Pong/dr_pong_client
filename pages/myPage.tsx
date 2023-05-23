@@ -5,7 +5,7 @@ import { ReactElement } from 'react';
 
 import PageHeader from 'components/global/PageHeader';
 import LoginFilter from 'components/layouts/LoginFilter';
-import NavigationLayout from 'components/layouts/NavigationLayout';
+import UtilLayout from 'components/layouts/UtilLayout';
 import MyPageFrame from 'components/myPage/MyPageFrame';
 
 import styles from 'styles/myPage/MyPage.module.scss';
@@ -23,7 +23,7 @@ export default function MyPage() {
 MyPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <LoginFilter>
-      <NavigationLayout>{page}</NavigationLayout>
+      <UtilLayout>{page}</UtilLayout>
     </LoginFilter>
   );
 };

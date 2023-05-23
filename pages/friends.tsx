@@ -11,7 +11,7 @@ import FriendTabContents from 'components/friends/FriendTabContents';
 import PageHeader from 'components/global/PageHeader';
 import TabsViewProvider from 'components/global/TabsViewProvider';
 import LoginFilter from 'components/layouts/LoginFilter';
-import NavigationLayout from 'components/layouts/NavigationLayout';
+import UtilLayout from 'components/layouts/UtilLayout';
 
 import styles from 'styles/friends/Friends.module.scss';
 
@@ -44,7 +44,7 @@ export default function Friends() {
 Friends.getLayout = function getLayout(page: ReactElement) {
   return (
     <LoginFilter>
-      <NavigationLayout>{page}</NavigationLayout>
+      <UtilLayout>{page}</UtilLayout>
     </LoginFilter>
   );
 };

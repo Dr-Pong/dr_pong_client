@@ -9,7 +9,7 @@ import { loginState } from 'recoils/login';
 import { userState } from 'recoils/user';
 
 import LoginFilter from 'components/layouts/LoginFilter';
-import NavigationLayout from 'components/layouts/NavigationLayout';
+import UtilLayout from 'components/layouts/UtilLayout';
 
 import styles from 'styles/index/Home.module.scss';
 
@@ -47,7 +47,7 @@ export default function Home() {
 Home.getLayout = function getLayout(page: ReactElement) {
   return (
     <LoginFilter>
-      <NavigationLayout>{page}</NavigationLayout>
+      <UtilLayout>{page}</UtilLayout>
     </LoginFilter>
   );
 };

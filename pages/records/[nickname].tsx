@@ -7,7 +7,7 @@ import React, { ReactElement, useState } from 'react';
 import PageHeader from 'components/global/PageHeader';
 import SearchBar from 'components/global/SearchBar';
 import LoginFilter from 'components/layouts/LoginFilter';
-import NavigationLayout from 'components/layouts/NavigationLayout';
+import UtilLayout from 'components/layouts/UtilLayout';
 import MatchHistory from 'components/records/MatchHistory';
 
 import styles from 'styles/records/Records.module.scss';
@@ -30,7 +30,7 @@ export default function Records() {
 Records.getLayout = function getLayout(page: ReactElement) {
   return (
     <LoginFilter>
-      <NavigationLayout>{page}</NavigationLayout>
+      <UtilLayout>{page}</UtilLayout>
     </LoginFilter>
   );
 };

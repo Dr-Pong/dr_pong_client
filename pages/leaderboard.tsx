@@ -4,7 +4,7 @@ import { ReactElement } from 'react';
 
 import PageHeader from 'components/global/PageHeader';
 import LoginFilter from 'components/layouts/LoginFilter';
-import NavigationLayout from 'components/layouts/NavigationLayout';
+import UtilLayout from 'components/layouts/UtilLayout';
 import LeaderboardFrame from 'components/leaderboard/LeaderboardFrame';
 
 import styles from 'styles/leaderboard/Leaderboard.module.scss';
@@ -22,7 +22,7 @@ export default function Leaderboard() {
 Leaderboard.getLayout = function getLayout(page: ReactElement) {
   return (
     <LoginFilter>
-      <NavigationLayout>{page}</NavigationLayout>
+      <UtilLayout>{page}</UtilLayout>
     </LoginFilter>
   );
 };
