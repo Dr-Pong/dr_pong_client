@@ -18,7 +18,7 @@ type ProfileButtonsProps = {
 
 export default function ProfileButtons({ target }: ProfileButtonsProps) {
   const { t } = useTranslation('common');
-  const { nickname, roleType } = useRecoilValue(userState);
+  const { nickname } = useRecoilValue(userState);
   const { get } = useCustomQuery();
   const { friendRequest, breakupRequest, blockRequest, unblockRequest } =
     useRelationRequestQuery(target);
