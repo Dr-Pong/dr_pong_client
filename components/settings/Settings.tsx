@@ -8,8 +8,8 @@ import TfaField from 'components/settings/TfaField';
 
 import styles from 'styles/settings/Settings.module.scss';
 
-export default function SettingsFrame() {
-  const { t } = useTranslation('settings');
+export default function Settings() {
+  const { t } = useTranslation('common');
   const { onLogout } = useAuthHandler();
 
   const settingFields = [
@@ -28,7 +28,7 @@ export default function SettingsFrame() {
   };
 
   return (
-    <div className={styles.settingListContainer}>
+    <div className={styles.settingsContainer}>
       <ul>
         {settingFields.map(({ topic, field }, i) => {
           return (

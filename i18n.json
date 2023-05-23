@@ -10,7 +10,6 @@
     "/leaderboard": ["leaderboard"],
     "/records/[nickname]": ["records"],
     "/myPage": ["myPage"],
-    "/settings": ["settings"],
     "/login": ["login"],
     "/signUp": ["signUp"],
     "/authentication": ["authentication"]
