@@ -6,7 +6,7 @@ import useCustomQuery, { MutationType } from 'hooks/useCustomQuery';
 
 import BasicButton from 'components/global/buttons/BasicButton';
 
-export type RequestProp = {
+export type RequestProps = {
   api: string;
   method: 'post' | 'delete' | 'patch';
   options?: object;
@@ -15,13 +15,13 @@ export type RequestProp = {
 
 export default function ToastResultButton({
   request,
-  buttonProps,
+  button,
 }: {
-  request: RequestProp;
-  buttonProps: ButtonProps;
+  request: RequestProps;
+  button: ButtonProps;
 }) {
   const { api, method, options, body } = request;
-  const { style, color, children } = buttonProps;
+  const { style, color, children } = button;
   const { mutationPost, mutationPatch, mutationDelete } = useCustomQuery();
 
   const call: { [key: string]: MutationType } = {
