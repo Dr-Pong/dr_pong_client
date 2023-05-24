@@ -10,6 +10,11 @@ type ButtonStyle =
 
 type ButtonColor = 'black' | 'white' | 'opaque';
 
+export interface ButtonDesign {
+  style: ButtonStyle;
+  color: ButtonColor;
+}
+
 export interface ButtonProps {
   style: ButtonStyle;
   color: ButtonColor;
