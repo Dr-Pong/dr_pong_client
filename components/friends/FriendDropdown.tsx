@@ -1,3 +1,4 @@
+import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import React, { useEffect, useRef } from 'react';
@@ -5,22 +6,30 @@ import { IoMdMore } from 'react-icons/io';
 
 import { dropdownUserState, dropdownVisibilitySelector } from 'recoils/friends';
 
-import useModalProvider from 'hooks/useModalProvider';
-import useRelationRequestQuery from 'hooks/useRelationRequestQuery';
+import { ButtonDesign } from 'types/buttonTypes';
+
+import useRelationButtons from 'hooks/useRelationButtons';
 
 import Dropdown from 'components/global/Dropdown';
-import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/friends/FriendDropdown.module.scss';
 import buttonStyles from 'styles/global/Button.module.scss';
 
+const buttonDesign: ButtonDesign = {
+  style: 'thin',
+  color: 'white',
+};
+
 export default function FriendDropdown({ nickname }: { nickname: string }) {
-  const { useProfileModal } = useModalProvider();
-  const { breakupRequest, blockRequest } = useRelationRequestQuery(nickname);
+  const { t } = useTranslation('common');
   const isDropdownVisibleFor = useRecoilValue(dropdownVisibilitySelector);
   const setDropdownUser = useSetRecoilState(dropdownUserState);
   const dropdownRef = useRef<HTMLUListElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const { openProfile, spectate, deleteFriend, blockUser } = useRelationButtons(
+    buttonDesign,
+    nickname
+  );
 
   const handleClickOutside = (event: MouseEvent) => {
     if (
@@ -43,22 +52,11 @@ export default function FriendDropdown({ nickname }: { nickname: string }) {
     };
   }, [isDropdownVisibleFor(nickname)]);
 
-  const profile = () => {
-    useProfileModal(nickname);
-  };
-  const spectate = () => {};
-  const breakup = () => {
-    breakupRequest().mutate();
-  };
-  const block = () => {
-    blockRequest().mutate({});
-  };
-
-  const buttons: { content: string; handler: () => void }[] = [
-    { content: 'profile', handler: profile },
-    { content: 'spectate', handler: spectate },
-    { content: 'delete', handler: breakup },
-    { content: 'block', handler: block },
+  const buttons: { content: string; button: JSX.Element }[] = [
+    { content: 'profile', button: openProfile(t('profile')) },
+    { content: 'spectate', button: spectate(t('spectate')) },
+    { content: 'delete', button: deleteFriend(t('block')) },
+    { content: 'block', button: blockUser(t('delete')) },
   ];
 
   const kebabClickHandler = () => {
@@ -80,16 +78,8 @@ export default function FriendDropdown({ nickname }: { nickname: string }) {
       </button>
       <Dropdown style={'friend'} visibility={isDropdownVisibleFor(nickname)}>
         <ul ref={dropdownRef}>
-          {buttons.map(({ content, handler }) => (
-            <li key={content}>
-              <BasicButton
-                style={'thin'}
-                color={'white'}
-                handleButtonClick={handler}
-              >
-                {content}
-              </BasicButton>
-            </li>
+          {buttons.map(({ content, button }) => (
+            <li key={content}>{button}</li>
           ))}
         </ul>
       </Dropdown>
