@@ -6,8 +6,8 @@ import React, { ReactElement, useState } from 'react';
 
 import PageHeader from 'components/global/PageHeader';
 import SearchBar from 'components/global/SearchBar';
+import AppLayout from 'components/layouts/AppLayout';
 import LoginFilter from 'components/layouts/LoginFilter';
-import UtilLayout from 'components/layouts/UtilLayout';
 import MatchHistory from 'components/records/MatchHistory';
 
 import styles from 'styles/records/Records.module.scss';
@@ -30,7 +30,7 @@ export default function Records() {
 Records.getLayout = function getLayout(page: ReactElement) {
   return (
     <LoginFilter>
-      <UtilLayout>{page}</UtilLayout>
+      <AppLayout>{page}</AppLayout>
     </LoginFilter>
   );
 };

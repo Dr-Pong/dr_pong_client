@@ -10,8 +10,8 @@ import ChannelSearch from 'components/channels/ChannelSearch';
 import ChannelSetting from 'components/channels/ChannelSetting';
 import ChannelsList from 'components/channels/ChannelsList';
 import PageHeader from 'components/global/PageHeader';
+import AppLayout from 'components/layouts/AppLayout';
 import LoginFilter from 'components/layouts/LoginFilter';
-import UtilLayout from 'components/layouts/UtilLayout';
 
 import styles from 'styles/channels/Channels.module.scss';
 
@@ -65,7 +65,7 @@ export default function Channels() {
 Channels.getLayout = function getLayout(page: ReactElement) {
   return (
     <LoginFilter>
-      <UtilLayout>{page}</UtilLayout>
+      <AppLayout>{page}</AppLayout>
     </LoginFilter>
   );
 };

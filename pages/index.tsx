@@ -8,8 +8,8 @@ import React, { ReactElement } from 'react';
 import { loginState } from 'recoils/login';
 import { userState } from 'recoils/user';
 
+import AppLayout from 'components/layouts/AppLayout';
 import LoginFilter from 'components/layouts/LoginFilter';
-import UtilLayout from 'components/layouts/UtilLayout';
 
 import styles from 'styles/index/Home.module.scss';
 
@@ -47,7 +47,7 @@ export default function Home() {
 Home.getLayout = function getLayout(page: ReactElement) {
   return (
     <LoginFilter>
-      <UtilLayout>{page}</UtilLayout>
+      <AppLayout>{page}</AppLayout>
     </LoginFilter>
   );
 };
