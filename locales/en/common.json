@@ -15,5 +15,7 @@
   "2fa": "Two-Factor Authentication",
   "enable": "enable",
   "disable": "disable",
-  "logout": "logout"
+  "logout": "logout",
+  "success": "Your request is done successfully.",
+  "failure": "Your request has been failed."
 }
