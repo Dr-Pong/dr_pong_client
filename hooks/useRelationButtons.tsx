@@ -13,11 +13,11 @@ import useModalProvider from 'hooks/useModalProvider';
 import FriendDropdown from 'components/friends/FriendDropdown';
 import BasicButton from 'components/global/buttons/BasicButton';
 import ToastResultButton, {
-  RequestProp,
+  RequestProps,
 } from 'components/global/buttons/ToastResultButton';
 
 const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
-  const { useProfileModal, offModal } = useModalProvider();
+  const { useProfileModal, closeModal } = useModalProvider();
   const setDropdownUser = useSetRecoilState(dropdownUserState);
   const { style, color } = buttonDesign;
 
@@ -38,14 +38,14 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
 
   const inviteGame = (label: React.ReactNode) => {
     return (
-      <BasicButton style={style} color={color} handleButtonClick={offModal}>
+      <BasicButton style={style} color={color} handleButtonClick={closeModal}>
         <Link href={'/game'}>{label}</Link>
       </BasicButton>
     );
   };
 
   const blockUser = (label: React.ReactNode) => {
-    const request: RequestProp = {
+    const request: RequestProps = {
       api: `/users/blocks/${target}`,
       method: 'post',
       options: {},
@@ -54,11 +54,11 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
       ...buttonDesign,
       children: label,
     };
-    return <ToastResultButton request={request} buttonProps={buttonProps} />;
+    return <ToastResultButton request={request} button={buttonProps} />;
   };
 
   const unblockUser = (label: React.ReactNode) => {
-    const request: RequestProp = {
+    const request: RequestProps = {
       api: `/users/blocks/${target}`,
       method: 'delete',
       options: {},
@@ -67,11 +67,11 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
       ...buttonDesign,
       children: label,
     };
-    return <ToastResultButton request={request} buttonProps={buttonProps} />;
+    return <ToastResultButton request={request} button={buttonProps} />;
   };
 
   const addFriend = (label: React.ReactNode) => {
-    const request: RequestProp = {
+    const request: RequestProps = {
       api: `/users/friends/pendings/${target}`,
       method: 'post',
       options: {},
@@ -80,11 +80,11 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
       ...buttonDesign,
       children: label,
     };
-    return <ToastResultButton request={request} buttonProps={buttonProps} />;
+    return <ToastResultButton request={request} button={buttonProps} />;
   };
 
   const deleteFriend = (label: React.ReactNode) => {
-    const request: RequestProp = {
+    const request: RequestProps = {
       api: `/users/friends/${target}`,
       method: 'delete',
       options: {},
@@ -93,11 +93,11 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
       ...buttonDesign,
       children: label,
     };
-    return <ToastResultButton request={request} buttonProps={buttonProps} />;
+    return <ToastResultButton request={request} button={buttonProps} />;
   };
 
   const acceptFriendRequest = (label: React.ReactNode) => {
-    const request: RequestProp = {
+    const request: RequestProps = {
       api: `/users/friends/${target}`,
       method: 'post',
       options: {},
@@ -106,11 +106,11 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
       ...buttonDesign,
       children: label,
     };
-    return <ToastResultButton request={request} buttonProps={buttonProps} />;
+    return <ToastResultButton request={request} button={buttonProps} />;
   };
 
   const rejectFriendRequest = (label: React.ReactNode) => {
-    const request: RequestProp = {
+    const request: RequestProps = {
       api: `/users/friends/pendings/${target}`,
       method: 'delete',
       options: {},
@@ -119,12 +119,12 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
       ...buttonDesign,
       children: label,
     };
-    return <ToastResultButton request={request} buttonProps={buttonProps} />;
+    return <ToastResultButton request={request} button={buttonProps} />;
   };
 
   const directMessage = (label: React.ReactNode) => {
     return (
-      <BasicButton style={style} color={color} handleButtonClick={offModal}>
+      <BasicButton style={style} color={color} handleButtonClick={closeModal}>
         <Link href={'/chat'}>{label}</Link>
       </BasicButton>
     );
@@ -136,7 +136,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
 
   const spectate = (label: React.ReactNode) => {
     return (
-      <BasicButton style={'thin'} color={'white'} handleButtonClick={offModal}>
+      <BasicButton style={'thin'} color={'white'} handleButtonClick={closeModal}>
         <Link href={'/spectate'}>{label}</Link>
       </BasicButton>
     );

@@ -36,7 +36,7 @@ const useModalProvider = () => {
     setOpenModal(true);
   };
 
-  const offModal = () => {
+  const closeModal = () => {
     resetModalParts();
     setOpenModal(false);
   };
@@ -152,7 +152,7 @@ const useModalProvider = () => {
   };
 
   return {
-    offModal,
+    closeModal,
     useTfaRegisterModal,
     useProfileModal,
     useEditWarningModal,
