@@ -1,26 +1,15 @@
-import { useRecoilState, useSetRecoilState } from "recoil";
-
-
+import { useRecoilState } from 'recoil';
 
 import React, { useState } from 'react';
 
-
+import { openAlertState } from 'recoils/alert';
 
 import { ButtonProps } from 'types/buttonTypes';
 
-
-
 import useCustomQuery, { MutationType } from 'hooks/useCustomQuery';
 
-
-
+import Alert from 'components/alerts/Alert';
 import BasicButton from 'components/global/buttons/BasicButton';
-
-
-
-import { openAlertState } from '../../../recoils/alert';
-import Alert from '../../alerts/Alert';
-
 
 export type RequestProps = {
   api: string;
