@@ -1,5 +1,5 @@
 import useTranslation from 'next-translate/useTranslation';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import React, { MutableRefObject } from 'react';
 
@@ -27,12 +27,18 @@ import selectableItemStyles from 'styles/myPage/SelectableItem.module.scss';
 const useModalProvider = () => {
   const { t } = useTranslation('common');
   const setModalParts = useSetRecoilState(modalPartsState);
+  const resetModalParts = useResetRecoilState(modalPartsState);
   const setOpenModal = useSetRecoilState(openModalState);
   const user = useRecoilValue(userState);
 
   const useModal = (parts: ModalParts) => {
     setModalParts(parts);
     setOpenModal(true);
+  };
+
+  const closeModal = () => {
+    resetModalParts();
+    setOpenModal(false);
   };
 
   const useTfaRegisterModal = (
@@ -146,6 +152,7 @@ const useModalProvider = () => {
   };
 
   return {
+    closeModal,
     useTfaRegisterModal,
     useProfileModal,
     useEditWarningModal,

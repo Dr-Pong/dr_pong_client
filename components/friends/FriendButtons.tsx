@@ -6,15 +6,17 @@ import {
   IoMdClose,
 } from 'react-icons/io';
 
+import { ButtonDesign } from 'types/buttonTypes';
 import { FriendTab, SearchUser } from 'types/friendTypes';
 
-import useRelationRequestQuery from 'hooks/useRelationRequestQuery';
-
-import FriendDropdown from 'components/friends/FriendDropdown';
-import BasicButton from 'components/global/buttons/BasicButton';
+import useRelationButtons from 'hooks/useRelationButtons';
 
 import styles from 'styles/friends/FriendButtons.module.scss';
 
+const buttonDesign: ButtonDesign = {
+  style: 'round',
+  color: 'opaque',
+};
 export default function FriendButtons({
   tab,
   nickname,
@@ -23,82 +25,24 @@ export default function FriendButtons({
   nickname: string;
 }) {
   const {
+    directMessage,
+    dropdown,
     acceptFriendRequest,
     rejectFriendRequest,
-    unblockRequest,
-    friendRequest,
-  } = useRelationRequestQuery(nickname);
-
-  const goDM = () => {};
-
-  const accept = () => {
-    acceptFriendRequest().mutate({});
-  };
-
-  const reject = () => {
-    rejectFriendRequest().mutate();
-  };
-
-  const unblock = () => {
-    unblockRequest().mutate();
-  };
-
-  const add = () => {
-    friendRequest().mutate({});
-  };
+    addFriend,
+    unblockUser,
+  } = useRelationButtons(buttonDesign, nickname);
 
   const buttons: {
     [key: string]: JSX.Element[];
   } = {
-    all: [
-      <BasicButton
-        key={nickname + 'DM'}
-        color={'opaque'}
-        style={'round'}
-        handleButtonClick={goDM}
-      >
-        {<IoIosChatboxes />}
-      </BasicButton>,
-      <FriendDropdown key={nickname + 'dropdown'} nickname={nickname} />,
-    ],
+    all: [directMessage(<IoIosChatboxes />), dropdown()],
     pending: [
-      <BasicButton
-        key={nickname + 'accept'}
-        color={'opaque'}
-        style={'round'}
-        handleButtonClick={accept}
-      >
-        {<IoMdCheckmark />}
-      </BasicButton>,
-      <BasicButton
-        key={nickname + 'reject'}
-        color={'opaque'}
-        style={'round'}
-        handleButtonClick={reject}
-      >
-        {<IoMdClose />}
-      </BasicButton>,
+      acceptFriendRequest(<IoMdCheckmark />),
+      rejectFriendRequest(<IoMdClose />),
     ],
-    block: [
-      <BasicButton
-        key={nickname + 'unblock'}
-        color={'opaque'}
-        style={'round'}
-        handleButtonClick={unblock}
-      >
-        {<IoMdClose />}
-      </BasicButton>,
-    ],
-    find: [
-      <BasicButton
-        key={nickname + 'add'}
-        color={'opaque'}
-        style={'round'}
-        handleButtonClick={add}
-      >
-        {<IoMdAdd />}
-      </BasicButton>,
-    ],
+    block: [unblockUser(<IoMdClose />)],
+    find: [addFriend(<IoMdAdd />)],
   };
   return <div className={styles.buttons}>{buttons[tab].map((c) => c)}</div>;
 }

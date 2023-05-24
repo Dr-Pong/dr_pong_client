@@ -1,8 +1,20 @@
 import React from 'react';
-import { QueryKey, useMutation, useQuery, useQueryClient } from 'react-query';
+import {
+  QueryKey,
+  UseMutationResult,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from 'react-query';
 
 import instance from 'utils/axios';
 
+export type MutationType = (
+  path: string,
+  options?: object
+) =>
+  | UseMutationResult<object, unknown, object, unknown>
+  | UseMutationResult<object, unknown, void, unknown>;
 const useCustomQuery = () => {
   const queryClient = useQueryClient();
   const getDefaultOptions = {
