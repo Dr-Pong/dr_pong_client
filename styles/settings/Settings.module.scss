@@ -1,11 +1,6 @@
 @import 'styles/common.scss';
 
-.settingsPageContainer {
-  @include pageWithHeaderContainer;
-}
-
-.settingListContainer {
-  display: flex;
+.settingsContainer {
   flex-direction: column;
   justify-content: space-between;
   margin-inline: 1rem;

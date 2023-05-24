@@ -1,17 +1,17 @@
 import useTranslation from 'next-translate/useTranslation';
 
-import { useState, useEffect, ReactElement } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
+
+import { AllChannels } from 'types/channelTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
-import PageHeader from 'components/global/PageHeader';
-import LoginFilter from 'components/layouts/LoginFilter';
-import NavigationLayout from 'components/layouts/NavigationLayout';
-import ChannelSetting from 'components/channels/ChannelSetting';
 import ChannelSearch from 'components/channels/ChannelSearch';
+import ChannelSetting from 'components/channels/ChannelSetting';
 import ChannelsList from 'components/channels/ChannelsList';
-
-import { AllChannels } from 'types/channelTypes';
+import PageHeader from 'components/global/PageHeader';
+import AppLayout from 'components/layouts/AppLayout';
+import LoginFilter from 'components/layouts/LoginFilter';
 
 import styles from 'styles/channels/Channels.module.scss';
 
@@ -23,19 +23,21 @@ export default function Channels() {
   const [order, setOrder] = useState<string>('recent');
   const [keyword, setKeyword] = useState<string>('');
   const { get, queryClient } = useCustomQuery();
-  const [url, setUrl] = useState<string>(`/channels?page=${page}&count=${count}&order=${order}&keyword=${keyword}`);
-  const { data, isLoading } = get(
-    ['channels_key', url],
-    url,
-    setChannel
+  const [url, setUrl] = useState<string>(
+    `/channels?page=${page}&count=${count}&order=${order}&keyword=${keyword}`
   );
+  const { data, isLoading } = get(['channels_key', url], url, setChannel);
 
   useEffect(() => {
-    setUrl(`/channels?page=${page}&count=${count}&order=${order}&keyword=${keyword}`);
+    setUrl(
+      `/channels?page=${page}&count=${count}&order=${order}&keyword=${keyword}`
+    );
   }, [page, order, count]);
 
   useEffect(() => {
-    setUrl(`/channels?page=${1}&count=${count}&order=${order}&keyword=${keyword}`);
+    setUrl(
+      `/channels?page=${1}&count=${count}&order=${order}&keyword=${keyword}`
+    );
   }, [keyword]);
 
   if (isLoading) return null;
@@ -50,15 +52,11 @@ export default function Channels() {
           queryClient={queryClient}
         />
         <ChannelSearch
-          onSubmit={() => { }}
+          onSubmit={() => {}}
           keyword={keyword}
           setKeyword={setKeyword}
         />
-        <ChannelsList
-          channel={channel}
-          page={page}
-          setPage={setPage}
-        />
+        <ChannelsList channel={channel} page={page} setPage={setPage} />
       </div>
     </div>
   );
@@ -67,7 +65,7 @@ export default function Channels() {
 Channels.getLayout = function getLayout(page: ReactElement) {
   return (
     <LoginFilter>
-      <NavigationLayout>{page}</NavigationLayout>
+      <AppLayout>{page}</AppLayout>
     </LoginFilter>
   );
 };

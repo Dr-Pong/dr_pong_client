@@ -21,6 +21,7 @@ import ProfileButtons from 'components/global/buttons/buttonContainers/ProfileBu
 import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
 import ModalTitle from 'components/modals/modalParts/ModalTitle';
 import Profile from 'components/myPage/profile/Profile';
+import Settings from 'components/settings/Settings';
 
 import selectableItemStyles from 'styles/myPage/SelectableItem.module.scss';
 
@@ -39,6 +40,14 @@ const useModalProvider = () => {
   const closeModal = () => {
     resetModalParts();
     setOpenModal(false);
+  };
+
+  const useSettingsModal = () => {
+    useModal({
+      head: <ModalTitle title={t('settings')} />,
+      body: <Settings />,
+      tail: null,
+    });
   };
 
   const useTfaRegisterModal = (
@@ -153,6 +162,7 @@ const useModalProvider = () => {
 
   return {
     closeModal,
+    useSettingsModal,
     useTfaRegisterModal,
     useProfileModal,
     useEditWarningModal,

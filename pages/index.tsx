@@ -8,8 +8,8 @@ import React, { ReactElement } from 'react';
 import { loginState } from 'recoils/login';
 import { userState } from 'recoils/user';
 
+import AppLayout from 'components/layouts/AppLayout';
 import LoginFilter from 'components/layouts/LoginFilter';
-import NavigationLayout from 'components/layouts/NavigationLayout';
 
 import styles from 'styles/index/Home.module.scss';
 
@@ -23,9 +23,9 @@ export default function Home() {
   const login = useRecoilValue(loginState);
   const user = useRecoilValue(userState);
   const pages: page[] = [
+    { value: t('Game'), route: '/game' },
     { value: t('Leaderboard'), route: '/leaderboard' },
     { value: t('Match History'), route: `/records/${user.nickname}` },
-    { value: t('Settings'), route: '/settings' },
   ];
   if (!login) pages.push({ value: t('Login'), route: '/login' });
 
@@ -47,7 +47,7 @@ export default function Home() {
 Home.getLayout = function getLayout(page: ReactElement) {
   return (
     <LoginFilter>
-      <NavigationLayout>{page}</NavigationLayout>
+      <AppLayout>{page}</AppLayout>
     </LoginFilter>
   );
 };

@@ -1,28 +1,19 @@
 @import 'styles/common.scss';
 
 .navigationBarContainer {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  justify-items: center;
   height: 5rem;
   background: black;
 }
 
 .buttonBackground {
-  margin: 0.1rem;
-  border-radius: $basic-radius;
-}
-
-.basic {
-  flex: 1;
-  font-size: 2rem;
-  background: $violet;
-}
-
-.big {
-  flex: 1.5;
-  font-size: 1.5rem;
-  background: $pink;
+  width: 4.5rem;
+  height: 4.5rem;
+  border: solid 1px white;
+  border-radius: 50%;
 }
 
 .button {
@@ -30,5 +21,10 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+  font-size: 2.5rem;
   text-align: center;
+}
+
+.button:hover {
+  font-size: 3rem;
 }

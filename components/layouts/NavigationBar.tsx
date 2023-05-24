@@ -8,26 +8,21 @@ import styles from 'styles/layouts/NavigationBar.module.scss';
 type navigation = {
   value: string | React.ReactNode;
   route: string;
-  style: 'basic' | 'big';
 };
 
 export default function NavigationBar() {
   const navigations: navigation[] = [
-    { value: <IoMdHome />, route: '/', style: 'basic' },
-    { value: <IoMdChatboxes />, route: '/channels', style: 'basic' },
-    { value: 'Game\nStart', route: '/game', style: 'big' },
-    { value: <FaHandsHelping />, route: '/friends', style: 'basic' },
-    { value: <IoMdPerson />, route: '/myPage', style: 'basic' },
+    { value: <IoMdHome />, route: '/' },
+    { value: <IoMdChatboxes />, route: '/channels' },
+    { value: <FaHandsHelping />, route: '/friends' },
+    { value: <IoMdPerson />, route: '/myPage' },
   ];
 
   return (
     <div className={styles.navigationBarContainer}>
-      {navigations.map(({ value, route, style }, i) => {
+      {navigations.map(({ value, route }, i) => {
         return (
-          <div
-            key={i}
-            className={`${styles.buttonBackground} ${styles[style]}`}
-          >
+          <div key={i} className={styles.buttonBackground}>
             <Link href={route} className={styles.button}>
               {value}
             </Link>
