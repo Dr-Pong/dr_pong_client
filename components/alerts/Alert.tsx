@@ -20,7 +20,7 @@ export default function Alert({ isError }: { isError: boolean }) {
     return () => {
       clearTimeout(timer);
     };
-  }, [setOpenAlert]);
+  }, [openAlert]);
   const handleBackdropClick = () => {
     setOpenAlert(false);
   };
