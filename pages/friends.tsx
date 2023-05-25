@@ -1,9 +1,9 @@
 import useTranslation from 'next-translate/useTranslation';
-import { useRecoilState, useResetRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from 'recoil';
 
 import React, { ReactElement } from 'react';
 
-import { dropdownUserState, friendsTabState } from "recoils/friends";
+import { dropdownUserState, friendsTabState } from 'recoils/friends';
 
 import { FriendTab } from 'types/friendTypes';
 
