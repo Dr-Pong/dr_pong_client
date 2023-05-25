@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilState } from 'recoil';
 
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 import { openAlertState } from 'recoils/alert';
