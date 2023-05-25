@@ -17,5 +17,7 @@
   "disable": "disable",
   "logout": "logout",
   "success": "Your request is done successfully.",
-  "failure": "Your request has been failed."
+  "failure": "Your request has been failed.",
+  "Messages": "Messages",
+  "Notifications": "Notifications"
 }

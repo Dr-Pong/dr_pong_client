@@ -17,5 +17,7 @@
   "disable": "비활성화",
   "logout": "로그아웃",
   "success": "요청이 성공했습니다.",
-  "failure": "요청이 실패했습니다."
+  "failure": "요청이 실패했습니다.",
+  "Messages": "메시지",
+  "Notifications": "알림"
 }
