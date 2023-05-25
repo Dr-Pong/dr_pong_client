@@ -1,0 +1,27 @@
+@import 'styles/common.scss';
+
+.alertBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.alertContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80vw;
+  max-width: 20rem;
+  max-height: 80vh;
+  padding: 2rem 1.5rem;
+  color: black;
+  background: white;
+  border-radius: $basic-radius;
+}

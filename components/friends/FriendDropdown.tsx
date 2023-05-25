@@ -55,8 +55,8 @@ export default function FriendDropdown({ nickname }: { nickname: string }) {
   const buttons: { content: string; button: JSX.Element }[] = [
     { content: 'profile', button: openProfile(t('profile')) },
     { content: 'spectate', button: spectate(t('spectate')) },
-    { content: 'delete', button: deleteFriend(t('block')) },
-    { content: 'block', button: blockUser(t('delete')) },
+    { content: 'delete', button: deleteFriend(t('delete')) },
+    { content: 'block', button: blockUser(t('block')) },
   ];
 
   const kebabClickHandler = () => {
