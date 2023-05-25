@@ -2,7 +2,7 @@ import { Invitation } from 'types/notificationTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
-import InvitationBox from './InvitationBox';
+import InvitationBox from 'components/notifications/InvitationBox';
 
 export default function Invitations() {
   const { get } = useCustomQuery();

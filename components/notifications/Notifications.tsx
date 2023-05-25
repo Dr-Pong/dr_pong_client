@@ -1,8 +1,7 @@
 import FriendRequestsBox from 'components/notifications/FriendRequestsBox';
+import Invitations from 'components/notifications/Invitations';
 
 import styles from 'styles/notifications/Notifications.module.scss';
-
-import Invitations from './Invitations';
 
 export default function Notifications() {
   return (
