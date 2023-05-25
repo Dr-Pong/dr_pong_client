@@ -15,7 +15,7 @@ export default function Alert({ isError }: { isError: boolean }) {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setOpenAlert(false);
+      if (openAlert) setOpenAlert(false);
     }, 500);
     return () => {
       clearTimeout(timer);
