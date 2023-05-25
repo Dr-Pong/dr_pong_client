@@ -48,3 +48,14 @@ $basic-radius: 0.3rem;
   border-radius: $basic-radius;
   cursor: pointer;
 }
+
+@mixin alertCount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 1.5rem;
+  font-size: 0.8rem;
+  border: solid 1px red;
+  border-radius: $basic-radius;
+}
