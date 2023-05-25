@@ -7,10 +7,10 @@ import styles from 'styles/modals/Modal.module.scss';
 
 type ModalTitleProps = {
   title: string;
-  closeBtn?: boolean;
+  closeButton?: boolean;
 };
 
-export default function ModalTitle({ title, closeBtn }: ModalTitleProps) {
+export default function ModalTitle({ title, closeButton }: ModalTitleProps) {
   const setOpenModal = useSetRecoilState(openModalState);
   const handleModalClose = () => {
     setOpenModal(false);
@@ -19,9 +19,9 @@ export default function ModalTitle({ title, closeBtn }: ModalTitleProps) {
   return (
     <div className={styles.modalTitle}>
       <div>{title}</div>
-      {closeBtn && (
+      {closeButton && (
         <IoIosClose
-          style={{ cursor: 'pointer', fontSize: '3rem' }}
+          className={styles.closeButton}
           onClick={handleModalClose}
         />
       )}
