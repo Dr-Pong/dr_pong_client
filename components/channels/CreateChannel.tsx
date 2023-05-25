@@ -5,7 +5,10 @@ import { openModalState } from 'recoils/modal';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
-import { TypeSection, TitleSection, PasswordSection, CapacitySection } from 'components/channels/CreateChannelForm';
+import CreateChannelType from 'components/channels/CreateChannelType';
+import CreateChannelTitle from 'components/channels/CreateChannelTitle';
+import CreateChannelPassword from 'components/channels/CreateChannelPassword';
+import CreateChannelCapacity from 'components/channels/CreateChannelCapacity';
 
 import { NewChannel } from 'types/channelTypes';
 
@@ -70,7 +73,7 @@ export default function CreateChannel() {
     {
       label: 'Type',
       input: (
-        <TypeSection
+        <CreateChannelType
           type={type}
           handleTypeChange={handleTypeChange}
         />
@@ -79,7 +82,7 @@ export default function CreateChannel() {
     {
       label: 'Title',
       input: (
-        <TitleSection
+        <CreateChannelTitle
           title={title}
           titleCheck={titleCheck}
           handleTitleChange={handleTitleChange}
@@ -89,7 +92,7 @@ export default function CreateChannel() {
     {
       label: 'Password',
       input: (
-        <PasswordSection
+        <CreateChannelPassword
           password={password}
           type={type}
           handlePasswordChange={handlePasswordChange}
@@ -99,7 +102,7 @@ export default function CreateChannel() {
     {
       label: 'Capacity',
       input: (
-        <CapacitySection
+        <CreateChannelCapacity
           capacity={capacity}
           handleCapacityChange={handleCapacityChange}
         />
