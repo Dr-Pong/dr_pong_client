@@ -1,0 +1,30 @@
+@import 'styles/common.scss';
+
+.messagesContainer {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.messageBox {
+  display: grid;
+  grid-template-columns: 3rem 1fr 2.5rem;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  @include clickBox;
+}
+
+.profileImage {
+  width: 3rem;
+  height: 3rem;
+}
+
+.alert {
+  justify-self: center;
+  color: red;
+  font-size: 0.8rem;
+}
+
+.chatCount {
+  @include alertCount;
+}
