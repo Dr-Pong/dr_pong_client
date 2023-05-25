@@ -5,8 +5,7 @@ import ChannelDropdown from 'components/channels/ChannelDropdown';
 import useModalProvider from 'hooks/useModalProvider';
 
 import styles from 'styles/channels/ChannelSetting.module.scss';
-import { IoIosAdd } from 'react-icons/io';
-import { IoIosSearch } from 'react-icons/io';
+import { IoIosAdd, IoIosSearch } from 'react-icons/io';
 
 import BasicButton from 'components/global/buttons/BasicButton';
 
@@ -40,14 +39,11 @@ export default function ChannelSetting({
     <div className={styles.channelSetting}>
       <form className={styles.channelSearch} onSubmit={handleKeywordSubmit}>
         <input
+          className={styles.input}
           type='text'
           value={channelTitle}
           onChange={handleKeywordChange}
           placeholder='Search channel'
-          style={{
-            color: 'white',
-            background: 'transparent'
-          }}
         />
         <BasicButton
           style={'small'}
