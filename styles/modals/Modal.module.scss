@@ -36,7 +36,10 @@
 }
 
 .modalTitle {
-  align-self: start;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
   font-weight: 600;
 }
 
@@ -44,4 +47,9 @@
   line-height: 200%;
   text-align: center;
   margin-block: 1rem;
+}
+
+.closeButtton {
+  font-size: 3rem;
+  cursor: pointer;
 }

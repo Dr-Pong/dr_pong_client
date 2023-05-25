@@ -6,12 +6,11 @@ import { AllChannels } from 'types/channelTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
-import ChannelSearch from 'components/channels/ChannelSearch';
+import PageHeader from 'components/global/PageHeader';
+import LoginFilter from 'components/layouts/LoginFilter';
 import ChannelSetting from 'components/channels/ChannelSetting';
 import ChannelsList from 'components/channels/ChannelsList';
-import PageHeader from 'components/global/PageHeader';
 import AppLayout from 'components/layouts/AppLayout';
-import LoginFilter from 'components/layouts/LoginFilter';
 
 import styles from 'styles/channels/Channels.module.scss';
 
@@ -22,10 +21,8 @@ export default function Channels() {
   const [page, setPage] = useState(1);
   const [order, setOrder] = useState<string>('recent');
   const [keyword, setKeyword] = useState<string>('');
-  const { get, queryClient } = useCustomQuery();
-  const [url, setUrl] = useState<string>(
-    `/channels?page=${page}&count=${count}&order=${order}&keyword=${keyword}`
-  );
+  const { get } = useCustomQuery();
+  const [url, setUrl] = useState<string>(`/channels?page=${page}&count=${count}&order=${order}&keyword=${keyword}`);
   const { data, isLoading } = get(['channels_key', url], url, setChannel);
 
   useEffect(() => {
@@ -49,11 +46,6 @@ export default function Channels() {
         <ChannelSetting
           order={order}
           setOrder={setOrder}
-          queryClient={queryClient}
-        />
-        <ChannelSearch
-          onSubmit={() => {}}
-          keyword={keyword}
           setKeyword={setKeyword}
         />
         <ChannelsList channel={channel} page={page} setPage={setPage} />

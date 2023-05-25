@@ -12,6 +12,7 @@ import { Achievement } from 'types/userTypes';
 import NumberInputBox from 'components/authentication/NumberInputBox';
 import RegisterCode from 'components/authentication/RegisterCode';
 import SearchUser from 'components/friends/SearchUser';
+import CreateChannel from 'components/channels/CreateChannel';
 import UserImages from 'components/global/UserImages';
 import CloseModalButton from 'components/global/buttons/CloseModalButton';
 import ModalButton from 'components/global/buttons/ModalButton';
@@ -160,6 +161,14 @@ const useModalProvider = () => {
     });
   };
 
+  const useCreateChannelModal = () => {
+    useModal({
+      head: <ModalTitle title={'Create New Channel'} closeBtn />,
+      body: <CreateChannel />,
+      tail: null,
+    });
+  };
+
   return {
     closeModal,
     useSettingsModal,
@@ -169,6 +178,7 @@ const useModalProvider = () => {
     useImageChangeModal,
     useAchievementDetailModal,
     useFriendFinderModal,
+    useCreateChannelModal,
   };
 };
 

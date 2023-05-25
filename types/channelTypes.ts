@@ -12,8 +12,9 @@ export interface AllChannels {
   totalPage: number;
 }
 
-export interface CreateChannel {
+export interface NewChannel {
+  type: string;
   title: string;
   password: null | string;
-  maxCount: number;
+  capacity: number;
 }
