@@ -1,0 +1,30 @@
+.input {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+}
+
+.text {
+  width: 10rem;
+  height: 2rem;
+  margin-top: 1rem;
+  margin-left: auto;
+  padding: 1rem;
+}
+
+.radio {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+  margin-left: 2rem;
+}
+
+.radio input[type='radio'] {
+  margin-right: 0.3rem;
+}
+
+.info {
+  margin-top: 0.2rem;
+  color: red;
+  font-size: 0.8rem;
+}
