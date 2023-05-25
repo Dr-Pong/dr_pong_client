@@ -9,7 +9,7 @@
     "/game": ["game"],
     "/leaderboard": ["leaderboard"],
     "/records/[nickname]": ["records"],
-    "/myPage": ["myPage"],
+    "/myPage": ["myPage", "common"],
     "/login": ["login"],
     "/signUp": ["signUp"],
     "/authentication": ["authentication"]
