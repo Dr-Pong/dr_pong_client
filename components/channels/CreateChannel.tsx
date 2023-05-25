@@ -34,7 +34,7 @@ export default function CreateChannel() {
       type: value,
       password: value === 'private' ? null : prevChannel.password,
     }));
-  }, []);
+  }, [newChannel]);
 
   const handleTitleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -44,7 +44,7 @@ export default function CreateChannel() {
         title: value,
       }));
     }
-  }, []);
+  }, [newChannel]);
 
   const handlePasswordChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -55,14 +55,14 @@ export default function CreateChannel() {
         password: value,
       }));
     }
-  }, []);
+  }, [newChannel]);
 
   const handleCapacityChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setNewChannel(prevChannel => ({
       ...prevChannel,
       capacity: Number(event.target.value),
     }));
-  }, []);
+  }, [newChannel]);
 
   const handleCreateChannel = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
