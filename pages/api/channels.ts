@@ -35,6 +35,8 @@ export default (req: NextApiRequest, res: NextApiResponse<AllChannels | Error>) 
       currentPage: pageNum,
       totalPage: totalPages
     });
+  } else if (req.method === 'POST') {
+    res.status(200).json({ message: 'Success' });
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });
   }
