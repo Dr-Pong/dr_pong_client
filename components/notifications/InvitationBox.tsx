@@ -15,30 +15,38 @@ type InvitationBoxProps = {
   invitation: Invitation;
 };
 
+type InvitationProperty = {
+  acceptPath: string;
+  deletePath: string;
+  notification: string;
+};
+
 export default function InvitationBox({
   type,
   invitation,
 }: InvitationBoxProps) {
   const { t } = useTranslation('common');
   const { mutationPost, mutationDelete } = useCustomQuery();
-  const acceptPath: { [key: string]: string } = {
-    channel: `/channels/${invitation.channelId}/magicpass`,
-    game: ``,
-  };
-  const deletePath: { [key: string]: string } = {
-    channel: ``,
-    game: ``,
-  };
-  const invitationAcceptMutation = mutationPost(acceptPath[type]);
-  const invitationDeleteMutation = mutationDelete(deletePath[type]);
-  const notification = (): string => {
-    if (type === 'game') return `"${invitation.from}" ${t('gameInv')}`;
-    if (type === 'channel')
-      return `"${invitation.from}" ${t('channelInv1')} "${
+  const invitationProperties: { [key: string]: InvitationProperty } = {
+    channel: {
+      acceptPath: `/channels/${invitation.channelId}/magicpass`,
+      deletePath: ``,
+      notification: `"${invitation.from}" ${t('channelInv1')} "${
         invitation.channelName
-      }" ${t('channelInv2')}`;
-    return '';
+      }" ${t('channelInv2')}`,
+    },
+    game: {
+      acceptPath: ``,
+      deletePath: ``,
+      notification: `"${invitation.from}" ${t('gameInv')}`,
+    },
   };
+  const invitationAcceptMutation = mutationPost(
+    invitationProperties[type].acceptPath
+  );
+  const invitationDeleteMutation = mutationDelete(
+    invitationProperties[type].deletePath
+  );
 
   const handleInvitationAccept = () => {
     invitationAcceptMutation.mutate(
@@ -59,7 +67,9 @@ export default function InvitationBox({
 
   return (
     <div className={styles.invitationBox}>
-      <div className={styles.notification}>{notification()}</div>
+      <div className={styles.notification}>
+        {invitationProperties[type].notification}
+      </div>
       <div className={styles.buttons}>
         <BasicButton
           style='round'
