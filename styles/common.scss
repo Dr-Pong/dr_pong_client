@@ -28,3 +28,34 @@ $basic-radius: 0.3rem;
   height: 100%;
   padding-inline: 1.5rem;
 }
+
+@mixin backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+@mixin clickBox {
+  padding: 0.5rem;
+  border: solid 1px black;
+  border-radius: $basic-radius;
+  cursor: pointer;
+}
+
+@mixin alertCount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 1.5rem;
+  font-size: 0.8rem;
+  border: solid 1px red;
+  border-radius: $basic-radius;
+}

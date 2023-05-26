@@ -1,16 +1,7 @@
 @import 'styles/common.scss';
 
 .modalBackdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
+  @include backdrop;
 }
 
 .modalContainer {

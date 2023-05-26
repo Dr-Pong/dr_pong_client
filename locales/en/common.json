@@ -17,5 +17,11 @@
   "disable": "disable",
   "logout": "logout",
   "success": "Your request is done successfully.",
-  "failure": "Your request has been failed."
+  "failure": "Your request has been failed.",
+  "Messages": "Messages",
+  "Notifications": "Notifications",
+  "Friend requests": "Friend requests",
+  "gameInv": "has invited you to the game.",
+  "channelInv1": "invited you to the",
+  "channelInv2": "channel."
 }

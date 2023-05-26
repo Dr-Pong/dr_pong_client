@@ -17,5 +17,11 @@
   "disable": "비활성화",
   "logout": "로그아웃",
   "success": "요청이 성공했습니다.",
-  "failure": "요청이 실패했습니다."
+  "failure": "요청이 실패했습니다.",
+  "Messages": "메시지",
+  "Notifications": "알림",
+  "Friend requests": "친구 요청",
+  "gameInv": "님이 게임에 초대했습니다.",
+  "channelInv1": "님이",
+  "channelInv2": "채널에 초대했습니다."
 }

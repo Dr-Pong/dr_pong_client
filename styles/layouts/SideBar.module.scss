@@ -1,0 +1,24 @@
+@import 'styles/common.scss';
+
+.sideBarBackdrop {
+  @include backdrop;
+  align-items: flex-end;
+}
+
+.sideBarContainer {
+  display: grid;
+  grid-template-rows: 2rem 2rem 1fr;
+  gap: 1rem;
+  align-items: center;
+  width: 80vw;
+  max-width: 20rem;
+  height: 100vh;
+  padding: 1rem;
+  color: black;
+  background: white;
+}
+
+.closeButton {
+  font-size: 1.7rem;
+  cursor: pointer;
+}
