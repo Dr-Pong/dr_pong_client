@@ -1,1 +1,1 @@
-export type SideBarType = 'notification' | 'message' | null;
+export type SideBarType = 'notification' | 'directMessage' | null;

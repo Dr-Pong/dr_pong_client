@@ -6,7 +6,7 @@ import { IoMdClose } from 'react-icons/io';
 
 import { sideBarState } from 'recoils/sideBar';
 
-import Messages from 'components/messages/Messages';
+import DirectMessages from 'components/directMessages/DirectMessages';
 import Notifications from 'components/notifications/Notifications';
 
 import styles from 'styles/layouts/SideBar.module.scss';
@@ -18,9 +18,9 @@ export default function SideBar() {
   const sideBarTypes: {
     [key: string]: { name: string; children: React.ReactNode };
   } = {
-    message: {
+    directMessage: {
       name: t('Messages'),
-      children: <Messages />,
+      children: <DirectMessages />,
     },
     notification: {
       name: t('Notifications'),

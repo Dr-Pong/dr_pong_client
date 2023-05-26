@@ -27,7 +27,7 @@ export default function Header() {
           <RiSendPlaneFill
             className={styles.headerIcon}
             onClick={() => {
-              setSideBar('message');
+              setSideBar('directMessage');
             }}
           />
           <TbBellFilled

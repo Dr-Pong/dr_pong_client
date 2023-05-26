@@ -1,11 +1,11 @@
 @import 'styles/common.scss';
 
-.messagesContainer {
+.directMessagesContainer {
   height: 100%;
   overflow-y: auto;
 }
 
-.messageBox {
+.directMessageBox {
   display: grid;
   grid-template-columns: 3rem 1fr 2.5rem;
   gap: 1rem;
@@ -25,6 +25,6 @@
   font-size: 0.8rem;
 }
 
-.chatCount {
+.messageCount {
   @include alertCount;
 }

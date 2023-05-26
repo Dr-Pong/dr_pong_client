@@ -11,9 +11,3 @@ export type Friend = {
 export type UserListResponse = {
   users: Friend[];
 };
-
-export type Chat = {
-  nickname: string;
-  imgUrl: string;
-  newChats: number;
-};

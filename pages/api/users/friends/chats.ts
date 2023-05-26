@@ -1,13 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { Chat } from 'types/friendTypes';
+import { DirectMessage } from 'types/notificationTypes';
 
 type Error = {
   message: string;
 };
 
 type ChatsResponse = {
-  chats: Chat[];
+  chats: DirectMessage[];
 };
 
 export default (
@@ -23,7 +23,7 @@ export default (
   }
 };
 
-const chatResponse: Chat[] = [
+const chatResponse: DirectMessage[] = [
   {
     nickname: 'hakim',
     imgUrl:
