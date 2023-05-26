@@ -12,7 +12,7 @@ import styles from 'styles/notifications/Notifications.module.scss';
 
 export default function FriendRequestsBox() {
   const setSideBar = useSetRecoilState(sideBarState);
-  const setProfileTab = useSetRecoilState(friendsTabState);
+  const setFriendsTab = useSetRecoilState(friendsTabState);
   const { t } = useTranslation('common');
   const { get } = useCustomQuery();
   const { data, isLoading, isError } = get(
@@ -26,7 +26,7 @@ export default function FriendRequestsBox() {
 
   const handleRouterToFriends = () => {
     setSideBar(null);
-    setProfileTab('pending');
+    setFriendsTab('pending');
     Router.push('/friends');
   };
 
