@@ -1,4 +1,5 @@
 export interface Invitation {
+  id: string;
   from: string;
   createdAt: Date;
   channelId?: number;

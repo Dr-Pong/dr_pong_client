@@ -25,14 +25,17 @@ export default (
 
 const gameInvitations = [
   {
+    id: '5',
     from: 'hakim',
     createdAt: new Date(2023, 5, 20, 3, 24, 0),
   },
   {
+    id: '6',
     from: 'hakim',
     createdAt: new Date(2023, 5, 16, 3, 24, 0),
   },
   {
+    id: '7',
     from: 'hakim',
     createdAt: new Date(2023, 5, 16, 2, 24, 0),
   },
