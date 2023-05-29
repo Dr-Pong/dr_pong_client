@@ -18,3 +18,10 @@ export interface NewChannel {
   password: null | string;
   capacity: number;
 }
+
+export interface ChannelParticipants {
+  me: {};
+  participants: [];
+  headCount: string;
+  maxCount: string;
+}
