@@ -9,9 +9,9 @@ import useCustomQuery from 'hooks/useCustomQuery';
 
 import BasicButton from 'components/global/buttons/BasicButton';
 
-import styles from 'styles/channels/SubmitChannelPassword.module.scss';
+import styles from 'styles/channels/ChannelPasswordInput.module.scss';
 
-export default function SubmitChannelPassword({ roomId }: { roomId: string }) {
+export default function ChannelPasswordInput({ roomId }: { roomId: string }) {
   const router = useRouter();
   const setOpenModal = useSetRecoilState(openModalState);
   const { mutationPost } = useCustomQuery();
@@ -24,7 +24,7 @@ export default function SubmitChannelPassword({ roomId }: { roomId: string }) {
       setPassword(value);
   };
 
-  const handleSubmit = () => {
+  const handlePasswordSubmit = () => {
     mutate(
       { password },
       {
@@ -40,7 +40,7 @@ export default function SubmitChannelPassword({ roomId }: { roomId: string }) {
   };
 
   return (
-    <div className={styles.modal}>
+    <form className={styles.modal} onSubmit={handlePasswordSubmit}>
       <div className={styles.input}>
         <label className={styles.label}>Password</label>
         <input
@@ -52,10 +52,10 @@ export default function SubmitChannelPassword({ roomId }: { roomId: string }) {
         />
       </div>
       <div className={styles.button}>
-        <BasicButton style='basic' color='black' handleButtonClick={handleSubmit}>
+        <BasicButton style='basic' color='black' handleButtonClick={handlePasswordSubmit}>
           Submit
         </BasicButton>
       </div>
-    </div>
+    </form>
   );
 }
