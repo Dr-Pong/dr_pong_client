@@ -36,7 +36,6 @@ export default function ChatBox({
       </div>
     ),
   };
-  console.log(chatBoxProp);
   return chatBox[chatBoxTypeSelector(chatBoxProp)];
 }
 
