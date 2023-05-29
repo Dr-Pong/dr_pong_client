@@ -7,10 +7,12 @@ import useCustomQuery from 'hooks/useCustomQuery';
 import InvitationBox from 'components/notifications/InvitationBox';
 
 export default function InvitationList() {
-  const [channelInvitations, setChannelInvitations] =
-    useState<Invitations>(defaultInvitations);
-  const [gameInvitations, setGameInvitations] =
-    useState<Invitations>(defaultInvitations);
+  const [channelInvitations, setChannelInvitations] = useState<Invitations>({
+    invitations: [],
+  });
+  const [gameInvitations, setGameInvitations] = useState<Invitations>({
+    invitations: [],
+  });
   const [combination, setCombination] = useState<Invitation[]>([]);
   const { get } = useCustomQuery();
   const gameInvitationsGet = get(
@@ -69,13 +71,3 @@ export default function InvitationList() {
     </div>
   );
 }
-
-const defaultInvitations: Invitations = {
-  invitations: [
-    {
-      id: '',
-      from: '',
-      createdAt: new Date(),
-    },
-  ],
-};
