@@ -48,21 +48,17 @@ export default function ChatInputBox({
     },
     [message]
   );
+
   return (
-    <>
-      <form className={styles.channelSearch} onSubmit={handleChatSubmit}>
-        <input
-          className={styles.input}
-          type='text'
-          value={message}
-          onChange={handleMessageChange}
-          placeholder=''
-        />
-        <RiSendPlaneFill
-          className={styles.sendIcon}
-          onClick={handleChatSubmit}
-        />
-      </form>
-    </>
+    <form className={styles.channelSearch} onSubmit={handleChatSubmit}>
+      <input
+        className={styles.input}
+        type='text'
+        value={message}
+        onChange={handleMessageChange}
+        placeholder=''
+      />
+      <RiSendPlaneFill className={styles.sendIcon} onClick={handleChatSubmit} />
+    </form>
   );
 }
