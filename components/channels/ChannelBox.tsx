@@ -7,7 +7,7 @@ import useModalProvider from 'hooks/useModalProvider';
 
 import { EachChannel } from 'types/channelTypes';
 
-import styles from 'styles/channels/ChannelBoxes.module.scss';
+import styles from 'styles/channels/ChannelBox.module.scss';
 
 export default function ChannelBox({ channel }: { channel: EachChannel }) {
   const router = useRouter();
