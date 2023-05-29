@@ -58,13 +58,12 @@ export default function InvitationList() {
       {combination.map((el, i) => {
         const type = 'channelId' in el ? 'channel' : 'game';
         return (
-          <div key={i}>
-            <InvitationBox
-              type={type}
-              invitation={el}
-              deleteInvitation={deleteInvitation}
-            />
-          </div>
+          <InvitationBox
+            key={i}
+            type={type}
+            invitation={el}
+            deleteInvitation={deleteInvitation}
+          />
         );
       })}
     </div>
