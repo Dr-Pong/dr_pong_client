@@ -6,6 +6,10 @@ export interface Invitation {
   channelName?: string;
 }
 
+export interface Invitations {
+  invitations: Invitation[];
+}
+
 export type DirectMessage = {
   nickname: string;
   imgUrl: string;
