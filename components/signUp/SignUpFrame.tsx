@@ -1,5 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 
+import { useRouter } from 'next/router';
+
 import { useState } from 'react';
 
 import useCustomQuery from 'hooks/useCustomQuery';
@@ -13,7 +15,14 @@ import styles from 'styles/signUp/SignUp.module.scss';
 export default function SignUpFrame() {
   const { t } = useTranslation('signUp');
   const { mutationPost } = useCustomQuery();
+  const router = useRouter();
   const [wrongFields, setWrongFields] = useState<string[]>([]);
+  const userSignUpMutation = mutationPost('/signup', {
+    onSuccess: () => {
+      router.push('/');
+    },
+    onError: () => {},
+  });
 
   const isValidImgId = (imgId: string | undefined) => {
     if (!imgId) {
@@ -49,14 +58,7 @@ export default function SignUpFrame() {
     if (!isValidNickname(nickname)) return;
     setWrongFields([]);
 
-    mutationPost('/signup', {
-      onSuccess: () => {
-        console.log(nickname, imgId);
-      },
-      onError: () => {
-        console.log('error');
-      },
-    }).mutate({
+    userSignUpMutation.mutate({
       nickname: nickname,
       imgId: imgId,
     });
