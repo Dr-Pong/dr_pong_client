@@ -58,11 +58,7 @@ export default function Chattings({
           <ChatBox key={i} chatBoxProp={c} />
         ))}
       </div>
-      <ChatInputBox
-        roomId={roomId}
-        chatBoxes={chatBoxes}
-        setChatBoxes={setChatBoxes}
-      />
+      <ChatInputBox roomId={roomId} setChatBoxes={setChatBoxes} />
     </div>
   );
 }

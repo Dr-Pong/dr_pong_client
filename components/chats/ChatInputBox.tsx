@@ -12,11 +12,9 @@ import styles from 'styles/chats/ChatInputBox.module.scss';
 
 export default function ChatInputBox({
   roomId,
-  chatBoxes,
   setChatBoxes,
 }: {
   roomId: string;
-  chatBoxes: ChatBoxProps[];
   setChatBoxes: React.Dispatch<SetStateAction<ChatBoxProps[]>>;
 }) {
   const [message, setMessage] = useState<string>('');
@@ -26,13 +24,15 @@ export default function ChatInputBox({
       e.preventDefault();
       if (!message) return;
       //mutate;
-      setChatBoxes([
-        {
-          message: message,
-          time: new Date(),
-        },
-        ...chatBoxes,
-      ]);
+      setChatBoxes((previous) => {
+        return [
+          {
+            message: message,
+            time: new Date(),
+          },
+          ...previous,
+        ];
+      });
       setMessage('');
     },
     [message]
