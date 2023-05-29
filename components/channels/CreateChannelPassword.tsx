@@ -18,7 +18,7 @@ export default function PasswordSection({
         type='text'
         value={password ? password : ''}
         onChange={handlePasswordChange}
-        placeholder={'Channel password'}
+        placeholder='Channel password'
         disabled={type === 'private'}
       />
       <div className={styles.info}>* 4~8자의 영문 / 숫자로 해라</div>
