@@ -10,12 +10,15 @@ export default (
   res: NextApiResponse<ChatResponse | Error>
 ) => {
   const { offset, count } = req.query;
+
   if (req.method === 'GET') {
-    const chats = rawChats.slice(
-      Number(offset) - Number(count),
-      Number(offset)
+    const reverse = rawChats.reverse();
+    const chats = reverse.slice(
+      Number(offset ?? 0),
+      Number(offset ?? 0) + Number(count)
     );
     const isLastPage = Number(offset) - Number(count) <= 0;
+
     res.status(200).json({ chats: chats, isLastPage: isLastPage });
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });
@@ -45,7 +48,7 @@ const rawChats: RawChat[] = [
   },
   {
     message: '언뽈기븐~암어빌른~',
-    nickname: 'hakikim',
+    nickname: 'hakim',
     createdAt: new Date('2020-01-01 00:00:04'),
   },
   {
@@ -105,7 +108,7 @@ const rawChats: RawChat[] = [
   },
   {
     message: '언뽈기븐~암어빌른~',
-    nickname: 'hakikim',
+    nickname: 'hakim',
     createdAt: new Date('2020-01-02 00:05:04'),
   },
   {
@@ -130,7 +133,7 @@ const rawChats: RawChat[] = [
   },
   {
     message: '언뽈기븐~암어빌른~',
-    nickname: 'hakikim',
+    nickname: 'hakim',
     createdAt: new Date('2020-01-05 00:03:03'),
   },
   {
@@ -175,7 +178,7 @@ const rawChats: RawChat[] = [
   },
   {
     message: '언뽈기븐~암어빌른~',
-    nickname: 'hakikim',
+    nickname: 'hakim',
     createdAt: new Date('2020-01-07 21:00:00'),
   },
   {
@@ -200,7 +203,7 @@ const rawChats: RawChat[] = [
   },
   {
     message: '언뽈기븐~암어빌른~',
-    nickname: 'hakikim',
+    nickname: 'hakim',
     createdAt: new Date('2020-01-15 00:00:05'),
   },
   {
@@ -230,7 +233,7 @@ const rawChats: RawChat[] = [
   },
   {
     message: '언뽈기븐~암어빌른~',
-    nickname: 'hakikim',
+    nickname: 'hakim',
     createdAt: new Date('2020-01-16 00:00:05'),
   },
   {
@@ -315,7 +318,7 @@ const rawChats: RawChat[] = [
   },
   {
     message: '언뽈기븐~암어빌른~',
-    nickname: 'hakikim',
+    nickname: 'hakim',
     createdAt: new Date('2020-03-12 00:00:04'),
   },
   {
@@ -345,12 +348,12 @@ const rawChats: RawChat[] = [
   },
   {
     message: '언뽈기븐~암어빌른~',
-    nickname: 'hakikim',
+    nickname: 'hakim',
     createdAt: new Date('2020-03-12 12:15:04'),
   },
   {
     message: '언뽈기븐~암어빌른~',
-    nickname: 'hakikim',
+    nickname: 'hakim',
     createdAt: new Date('2020-03-12 12:17:05'),
   },
-].reverse();
+];
