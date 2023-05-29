@@ -9,7 +9,7 @@ import { EachChannel } from 'types/channelTypes';
 
 import styles from 'styles/channels/ChannelBoxes.module.scss';
 
-export default function EachChannelBox({ channel }: { channel: EachChannel }) {
+export default function ChannelBox({ channel }: { channel: EachChannel }) {
   const router = useRouter();
   const { useSubmitChannelPasswordModal } = useModalProvider();
   const { mutationPost } = useCustomQuery();
@@ -28,7 +28,7 @@ export default function EachChannelBox({ channel }: { channel: EachChannel }) {
     );
   };
 
-  const onClickJoinChannel = useCallback(() => {
+  const handleChannelJoin = useCallback(() => {
     if (channel.access === 'protected') {
       useSubmitChannelPasswordModal(channel.id.toString());
     } else {
@@ -39,7 +39,7 @@ export default function EachChannelBox({ channel }: { channel: EachChannel }) {
   return (
     <div
       className={styles.channelBox}
-      onClick={onClickJoinChannel}
+      onClick={handleChannelJoin}
     >
       <div>
         {channel.title}
