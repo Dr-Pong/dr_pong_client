@@ -1,23 +1,31 @@
 import { Dispatch, SetStateAction } from 'react';
 
-import ChannelBoxes from 'components/channels/ChannelBoxes';
+import ChannelBox from 'components/channels/ChannelBox';
 import Pagination from 'components/channels/Pagination';
-import { AllChannels } from 'types/channelTypes';
+import { AllChannels, EachChannel } from 'types/channelTypes';
+
+import styles from 'styles/channels/ChannelsList.module.scss';
 
 export default function ChannelsList({
-  channel,
+  channels,
   page,
   setPage
 }: {
-  channel: AllChannels | undefined,
+  channels: AllChannels | undefined,
   page: number,
   setPage: Dispatch<SetStateAction<number>>
 }) {
   return (
     <>
-      <ChannelBoxes channel={channel} />
+      <div className={styles.channelList}>
+        {channels?.channel.map((eachChannel: EachChannel) => {
+          return (
+            <ChannelBox channel={eachChannel} />
+          );
+        })}
+      </div>
       <Pagination
-        total={channel?.totalPage}
+        total={channels?.totalPage}
         page={page}
         setPage={setPage}
       />
