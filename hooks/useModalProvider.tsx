@@ -170,7 +170,7 @@ const useModalProvider = () => {
     });
   };
 
-  const useSubmitChannelPasswordModal = (
+  const useChannelPasswordModal = (
     roomId: string
   ) => {
     useModal({
@@ -191,7 +191,7 @@ const useModalProvider = () => {
     useAchievementDetailModal,
     useFriendFinderModal,
     useCreateChannelModal,
-    useSubmitChannelPasswordModal,
+    useChannelPasswordModal,
   };
 };
 

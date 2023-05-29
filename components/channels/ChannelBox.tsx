@@ -11,7 +11,7 @@ import styles from 'styles/channels/ChannelBoxes.module.scss';
 
 export default function ChannelBox({ channel }: { channel: EachChannel }) {
   const router = useRouter();
-  const { useSubmitChannelPasswordModal } = useModalProvider();
+  const { useChannelPasswordModal } = useModalProvider();
   const { mutationPost } = useCustomQuery();
   const { mutate } = mutationPost(`channels/${channel.id}/participants`);
 
@@ -30,11 +30,11 @@ export default function ChannelBox({ channel }: { channel: EachChannel }) {
 
   const handleChannelJoin = useCallback(() => {
     if (channel.access === 'protected') {
-      useSubmitChannelPasswordModal(channel.id.toString());
+      useChannelPasswordModal(channel.id.toString());
     } else {
       handleRouterToChat();
     }
-  }, [handleRouterToChat, useSubmitChannelPasswordModal]);
+  }, [handleRouterToChat, useChannelPasswordModal]);
 
   return (
     <div
