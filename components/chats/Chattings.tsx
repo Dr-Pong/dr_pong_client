@@ -31,7 +31,7 @@ export default function Chattings({
   const [chatBoxes, setChatBoxes] = useState<ChatBoxProps[]>([]);
   const { getChats } = useChatQuery(roomType, roomId);
 
-  const dataToChatBoxes = (rawChats: RawChat[]): void => {
+  const parseChats = (rawChats: RawChat[]): void => {
     setChatBoxes(
       rawChats.map((c) => {
         const { message, nickname, createdAt } = c;
@@ -47,7 +47,7 @@ export default function Chattings({
     );
   };
 
-  const { data, isLoading, isError } = getChats(dataToChatBoxes);
+  const { data, isLoading, isError } = getChats(parseChats);
   if (isLoading) return null;
   if (isError) return null;
 
