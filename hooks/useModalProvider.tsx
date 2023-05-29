@@ -13,7 +13,7 @@ import NumberInputBox from 'components/authentication/NumberInputBox';
 import RegisterCode from 'components/authentication/RegisterCode';
 import SearchUser from 'components/friends/SearchUser';
 import CreateChannel from 'components/channels/CreateChannel';
-import SubmitChannelPassword from 'components/channels/SubmitChannelPassword';
+import ChannelPasswordInput from 'components/channels/ChannelPasswordInput';
 import UserImages from 'components/global/UserImages';
 import CloseModalButton from 'components/global/buttons/CloseModalButton';
 import ModalButton from 'components/global/buttons/ModalButton';
@@ -175,7 +175,7 @@ const useModalProvider = () => {
   ) => {
     useModal({
       head: <ModalTitle title={'Insert Channel Password'} closeButton />,
-      body: <SubmitChannelPassword roomId={roomId} />,
+      body: <ChannelPasswordInput roomId={roomId} />,
       tail: null,
     });
   };
