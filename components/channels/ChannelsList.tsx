@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
-import ChannelBox from 'components/channels/ChannelBox';
+import ChannelBoxes from 'components/channels/ChannelBoxes';
 import Pagination from 'components/channels/Pagination';
 import { AllChannels } from 'types/channelTypes';
 
@@ -15,7 +15,7 @@ export default function ChannelsList({
 }) {
   return (
     <>
-      <ChannelBox channel={channel} />
+      <ChannelBoxes channel={channel} />
       <Pagination
         total={channel?.totalPage}
         page={page}
