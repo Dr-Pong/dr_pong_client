@@ -1,14 +1,54 @@
+import { useRecoilValue } from 'recoil';
+
 import React, { useState } from 'react';
 
-import { ChatBoxProps } from 'types/chatTypes';
+import { userState } from 'recoils/user';
+
+import {
+  ChatBoxProps,
+  ChattingType,
+  RawChat,
+  UserImageMap,
+} from 'types/chatTypes';
+
+import useChatQuery from 'hooks/useChatQuery';
 
 import ChatBox from 'components/chats/ChatBox';
 import ChatInputBox from 'components/chats/ChatInputBox';
 
 import styles from 'styles/chats/Chattings.module.scss';
 
-export default function Chattings({ roomId }: { roomId: string }) {
-  const [chatBoxes, setChatBoxes] = useState<ChatBoxProps[]>(chats);
+export default function Chattings({
+  userImageMap,
+  roomType,
+  roomId,
+}: {
+  userImageMap: UserImageMap;
+  roomType: ChattingType;
+  roomId: string;
+}) {
+  const { nickname: myName } = useRecoilValue(userState);
+  const [chatBoxes, setChatBoxes] = useState<ChatBoxProps[]>([]);
+  const { getChats } = useChatQuery(roomType, roomId);
+  const dataToChatBoxes = (rawChats: RawChat[]): void => {
+    setChatBoxes(
+      rawChats.map((c) => {
+        const { message, nickname, createdAt } = c;
+        if (nickname === myName) return { message, time: createdAt };
+        else if (nickname === 'system') return { message };
+        else
+          return {
+            chatUser: { nickname, imgUrl: userImageMap[nickname] },
+            message,
+            time: createdAt,
+          };
+      })
+    );
+  };
+
+  const { data, isLoading, isError } = getChats(dataToChatBoxes);
+  if (isLoading) return null;
+  if (isError) return null;
 
   return (
     <div className={styles.chattings}>
@@ -18,52 +58,10 @@ export default function Chattings({ roomId }: { roomId: string }) {
         ))}
       </div>
       <ChatInputBox
-        roomId={roomId as string}
+        roomId={roomId}
         chatBoxes={chatBoxes}
         setChatBoxes={setChatBoxes}
       />
     </div>
   );
 }
-
-const chats = [
-  {
-    message: 'hakikim님이 나가셨습니다.',
-  },
-  {
-    chatUser: {
-      imgUrl:
-        'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
-      nickname: 'hakikim',
-    },
-    message: '언뽈기븐~암어빌른~',
-    time: new Date('2020-01-01T01:00:00'),
-  },
-  {
-    chatUser: {
-      imgUrl:
-        'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
-      nickname: 'hakikim',
-    },
-    message: '언뽈기븐~암어빌른~',
-    time: new Date('2020-01-01T00:30:01'),
-  },
-  {
-    chatUser: {
-      imgUrl:
-        'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
-      nickname: 'hakikim',
-    },
-    message: '언뽈기븐~암어빌른~',
-    time: new Date('2020-01-01T00:15:02'),
-  },
-  {
-    chatUser: {
-      imgUrl:
-        'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
-      nickname: 'hakikim',
-    },
-    message: '언뽈기븐~암어빌른~',
-    time: new Date('2020-01-01T00:00:03'),
-  },
-];

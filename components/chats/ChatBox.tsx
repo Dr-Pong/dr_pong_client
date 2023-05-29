@@ -4,11 +4,7 @@ import { ChatBoxProps, ChatBoxType } from 'types/chatTypes';
 
 import styles from 'styles/chats/ChatBox.module.scss';
 
-export default function ChatBox({
-  chatBoxProp,
-}: {
-  chatBoxProp: ChatBoxProps;
-}) {
+function ChatBox({ chatBoxProp }: { chatBoxProp: ChatBoxProps }) {
   const { chatUser, message, time } = chatBoxProp;
   const { imgUrl, nickname } = chatUser ?? {};
   const chatBox: { [key in ChatBoxType]: JSX.Element } = {
@@ -39,6 +35,8 @@ export default function ChatBox({
   return chatBox[chatBoxTypeSelector(chatBoxProp)];
 }
 
+export default React.memo(ChatBox);
+
 function chatBoxTypeSelector(props: ChatBoxProps) {
   if (props.chatUser) {
     return 'chatBox';
@@ -51,7 +49,8 @@ function chatBoxTypeSelector(props: ChatBoxProps) {
 
 function timeConverter(time: Date | undefined) {
   if (!time) return '';
-  const hour = time.getHours();
-  const minute = time.getMinutes();
+  const date = new Date(time);
+  const hour = date.getHours();
+  const minute = date.getMinutes();
   return `${hour}:${minute < 10 ? '0' + minute : minute}`;
 }

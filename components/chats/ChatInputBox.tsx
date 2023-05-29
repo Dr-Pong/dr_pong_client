@@ -1,5 +1,3 @@
-import { useRecoilValue } from 'recoil';
-
 import React, {
   ChangeEvent,
   SetStateAction,
@@ -7,8 +5,6 @@ import React, {
   useState,
 } from 'react';
 import { RiSendPlaneFill } from 'react-icons/ri';
-
-import { userState } from 'recoils/user';
 
 import { ChatBoxProps } from 'types/chatTypes';
 
@@ -23,7 +19,6 @@ export default function ChatInputBox({
   chatBoxes: ChatBoxProps[];
   setChatBoxes: React.Dispatch<SetStateAction<ChatBoxProps[]>>;
 }) {
-  const me = useRecoilValue(userState);
   const [message, setMessage] = useState<string>('');
   const handleChatSubmit = useCallback(
     (e: React.FormEvent | React.MouseEvent) => {
