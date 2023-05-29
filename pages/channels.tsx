@@ -16,14 +16,14 @@ import styles from 'styles/channels/Channels.module.scss';
 
 export default function Channels() {
   const { t } = useTranslation('channels');
-  const [channel, setChannel] = useState<AllChannels>();
+  const [channels, setChannels] = useState<AllChannels>();
   const [count, setCount] = useState(7);
   const [page, setPage] = useState(1);
   const [order, setOrder] = useState<string>('recent');
   const [keyword, setKeyword] = useState<string>('');
   const { get } = useCustomQuery();
   const [url, setUrl] = useState<string>(`/channels?page=${page}&count=${count}&order=${order}&keyword=${keyword}`);
-  const { data, isLoading } = get(['channels_key', url], url, setChannel);
+  const { data, isLoading } = get(['channels_key', url], url, setChannels);
 
   useEffect(() => {
     setUrl(
@@ -48,7 +48,7 @@ export default function Channels() {
           setOrder={setOrder}
           setKeyword={setKeyword}
         />
-        <ChannelsList channel={channel} page={page} setPage={setPage} />
+        <ChannelsList channels={channels} page={page} setPage={setPage} />
       </div>
     </div>
   );

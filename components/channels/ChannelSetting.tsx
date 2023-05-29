@@ -29,12 +29,6 @@ export default function ChannelSetting({
     setChannelTitle(event.target.value);
   }, [channelTitle]);
 
-  const ChannelCreate = () => {
-    // 변경된 useMutation 적용 예정
-    // 모달 띄우고 title, password, maxCount 설정
-    // mutaion.('/channels', {title: string, password: null | string, maxCount: number});
-  }
-
   return (
     <div className={styles.channelSetting}>
       <form className={styles.channelSearch} onSubmit={handleKeywordSubmit}>

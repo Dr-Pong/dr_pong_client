@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import React, { MutableRefObject } from 'react';
+import React, { MutableRefObject, Dispatch, SetStateAction } from 'react';
 
 import { modalPartsState, openModalState } from 'recoils/modal';
 import { userState } from 'recoils/user';
@@ -13,6 +13,7 @@ import NumberInputBox from 'components/authentication/NumberInputBox';
 import RegisterCode from 'components/authentication/RegisterCode';
 import SearchUser from 'components/friends/SearchUser';
 import CreateChannel from 'components/channels/CreateChannel';
+import ChannelPasswordInput from 'components/channels/ChannelPasswordInput';
 import UserImages from 'components/global/UserImages';
 import CloseModalButton from 'components/global/buttons/CloseModalButton';
 import ModalButton from 'components/global/buttons/ModalButton';
@@ -163,11 +164,22 @@ const useModalProvider = () => {
 
   const useCreateChannelModal = () => {
     useModal({
-      head: <ModalTitle title={'Create New Channel'} closeBtn />,
+      head: <ModalTitle title={'Create New Channel'} closeButton />,
       body: <CreateChannel />,
       tail: null,
     });
   };
+
+  const useChannelPasswordModal = (
+    roomId: string
+  ) => {
+    useModal({
+      head: <ModalTitle title={'Insert Channel Password'} closeButton />,
+      body: <ChannelPasswordInput roomId={roomId} />,
+      tail: null,
+    });
+  };
+
 
   return {
     closeModal,
@@ -179,6 +191,7 @@ const useModalProvider = () => {
     useAchievementDetailModal,
     useFriendFinderModal,
     useCreateChannelModal,
+    useChannelPasswordModal,
   };
 };
 

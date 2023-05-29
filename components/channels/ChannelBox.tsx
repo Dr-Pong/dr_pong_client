@@ -1,35 +1,52 @@
-import { AllChannels } from 'types/channelTypes';
+import { useCallback } from 'react';
+
+import { useRouter } from 'next/router';
+
+import useCustomQuery from 'hooks/useCustomQuery';
+import useModalProvider from 'hooks/useModalProvider';
 
 import { EachChannel } from 'types/channelTypes';
 
 import styles from 'styles/channels/ChannelBox.module.scss';
 
-export default function ChannelBox({ channel }: { channel: AllChannels | undefined }) {
-  const onClickJoinChannel = () => {
-    // 변경된 useMutation 적용 예정
-    // mutation.('/channels/{roomId}/participants', {password: null | string});
+export default function ChannelBox({ channel }: { channel: EachChannel }) {
+  const router = useRouter();
+  const { useChannelPasswordModal } = useModalProvider();
+  const { mutationPost } = useCustomQuery();
+  const { mutate } = mutationPost(`channels/${channel.id}/participants`);
+
+  const handleRouterToChat = () => {
+    mutate(
+      { password: null },
+      {
+        onSuccess: () => {
+          router.push(`/chats/channel/${channel.id}`);
+        },
+        onError: () => {
+        },
+      }
+    );
   };
 
+  const handleChannelJoin = useCallback(() => {
+    if (channel.access === 'protected') {
+      useChannelPasswordModal(channel.id.toString());
+    } else {
+      handleRouterToChat();
+    }
+  }, [handleRouterToChat, useChannelPasswordModal]);
+
   return (
-    <div className={styles.channelList}>
-      {channel?.channel.map(({ id, title, access, headCount, maxCount }: EachChannel) => {
-        return (
-          <div
-            className={styles.channelBox}
-            data-id={id}
-            data-status={access}
-            key={id}
-            onClick={onClickJoinChannel}
-          >
-            <div>
-              {title.length > 20
-                ? title.slice(0, 20) + "..."
-                : title}
-            </div>
-            <div>{headCount} / {maxCount}</div>
-          </div>
-        );
-      })}
+    <div
+      className={styles.channelBox}
+      onClick={handleChannelJoin}
+    >
+      <div>
+        {channel.title}
+      </div>
+      <div>
+        {channel.headCount} / {channel.maxCount}
+      </div>
     </div>
   );
 }
