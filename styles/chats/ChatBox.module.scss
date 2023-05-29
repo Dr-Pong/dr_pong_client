@@ -1,0 +1,58 @@
+.chatBox {
+  display: flex;
+  flex-direction: row;
+}
+
+.chatterImg {
+  width: 2rem;
+  height: 2rem;
+  margin: 0.3rem;
+}
+
+.chatTexts {
+  display: flex;
+  flex-direction: column;
+}
+
+.nickname {
+
+}
+
+.messageBox {
+  display: flex;
+  flex-direction: row;
+  margin-top: 0.5rem;
+}
+
+.message {
+
+}
+
+.time {
+  margin-inline: 1rem;
+}
+
+.myChatBox {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: 0.5rem;
+}
+
+.myMessage {
+
+}
+
+.myTime {
+  margin-inline: 1rem;
+}
+
+.systemChatBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-block: 0.5rem;
+}
+
+.systemMessage {
+
+}
