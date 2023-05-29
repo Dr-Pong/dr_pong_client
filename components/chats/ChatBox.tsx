@@ -7,6 +7,7 @@ import styles from 'styles/chats/ChatBox.module.scss';
 function ChatBox({ chatBoxProp }: { chatBoxProp: ChatBoxProps }) {
   const { chatUser, message, time } = chatBoxProp;
   const { imgUrl, nickname } = chatUser ?? {};
+
   const chatBox: { [key in ChatBoxType]: JSX.Element } = {
     chatBox: (
       <div className={styles.chatBox}>
@@ -32,6 +33,7 @@ function ChatBox({ chatBoxProp }: { chatBoxProp: ChatBoxProps }) {
       </div>
     ),
   };
+
   return chatBox[chatBoxTypeSelector(chatBoxProp)];
 }
 

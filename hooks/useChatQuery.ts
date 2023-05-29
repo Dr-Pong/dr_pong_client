@@ -25,21 +25,21 @@ const useChatQuery = (chattingType: ChattingType, roomId: string) => {
         `/users/${roomId}/detail`,
         friendDetailToChatUser
       );
-    } else {
-      const participantsToChatUsers = (data: ParticipantsResponse) => {
-        const chatUsers: UserImageMap = {};
-        data.participants.map((p) => {
-          const { nickname, imgUrl } = p;
-          chatUsers[nickname] = imgUrl;
-        });
-        setChatUsers(chatUsers);
-      };
-      return get(
-        'currentChannelParticipants',
-        `/channels/${roomId}/participants`,
-        participantsToChatUsers
-      );
     }
+
+    const participantsToChatUsers = (data: ParticipantsResponse) => {
+      const chatUsers: UserImageMap = {};
+      data.participants.map((p) => {
+        const { nickname, imgUrl } = p;
+        chatUsers[nickname] = imgUrl;
+      });
+      setChatUsers(chatUsers);
+    };
+    return get(
+      'currentChannelParticipants',
+      `/channels/${roomId}/participants`,
+      participantsToChatUsers
+    );
   };
 
   const getChats = (dataToChatBoxes: (rawChats: RawChat[]) => void) => {

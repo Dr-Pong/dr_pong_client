@@ -18,6 +18,7 @@ export default function Chats() {
   const router = useRouter();
   const { roomType, roomId } = router.query;
   const [userImageMap, setUserImageMap] = useState<UserImageMap>({});
+
   const { getChatUsers } = useChatQuery(
     roomType as ChattingType,
     roomId as string

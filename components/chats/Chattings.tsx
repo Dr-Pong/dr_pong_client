@@ -30,6 +30,7 @@ export default function Chattings({
   const { nickname: myName } = useRecoilValue(userState);
   const [chatBoxes, setChatBoxes] = useState<ChatBoxProps[]>([]);
   const { getChats } = useChatQuery(roomType, roomId);
+
   const dataToChatBoxes = (rawChats: RawChat[]): void => {
     setChatBoxes(
       rawChats.map((c) => {

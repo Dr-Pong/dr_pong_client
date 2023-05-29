@@ -20,6 +20,7 @@ export default function ChatInputBox({
   setChatBoxes: React.Dispatch<SetStateAction<ChatBoxProps[]>>;
 }) {
   const [message, setMessage] = useState<string>('');
+
   const handleChatSubmit = useCallback(
     (e: React.FormEvent | React.MouseEvent) => {
       e.preventDefault();

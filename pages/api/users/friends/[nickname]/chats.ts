@@ -10,6 +10,7 @@ export default (
   res: NextApiResponse<ChatResponse | Error>
 ) => {
   const { offset, count } = req.query;
+
   if (req.method === 'GET') {
     const reverse = rawChats.reverse();
     const chats = reverse.slice(
@@ -17,6 +18,7 @@ export default (
       Number(offset ?? 0) + Number(count)
     );
     const isLastPage = Number(offset) - Number(count) <= 0;
+
     res.status(200).json({ chats: chats, isLastPage: isLastPage });
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });
