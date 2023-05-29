@@ -22,12 +22,12 @@ export default function ChatInputBox({
   const handleChatSubmit = useCallback(
     (e: React.FormEvent | React.MouseEvent) => {
       e.preventDefault();
-      if (!message) return;
+      if (!isMessageValid(message)) return;
       //mutate;
       setChatBoxes((previous) => {
         return [
           {
-            message: message,
+            message,
             time: new Date(),
           },
           ...previous,
@@ -40,6 +40,8 @@ export default function ChatInputBox({
 
   const handleMessageChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
+      if (messageOverLengthLimit(event.target.value))
+        event.target.value = event.target.value.substring(0, 100);
       setMessage(event.target.value);
     },
     [message]
@@ -58,3 +60,11 @@ export default function ChatInputBox({
     </form>
   );
 }
+
+const messageOverLengthLimit = (message: string): boolean => {
+  return message.length > 100;
+};
+
+const isMessageValid = (message: string): boolean => {
+  return message.trim().length !== 0;
+};
