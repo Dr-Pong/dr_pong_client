@@ -1,7 +1,11 @@
 import Link from 'next/link';
 
-import { FaHandsHelping } from 'react-icons/fa';
-import { IoMdChatboxes, IoMdHome, IoMdPerson } from 'react-icons/io';
+import {
+  IoMdChatboxes,
+  IoMdHome,
+  IoMdPeople,
+  IoMdPerson,
+} from 'react-icons/io';
 
 import styles from 'styles/layouts/NavigationBar.module.scss';
 
@@ -14,7 +18,7 @@ export default function NavigationBar() {
   const navigations: navigation[] = [
     { value: <IoMdHome />, route: '/' },
     { value: <IoMdChatboxes />, route: '/channels' },
-    { value: <FaHandsHelping />, route: '/friends' },
+    { value: <IoMdPeople />, route: '/friends' },
     { value: <IoMdPerson />, route: '/myPage' },
   ];
 
