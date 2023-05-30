@@ -22,6 +22,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border: none;
   cursor: pointer;
 }
 
@@ -94,9 +95,15 @@
 }
 
 .pink {
-  background: linear-gradient(to bottom, $light-pink, $just-pink);
+  color: white;
+  background: $just-pink;
 }
 
 .purple {
-  background: linear-gradient(to bottom, $just-purple, $dark-purple);
+  color: white;
+  background: $just-purple;
+}
+
+.purple:hover {
+  background: $dark-purple;
 }

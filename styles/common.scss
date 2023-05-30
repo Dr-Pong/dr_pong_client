@@ -16,7 +16,7 @@ $just-purple: #6804c6;
 $dark-purple: #3a0071;
 $light-blue: #03a8c8;
 $just-blue: #032ddb;
-$dark-blue: #04008b;
+$dark-blue: #10143a;
 $just-green: #49f60d;
 $just-yellow: #fdde2e;
 $just-orange: #fd6710;
@@ -58,7 +58,7 @@ $basic-radius: 0.3rem;
 
 @mixin clickBox {
   padding: 0.5rem;
-  border: solid 1px black;
+  background: white;
   border-radius: $basic-radius;
   cursor: pointer;
 }
@@ -69,7 +69,8 @@ $basic-radius: 0.3rem;
   justify-content: center;
   width: 2.5rem;
   height: 1.5rem;
+  color: white;
   font-size: 0.8rem;
-  border: solid 1px red;
+  background: $just-pink;
   border-radius: $basic-radius;
 }

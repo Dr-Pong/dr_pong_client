@@ -91,14 +91,14 @@ export default function InvitationBox({
       <div className={styles.buttons}>
         <BasicButton
           style='round'
-          color='black'
+          color='purple'
           handleButtonClick={handleInvitationAccept}
         >
           <IoMdCheckmark />
         </BasicButton>
         <BasicButton
           style='round'
-          color='black'
+          color='purple'
           handleButtonClick={handleInvitationDelete}
         >
           <IoMdClose />
