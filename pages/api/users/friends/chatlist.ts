@@ -1,29 +1,25 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { DirectMessage } from 'types/notificationTypes';
+import { ChatList, Friend } from 'types/notificationTypes';
 
 type Error = {
   message: string;
 };
 
-type ChatsResponse = {
-  chats: DirectMessage[];
-};
-
 export default (
   req: NextApiRequest,
-  res: NextApiResponse<ChatsResponse | Error>
+  res: NextApiResponse<ChatList | Error>
 ) => {
   if (req.method === 'GET') {
     res.status(200).json({
-      chats: chatResponse,
+      chatList: chatListResponse,
     });
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });
   }
 };
 
-const chatResponse: DirectMessage[] = [
+const chatListResponse: Friend[] = [
   {
     nickname: 'hakim',
     imgUrl:
