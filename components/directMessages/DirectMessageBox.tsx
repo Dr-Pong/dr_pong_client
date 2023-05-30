@@ -2,17 +2,17 @@ import { useSetRecoilState } from 'recoil';
 
 import { sideBarState } from 'recoils/sideBar';
 
-import { DirectMessage } from 'types/notificationTypes';
+import { DMRoom } from 'types/notificationTypes';
 
 import styles from 'styles/directMessages/DirectMessages.module.scss';
 
-type MessageBoxProps = {
-  directMessage: DirectMessage;
+type DirectMessageBoxProps = {
+  dmRoom: DMRoom;
 };
 
-export default function DirectMessageBox({ directMessage }: MessageBoxProps) {
+export default function DirectMessageBox({ dmRoom }: DirectMessageBoxProps) {
   const setSideBar = useSetRecoilState(sideBarState);
-  const { nickname, imgUrl, newChats } = directMessage;
+  const { nickname, imgUrl, newChats } = dmRoom;
 
   const handleRouterToChat = () => {
     setSideBar(null);

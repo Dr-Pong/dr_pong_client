@@ -10,8 +10,12 @@ export interface Invitations {
   invitations: Invitation[];
 }
 
-export type DirectMessage = {
+export interface DMRoom {
   nickname: string;
   imgUrl: string;
   newChats: number;
-};
+}
+
+export interface ChatList {
+  chatList: DMRoom[];
+}
