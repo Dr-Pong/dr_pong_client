@@ -22,6 +22,7 @@ $just-yellow: #fdde2e;
 $just-orange: #fd6710;
 $light-pink: #f868e1;
 $just-pink: #f71a6a;
+$dark-pink: #b80043;
 $light-grey: #f0f0f0;
 $dark-grey: #9a9a9a;
 
@@ -37,7 +38,7 @@ $basic-radius: 0.3rem;
 @mixin pageWithHeaderContainer {
   display: grid;
   grid-template-rows: 2rem 1fr;
-  gap: 2rem;
+  gap: 1rem;
   width: 100%;
   height: 100%;
   padding-inline: 1.5rem;
