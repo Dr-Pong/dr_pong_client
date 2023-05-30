@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { ChatList, Friend } from 'types/notificationTypes';
+import { ChatList, DMRoom } from 'types/notificationTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
@@ -21,8 +21,8 @@ export default function DirectMessages() {
 
   return (
     <div className={styles.directMessagesContainer}>
-      {chatList.map((friend: Friend, i: number) => {
-        return <DirectMessageBox key={i} friend={friend} />;
+      {chatList.map((dmRoom: DMRoom, i: number) => {
+        return <DirectMessageBox key={i} dmRoom={dmRoom} />;
       })}
     </div>
   );

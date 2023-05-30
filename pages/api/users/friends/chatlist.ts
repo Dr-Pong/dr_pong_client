@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { ChatList, Friend } from 'types/notificationTypes';
+import { ChatList, DMRoom } from 'types/notificationTypes';
 
 type Error = {
   message: string;
@@ -19,7 +19,7 @@ export default (
   }
 };
 
-const chatListResponse: Friend[] = [
+const chatListResponse: DMRoom[] = [
   {
     nickname: 'hakim',
     imgUrl:

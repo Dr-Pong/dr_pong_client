@@ -10,12 +10,12 @@ export interface Invitations {
   invitations: Invitation[];
 }
 
-export interface Friend {
+export interface DMRoom {
   nickname: string;
   imgUrl: string;
   newChats: number;
 }
 
 export interface ChatList {
-  chatList: Friend[];
+  chatList: DMRoom[];
 }
