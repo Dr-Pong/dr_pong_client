@@ -8,6 +8,7 @@ import { sideBarState } from 'recoils/sideBar';
 
 import DirectMessages from 'components/directMessages/DirectMessages';
 import Notifications from 'components/notifications/Notifications';
+import Participants from 'components/channels/Participants';
 
 import styles from 'styles/layouts/SideBar.module.scss';
 
@@ -26,6 +27,10 @@ export default function SideBar() {
       name: t('Notifications'),
       children: <Notifications />,
     },
+    participants: {
+      name: t('Participants'),
+      children: <Participants />
+    }
   };
 
   const handleModalClose = () => {
@@ -35,16 +40,19 @@ export default function SideBar() {
   if (!sideBar) return null;
 
   return (
-    <div className={styles.sideBarBackdrop} onClick={handleModalClose}>
+    <div
+      className={`${styles.sideBarBackdrop}`}
+      onClick={handleModalClose}
+    >
       <div
-        className={styles.sideBarContainer}
+        className={`${styles.sideBarContainer}`}
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
         <IoMdClose className={styles.closeButton} onClick={handleModalClose} />
-        <div>{sideBarTypes[sideBar].name}</div>
-        {sideBarTypes[sideBar].children}
+        <div>{sideBarTypes[sideBar]?.name}</div>
+        {sideBarTypes[sideBar]?.children}
       </div>
     </div>
   );
