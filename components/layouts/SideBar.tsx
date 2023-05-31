@@ -41,11 +41,11 @@ export default function SideBar() {
 
   return (
     <div
-      className={`${styles.sideBarBackdrop}`}
+      className={styles.sideBarBackdrop}
       onClick={handleModalClose}
     >
       <div
-        className={`${styles.sideBarContainer}`}
+        className={styles.sideBarContainer}
         onClick={(e) => {
           e.stopPropagation();
         }}
