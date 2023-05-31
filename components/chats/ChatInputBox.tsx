@@ -29,6 +29,7 @@ export default function ChatInputBox({
       setChatBoxes((previous) => {
         return [
           {
+            id: previous[0].id + 1,
             message,
             time: new Date(),
           },

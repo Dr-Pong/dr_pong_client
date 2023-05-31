@@ -65,11 +65,12 @@ export default function Chattings({
   const parseChats = (rawChats: RawChat[]): void => {
     setChatBoxes(
       rawChats.map((c) => {
-        const { message, nickname, createdAt } = c;
-        if (nickname === myName) return { message, time: createdAt };
-        else if (nickname === 'system') return { message };
+        const { id, message, nickname, createdAt } = c;
+        if (nickname === myName) return { id, message, time: createdAt };
+        else if (nickname === 'system') return { id, message };
         else
           return {
+            id,
             chatUser: { nickname, imgUrl: userImageMap[nickname] },
             message,
             time: createdAt,
@@ -111,8 +112,8 @@ export default function Chattings({
     <div className={styles.chattings}>
       <div className={styles.chatBoxes}>
         <div ref={topRef} className={styles.top} />
-        {chatBoxes.map((c, i) => (
-          <ChatBox key={i} chatBoxProp={c} />
+        {chatBoxes.map((c) => (
+          <ChatBox key={c.id} chatBoxProp={c} />
         ))}
         <div ref={bottomRef} className={styles.bottom} />
       </div>

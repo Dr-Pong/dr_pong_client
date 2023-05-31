@@ -11,6 +11,7 @@ export interface UserImageMap {
 }
 
 export interface ChatBoxProps {
+  id: number;
   chatUser?: ChatUser;
   message: string;
   time?: Date;
