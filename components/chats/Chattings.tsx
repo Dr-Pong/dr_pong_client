@@ -31,28 +31,34 @@ export default function Chattings({
   const [chatBoxes, setChatBoxes] = useState<ChatBoxProps[]>([]);
   const { getChats } = useChatQuery(roomType, roomId);
   const topRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
   const [isTopRefVisible, setIsTopRefVisible] = useState(true);
-  // const [newestChat, setNewestChat] = useState<ChatBoxProps | null>(null);
-  const [newestChat, setNewestChat] = useState<ChatBoxProps | null>({
-    chatUser: { nickname: 'hakikim', imgUrl: userImageMap['hakikim'] },
-    message: 'new message',
-    time: new Date(),
-  });
+  const [isBottomRefVisible, setIsBottomRefVisible] = useState(false);
+  const [newestChat, setNewestChat] = useState<ChatBoxProps | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => setIsTopRefVisible(entry.isIntersecting));
+        entries.forEach((entry) => {
+          if (entry.target === topRef.current) {
+            setIsTopRefVisible(entry.isIntersecting);
+          } else if (entry.target === bottomRef.current) {
+            setIsBottomRefVisible(entry.isIntersecting);
+          }
+        });
       },
       { threshold: 0.5 }
     );
+
     const timeout = setTimeout(() => {
       if (topRef.current) observer.observe(topRef.current);
-    }, 100);
+      if (bottomRef.current) observer.observe(bottomRef.current);
+    }, 300);
 
     return () => {
       clearTimeout(timeout);
       if (topRef.current) observer.unobserve(topRef.current);
+      if (bottomRef.current) observer.unobserve(bottomRef.current);
     };
   }, []);
 
@@ -73,7 +79,8 @@ export default function Chattings({
   };
 
   useEffect(() => {
-    if (!isTopRefVisible) setNewestChat(chatBoxes[0]);
+    if (!isTopRefVisible && chatBoxes[0] !== newestChat)
+      setNewestChat(chatBoxes[0]);
     else topRef.current?.scrollIntoView({ behavior: 'auto' });
   }, [chatBoxes]);
 
@@ -82,7 +89,21 @@ export default function Chattings({
     [topRef.current]
   );
 
-  const { data, isLoading, isError } = getChats(parseChats);
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isError,
+  } = getChats(parseChats);
+
+  useEffect(() => {
+    if (hasNextPage && !isFetchingNextPage && isBottomRefVisible) {
+      setTimeout(fetchNextPage, 500);
+    }
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage, isBottomRefVisible]);
+
   if (isLoading) return null;
   if (isError) return null;
 
@@ -93,6 +114,7 @@ export default function Chattings({
         {chatBoxes.map((c, i) => (
           <ChatBox key={i} chatBoxProp={c} />
         ))}
+        <div ref={bottomRef} className={styles.bottom} />
       </div>
       {!isTopRefVisible && newestChat && (
         <div className={styles.preview} onClick={onNewestClick}>
