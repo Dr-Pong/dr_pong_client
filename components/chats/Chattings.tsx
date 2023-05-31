@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { userState } from 'recoils/user';
 
@@ -30,6 +30,7 @@ export default function Chattings({
   const { nickname: myName } = useRecoilValue(userState);
   const [chatBoxes, setChatBoxes] = useState<ChatBoxProps[]>([]);
   const { getChats } = useChatQuery(roomType, roomId);
+  const topRef = useRef<HTMLDivElement>(null);
 
   const parseChats = (rawChats: RawChat[]): void => {
     setChatBoxes(
@@ -54,11 +55,16 @@ export default function Chattings({
   return (
     <div className={styles.chattings}>
       <div className={styles.chatBoxes}>
+        <div ref={topRef} className={styles.top} />
         {chatBoxes.map((c, i) => (
           <ChatBox key={i} chatBoxProp={c} />
         ))}
       </div>
-      <ChatInputBox roomId={roomId} setChatBoxes={setChatBoxes} />
+      <ChatInputBox
+        roomId={roomId}
+        setChatBoxes={setChatBoxes}
+        topRef={topRef}
+      />
     </div>
   );
 }
