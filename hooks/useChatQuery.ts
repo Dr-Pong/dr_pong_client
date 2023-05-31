@@ -73,8 +73,9 @@ const useChatQuery = (chattingType: ChattingType, roomId: string) => {
           return lastChat ? lastChat.id : undefined;
         },
         onSuccess: (data) => {
-          const allChats = data.pages.flatMap((page) => page.chats);
-          parseChats(allChats);
+          if (data.pages.length === 0) return;
+          const newChats = data.pages[data.pages.length - 1].chats;
+          parseChats(newChats);
         },
       }
     );

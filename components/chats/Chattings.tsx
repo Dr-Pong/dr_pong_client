@@ -63,25 +63,28 @@ export default function Chattings({
   }, []);
 
   const parseChats = (rawChats: RawChat[]): void => {
-    setChatBoxes(
-      rawChats.map((c) => {
-        const { id, message, nickname, createdAt } = c;
-        if (nickname === myName) return { id, message, time: createdAt };
-        else if (nickname === 'system') return { id, message };
-        else
-          return {
-            id,
-            chatUser: { nickname, imgUrl: userImageMap[nickname] },
-            message,
-            time: createdAt,
-          };
-      })
-    );
+    setChatBoxes((prev) => {
+      return prev.concat(
+        rawChats.map((c) => {
+          const { id, message, nickname, createdAt } = c;
+          if (nickname === myName) return { id, message, time: createdAt };
+          else if (nickname === 'system') return { id, message };
+          else
+            return {
+              id,
+              chatUser: { nickname, imgUrl: userImageMap[nickname] },
+              message,
+              time: createdAt,
+            };
+        })
+      );
+    });
   };
 
   useEffect(() => {
     if (!isTopRefVisible && chatBoxes[0] !== newestChat)
       setNewestChat(chatBoxes[0]);
+    else if (chatBoxes[0] === newestChat) return;
     else topRef.current?.scrollIntoView({ behavior: 'auto' });
   }, [chatBoxes]);
 
