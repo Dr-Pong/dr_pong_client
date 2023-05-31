@@ -2,6 +2,10 @@ import { useRouter } from 'next/router';
 
 import React, { ReactElement, useEffect, useState } from 'react';
 import { RiSettings4Fill } from 'react-icons/ri';
+import { IoIosMenu } from 'react-icons/io'
+
+import { useSetRecoilState } from 'recoil';
+import { sideBarState } from 'recoils/sideBar';
 
 import { ChattingType, UserImageMap } from 'types/chatTypes';
 
@@ -17,6 +21,7 @@ import styles from 'styles/chats/Chats.module.scss';
 export default function Chats() {
   const router = useRouter();
   const { roomType, roomId } = router.query;
+  const setSideBar = useSetRecoilState(sideBarState);
   const [userImageMap, setUserImageMap] = useState<UserImageMap>({});
 
   const { getChatUsers } = useChatQuery(
@@ -35,7 +40,7 @@ export default function Chats() {
 
   let button;
   if (roomType === 'channel')
-    button = { value: <RiSettings4Fill />, handleButtonClick: () => null };
+    button = { value: <RiSettings4Fill />, handleButtonClick: () => { setSideBar('participants'); } };
 
   return (
     <div className={styles.chats}>

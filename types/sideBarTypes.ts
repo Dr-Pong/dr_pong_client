@@ -1,1 +1,1 @@
-export type SideBarType = 'notification' | 'directMessage' | null;
+export type SideBarType = 'notification' | 'directMessage' | 'participants' | null;

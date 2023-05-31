@@ -7,6 +7,8 @@ import useModalProvider from 'hooks/useModalProvider';
 
 import { EachChannel } from 'types/channelTypes';
 
+import { IoIosLock } from "react-icons/io";
+
 import styles from 'styles/channels/ChannelBox.module.scss';
 
 export default function ChannelBox({ channel }: { channel: EachChannel }) {
@@ -43,6 +45,7 @@ export default function ChannelBox({ channel }: { channel: EachChannel }) {
     >
       <div>
         {channel.title}
+        {channel.access === 'protected' && (<IoIosLock className={styles.lockImg} />)}
       </div>
       <div>
         {channel.headCount} / {channel.maxCount}

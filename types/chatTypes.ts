@@ -26,19 +26,16 @@ export interface ChatResponse {
   isLastPage: boolean;
 }
 
+export interface Participant {
+  nickname: string;
+  imgUrl: string;
+  roleType: 'owner' | 'admin' | 'normal';
+  isMuted: boolean;
+}
+
 export interface ParticipantsResponse {
-  me: {
-    nickname: string;
-    imgUrl: string;
-    roleType: 'owner' | 'admin' | 'normal';
-    isMuted: boolean;
-  };
-  participants: {
-    nickname: string;
-    imgUrl: string;
-    roleType: 'owner' | 'admin' | 'normal';
-    isMuted: boolean;
-  }[];
-  headCount: string;
-  maxCount: string;
+  me: Participant;
+  participants: Participant[];
+  headCount: number;
+  maxCount: number;
 }

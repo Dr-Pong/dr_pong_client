@@ -2,8 +2,8 @@ export interface EachChannel {
   id: number;
   title: string;
   access: 'public' | 'protected';
-  headCount: string;
-  maxCount: string;
+  headCount: number;
+  maxCount: number;
 }
 
 export interface AllChannels {
@@ -17,11 +17,4 @@ export interface NewChannel {
   title: string;
   password: null | string;
   capacity: number;
-}
-
-export interface ChannelParticipants {
-  me: {};
-  participants: [];
-  headCount: string;
-  maxCount: string;
 }
