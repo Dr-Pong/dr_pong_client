@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import useChatQuery from 'hooks/useChatQuery';
-
 import useModalProvider from 'hooks/useModalProvider';
 
 import { ChattingType, Participant, ParticipantsResponse, UserImageMap } from 'types/chatTypes';
@@ -50,18 +49,14 @@ export default function Participants() {
     return null;
   };
 
-  const handleParticipantClick = (e: React.MouseEvent<HTMLElement>) => {
-    const target = e.target as HTMLElement;
-    const nickname = target.querySelector('span')?.innerHTML;
-    if (nickname) {
-      useProfileModal(nickname);
-    }
+  const handleParticipantClick = (nickname: string) => {
+    useProfileModal(nickname);
   };
 
 
   return (
     <div className={styles.participantsContainer}>
-      <div className={styles.participant} onClick={handleParticipantClick}>
+      <div className={styles.participant} onClick={() => handleParticipantClick(data.me.nickname)}>
         <img src={data.me.imgUrl} className={styles.profileImage} />
         <div>
           <span>{data.me.nickname}</span>
@@ -70,7 +65,7 @@ export default function Participants() {
       </div>
 
       {data.participants.map((participant: Participant) => (
-        <div key={participant.nickname} className={styles.participant} onClick={handleParticipantClick}>
+        <div key={participant.nickname} className={styles.participant} onClick={() => handleParticipantClick(participant.nickname)}>
           <img src={participant.imgUrl} className={styles.profileImage} />
           <div>
             <span>{participant.nickname}</span>
