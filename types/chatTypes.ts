@@ -17,6 +17,7 @@ export interface ChatBoxProps {
 }
 
 export interface RawChat {
+  id: number;
   message: string;
   nickname: string;
   createdAt: Date;
