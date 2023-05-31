@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
 
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { userState } from 'recoils/user';
 
@@ -30,6 +30,31 @@ export default function Chattings({
   const { nickname: myName } = useRecoilValue(userState);
   const [chatBoxes, setChatBoxes] = useState<ChatBoxProps[]>([]);
   const { getChats } = useChatQuery(roomType, roomId);
+  const topRef = useRef<HTMLDivElement>(null);
+  const [isTopRefVisible, setIsTopRefVisible] = useState(true);
+  // const [newestChat, setNewestChat] = useState<ChatBoxProps | null>(null);
+  const [newestChat, setNewestChat] = useState<ChatBoxProps | null>({
+    chatUser: { nickname: 'hakikim', imgUrl: userImageMap['hakikim'] },
+    message: 'new message',
+    time: new Date(),
+  });
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => setIsTopRefVisible(entry.isIntersecting));
+      },
+      { threshold: 0.5 }
+    );
+    const timeout = setTimeout(() => {
+      if (topRef.current) observer.observe(topRef.current);
+    }, 100);
+
+    return () => {
+      clearTimeout(timeout);
+      if (topRef.current) observer.unobserve(topRef.current);
+    };
+  }, []);
 
   const parseChats = (rawChats: RawChat[]): void => {
     setChatBoxes(
@@ -47,6 +72,16 @@ export default function Chattings({
     );
   };
 
+  useEffect(() => {
+    if (!isTopRefVisible) setNewestChat(chatBoxes[0]);
+    else topRef.current?.scrollIntoView({ behavior: 'auto' });
+  }, [chatBoxes]);
+
+  const onNewestClick = useCallback(
+    () => topRef.current?.scrollIntoView({ behavior: 'auto' }),
+    [topRef.current]
+  );
+
   const { data, isLoading, isError } = getChats(parseChats);
   if (isLoading) return null;
   if (isError) return null;
@@ -54,11 +89,21 @@ export default function Chattings({
   return (
     <div className={styles.chattings}>
       <div className={styles.chatBoxes}>
+        <div ref={topRef} className={styles.top} />
         {chatBoxes.map((c, i) => (
           <ChatBox key={i} chatBoxProp={c} />
         ))}
       </div>
-      <ChatInputBox roomId={roomId} setChatBoxes={setChatBoxes} />
+      {!isTopRefVisible && newestChat && (
+        <div className={styles.preview} onClick={onNewestClick}>
+          <ChatBox chatBoxProp={newestChat} />
+        </div>
+      )}
+      <ChatInputBox
+        roomId={roomId}
+        setChatBoxes={setChatBoxes}
+        topRef={topRef}
+      />
     </div>
   );
 }

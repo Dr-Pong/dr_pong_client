@@ -13,9 +13,11 @@ import styles from 'styles/chats/ChatInputBox.module.scss';
 export default function ChatInputBox({
   roomId,
   setChatBoxes,
+  topRef,
 }: {
   roomId: string;
   setChatBoxes: React.Dispatch<SetStateAction<ChatBoxProps[]>>;
+  topRef: React.RefObject<HTMLDivElement>;
 }) {
   const [message, setMessage] = useState<string>('');
 
@@ -34,6 +36,7 @@ export default function ChatInputBox({
         ];
       });
       setMessage('');
+      topRef.current?.scrollIntoView({ behavior: 'auto' });
     },
     [message]
   );

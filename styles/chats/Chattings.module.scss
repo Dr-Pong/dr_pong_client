@@ -1,6 +1,18 @@
+@import 'styles/common.scss';
+
+.chattings {
+  disply: flex;
+  flex-direction: column;
+}
+
 .chatBoxes {
   display: flex;
   flex-direction: column-reverse;
-  height: 80vh;
+  height: 65vh;
   overflow-y: scroll;
+}
+
+.preview {
+  background: rgba($purple, 0.2);
+  padding: 0.3rem;
 }
