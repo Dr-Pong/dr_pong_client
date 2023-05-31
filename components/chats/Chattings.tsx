@@ -74,6 +74,7 @@ export default function Chattings({
 
   useEffect(() => {
     if (!isTopRefVisible) setNewestChat(chatBoxes[0]);
+    else topRef.current?.scrollIntoView({ behavior: 'auto' });
   }, [chatBoxes]);
 
   const onNewestClick = useCallback(
