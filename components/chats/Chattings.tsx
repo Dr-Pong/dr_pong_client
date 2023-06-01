@@ -103,10 +103,9 @@ export default function Chattings({
   } = getChats(parseChats);
 
   useEffect(() => {
-    if (hasNextPage && !isFetchingNextPage && isBottomRefVisible) {
-      setTimeout(fetchNextPage, 500);
-    }
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage, isBottomRefVisible]);
+    if (hasNextPage && !isFetchingNextPage && isBottomRefVisible)
+      fetchNextPage();
+  }, [hasNextPage, fetchNextPage, isBottomRefVisible]);
 
   if (isLoading) return null;
   if (isError) return null;
