@@ -9,3 +9,12 @@
   font-size: 1rem;
   border-bottom: solid 1px $just-pink;
 }
+
+.buttons {
+  display: flex;
+  align-items: center;
+}
+
+.button {
+  margin-left: 1rem;
+}
