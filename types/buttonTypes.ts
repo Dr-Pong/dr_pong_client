@@ -6,7 +6,8 @@ type ButtonStyle =
   | 'small'
   | 'flex'
   | 'round'
-  | 'square';
+  | 'square'
+  | 'dropdown';
 
 type ButtonColor = 'black' | 'white' | 'opaque' | 'default' | 'pink' | 'purple';
 
