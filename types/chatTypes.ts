@@ -1,4 +1,8 @@
-export type ChatBoxType = 'chatBox' | 'myChatBox' | 'systemChatBox';
+export type ChatBoxType =
+  | 'chatBox'
+  | 'myChatBox'
+  | 'systemChatBox'
+  | 'failedChatBox';
 export type ChattingType = 'channels' | 'dm';
 
 export interface ChatUser {
@@ -15,6 +19,7 @@ export interface ChatBoxProps {
   chatUser?: ChatUser;
   message: string;
   time?: Date;
+  buttons?: React.ReactNode[];
 }
 
 export interface RawChat {
