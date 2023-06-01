@@ -6,8 +6,6 @@ export interface EachChannel {
   maxCount: number;
 }
 
-export type IsMyChannel = EachChannel | null;
-
 export interface AllChannels {
   channel: EachChannel[];
   currentPage: number;

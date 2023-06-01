@@ -2,7 +2,7 @@ import useTranslation from 'next-translate/useTranslation';
 
 import { ReactElement, useEffect, useState } from 'react';
 
-import { AllChannels, IsMyChannel } from 'types/channelTypes';
+import { AllChannels } from 'types/channelTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
@@ -18,14 +18,13 @@ import styles from 'styles/channels/Channels.module.scss';
 export default function Channels() {
   const { t } = useTranslation('channels');
   const [channels, setChannels] = useState<AllChannels>();
-  const [myChannel, setMyChannel] = useState<IsMyChannel>(null);
   const [count, setCount] = useState(7);
   const [page, setPage] = useState(1);
   const [order, setOrder] = useState<string>('recent');
   const [keyword, setKeyword] = useState<string>('');
   const { get } = useCustomQuery();
   const [url, setUrl] = useState<string>(`/channels?page=${page}&count=${count}&order=${order}&keyword=${keyword}`);
-  const myChannelGet = get('myChannel', '/channels/me', setMyChannel);
+  const myChannelGet = get('myChannel', '/channels/me');
   const allChannelGet = get(['allChannels', url], url, setChannels);
 
   useEffect(() => {
@@ -47,7 +46,7 @@ export default function Channels() {
     <div className={styles.channelsPageContainer}>
       <PageHeader title={t('Channels')} />
       <div>
-        {myChannel && <MyChannel channel={myChannelGet.data} />}
+        {myChannelGet.data && <MyChannel channel={myChannelGet.data} />}
         <ChannelSetting
           order={order}
           setOrder={setOrder}

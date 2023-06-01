@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router';
 
-import { IsMyChannel } from 'types/channelTypes';
+import { EachChannel } from 'types/channelTypes';
 
-import styles from 'styles/channels/ChannelBox.module.scss';
+import styles from 'styles/channels/MyChannel.module.scss';
 
-export default function MyChannel({ channel }: { channel: IsMyChannel }) {
+export default function MyChannel({ channel }: { channel: EachChannel }) {
   const router = useRouter();
 
   const handleRouterToChat = () => {
-    router.push(`/chats/channel/${channel?.id}`);
+    router.push(`/chats/channel/${channel.id}`);
   };
 
   return (
@@ -17,10 +17,10 @@ export default function MyChannel({ channel }: { channel: IsMyChannel }) {
       onClick={handleRouterToChat}
     >
       <div>
-        {channel?.title}
+        {channel.title}
       </div>
       <div>
-        {channel?.headCount} / {channel?.maxCount}
+        {channel.headCount} / {channel.maxCount}
       </div>
     </div>
   );
