@@ -1,0 +1,10 @@
+@import 'styles/common.scss';
+
+.searchBar {
+  display: flex;
+  justify-content: flex-end;
+  width: 12rem;
+  height: 1.5rem;
+  border-radius: $basic-radius;
+  padding-inline: 0.3rem;
+}
