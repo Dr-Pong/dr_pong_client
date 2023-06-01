@@ -19,10 +19,10 @@ import styles from 'styles/myPage/Profile.module.scss';
 export default function Profile({ nickname }: { nickname: string }) {
   const editable = useRecoilValue(editableState);
   const profileTab = useRecoilValue(profileTabState);
-  const { getSelected } = useMyPageQuery(nickname, 'achievements');
-  const { data, isLoading, isError } = getSelected();
-  const { patchProfile } = useMyPageQuery(nickname);
-  const { patchImage, patchTitle, patchMessage } = patchProfile();
+  const { selectedGet } = useMyPageQuery(nickname, 'achievements');
+  const { data, isLoading, isError } = selectedGet();
+  const { profileMutationPatch } = useMyPageQuery(nickname);
+  const { patchImage, patchTitle, patchMessage } = profileMutationPatch();
   const achievements = data as Achievements;
   const [detailDto, setDetailDto] = useState<DetailDto>(defaultDetailDto);
 

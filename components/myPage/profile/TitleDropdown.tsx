@@ -27,8 +27,8 @@ export default function TitleDropdown({
 }: TitleDropdownProps) {
   const editable = useRecoilValue(editableState);
   const [dropdownVisibility, setDropdownVisibility] = useState<boolean>(false);
-  const { getTitles } = useMyPageQuery(nickname);
-  const { isLoading, isError, data } = getTitles();
+  const { titlesGet } = useMyPageQuery(nickname);
+  const { isLoading, isError, data } = titlesGet();
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;

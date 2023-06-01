@@ -10,14 +10,14 @@ import Match from 'components/records/Match';
 import styles from 'styles/records/MatchHistory.module.scss';
 
 export default function MatchHistory({ nickname }: { nickname: string }) {
-  const { fetchMatchHistory } = useRecordsQuery(nickname);
+  const { matchHistoryFetch } = useRecordsQuery(nickname);
   const [matches, setMatches] = useState<Record[]>([]);
   const [isLastPage, setIsLastPage] = useState<boolean>(false);
   const [lastGameId, setLastGameId] = useState<number>(0);
 
   useEffect(() => {
     const loadData = async () => {
-      const data = await fetchMatchHistory(lastGameId);
+      const data = await matchHistoryFetch(lastGameId);
       setIsLastPage(data.isLastPage);
       const { records } = data;
       if (records) setMatches((prev) => [...prev, ...records]);

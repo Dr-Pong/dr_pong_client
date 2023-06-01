@@ -29,21 +29,21 @@ type SelectTabProps = {
 
 export default function SelectTab({ nickname, itemType }: SelectTabProps) {
   const selectables = itemType === 'achieve' ? AchievementsClass : EmojisClass;
-  const { getAll, getSelected, patchSelectables } = useMyPageQuery(
+  const { allItemsGet, selectedGet, selectablesMutationPatch } = useMyPageQuery(
     nickname,
     selectables.getQuery()
   );
   const editable = useRecoilValue(editableState);
   const [selected, setSelected] = useState(new selectables([]));
   const [all, setAll] = useState(new selectables([]));
-  const { mutate } = patchSelectables();
+  const { mutate } = selectablesMutationPatch();
 
   useEffect(() => {
     if (selected.isEmpty()) {
       return;
     }
     if (!editable) {
-      mutate({ ...selected.getSelected() });
+      mutate({ ...selected.selectedGet() });
     }
   }, [editable]);
 
@@ -72,8 +72,8 @@ export default function SelectTab({ nickname, itemType }: SelectTabProps) {
   };
 
   const { isLoading: isSelectedLoading, isError: isSelectedError } =
-    getSelected(setSelectedFromJson());
-  const { isLoading: isAllLoading, isError: isAllError } = getAll(
+    selectedGet(setSelectedFromJson());
+  const { isLoading: isAllLoading, isError: isAllError } = allItemsGet(
     setAllFromJSON()
   );
 
