@@ -2,29 +2,35 @@ import useTranslation from 'next-translate/useTranslation';
 
 import React from 'react';
 
-import styles from 'styles/global/TabsViewProvider.module.scss';
+import styles from 'styles/global/TabProvider.module.scss';
 
-export default function TabsViewProvider({
-  namespace,
-  tabNames,
-  handleTabClick,
-  children,
-}: {
+type TabProviderProps = {
   namespace: string;
   tabNames: string[];
+  currentTab: string;
   handleTabClick: (event: React.MouseEvent<HTMLDivElement>) => void;
   children: React.ReactNode;
-}) {
+};
+
+export default function TabProvider({
+  namespace,
+  tabNames,
+  currentTab,
+  handleTabClick,
+  children,
+}: TabProviderProps) {
   const { t } = useTranslation(namespace);
   return (
-    <div className={styles.tabsViewProvider}>
-      <div className={styles.tabNames}>
+    <div className={styles.tabProviderContainer}>
+      <div className={styles.tabButtonsWrap}>
         {tabNames.map((name) => {
           return (
             <div
               id={name}
               key={name}
-              className={styles.tabName}
+              className={`${styles.tabButton} ${
+                currentTab === name && styles.currentTabButton
+              }`}
               onClick={handleTabClick}
             >
               {t(name)}
@@ -32,7 +38,7 @@ export default function TabsViewProvider({
           );
         })}
       </div>
-      <div className={styles.tab}>{children}</div>
+      <div className={styles.tabBox}>{children}</div>
     </div>
   );
 }
