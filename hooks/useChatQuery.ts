@@ -14,7 +14,7 @@ import instance from 'utils/axios';
 import { DetailDto } from 'components/myPage/profile/ProfileCard';
 
 const useChatQuery = (chattingType: ChattingType, roomId: string) => {
-  const { get } = useCustomQuery();
+  const { get, mutationPost } = useCustomQuery();
 
   const getChatUsers = (setChatUsers: (u: UserImageMap) => void) => {
     if (chattingType === 'dm') {
@@ -80,11 +80,19 @@ const useChatQuery = (chattingType: ChattingType, roomId: string) => {
         refetchOnMount: 'always',
         refetchOnWindowFocus: false,
         refetchOnReconnect: false,
-      }
+      } //TODO: onError 처리해야함
     );
   };
 
-  return { getChatUsers, getChats };
+  const chatMutationPost = () => {
+    const path =
+      chattingType === 'dm'
+        ? `/users/friends/${roomId}/chats`
+        : `/channels/${roomId}/chats`;
+    return mutationPost(path, {});
+  };
+
+  return { getChatUsers, getChats, chatMutationPost};
 };
 
 export default useChatQuery;
