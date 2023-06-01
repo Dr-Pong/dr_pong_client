@@ -22,12 +22,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: $basic-font;
   border: none;
   cursor: pointer;
 }
 
 .small {
-  width: 1.7rem;
+  width: 4.5rem;
   height: 1.5rem;
   border-radius: $basic-radius;
 }

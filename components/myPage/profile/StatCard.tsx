@@ -12,6 +12,11 @@ import WinRateStat from 'components/myPage/profile/WinRateStat';
 
 import styles from 'styles/myPage/StatCard.module.scss';
 
+type StatBox = {
+  top: React.ReactElement;
+  bottom: React.ReactElement;
+};
+
 export default function StatCard({ nickname }: { nickname: string }) {
   const { getStat } = useMyPageQuery(nickname);
   const { t } = useTranslation('myPage');
@@ -20,29 +25,44 @@ export default function StatCard({ nickname }: { nickname: string }) {
   if (isError) return <div>Error...</div>;
   const { totalStat, seasonStat, totalRank, seasonRank } = data;
 
-  return (
-    <div className={styles.statCard}>
-      <div className={styles.container} id={styles.summary}>
-        <div className={styles.box} id={styles.info}>
-          <div className={styles.boxName}>{t('Summary')}</div>
-          <WinRateStat winRateInfo={totalStat} />
+  const stats: StatBox[] = [
+    {
+      top: (
+        <div className={styles.top}>
+          <div className={styles.statName}>{t('Summary')}</div>
         </div>
-        <div className={styles.box} id={styles.history}>
-          <Link href={`records/${nickname}`}>
-            <div className={styles.historyButton}>{t('History')}</div>
-            <IoIosArrowForward />
-          </Link>
-        </div>
-      </div>
-      <div className={styles.container} id={styles.rank}>
-        <div className={styles.box} id={styles.info}>
-          <div className={styles.boxName}>{t('Rank')}</div>
+      ),
+      bottom: <WinRateStat winRateInfo={totalStat} />,
+    },
+    {
+      top: (
+        <div className={styles.top}>
+          <div className={styles.statName}>{t('Rank')}</div>
           <RankTag rankProps={seasonRank} isBest={false} />
-          <WinRateStat winRateInfo={seasonStat} />
         </div>
-        <div className={styles.box} id={styles.bestRecord}>
-          <RankTag rankProps={totalRank} isBest={true} />
-        </div>
+      ),
+      bottom: <WinRateStat winRateInfo={seasonStat} />,
+    },
+  ];
+
+  return (
+    <div className={styles.statCardContainer}>
+      <div className={styles.leftWrap}>
+        {stats.map(({ top, bottom }: StatBox, i: number) => {
+          return (
+            <div key={i}>
+              {top}
+              {bottom}
+            </div>
+          );
+        })}
+      </div>
+      <div className={styles.rightWrap}>
+        <Link href={`records/${nickname}`} className={styles.historyLink}>
+          <div>{t('History')}</div>
+          <IoIosArrowForward />
+        </Link>
+        <RankTag rankProps={totalRank} isBest={true} />
       </div>
     </div>
   );

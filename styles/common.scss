@@ -12,9 +12,10 @@ $grey: #888888;
 $grey-ish: #bbbbbb;
 $green: #33bb44;
 
+$light-purple: #d19fff;
 $just-purple: #6804c6;
 $dark-purple: #3a0071;
-$light-blue: #03a8c8;
+$light-blue: #00c4ff;
 $just-blue: #032ddb;
 $dark-blue: #10143a;
 $just-green: #49f60d;
@@ -28,6 +29,9 @@ $dark-grey: #9a9a9a;
 
 /* border-radius */
 $basic-radius: 0.3rem;
+
+/* font-size */
+$basic-font: 0.9rem;
 
 @mixin pageContainer {
   width: 100%;

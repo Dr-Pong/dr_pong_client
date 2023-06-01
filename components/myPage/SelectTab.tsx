@@ -21,13 +21,13 @@ export interface SelectHandler {
   select: (item: Selectable | null) => void;
   deselect: (item: Selectable | null) => void;
 }
-export default function SelectTab({
-  nickname,
-  itemType,
-}: {
+
+type SelectTabProps = {
   nickname: string;
   itemType: string;
-}) {
+};
+
+export default function SelectTab({ nickname, itemType }: SelectTabProps) {
   const selectables = itemType === 'achieve' ? AchievementsClass : EmojisClass;
   const { getAll, getSelected, patchSelectables } = useMyPageQuery(
     nickname,
@@ -37,6 +37,7 @@ export default function SelectTab({
   const [selected, setSelected] = useState(new selectables([]));
   const [all, setAll] = useState(new selectables([]));
   const { mutate } = patchSelectables();
+
   useEffect(() => {
     if (selected.isEmpty()) {
       return;
@@ -51,11 +52,13 @@ export default function SelectTab({
       setSelected(selected.copyJSON(selectables).clone());
     };
   };
+
   const setAllFromJSON = () => {
     return (selectables: Selectables) => {
       setAll(all.copyJSON(selectables).clone());
     };
   };
+
   const clickHandler: SelectHandler = {
     select: (item: Selectable | null) => {
       if (item === null) return;
@@ -76,9 +79,10 @@ export default function SelectTab({
 
   if (isSelectedLoading || isAllLoading) return <div>Loading...</div>;
   if (isSelectedError || isAllError) return <div>Error...</div>;
+
   return (
-    <div className={styles.selectTab}>
-      <div className={styles.selectedItems}>
+    <div className={styles.selectTabContainer}>
+      <div className={`${styles.itemsWrap} ${styles[itemType]}`}>
         {selected.getSelectables().map((item, i) => (
           <SelectableItem
             key={i}
@@ -88,7 +92,7 @@ export default function SelectTab({
           />
         ))}
       </div>
-      <div className={styles.allItems}>
+      <div className={`${styles.itemsWrap} ${styles[itemType]}`}>
         {all.getSelectables().map((item) => (
           <SelectableItem
             key={item?.id}

@@ -6,17 +6,21 @@ import { UserRank } from 'types/userTypes';
 
 import styles from 'styles/myPage/RankTag.module.scss';
 
-export default function RankTag({
-  rankProps,
-  isBest,
-}: {
+type RankTagProps = {
   rankProps: UserRank;
   isBest: boolean;
-}) {
+};
+
+export default function RankTag({ rankProps, isBest }: RankTagProps) {
   const { t } = useTranslation('myPage');
   const { record, rank, tier } = rankProps;
+
   return (
-    <div className={styles.rankTag} id={isBest ? styles.column : styles.row}>
+    <div
+      className={`${styles.rankTagContainer} ${
+        isBest ? styles.column : styles.row
+      }`}
+    >
       {isBest && <span className={styles.bestRecord}>{t('Best Record')}</span>}
       <span className={styles.tier}>{tier}</span>
       {tier === 'doctor' && (
@@ -32,6 +36,7 @@ export default function RankTag({
     </div>
   );
 }
+
 const rankSignSelector = (rank: number | null): string => {
   if (rank === null) return '';
   const firstDigit = rank.toString().slice(-1);

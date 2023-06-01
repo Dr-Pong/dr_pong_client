@@ -1,3 +1,5 @@
+@import 'styles/common.scss';
+
 /* fade in */
 
 @keyframes fadeInAnimation {
@@ -36,12 +38,20 @@
 .title {
   position: absolute;
   top: 100%;
-  left: 4rem;
+  left: 0%;
   z-index: 99;
+  width: 100%;
   max-height: 6rem;
-  overflow: hidden;
-  overflow-y: scroll;
-  transform: translate(0%, 0%);
+  overflow-y: auto;
+  background: $light-grey;
+  li {
+    display: flex;
+    align-items: center;
+    height: 1.5rem;
+    color: black;
+    border-bottom: solid 1px $dark-grey;
+    padding-inline: 0.5rem;
+  }
 }
 
 .friend {
@@ -51,7 +61,7 @@
   z-index: 99;
   max-height: 6rem;
   overflow: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   transform: translate(0%, 0%);
 }
 
@@ -62,6 +72,6 @@
   z-index: 99;
   max-height: 6rem;
   overflow: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   transform: translate(0%, 0%);
 }

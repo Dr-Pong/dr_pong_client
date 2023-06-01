@@ -29,6 +29,12 @@ export interface UserRank {
   tier: 'doctor' | 'master' | 'bachelor' | 'student' | 'egg';
 }
 
+export interface DetailDto {
+  image: Image;
+  title: Title;
+  statusMessage: string;
+}
+
 export interface Title {
   id: number;
   title: string;

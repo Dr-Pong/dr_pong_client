@@ -4,32 +4,36 @@ import React from 'react';
 
 import { editableState } from 'recoils/user';
 
-import { DetailDto } from 'components/myPage/profile/ProfileCard';
+import { DetailDto } from 'types/userTypes';
 
-import styles from 'styles/myPage/ProfileStatusMessage.module.scss';
+import styles from 'styles/myPage/StatusMessage.module.scss';
 
-export default function ProfileStatusMessage({
-  detailDto,
-  setDetailDto,
-}: {
+type StatusMessageProps = {
   detailDto: DetailDto;
   setDetailDto: React.Dispatch<React.SetStateAction<DetailDto>>;
-}) {
+};
+
+export default function StatusMessage({
+  detailDto,
+  setDetailDto,
+}: StatusMessageProps) {
+  const editable = useRecoilValue(editableState);
+
   const statusMessageHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDetailDto({ ...detailDto, statusMessage: event.target.value });
   };
-  const editable = useRecoilValue(editableState);
+
   return (
-    <div className={styles.statusMessage}>
+    <div className={styles.statusMessageContainer}>
       {editable ? (
         <input
-          className={styles.content}
+          className={styles.messageInput}
           type='text'
           value={detailDto.statusMessage}
           onChange={statusMessageHandler}
         />
       ) : (
-        <div className={styles.content}>{detailDto.statusMessage}</div>
+        <div className={styles.message}>{detailDto.statusMessage}</div>
       )}
     </div>
   );

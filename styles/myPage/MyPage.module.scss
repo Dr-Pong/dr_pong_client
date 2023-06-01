@@ -3,3 +3,12 @@
 .myPageContainer {
   @include pageWithHeaderContainer;
 }
+
+.myPageFrame {
+  display: grid;
+  grid-template-rows: 1.5rem 1fr;
+  gap: 1rem;
+  form {
+    justify-self: flex-end;
+  }
+}

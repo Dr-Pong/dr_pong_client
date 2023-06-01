@@ -5,9 +5,11 @@ import React from 'react';
 
 import { editableState } from 'recoils/user';
 
+import { DetailDto } from 'types/userTypes';
+
 import useModalProvider from 'hooks/useModalProvider';
 
-import { DetailDto } from 'components/myPage/profile/ProfileCard';
+import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/myPage/ProfileImage.module.scss';
 
@@ -22,9 +24,10 @@ export default function ProfileImage({
   const editable = useRecoilValue(editableState);
   const { id: originId, url: imgUrl } = detailDto.image;
   const { useImageChangeModal } = useModalProvider();
-  const handleChangeClick = () => {
+  const handleSelectModalOpen = () => {
     useImageChangeModal(handleSubmitClick, originId);
   };
+
   const handleSubmitClick = () => {
     const selectedRadio = document.querySelector(
       'input[type=radio][name=userImage]:checked'
@@ -32,6 +35,7 @@ export default function ProfileImage({
     const imgId = selectedRadio?.id ? parseInt(selectedRadio.id) : originId;
     const selectedImg = document.querySelector(`label[for="${imgId}"] img`);
     const url = selectedImg?.getAttribute('src') ?? '';
+
     setDetailDto((prevDetailDto) => ({
       ...prevDetailDto,
       image: {
@@ -40,19 +44,22 @@ export default function ProfileImage({
       },
     }));
   };
+
   return (
-    <div className={styles.profileImgFrame}>
+    <div className={styles.profileImageContainer}>
       <img
-        className={styles.profileImg}
+        className={styles.profileImage}
         src={imgUrl ?? undefined}
         alt='profileImg'
       />
       {editable && (
-        <div className={styles.imgOverlay}>
-          <div className={styles.changeButton} onClick={handleChangeClick}>
-            {t('change picture')}
-          </div>
-        </div>
+        <BasicButton
+          style='thin'
+          color='pink'
+          handleButtonClick={handleSelectModalOpen}
+        >
+          {t('select')}
+        </BasicButton>
       )}
     </div>
   );
