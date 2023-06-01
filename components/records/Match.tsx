@@ -15,12 +15,19 @@ export default function Match({ record }: { record: Record }) {
   const { me, you: u } = record;
   const { gameId, gameType, playedAt, result } = record;
   const [isFolded, setIsFolded] = React.useState<boolean>(true);
-
+  const [isHovered, setIsHovered] = React.useState<boolean>(false);
+  const date = new Date(playedAt);
   const handleFoldedClick = () => {
     setIsFolded(false);
   };
   const handleUnfoldedClick = () => {
     setIsFolded(true);
+  };
+  const handleHover = () => {
+    setIsHovered(true);
+  };
+  const handleUnhover = () => {
+    setIsHovered(false);
   };
 
   return (
@@ -28,11 +35,22 @@ export default function Match({ record }: { record: Record }) {
       <div className={styles.matchBrief}>
         <div className={styles.matchText}>
           <div className={styles.gameType}>{t(gameType)}</div>
-          <div className={styles.playedAt}>{getTimeAgo(playedAt, t)}</div>
+          <div
+            className={styles.playedAt}
+            onTouchStart={handleHover}
+            onTouchEnd={handleUnhover}
+            onMouseOver={handleHover}
+            onMouseOut={handleUnhover}
+          >
+            {getTimeAgo(playedAt, t)}
+          </div>
           {isFolded && (
             <div className={styles.unfold} onClick={handleFoldedClick}>
               {'▾'}
             </div>
+          )}
+          {isHovered && (
+            <div className={styles.gameDate}>{date.toString()}</div>
           )}
         </div>
         <div className={styles.matchVisual}>

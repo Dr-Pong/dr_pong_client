@@ -23,12 +23,12 @@ export default function Participants() {
   const [userImageMap, setUserImageMap] = useState<UserImageMap>({});
   const { useProfileModal } = useModalProvider();
 
-  const { getChatUsers } = useChatQuery(
+  const { chatUsersGet } = useChatQuery(
     roomType as ChattingType,
     roomId as string
   );
 
-  const { data, isLoading, isError } = getChatUsers(setUserImageMap);
+  const { data, isLoading, isError } = chatUsersGet(setUserImageMap);
   if (isLoading) return null;
   if (isError) return null;
 

@@ -6,17 +6,16 @@ import {
   RawChat,
   UserImageMap,
 } from 'types/chatTypes';
+import { DetailDto } from 'types/userTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
 import instance from 'utils/axios';
 
-import { DetailDto } from 'components/myPage/profile/ProfileCard';
-
 const useChatQuery = (chattingType: ChattingType, roomId: string) => {
   const { get, mutationPost } = useCustomQuery();
 
-  const getChatUsers = (setChatUsers: (u: UserImageMap) => void) => {
+  const chatUsersGet = (setChatUsers: (u: UserImageMap) => void) => {
     if (chattingType === 'dm') {
       const friendDetailToChatUser = (data: DetailDto) => {
         const { url } = data.image;
@@ -44,7 +43,7 @@ const useChatQuery = (chattingType: ChattingType, roomId: string) => {
     );
   };
 
-  const getChats = (parseChats: (rawChats: RawChat[]) => void) => {
+  const chatsGet = (parseChats: (rawChats: RawChat[]) => void) => {
     const fetchChats = async (key: any, offset?: string) => {
       const count = 20; // Set your desired count value here
       let path =
@@ -92,7 +91,7 @@ const useChatQuery = (chattingType: ChattingType, roomId: string) => {
     return mutationPost(path, {});
   };
 
-  return { getChatUsers, getChats, chatMutationPost};
+  return { chatUsersGet, chatsGet, chatMutationPost };
 };
 
 export default useChatQuery;

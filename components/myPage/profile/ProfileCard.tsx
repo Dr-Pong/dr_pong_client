@@ -28,8 +28,8 @@ export default function ProfileCard({
   setDetailDto,
 }: ProfildCardProps) {
   const { t } = useTranslation('myPage');
-  const { getProfile } = useMyPageQuery(nickname);
-  const { isLoading, isError, data } = getProfile(setDetailDto);
+  const { profileGet } = useMyPageQuery(nickname);
+  const { isLoading, isError, data } = profileGet(setDetailDto);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;

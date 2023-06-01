@@ -39,8 +39,8 @@ export default function MatchDetail({
   onUnfoldClick: () => void;
 }) {
   const { t } = useTranslation('records');
-  const { getMatchDetail } = useRecordsQuery(nickname);
-  const { data, isLoading } = getMatchDetail(gameId);
+  const { matchDetailGet } = useRecordsQuery(nickname);
+  const { data, isLoading } = matchDetailGet(gameId);
 
   if (isLoading) return <div>loading...</div>;
 

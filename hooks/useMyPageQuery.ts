@@ -1,18 +1,18 @@
 import { QueryKey } from 'react-query';
 
 import { Achievements, Emojis, Titles } from 'types/userTypes';
+import { DetailDto } from 'types/userTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
-import { DetailDto } from 'components/myPage/profile/ProfileCard';
 import { empty } from 'components/myPage/profile/TitleDropdown';
 
 const useMyPageQuery = (nickname: string, type?: string) => {
   const { get, mutationPatch, queryClient } = useCustomQuery();
-  const getProfile = (setter: (detailDto: DetailDto) => void) => {
+  const profileGet = (setter: (detailDto: DetailDto) => void) => {
     return get('userDetail', `/users/${nickname}/detail`, setter);
   };
-  const patchProfile = () => {
+  const profileMutationPatch = () => {
     const options = (queryKey: QueryKey) => {
       return {
         onSuccess: () => {
@@ -35,17 +35,17 @@ const useMyPageQuery = (nickname: string, type?: string) => {
       ),
     };
   };
-  const getAll = (setter?: AchievementsSetter | EmojisSetter) => {
+  const allItemsGet = (setter?: AchievementsSetter | EmojisSetter) => {
     return get([`all${type}`], `/users/${nickname}/${type}`, setter);
   };
-  const getSelected = (setter?: AchievementsSetter | EmojisSetter) => {
+  const selectedGet = (setter?: AchievementsSetter | EmojisSetter) => {
     return get(
       [`selected${type}`],
       `/users/${nickname}/${type}?selected=true`,
       setter
     );
   };
-  const patchSelectables = () => {
+  const selectablesMutationPatch = () => {
     const options = (queryKey: QueryKey) => {
       return {
         onSuccess: () => {
@@ -58,7 +58,7 @@ const useMyPageQuery = (nickname: string, type?: string) => {
       options([[`all${type}`], [`selected${type}`]])
     );
   };
-  const getStat = () => {
+  const statGet = () => {
     const {
       data: totalStat,
       isLoading: tsLoading,
@@ -90,7 +90,7 @@ const useMyPageQuery = (nickname: string, type?: string) => {
       isError: tsError || ssError || trError || srError,
     };
   };
-  const getTitles = () => {
+  const titlesGet = () => {
     return get(
       `userTitles`,
       `/users/${nickname}/titles`,
@@ -100,13 +100,13 @@ const useMyPageQuery = (nickname: string, type?: string) => {
     );
   };
   return {
-    getProfile,
-    patchProfile,
-    getAll,
-    getSelected,
-    patchSelectables,
-    getStat,
-    getTitles,
+    profileGet,
+    profileMutationPatch,
+    allItemsGet,
+    selectedGet,
+    selectablesMutationPatch,
+    statGet,
+    titlesGet,
   };
 };
 export default useMyPageQuery;
