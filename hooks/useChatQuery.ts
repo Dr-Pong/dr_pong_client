@@ -77,7 +77,7 @@ const useChatQuery = (chattingType: ChattingType, roomId: string) => {
           const newChats = data.pages[data.pages.length - 1].chats;
           parseChats(newChats);
         },
-        refetchOnMount: false,
+        refetchOnMount: 'always',
         refetchOnWindowFocus: false,
         refetchOnReconnect: false,
       }
