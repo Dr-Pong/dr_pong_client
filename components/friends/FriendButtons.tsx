@@ -1,10 +1,6 @@
 import React from 'react';
-import {
-  IoIosChatboxes,
-  IoMdAdd,
-  IoMdCheckmark,
-  IoMdClose,
-} from 'react-icons/io';
+import { IoMdAdd, IoMdCheckmark, IoMdClose } from 'react-icons/io';
+import { IoChatbox } from 'react-icons/io5';
 
 import { ButtonDesign } from 'types/buttonTypes';
 import { FriendTab, SearchUser } from 'types/friendTypes';
@@ -17,6 +13,7 @@ const buttonDesign: ButtonDesign = {
   style: 'round',
   color: 'opaque',
 };
+
 export default function FriendButtons({
   tab,
   nickname,
@@ -36,7 +33,10 @@ export default function FriendButtons({
   const buttons: {
     [key: string]: JSX.Element[];
   } = {
-    all: [directMessage(<IoIosChatboxes />), dropdown()],
+    all: [
+      directMessage(<IoChatbox className={styles.chatBoxIcon} />),
+      dropdown(),
+    ],
     pending: [
       acceptFriendRequest(<IoMdCheckmark />),
       rejectFriendRequest(<IoMdClose />),
@@ -44,5 +44,10 @@ export default function FriendButtons({
     block: [unblockUser(<IoMdClose />)],
     find: [addFriend(<IoMdAdd />)],
   };
-  return <div className={styles.buttons}>{buttons[tab].map((c) => c)}</div>;
+
+  return (
+    <div className={styles.friendButtonsContainer}>
+      {buttons[tab].map((c) => c)}
+    </div>
+  );
 }
