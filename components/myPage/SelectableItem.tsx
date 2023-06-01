@@ -12,15 +12,17 @@ import { SelectHandler } from 'components/myPage/SelectTab';
 
 import styles from 'styles/myPage/SelectableItem.module.scss';
 
+type SelectableItemProps = {
+  itemType: string;
+  item: Achievement | Emoji | null;
+  clickHandler: SelectHandler | null;
+};
+
 export default function SelectableItem({
   itemType,
   item,
   clickHandler,
-}: {
-  itemType: string;
-  item: Achievement | Emoji | null;
-  clickHandler: SelectHandler | null;
-}) {
+}: SelectableItemProps) {
   const { name, imgUrl, status } = item ?? {
     name: 'none',
     imgUrl: 'empty',
@@ -34,6 +36,7 @@ export default function SelectableItem({
     const achievement = item as Achievement;
     useAchievementDetailModal(achievement);
   };
+
   const handleEditClick = () => {
     switch (status) {
       case 'unachieved':
@@ -46,6 +49,7 @@ export default function SelectableItem({
         break;
     }
   };
+
   const itemStyle = () => {
     if (editable && tab !== 'profile' && status === 'selected') {
       return styles.selected;
@@ -58,25 +62,16 @@ export default function SelectableItem({
     if (item === null) {
       return <div className={styles.empty}></div>;
     } else {
-      return editable ? (
+      return (
         <img
           className={styles.itemImage}
           src={imgUrl}
           alt={name}
-          onClick={handleEditClick}
-        />
-      ) : (
-        <img
-          className={styles.itemImage}
-          src={imgUrl}
-          alt={name}
-          onClick={handleItemClick}
+          onClick={editable ? handleEditClick : handleItemClick}
         />
       );
     }
   };
 
-  return (
-    <div className={`${styles[itemType]} ${itemStyle()}`}>{imgSelector()}</div>
-  );
+  return <div className={itemStyle()}>{imgSelector()}</div>;
 }

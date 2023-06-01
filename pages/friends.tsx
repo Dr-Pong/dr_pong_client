@@ -9,7 +9,7 @@ import { FriendTab } from 'types/friendTypes';
 
 import FriendTabContents from 'components/friends/FriendTabContents';
 import PageHeader from 'components/global/PageHeader';
-import TabsViewProvider from 'components/global/TabsViewProvider';
+import TabProvider from 'components/global/TabProvider';
 import AppLayout from 'components/layouts/AppLayout';
 import LoginFilter from 'components/layouts/LoginFilter';
 
@@ -30,13 +30,14 @@ export default function Friends() {
     <div className={styles.friendsPageContainer}>
       <PageHeader title={t('Friends')} />
       <div className={styles.friendsPageFrame}>
-        <TabsViewProvider
+        <TabProvider
           namespace={'friends'}
           tabNames={['all', 'pending', 'block']}
+          currentTab={tab}
           handleTabClick={handleTabClick}
         >
           <FriendTabContents key={tab} tab={tab} />
-        </TabsViewProvider>
+        </TabProvider>
       </div>
     </div>
   );

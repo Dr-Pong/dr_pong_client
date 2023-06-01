@@ -1,40 +1,45 @@
-.profileCard {
-  display: flex;
-  flex-direction: column;
-  margin-block: 1rem;
-  width: 90%;
+@import 'styles/common.scss';
+
+.profileCardContainer {
+  display: grid;
+  grid-column: 2 / 3;
+  grid-template-rows: repeat(3, 1fr);
+  height: 7.7rem;
+  padding: 0.5rem;
+  background: $dark-blue;
 }
 
-.profileTag {
-  display: flex;
-  align-items: stretch;
-  justify-content: space-between;
+.profileField {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 1rem;
+  align-content: center;
+  align-items: center;
+  justify-items: center;
+  font-size: 1rem;
 }
 
-.profileInfo {
-  width: 75%;
-  display: flex;
-  flex: 2;
-  flex-direction: column;
-  justify-content: center;
-  border: solid;
+.fieldLabel {
+  font-weight: 800;
 }
 
-.captionContentBar {
+.fieldContent {
   position: relative;
   display: flex;
-  margin-inline: 0.8rem;
-}
-
-.caption {
-  width: 3rem;
-  margin-right: 1rem;
-}
-
-.content {
-  display: flex;
+  align-items: center;
   justify-content: space-between;
-  width: 80%;
+  justify-self: start;
+  width: 100%;
 }
 
+.titleDropdownContainer {
+  display: flex;
+  align-items: center;
+}
 
+.dropdownArrow {
+  height: 1.2rem;
+  color: $just-pink;
+  font-size: 1.5rem;
+  cursor: pointer;
+}

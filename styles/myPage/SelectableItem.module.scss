@@ -1,33 +1,33 @@
-.achieve {
-  margin: 1rem;
-  flex: 0 0 calc(33.33% - 2rem);
-  box-sizing: border-box;
-}
+@import 'styles/common.scss';
 
-.emoji {
-  margin: 1rem;
-  flex: 0 0 calc(25% - 2rem);
-  box-sizing: border-box;
-}
-
-.itemImage {
+@mixin imageBox {
   width: 100%;
+  // height: 100%;
   aspect-ratio: 1/1;
-  object-fit: cover;
 }
 
 .selected {
-  border: solid blue;
+  @include imageBox;
+  border: solid 2px $just-pink;
 }
 
 .unachieved {
-  filter: grayscale(100%);
+  @include imageBox;
   opacity: 0.5;
+  filter: grayscale(100%);
 }
 
 .empty {
-  width: 100%;
-  aspect-ratio: 1/1;
+  @include imageBox;
+  // display: none;
+  // object-fit: fill;
+	// border: solid 2px $just-pink;s
+	img {
+		display: none;
+	}
+}
+
+.itemImage {
+  @include imageBox;
   object-fit: cover;
-  display: none;
 }

@@ -8,7 +8,7 @@ type ButtonStyle =
   | 'round'
   | 'square';
 
-type ButtonColor = 'black' | 'white' | 'opaque';
+type ButtonColor = 'black' | 'white' | 'opaque' | 'default' | 'pink' | 'purple';
 
 export interface ButtonDesign {
   style: ButtonStyle;

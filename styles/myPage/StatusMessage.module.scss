@@ -1,0 +1,19 @@
+@import 'styles/common.scss';
+
+.statusMessageContainer {
+  grid-column: 1/3;
+  height: 6rem;
+  padding: 1rem;
+  font-size: 1rem;
+  background: $dark-blue;
+}
+
+.messageInput {
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background: white;
+  border-radius: $basic-radius;
+  opacity: 50%;
+}

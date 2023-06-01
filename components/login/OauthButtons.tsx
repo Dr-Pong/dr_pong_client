@@ -2,11 +2,9 @@ import useTranslation from 'next-translate/useTranslation';
 
 import { FcGoogle } from 'react-icons/fc';
 
-import BasicButton from 'components/global/buttons/BasicButton';
+import styles from 'styles/login/OauthButtons.module.scss';
 
-import styles from 'styles/login/LoginButtons.module.scss';
-
-export default function LoginButtons() {
+export default function OauthButtons() {
   const { t } = useTranslation('login');
   const oauths = [
     {
@@ -28,15 +26,15 @@ export default function LoginButtons() {
     },
   ];
   return (
-    <div className={styles.loginButtons}>
+    <div className={styles.oauthButtonsContainer}>
       {oauths.map(({ name, logo, value, link }) => {
         return (
-          <BasicButton key={name} style='big' color='white'>
-            <a href={link}>
-              <span className={styles.logo}>{logo}</span>
-              <span className={styles.string}>{value}</span>
-            </a>
-          </BasicButton>
+          // <BasicButton key={name} style='big' color='purple'>
+          <a key={name} href={link} className={styles.oauthButton}>
+            <span className={styles.logo}>{logo}</span>
+            <span className={styles.string}>{value}</span>
+          </a>
+          // </BasicButton>
         );
       })}
     </div>

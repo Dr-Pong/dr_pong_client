@@ -1,7 +1,9 @@
+@import 'styles/common.scss';
+
 .layoutContainer {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center;
   justify-content: space-between;
   width: 100vw;
   height: 100vh;
@@ -11,19 +13,21 @@
   display: grid;
   grid-template-rows: 3rem 1fr 5rem;
   gap: 1rem;
+  justify-items: center;
   width: 100vw;
   height: 100vh;
-  padding-block: 1rem;
 }
 
 .pageContainer {
+  width: 100%;
+  max-width: 50rem;
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
 .pageContainer::-webkit-scrollbar {
-  width: 8px;
+  width: 5px;
   height: 8px;
 }
 
@@ -32,6 +36,6 @@
 }
 
 .pageContainer::-webkit-scrollbar-thumb {
-  background: white;
+  background: $light-grey;
   border-radius: 8px;
 }

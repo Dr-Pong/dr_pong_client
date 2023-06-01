@@ -1,0 +1,34 @@
+@import 'styles/common.scss';
+
+.oauthButtonsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.oauthButton {
+  display: grid;
+  grid-template-columns: 2.8rem 1fr;
+  align-content: center;
+  width: 14rem;
+  height: 3rem;
+  margin-bottom: 1rem;
+  color: white;
+  background: $just-purple;
+  border-radius: $basic-radius;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  align-self: end;
+  font-size: 1.2rem;
+  place-self: end;
+  img {
+    height: 1.2rem;
+  }
+}
+
+.string {
+  justify-self: center;
+  font-size: 1rem;
+}
