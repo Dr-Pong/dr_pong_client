@@ -46,7 +46,7 @@ export default function ChannelTypeSetting({ roomId }: { roomId: string }) {
     if (type.access === 'protected' && (type.password === null || type.password === ''))
       return null;
     mutate(
-      { type },
+      { ...type },
       {
         onSuccess: () => {
           setOpenModal(false);
