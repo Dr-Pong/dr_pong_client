@@ -10,6 +10,7 @@ import PageHeader from 'components/global/PageHeader';
 import LoginFilter from 'components/layouts/LoginFilter';
 import ChannelSetting from 'components/channels/ChannelSetting';
 import ChannelsList from 'components/channels/ChannelsList';
+import MyChannel from 'components/channels/MyChannel';
 import AppLayout from 'components/layouts/AppLayout';
 
 import styles from 'styles/channels/Channels.module.scss';
@@ -23,7 +24,8 @@ export default function Channels() {
   const [keyword, setKeyword] = useState<string>('');
   const { get } = useCustomQuery();
   const [url, setUrl] = useState<string>(`/channels?page=${page}&count=${count}&order=${order}&keyword=${keyword}`);
-  const { data, isLoading } = get(['channels_key', url], url, setChannels);
+  const myChannelGet = get('myChannel', '/channels/me');
+  const allChannelGet = get(['allChannels', url], url, setChannels);
 
   useEffect(() => {
     setUrl(
@@ -37,12 +39,14 @@ export default function Channels() {
     );
   }, [keyword]);
 
-  if (isLoading) return null;
+  if (allChannelGet.isLoading || allChannelGet.isError) return null;
+  if (myChannelGet.isLoading || myChannelGet.isError) return null;
 
   return (
     <div className={styles.channelsPageContainer}>
       <PageHeader title={t('Channels')} />
-      <div className={styles.channelLayout}>
+      <div>
+        {myChannelGet.data && <MyChannel channel={myChannelGet.data} />}
         <ChannelSetting
           order={order}
           setOrder={setOrder}

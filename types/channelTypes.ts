@@ -1,7 +1,7 @@
 export interface EachChannel {
   id: number;
   title: string;
-  access: 'public' | 'protected';
+  access?: 'public' | 'protected';
   headCount: number;
   maxCount: number;
 }
