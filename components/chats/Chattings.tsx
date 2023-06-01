@@ -113,11 +113,15 @@ export default function Chattings({
   return (
     <div className={styles.chattings}>
       <div className={styles.chatBoxes}>
-        <div ref={topRef} className={styles.top} />
+        <div ref={topRef} className={styles.top}>
+          ㅤ
+        </div>
         {chatBoxes.map((c) => (
           <ChatBox key={c.id} chatBoxProp={c} />
         ))}
-        <div ref={bottomRef} className={styles.bottom} />
+        <div ref={bottomRef} className={styles.bottom}>
+          ㅤ
+        </div>
       </div>
       {!isTopRefVisible && newestChat && (
         <div className={styles.preview} onClick={onNewestClick}>
