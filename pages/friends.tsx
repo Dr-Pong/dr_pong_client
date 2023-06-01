@@ -33,6 +33,7 @@ export default function Friends() {
         <TabProvider
           namespace={'friends'}
           tabNames={['all', 'pending', 'block']}
+          currentTab={tab}
           handleTabClick={handleTabClick}
         >
           <FriendTabContents key={tab} tab={tab} />
