@@ -56,3 +56,14 @@
 .systemMessage {
 
 }
+
+.failedChatBox {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-block: 0.5rem;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+}

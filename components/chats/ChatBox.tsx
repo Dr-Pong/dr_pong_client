@@ -5,7 +5,7 @@ import { ChatBoxProps, ChatBoxType } from 'types/chatTypes';
 import styles from 'styles/chats/ChatBox.module.scss';
 
 function ChatBox({ chatBoxProp }: { chatBoxProp: ChatBoxProps }) {
-  const { chatUser, message, time } = chatBoxProp;
+  const { chatUser, message, time, buttons } = chatBoxProp;
   const { imgUrl, nickname } = chatUser ?? {};
 
   const chatBox: { [key in ChatBoxType]: JSX.Element } = {
@@ -32,6 +32,12 @@ function ChatBox({ chatBoxProp }: { chatBoxProp: ChatBoxProps }) {
         <div className={styles.systemMessage}>{message}</div>
       </div>
     ),
+    failedChatBox: (
+      <div className={styles.failedChatBox}>
+        <div className={styles.failedMessage}>{message}</div>
+        <div className={styles.buttons}>{buttons?.map((b) => b)}</div>
+      </div>
+    ),
   };
 
   return chatBox[chatBoxTypeSelector(chatBoxProp)];
@@ -45,6 +51,9 @@ function chatBoxTypeSelector(props: ChatBoxProps) {
   }
   if (props.time) {
     return 'myChatBox';
+  }
+  if (props.buttons) {
+    return 'failedChatBox';
   }
   return 'systemChatBox';
 }

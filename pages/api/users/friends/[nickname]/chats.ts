@@ -19,6 +19,21 @@ export default (
     const isLastPage = Number(offset) - Number(count) <= 0;
 
     res.status(200).json({ chats: chats, isLastPage: isLastPage });
+  } else if (req.method === 'POST') {
+    const rand = Math.floor(Math.random() * 10);
+    if (rand % 2 === 0) {
+      res.status(400).json({ message: 'Bad Request' });
+    } else {
+      const { message } = req.body;
+      const newChat: RawChat = {
+        id: rawChats.length + 1,
+        message,
+        nickname: 'hakim',
+        createdAt: new Date(),
+      };
+      rawChats.unshift(newChat);
+      res.status(200).json({ message: 'ok' });
+    }
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });
   }
