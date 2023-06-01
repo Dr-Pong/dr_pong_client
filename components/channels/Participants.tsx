@@ -5,7 +5,7 @@ import { useState } from 'react';
 import useChatQuery from 'hooks/useChatQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
-import { ChattingType, Participant, ParticipantsResponse, UserImageMap } from 'types/chatTypes';
+import { ChattingType, Participant, UserImageMap } from 'types/chatTypes';
 
 import { FaCrown, FaBan } from 'react-icons/fa';
 import { RiVipCrownLine } from 'react-icons/ri';
@@ -19,7 +19,6 @@ import styles from 'styles/channels/Participants.module.scss';
 export default function Participants() {
   const router = useRouter();
   const { roomType, roomId } = router.query;
-  const [participants, setParticipants] = useState<ParticipantsResponse>();
   const [userImageMap, setUserImageMap] = useState<UserImageMap>({});
   const { useProfileModal } = useModalProvider();
 
