@@ -1,10 +1,12 @@
 export interface EachChannel {
   id: number;
   title: string;
-  access: 'public' | 'protected';
+  access?: 'public' | 'protected';
   headCount: number;
   maxCount: number;
 }
+
+export type IsMyChannel = EachChannel | null;
 
 export interface AllChannels {
   channel: EachChannel[];
