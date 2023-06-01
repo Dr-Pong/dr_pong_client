@@ -62,22 +62,25 @@ export default function Chattings({
     };
   }, []);
 
+  const rawChatToChatBoxProps = useCallback(
+    (rawChat: RawChat): ChatBoxProps => {
+      const { id, message, nickname, createdAt } = rawChat;
+      if (nickname === myName) return { id, message, time: createdAt };
+      else if (nickname === 'system') return { id, message };
+      else
+        return {
+          id,
+          chatUser: { nickname, imgUrl: userImageMap[nickname] },
+          message,
+          time: createdAt,
+        };
+    },
+    [myName, userImageMap]
+  );
+
   const parseChats = (rawChats: RawChat[]): void => {
     setChatBoxes((prev) => {
-      return prev.concat(
-        rawChats.map((c) => {
-          const { id, message, nickname, createdAt } = c;
-          if (nickname === myName) return { id, message, time: createdAt };
-          else if (nickname === 'system') return { id, message };
-          else
-            return {
-              id,
-              chatUser: { nickname, imgUrl: userImageMap[nickname] },
-              message,
-              time: createdAt,
-            };
-        })
-      );
+      return [...prev, ...rawChats.map((c) => rawChatToChatBoxProps(c))];
     });
   };
 
