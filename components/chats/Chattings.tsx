@@ -85,9 +85,9 @@ export default function Chattings({
   };
 
   useEffect(() => {
-    if (!isTopRefVisible && chatBoxes[0] !== newestChat)
-      setNewestChat(chatBoxes[0]);
-    else if (chatBoxes[0] === newestChat) return;
+    if (!isTopRefVisible && chatBoxes[0] !== newestChat) // TODO: 소켓 달고
+      setNewestChat(chatBoxes[0]); // TODO: 소켓 달고
+    else if (chatBoxes[0] === newestChat) return; // TODO: 소켓 달고
     else topRef.current?.scrollIntoView({ behavior: 'auto' });
   }, [chatBoxes]);
 
@@ -132,6 +132,7 @@ export default function Chattings({
         </div>
       )}
       <ChatInputBox
+        roomType={roomType}
         roomId={roomId}
         setChatBoxes={setChatBoxes}
         topRef={topRef}
