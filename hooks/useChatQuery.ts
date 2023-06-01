@@ -1,6 +1,6 @@
+import { useInfiniteQuery } from 'react-query';
+
 import {
-  ChatBoxProps,
-  ChatResponse,
   ChattingType,
   ParticipantsResponse,
   RawChat,
@@ -8,6 +8,8 @@ import {
 } from 'types/chatTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
+
+import instance from 'utils/axios';
 
 import { DetailDto } from 'components/myPage/profile/ProfileCard';
 
@@ -42,22 +44,44 @@ const useChatQuery = (chattingType: ChattingType, roomId: string) => {
     );
   };
 
-  const getChats = (dataToChatBoxes: (rawChats: RawChat[]) => void) => {
-    const unboxer = (data: ChatResponse) => dataToChatBoxes(data.chats);
+  const getChats = (parseChats: (rawChats: RawChat[]) => void) => {
+    const fetchChats = async (key: any, offset?: string) => {
+      const count = 20; // Set your desired count value here
+      let path =
+        chattingType === 'dm'
+          ? `/users/friends/${roomId}/chats?count=${count}`
+          : `/channels/${roomId}/chats?count=${count}`;
 
-    if (chattingType === 'dm') {
-      return get(
-        'currentDMChats',
-        `/users/friends/${roomId}/chats?count=40`,
-        unboxer
-      );
-    } else {
-      return get(
-        'currentChannelChats',
-        `/channels/${roomId}/chats?count=40`,
-        unboxer
-      );
-    }
+      if (offset) {
+        path += `&offset=${offset}`;
+      }
+
+      const { data } = await instance.get(path);
+      return data;
+    };
+
+    return useInfiniteQuery(
+      'chats',
+      async ({ pageParam }) => {
+        const offset = pageParam;
+        return fetchChats(roomId, offset);
+      },
+      {
+        getNextPageParam: (lastPage) => {
+          const lastChat = lastPage.chats[lastPage.chats.length - 1];
+          if (!lastChat) return undefined;
+          return lastChat ? lastChat.id : undefined;
+        },
+        onSuccess: (data) => {
+          if (data.pages.length === 0) return;
+          const newChats = data.pages[data.pages.length - 1].chats;
+          parseChats(newChats);
+        },
+        refetchOnMount: 'always',
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
+      }
+    );
   };
 
   return { getChatUsers, getChats };

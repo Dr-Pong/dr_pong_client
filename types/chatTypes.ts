@@ -11,12 +11,14 @@ export interface UserImageMap {
 }
 
 export interface ChatBoxProps {
+  id: number;
   chatUser?: ChatUser;
   message: string;
   time?: Date;
 }
 
 export interface RawChat {
+  id: number;
   message: string;
   nickname: string;
   createdAt: Date;

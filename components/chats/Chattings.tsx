@@ -31,49 +31,63 @@ export default function Chattings({
   const [chatBoxes, setChatBoxes] = useState<ChatBoxProps[]>([]);
   const { getChats } = useChatQuery(roomType, roomId);
   const topRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
   const [isTopRefVisible, setIsTopRefVisible] = useState(true);
-  // const [newestChat, setNewestChat] = useState<ChatBoxProps | null>(null);
-  const [newestChat, setNewestChat] = useState<ChatBoxProps | null>({
-    chatUser: { nickname: 'hakikim', imgUrl: userImageMap['hakikim'] },
-    message: 'new message',
-    time: new Date(),
-  });
+  const [isBottomRefVisible, setIsBottomRefVisible] = useState(false);
+  const [newestChat, setNewestChat] = useState<ChatBoxProps | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => setIsTopRefVisible(entry.isIntersecting));
+        entries.forEach((entry) => {
+          if (entry.target === topRef.current) {
+            setIsTopRefVisible(entry.isIntersecting);
+          } else if (entry.target === bottomRef.current) {
+            setIsBottomRefVisible(entry.isIntersecting);
+          }
+        });
       },
       { threshold: 0.5 }
     );
+
     const timeout = setTimeout(() => {
       if (topRef.current) observer.observe(topRef.current);
-    }, 100);
+      if (bottomRef.current) observer.observe(bottomRef.current);
+    }, 300);
 
     return () => {
       clearTimeout(timeout);
       if (topRef.current) observer.unobserve(topRef.current);
+      if (bottomRef.current) observer.unobserve(bottomRef.current);
     };
   }, []);
 
+  const rawChatToChatBoxProps = useCallback(
+    (rawChat: RawChat): ChatBoxProps => {
+      const { id, message, nickname, createdAt } = rawChat;
+      if (nickname === myName) return { id, message, time: createdAt };
+      else if (nickname === 'system') return { id, message };
+      else
+        return {
+          id,
+          chatUser: { nickname, imgUrl: userImageMap[nickname] },
+          message,
+          time: createdAt,
+        };
+    },
+    [myName, userImageMap]
+  );
+
   const parseChats = (rawChats: RawChat[]): void => {
-    setChatBoxes(
-      rawChats.map((c) => {
-        const { message, nickname, createdAt } = c;
-        if (nickname === myName) return { message, time: createdAt };
-        else if (nickname === 'system') return { message };
-        else
-          return {
-            chatUser: { nickname, imgUrl: userImageMap[nickname] },
-            message,
-            time: createdAt,
-          };
-      })
-    );
+    setChatBoxes((prev) => {
+      return [...prev, ...rawChats.map((c) => rawChatToChatBoxProps(c))];
+    });
   };
 
   useEffect(() => {
-    if (!isTopRefVisible) setNewestChat(chatBoxes[0]);
+    if (!isTopRefVisible && chatBoxes[0] !== newestChat)
+      setNewestChat(chatBoxes[0]);
+    else if (chatBoxes[0] === newestChat) return;
     else topRef.current?.scrollIntoView({ behavior: 'auto' });
   }, [chatBoxes]);
 
@@ -82,17 +96,35 @@ export default function Chattings({
     [topRef.current]
   );
 
-  const { data, isLoading, isError } = getChats(parseChats);
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isError,
+  } = getChats(parseChats);
+
+  useEffect(() => {
+    if (hasNextPage && !isFetchingNextPage && isBottomRefVisible)
+      fetchNextPage();
+  }, [hasNextPage, fetchNextPage, isBottomRefVisible]);
+
   if (isLoading) return null;
   if (isError) return null;
 
   return (
     <div className={styles.chattings}>
       <div className={styles.chatBoxes}>
-        <div ref={topRef} className={styles.top} />
-        {chatBoxes.map((c, i) => (
-          <ChatBox key={i} chatBoxProp={c} />
+        <div ref={topRef} className={styles.top}>
+          ㅤ
+        </div>
+        {chatBoxes.map((c) => (
+          <ChatBox key={c.id} chatBoxProp={c} />
         ))}
+        <div ref={bottomRef} className={styles.bottom}>
+          ㅤ
+        </div>
       </div>
       {!isTopRefVisible && newestChat && (
         <div className={styles.preview} onClick={onNewestClick}>
