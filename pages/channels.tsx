@@ -2,7 +2,7 @@ import useTranslation from 'next-translate/useTranslation';
 
 import { ReactElement, useEffect, useState } from 'react';
 
-import { AllChannels } from 'types/channelTypes';
+import { AllChannels, IsMyChannel } from 'types/channelTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
@@ -10,6 +10,7 @@ import PageHeader from 'components/global/PageHeader';
 import LoginFilter from 'components/layouts/LoginFilter';
 import ChannelSetting from 'components/channels/ChannelSetting';
 import ChannelsList from 'components/channels/ChannelsList';
+import MyChannel from 'components/channels/MyChannel';
 import AppLayout from 'components/layouts/AppLayout';
 
 import styles from 'styles/channels/Channels.module.scss';
@@ -17,13 +18,15 @@ import styles from 'styles/channels/Channels.module.scss';
 export default function Channels() {
   const { t } = useTranslation('channels');
   const [channels, setChannels] = useState<AllChannels>();
+  const [myChannel, setMyChannel] = useState<IsMyChannel>(null);
   const [count, setCount] = useState(7);
   const [page, setPage] = useState(1);
   const [order, setOrder] = useState<string>('recent');
   const [keyword, setKeyword] = useState<string>('');
   const { get } = useCustomQuery();
   const [url, setUrl] = useState<string>(`/channels?page=${page}&count=${count}&order=${order}&keyword=${keyword}`);
-  const { data, isLoading } = get(['channels_key', url], url, setChannels);
+  const myChannelGet = get('myChannel', '/channels/me', setMyChannel);
+  const allChannelGet = get(['allChannels', url], url, setChannels);
 
   useEffect(() => {
     setUrl(
@@ -37,12 +40,14 @@ export default function Channels() {
     );
   }, [keyword]);
 
-  if (isLoading) return null;
+  if (allChannelGet.isLoading || allChannelGet.isError) return null;
+  if (myChannelGet.isLoading || myChannelGet.isError) return null;
 
   return (
     <div className={styles.channelsPageContainer}>
       <PageHeader title={t('Channels')} />
-      <div className={styles.channelLayout}>
+      <div>
+        {myChannel && <MyChannel channel={myChannelGet.data} />}
         <ChannelSetting
           order={order}
           setOrder={setOrder}
