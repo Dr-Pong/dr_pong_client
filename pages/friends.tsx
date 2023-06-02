@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 
 import { dropdownUserState, friendsTabState } from 'recoils/friends';
 
@@ -18,7 +18,15 @@ import styles from 'styles/friends/Friends.module.scss';
 export default function Friends() {
   const { t } = useTranslation('friends');
   const resetDropdownUserState = useResetRecoilState(dropdownUserState);
+  const resetFriendsTabState = useResetRecoilState(friendsTabState);
   const [tab, setTab] = useRecoilState(friendsTabState);
+
+  useEffect(() => {
+    return () => {
+      resetFriendsTabState();
+      resetDropdownUserState();
+    };
+  }, []);
 
   const handleTabClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const div = event.target as HTMLDivElement;

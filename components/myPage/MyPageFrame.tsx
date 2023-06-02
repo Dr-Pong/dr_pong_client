@@ -1,5 +1,5 @@
 import useTranslation from 'next-translate/useTranslation';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 
 import React, { useEffect } from 'react';
 
@@ -17,6 +17,7 @@ import styles from 'styles/myPage/MyPage.module.scss';
 export default function MyPageFrame() {
   const { t } = useTranslation('myPage');
   const [tab, setTab] = useRecoilState(profileTabState);
+  const resetProfileTabState = useResetRecoilState(profileTabState);
   const [editable, setEditable] = useRecoilState(editableState);
   const { nickname } = useRecoilValue(userState);
   const { useEditWarningModal } = useModalProvider();
@@ -46,6 +47,7 @@ export default function MyPageFrame() {
 
   useEffect(() => {
     return () => {
+      resetProfileTabState();
       setEditable(false);
     };
   }, []);
