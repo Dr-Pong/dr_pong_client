@@ -1,21 +1,19 @@
+import { useRecoilValue } from 'recoil';
+
 import React from 'react';
 
-import { Friend, FriendTab, SearchUser } from 'types/friendTypes';
+import { friendsTabState } from 'recoils/friends';
+
+import { Friend } from 'types/friendTypes';
 
 import useModalProvider from 'hooks/useModalProvider';
 
 import FriendButtons from 'components/friends/FriendButtons';
-import StatusDisplay from 'components/friends/StatusDisplay';
 
 import styles from 'styles/friends/FriendBox.module.scss';
 
-export default function FriendBox({
-  tab,
-  friend,
-}: {
-  tab: FriendTab | SearchUser;
-  friend: Friend;
-}) {
+export default function FriendBox({ friend }: { friend: Friend }) {
+  const tab = useRecoilValue(friendsTabState);
   const { nickname, status, imgUrl } = friend;
   const { useProfileModal } = useModalProvider();
 
@@ -25,10 +23,13 @@ export default function FriendBox({
   };
 
   return (
-    <div className={styles.friendBox}>
-      <StatusDisplay status={status}>
+    <div className={styles.friendBoxContainer}>
+      <div className={styles.imageStatusWrap}>
         <img className={styles.img} src={imgUrl} alt={`photo of ${nickname}`} />
-      </StatusDisplay>
+        {status && (
+          <div className={`${styles.statusSignal} ${styles[status]}`}></div>
+        )}
+      </div>
       <div className={styles.nickname} onClick={handleNicknameClick}>
         {nickname}
       </div>

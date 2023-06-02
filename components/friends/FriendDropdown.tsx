@@ -16,7 +16,7 @@ import styles from 'styles/friends/FriendDropdown.module.scss';
 import buttonStyles from 'styles/global/Button.module.scss';
 
 const buttonDesign: ButtonDesign = {
-  style: 'thin',
+  style: 'dropdown',
   color: 'white',
 };
 

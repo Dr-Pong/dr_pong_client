@@ -1,5 +1,17 @@
-.buttons {
-  display: flex;
-  justify-content: flex-end;
+.friendButtonsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
   align-items: center;
+  justify-self: end;
+}
+
+.friendButtonsContainer > *:only-child {
+  grid-column: 2;
+}
+
+.chatBoxIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
