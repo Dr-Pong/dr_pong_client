@@ -41,7 +41,7 @@ export default function Chats() {
   if (isError) return null;
 
   let buttons = [];
-  const isOwner = data.me.roleType === 'owner';
+  const isOwner = data.me?.roleType === 'owner';
   if (roomType === 'channel') {
     if (isOwner)
       buttons.push({ value: <RiLockPasswordFill />, handleButtonClick: () => { useChannelTypeSettingModal(roomId as string); } });
