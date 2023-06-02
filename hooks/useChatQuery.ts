@@ -19,8 +19,7 @@ const useChatQuery = (chattingType: ChattingType, roomId: string) => {
     if (chattingType === 'dm') {
       const friendDetailToChatUser = (data: DetailDto) => {
         const { url } = data.image;
-        if (setChatUsers)
-          setChatUsers({ [roomId]: url });
+        setChatUsers?.({ [roomId]: url });
       };
       return get(
         'currentDMFriend',
@@ -35,8 +34,7 @@ const useChatQuery = (chattingType: ChattingType, roomId: string) => {
         const { nickname, imgUrl } = p;
         chatUsers[nickname] = imgUrl;
       });
-      if (setChatUsers)
-        setChatUsers(chatUsers);
+      setChatUsers?.(chatUsers);
     };
     return get(
       'currentChannelParticipants',
