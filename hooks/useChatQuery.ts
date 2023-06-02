@@ -15,11 +15,12 @@ import instance from 'utils/axios';
 const useChatQuery = (chattingType: ChattingType, roomId: string) => {
   const { get, mutationPost } = useCustomQuery();
 
-  const chatUsersGet = (setChatUsers: (u: UserImageMap) => void) => {
+  const chatUsersGet = (setChatUsers?: (u: UserImageMap) => void) => {
     if (chattingType === 'dm') {
       const friendDetailToChatUser = (data: DetailDto) => {
         const { url } = data.image;
-        setChatUsers({ [roomId]: url });
+        if (setChatUsers)
+          setChatUsers({ [roomId]: url });
       };
       return get(
         'currentDMFriend',
@@ -34,7 +35,8 @@ const useChatQuery = (chattingType: ChattingType, roomId: string) => {
         const { nickname, imgUrl } = p;
         chatUsers[nickname] = imgUrl;
       });
-      setChatUsers(chatUsers);
+      if (setChatUsers)
+        setChatUsers(chatUsers);
     };
     return get(
       'currentChannelParticipants',
