@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useCallback } from 'react';
+import { useState, ChangeEvent, useCallback, FormEvent } from 'react';
 
 import { useSetRecoilState } from 'recoil';
 import { openModalState } from 'recoils/modal';
@@ -36,7 +36,7 @@ export default function CreateChannel() {
     }));
   }, [newChannel]);
 
-  const handleTitleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTitleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     if (value.length <= 16) {
       setNewChannel(prevChannel => ({
@@ -46,7 +46,7 @@ export default function CreateChannel() {
     }
   }, [newChannel]);
 
-  const handlePasswordChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePasswordChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     const regex = /^[a-zA-Z0-9]+$/;
     if (value.length === 0 || (value.length <= 8 && regex.test(value))) {
@@ -64,7 +64,7 @@ export default function CreateChannel() {
     }));
   }, [newChannel]);
 
-  const handleCreateChannel = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleCreateChannel = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (newChannel.title) {
       mutate({ newChannel });

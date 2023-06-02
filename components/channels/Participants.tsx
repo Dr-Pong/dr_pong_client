@@ -1,14 +1,16 @@
 import { useRouter } from 'next/router';
 
-import { useState } from 'react';
+import { FormEvent } from 'react';
 
 import useChatQuery from 'hooks/useChatQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
-import { ChattingType, Participant, ParticipantsResponse, UserImageMap } from 'types/chatTypes';
+import BasicButton from 'components/global/buttons/BasicButton';
+
+import { ChattingType, Participant } from 'types/chatTypes';
 
 import { FaCrown, FaBan } from 'react-icons/fa';
-import { RiVipCrownLine } from 'react-icons/ri';
+import { TbCrown, TbCrownOff } from 'react-icons/tb';
 import { GiHighKick } from 'react-icons/gi';
 import { BsFillVolumeUpFill, BsVolumeMuteFill } from 'react-icons/bs';
 import { FiUserPlus } from 'react-icons/fi';
@@ -16,11 +18,11 @@ import { MdLogout } from 'react-icons/md';
 
 import styles from 'styles/channels/Participants.module.scss';
 
+type ButtonRole = 'admin' | 'kick' | 'ban' | 'mute' | 'unmute';
+
 export default function Participants() {
   const router = useRouter();
   const { roomType, roomId } = router.query;
-  const [participants, setParticipants] = useState<ParticipantsResponse>();
-  const [userImageMap, setUserImageMap] = useState<UserImageMap>({});
   const { useProfileModal } = useModalProvider();
 
   const { chatUsersGet } = useChatQuery(
@@ -28,21 +30,41 @@ export default function Participants() {
     roomId as string
   );
 
-  const { data, isLoading, isError } = chatUsersGet(setUserImageMap);
+  const { data, isLoading, isError } = chatUsersGet();
   if (isLoading) return null;
   if (isError) return null;
 
   const isOwner = data.me.roleType === 'owner';
   const isAdmin = data.me.roleType === 'admin';
 
+  const handleRoleEvent = (event: FormEvent<HTMLFormElement>, role: ButtonRole, nickname: string) => {
+    // role 및 nickname에 따른 작업 수행
+  };
+
   const renderButtons = (participant: Participant) => {
     if (isOwner || (isAdmin && participant.roleType === 'normal')) {
       return (
         <div className={styles.buttons}>
-          {isOwner && <button><RiVipCrownLine /></button>}
-          <button><GiHighKick /></button>
-          <button><FaBan /></button>
-          <button>{participant.isMuted ? <BsVolumeMuteFill /> : <BsFillVolumeUpFill />}</button>
+          {isOwner &&
+            <BasicButton
+              style='transparent'
+              color='none'
+              handleButtonClick={(event) => handleRoleEvent(event, 'admin', participant.nickname)}>
+              {participant.roleType === 'admin' ? <TbCrownOff /> : <TbCrown />}
+            </BasicButton>}
+          <BasicButton style='transparent' color='none' handleButtonClick={(event) => handleRoleEvent(event, 'kick', participant.nickname)}>
+            <GiHighKick />
+          </BasicButton>
+          <BasicButton style='transparent' color='none' handleButtonClick={(event) => handleRoleEvent(event, 'ban', participant.nickname)}>
+            <FaBan />
+          </BasicButton>
+          <BasicButton
+            style='transparent'
+            color='none'
+            handleButtonClick={(event) => handleRoleEvent(event, participant.isMuted ? 'unmute' : 'mute', participant.nickname)}
+          >
+            {participant.isMuted ? <BsVolumeMuteFill /> : <BsFillVolumeUpFill />}
+          </BasicButton>
         </div>
       );
     }
@@ -60,7 +82,7 @@ export default function Participants() {
         <img src={data.me.imgUrl} className={styles.profileImage} />
         <div>
           <span>{data.me.nickname}</span>
-          {isOwner ? <FaCrown /> : isAdmin ? <RiVipCrownLine /> : null}
+          {isOwner ? <FaCrown /> : isAdmin ? <TbCrown /> : null}
         </div>
       </div>
 
@@ -69,14 +91,24 @@ export default function Participants() {
           <img src={participant.imgUrl} className={styles.profileImage} />
           <div>
             <span>{participant.nickname}</span>
-            {participant.roleType === 'owner' ? <FaCrown /> : participant.roleType === 'admin' ? <RiVipCrownLine /> : null}
+            {participant.roleType === 'owner' ? <FaCrown /> : participant.roleType === 'admin' ? <TbCrown /> : null}
             {renderButtons(participant)}
           </div>
         </div>
       ))}
       <div className={styles.footer}>
-        <button>초대하기 <FiUserPlus /></button>
-        <button>나가기 <MdLogout /></button>
+        <BasicButton
+          style='transparent'
+          color='none'
+          handleButtonClick={() => { }}
+        >초대하기 <FiUserPlus />
+        </BasicButton>
+        <BasicButton
+          style='transparent'
+          color='none'
+          handleButtonClick={() => { }}
+        >나가기 <MdLogout />
+        </BasicButton>
       </div>
     </div>
   );

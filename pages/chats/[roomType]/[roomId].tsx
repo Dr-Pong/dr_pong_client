@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 
 import React, { ReactElement, useEffect, useState } from 'react';
-import { RiSettings4Fill } from 'react-icons/ri';
-import { IoIosMenu } from 'react-icons/io'
+import { RiLockPasswordFill } from 'react-icons/ri';
+import { BsPeopleFill } from 'react-icons/bs';
 
 import { useSetRecoilState } from 'recoil';
 import { sideBarState } from 'recoils/sideBar';
@@ -10,6 +10,7 @@ import { sideBarState } from 'recoils/sideBar';
 import { ChattingType, UserImageMap } from 'types/chatTypes';
 
 import useChatQuery from 'hooks/useChatQuery';
+import useModalProvider from 'hooks/useModalProvider';
 
 import Chattings from 'components/chats/Chattings';
 import PageHeader from 'components/global/PageHeader';
@@ -22,6 +23,7 @@ export default function Chats() {
   const router = useRouter();
   const { roomType, roomId } = router.query;
   const setSideBar = useSetRecoilState(sideBarState);
+  const { useChannelTypeSettingModal } = useModalProvider();
   const [userImageMap, setUserImageMap] = useState<UserImageMap>({});
 
   const { chatUsersGet } = useChatQuery(
@@ -38,13 +40,17 @@ export default function Chats() {
   if (isLoading) return null;
   if (isError) return null;
 
-  let button;
-  if (roomType === 'channel')
-    button = { value: <RiSettings4Fill />, handleButtonClick: () => { setSideBar('participants'); } };
+  let buttons = [];
+  const isOwner = data.me?.roleType === 'owner';
+  if (roomType === 'channel') {
+    if (isOwner)
+      buttons.push({ value: <RiLockPasswordFill />, handleButtonClick: () => { useChannelTypeSettingModal(roomId as string); } });
+    buttons.push({ value: <BsPeopleFill />, handleButtonClick: () => { setSideBar('participants'); } });
+  }
 
   return (
     <div className={styles.chats}>
-      <PageHeader title={'chats'} button={button} />
+      <PageHeader title={'chats'} buttons={buttons} />
       <Chattings
         userImageMap={userImageMap}
         roomType={roomType as ChattingType}

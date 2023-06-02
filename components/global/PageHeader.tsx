@@ -2,17 +2,29 @@ import styles from 'styles/global/PageHeader.module.scss';
 
 type pageHeaderProps = {
   title: string;
-  button?: {
+  buttons?: {
     value: React.ReactNode;
     handleButtonClick: () => void;
-  };
+  }[];
 };
 
-export default function PageHeader({ title, button }: pageHeaderProps) {
+export default function PageHeader({ title, buttons }: pageHeaderProps) {
   return (
     <div className={styles.pageHeaderContainer}>
       <span>{title}</span>
-      {button && <span onClick={button.handleButtonClick}>{button.value}</span>}
+      {buttons && (
+        <div className={styles.buttons}>
+          {buttons.map((button, index) => (
+            <span
+              className={styles.button}
+              key={index}
+              onClick={button.handleButtonClick}
+            >
+              {button.value}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
