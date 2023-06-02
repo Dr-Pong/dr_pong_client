@@ -26,7 +26,7 @@ export default function Chats() {
   const { useChannelTypeSettingModal } = useModalProvider();
   const [userImageMap, setUserImageMap] = useState<UserImageMap>({});
 
-  const { getChatUsers } = useChatQuery(
+  const { chatUsersGet } = useChatQuery(
     roomType as ChattingType,
     roomId as string
   );
@@ -36,7 +36,7 @@ export default function Chats() {
     if (typeof roomId !== 'string') router.replace('/');
   }, []);
 
-  const { data, isLoading, isError } = getChatUsers(setUserImageMap);
+  const { data, isLoading, isError } = chatUsersGet(setUserImageMap);
   if (isLoading) return null;
   if (isError) return null;
 

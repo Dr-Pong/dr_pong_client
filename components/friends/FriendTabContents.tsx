@@ -1,38 +1,38 @@
+import useTranslation from 'next-translate/useTranslation';
+import { useRecoilValue } from 'recoil';
+
 import React, { useState } from 'react';
 import { IoMdAdd } from 'react-icons/io';
 import { UseQueryResult } from 'react-query';
 
-import { Friend, FriendTab } from 'types/friendTypes';
+import { friendsTabState } from 'recoils/friends';
+
+import { Friend } from 'types/friendTypes';
 
 import useFriendsQuery from 'hooks/useFriendsQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
 import FriendBox from 'components/friends/FriendBox';
-import SearchableList from 'components/friends/SearchableList';
+import SearchBar from 'components/friends/SearchBar';
 import BasicButton from 'components/global/buttons/BasicButton';
 
-export default function FriendTabContents({ tab }: { tab: FriendTab }) {
-  const { getAllList, getPendingList, getBlockList } = useFriendsQuery();
+import styles from 'styles/friends/FriendTabContents.module.scss';
+
+export default function FriendTabContents() {
+  const { t } = useTranslation('friends');
   const { useFriendFinderModal } = useModalProvider();
-  const popModalButton =
-    tab === 'all' ? (
-      <BasicButton
-        style={'square'}
-        color={'white'}
-        handleButtonClick={useFriendFinderModal}
-      >
-        <IoMdAdd />
-      </BasicButton>
-    ) : null;
+  const { allListGet, pendingListGet, blockListGet } = useFriendsQuery();
+  const tab = useRecoilValue(friendsTabState);
+  const [friends, setFriends] = useState<Friend[]>([]);
+  const [searchKey, setSearchKey] = useState<string>('');
+
   const query: {
     [key: string]: (setBlocks: (f: Friend[]) => void) => UseQueryResult;
   } = {
-    all: getAllList,
-    pending: getPendingList,
-    block: getBlockList,
+    all: allListGet,
+    pending: pendingListGet,
+    block: blockListGet,
   };
-
-  const [friends, setFriends] = useState<Friend[]>([]);
 
   const { isLoading, isError } = query[tab](setFriends);
 
@@ -40,13 +40,30 @@ export default function FriendTabContents({ tab }: { tab: FriendTab }) {
   if (isError) return <div>Error</div>;
 
   return (
-    <div>
-      <SearchableList
-        haystack={friends.map((friend) => (
-          <FriendBox key={friend.nickname} tab={tab} friend={friend} />
-        ))}
-        button={popModalButton}
-      />
+    <div className={styles.friendTabContentsContainer}>
+      <div className={styles.utilsWrap}>
+        <SearchBar
+          searchKey={searchKey}
+          setSearchKey={setSearchKey}
+          placeHolder={t('Search by nickname')}
+        />
+        {tab === 'all' && (
+          <BasicButton
+            style={'square'}
+            color={'pink'}
+            handleButtonClick={useFriendFinderModal}
+          >
+            <IoMdAdd />
+          </BasicButton>
+        )}
+      </div>
+      <div className={styles.friendList}>
+        {friends
+          .filter((friend) => friend.nickname.includes(searchKey))
+          .map((friend) => {
+            return <FriendBox key={friend.nickname} friend={friend} />;
+          })}
+      </div>
     </div>
   );
 }

@@ -1,0 +1,21 @@
+@import 'styles/common.scss';
+
+.friendTabContentsContainer {
+  display: grid;
+  gap: 1rem;
+}
+
+.utilsWrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  form {
+    margin-left: 0.5rem;
+  }
+}
+
+.friendList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

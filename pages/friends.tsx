@@ -29,16 +29,14 @@ export default function Friends() {
   return (
     <div className={styles.friendsPageContainer}>
       <PageHeader title={t('Friends')} />
-      <div className={styles.friendsPageFrame}>
-        <TabProvider
-          namespace={'friends'}
-          tabNames={['all', 'pending', 'block']}
-          currentTab={tab}
-          handleTabClick={handleTabClick}
-        >
-          <FriendTabContents key={tab} tab={tab} />
-        </TabProvider>
-      </div>
+      <TabProvider
+        namespace={'friends'}
+        tabNames={['all', 'pending', 'block']}
+        currentTab={tab}
+        handleTabClick={handleTabClick}
+      >
+        <FriendTabContents key={tab} />
+      </TabProvider>
     </div>
   );
 }

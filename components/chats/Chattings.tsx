@@ -29,7 +29,7 @@ export default function Chattings({
 }) {
   const { nickname: myName } = useRecoilValue(userState);
   const [chatBoxes, setChatBoxes] = useState<ChatBoxProps[]>([]);
-  const { getChats } = useChatQuery(roomType, roomId);
+  const { chatsGet } = useChatQuery(roomType, roomId);
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const [isTopRefVisible, setIsTopRefVisible] = useState(true);
@@ -103,7 +103,7 @@ export default function Chattings({
     isFetchingNextPage,
     isLoading,
     isError,
-  } = getChats(parseChats);
+  } = chatsGet(parseChats);
 
   useEffect(() => {
     if (hasNextPage && !isFetchingNextPage && isBottomRefVisible)

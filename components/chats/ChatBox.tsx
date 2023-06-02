@@ -2,16 +2,28 @@ import React from 'react';
 
 import { ChatBoxProps, ChatBoxType } from 'types/chatTypes';
 
+import useModalProvider from 'hooks/useModalProvider';
+
 import styles from 'styles/chats/ChatBox.module.scss';
 
 function ChatBox({ chatBoxProp }: { chatBoxProp: ChatBoxProps }) {
   const { chatUser, message, time, buttons } = chatBoxProp;
   const { imgUrl, nickname } = chatUser ?? {};
+  const { useProfileModal } = useModalProvider();
+
+  const imgClickHandler = () => {
+    if (!nickname) return;
+    useProfileModal(nickname);
+  };
 
   const chatBox: { [key in ChatBoxType]: JSX.Element } = {
     chatBox: (
       <div className={styles.chatBox}>
-        <img className={styles.chatterImg} src={imgUrl} />
+        <img
+          className={styles.chatterImg}
+          onClick={imgClickHandler}
+          src={imgUrl}
+        />
         <div className={styles.chatTexts}>
           <div className={styles.nickname}>{nickname}</div>
           <div className={styles.messageBox}>

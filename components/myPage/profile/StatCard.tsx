@@ -18,9 +18,9 @@ type StatBox = {
 };
 
 export default function StatCard({ nickname }: { nickname: string }) {
-  const { getStat } = useMyPageQuery(nickname);
+  const { statGet } = useMyPageQuery(nickname);
   const { t } = useTranslation('myPage');
-  const { data, isLoading, isError } = getStat();
+  const { data, isLoading, isError } = statGet();
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
   const { totalStat, seasonStat, totalRank, seasonRank } = data;

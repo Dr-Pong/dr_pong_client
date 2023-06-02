@@ -7,7 +7,7 @@ import instance from 'utils/axios';
 const useRecordsQuery = (nickname: string) => {
   const { get } = useCustomQuery();
 
-  const fetchMatchHistory = async (lastGameId: number): Promise<Records> => {
+  const matchHistoryFetch = async (lastGameId: number): Promise<Records> => {
     const count = 10;
     return (
       await instance.get(
@@ -15,9 +15,9 @@ const useRecordsQuery = (nickname: string) => {
       )
     ).data;
   };
-  const getMatchDetail = (gameId: number) => {
+  const matchDetailGet = (gameId: number) => {
     return get([`matchDetail`, gameId], `/users/${nickname}/records/${gameId}`);
   };
-  return { fetchMatchHistory, getMatchDetail };
+  return { matchHistoryFetch, matchDetailGet };
 };
 export default useRecordsQuery;

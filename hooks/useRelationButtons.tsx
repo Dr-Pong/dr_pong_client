@@ -24,7 +24,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
   const openProfile = (label: React.ReactNode) => {
     return (
       <BasicButton
-        style={'thin'}
+        style={'dropdown'}
         color={'white'}
         handleButtonClick={() => {
           useProfileModal(target);
@@ -136,7 +136,11 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
 
   const spectate = (label: React.ReactNode) => {
     return (
-      <BasicButton style={'thin'} color={'white'} handleButtonClick={closeModal}>
+      <BasicButton
+        style={'dropdown'}
+        color={'white'}
+        handleButtonClick={closeModal}
+      >
         <Link href={'/spectate'}>{label}</Link>
       </BasicButton>
     );

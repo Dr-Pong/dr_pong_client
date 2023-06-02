@@ -27,6 +27,13 @@
   cursor: pointer;
 }
 
+.dropdown {
+  width: 6rem;
+  height: 1.5rem;
+  background: $light-grey;
+  border-bottom: solid 1px $dark-grey;
+}
+
 .small {
   width: 4.5rem;
   height: 1.5rem;
@@ -64,14 +71,15 @@
 }
 
 .square {
-  width: 2rem;
-  height: 2rem;
+  width: 1.8rem;
+  height: 1.8rem;
   border-radius: $basic-radius;
 }
 
 .round {
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 1.5rem;
   border-radius: 50%;
 }
 
@@ -87,7 +95,7 @@
 
 .opaque {
   color: white;
-  background: opacify(white, 0.5);
+  background-color: transparentize(white, 0.7);
 }
 
 .default {
