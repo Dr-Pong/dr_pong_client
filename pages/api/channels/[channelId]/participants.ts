@@ -13,11 +13,11 @@ export default (req: NextApiRequest, res: NextApiResponse<ParticipantsResponse |
     res.status(200).json(participants);
   } else if (req.method === 'POST') {
     // if (req.body.password === '1234')
-    res.status(200).json({ message: `Channel${roomId} Joined` });
+    res.status(200).json({ message: `Channel ${roomId} Joined` });
     // else
     //   res.status(400).json({ message: 'full bang | wrong password | private | no bang' });
   } else if (req.method === 'DELETE') {
-
+    res.status(200).json({ message: `Channel ${roomId} Leaved` });
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });
   }
