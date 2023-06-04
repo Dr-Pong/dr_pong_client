@@ -34,23 +34,6 @@
   border-radius: 50%;
 }
 
-.buttons {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  width: 100%;
-  margin-top: 5px;
-
-  button {
-    display: flex;
-    margin: 0 0.2rem;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-  }
-}
-
 .footer {
   position: fixed;
   right: 0;
