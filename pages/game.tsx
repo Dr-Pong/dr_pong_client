@@ -1,6 +1,6 @@
 import useTranslation from 'next-translate/useTranslation';
 
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 
 import GameLobby from 'components/game/GameLobby';
 import AppLayout from 'components/layouts/AppLayout';
@@ -10,7 +10,7 @@ import styles from 'styles/game/Game.module.scss';
 
 export default function Game() {
   const { t } = useTranslation('game');
-  const [normalClicked, setNormalClicked] = React.useState(false);
+  const [normalClicked, setNormalClicked] = useState(false);
 
   const handleLadderClick = () => {
     //요청 보내고
