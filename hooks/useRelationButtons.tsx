@@ -146,6 +146,19 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
     );
   };
 
+  const channelRoleEvent = (label: React.ReactNode, roleApi: string, method: 'post' | 'delete' | 'patch') => {
+    const request: RequestProps = {
+      api: `${roleApi}/${target}`,
+      method: method,
+      options: {},
+    };
+    const buttonProps = {
+      ...buttonDesign,
+      children: label,
+    };
+    return <ToastResultButton request={request} button={buttonProps} />;
+  };
+
   return {
     openProfile,
     inviteGame,
@@ -158,6 +171,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
     directMessage,
     dropdown,
     spectate,
+    channelRoleEvent,
   };
 };
 

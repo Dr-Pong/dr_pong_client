@@ -44,8 +44,14 @@ export default function Chats() {
   const isOwner = data.me?.roleType === 'owner';
   if (roomType === 'channel') {
     if (isOwner)
-      buttons.push({ value: <RiLockPasswordFill />, handleButtonClick: () => { useChannelTypeSettingModal(roomId as string); } });
-    buttons.push({ value: <BsPeopleFill />, handleButtonClick: () => { setSideBar('participants'); } });
+      buttons.push({
+        value: <RiLockPasswordFill />,
+        handleButtonClick: () => { useChannelTypeSettingModal(roomId as string); }
+      });
+    buttons.push({
+      value: <BsPeopleFill />,
+      handleButtonClick: () => { setSideBar('participants'); }
+    });
   }
 
   return (

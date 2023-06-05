@@ -1,34 +1,41 @@
 import { useRouter } from 'next/router';
 
-import { FormEvent } from 'react';
+import { useSetRecoilState } from 'recoil';
+import { sideBarState } from 'recoils/sideBar';
 
 import useChatQuery from 'hooks/useChatQuery';
+import useCustomQuery from 'hooks/useCustomQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
+import ChannelRoleButtons from 'components/channels/ChannelRoleButtons';
 import BasicButton from 'components/global/buttons/BasicButton';
 
 import { ChattingType, Participant } from 'types/chatTypes';
 
-import { FaCrown, FaBan } from 'react-icons/fa';
-import { TbCrown, TbCrownOff } from 'react-icons/tb';
-import { GiHighKick } from 'react-icons/gi';
-import { BsFillVolumeUpFill, BsVolumeMuteFill } from 'react-icons/bs';
+import { FaCrown } from 'react-icons/fa';
+import { TbCrown } from 'react-icons/tb';
 import { FiUserPlus } from 'react-icons/fi';
 import { MdLogout } from 'react-icons/md';
 
 import styles from 'styles/channels/Participants.module.scss';
 
-type ButtonRole = 'admin' | 'kick' | 'ban' | 'mute' | 'unmute';
-
 export default function Participants() {
   const router = useRouter();
   const { roomType, roomId } = router.query;
+  const setSideBar = useSetRecoilState(sideBarState);
   const { useProfileModal } = useModalProvider();
-
+  const { mutationDelete } = useCustomQuery();
   const { chatUsersGet } = useChatQuery(
     roomType as ChattingType,
     roomId as string
   );
+  const { mutate } = mutationDelete(`/channels/${roomId}/participants`, {
+    onSuccess: () => {
+      setSideBar(null);
+      router.push('/channels');
+    },
+    onError: () => { },
+  });
 
   const { data, isLoading, isError } = chatUsersGet();
   if (isLoading) return null;
@@ -37,48 +44,17 @@ export default function Participants() {
   const isOwner = data.me.roleType === 'owner';
   const isAdmin = data.me.roleType === 'admin';
 
-  const handleRoleEvent = (event: FormEvent<HTMLFormElement>, role: ButtonRole, nickname: string) => {
-    // role 및 nickname에 따른 작업 수행
-  };
-
-  const renderButtons = (participant: Participant) => {
-    if (isOwner || (isAdmin && participant.roleType === 'normal')) {
-      return (
-        <div className={styles.buttons}>
-          {isOwner &&
-            <BasicButton
-              style='transparent'
-              color='none'
-              handleButtonClick={(event) => handleRoleEvent(event, 'admin', participant.nickname)}>
-              {participant.roleType === 'admin' ? <TbCrownOff /> : <TbCrown />}
-            </BasicButton>}
-          <BasicButton style='transparent' color='none' handleButtonClick={(event) => handleRoleEvent(event, 'kick', participant.nickname)}>
-            <GiHighKick />
-          </BasicButton>
-          <BasicButton style='transparent' color='none' handleButtonClick={(event) => handleRoleEvent(event, 'ban', participant.nickname)}>
-            <FaBan />
-          </BasicButton>
-          <BasicButton
-            style='transparent'
-            color='none'
-            handleButtonClick={(event) => handleRoleEvent(event, participant.isMuted ? 'unmute' : 'mute', participant.nickname)}
-          >
-            {participant.isMuted ? <BsVolumeMuteFill /> : <BsFillVolumeUpFill />}
-          </BasicButton>
-        </div>
-      );
-    }
-    return null;
-  };
-
   const handleParticipantClick = (nickname: string) => {
     useProfileModal(nickname);
   };
 
+  const handleChannelLeave = () => {
+    mutate();
+  }
 
   return (
     <div className={styles.participantsContainer}>
-      <div className={styles.participant} onClick={() => handleParticipantClick(data.me.nickname)}>
+      <div className={styles.participant}>
         <img src={data.me.imgUrl} className={styles.profileImage} />
         <div>
           <span>{data.me.nickname}</span>
@@ -87,12 +63,21 @@ export default function Participants() {
       </div>
 
       {data.participants.map((participant: Participant) => (
-        <div key={participant.nickname} className={styles.participant} onClick={() => handleParticipantClick(participant.nickname)}>
-          <img src={participant.imgUrl} className={styles.profileImage} />
+        <div key={participant.nickname} className={styles.participant}>
+          <img
+            src={participant.imgUrl}
+            className={styles.profileImage}
+            onClick={() => handleParticipantClick(participant.nickname)}
+          />
           <div>
             <span>{participant.nickname}</span>
-            {participant.roleType === 'owner' ? <FaCrown /> : participant.roleType === 'admin' ? <TbCrown /> : null}
-            {renderButtons(participant)}
+            {participant.roleType === 'owner'
+              ? <FaCrown /> : participant.roleType === 'admin'
+                ? <TbCrown /> : null}
+            <ChannelRoleButtons
+              roomId={roomId as string}
+              myRoleType={data.me.roleType}
+              participant={participant} />
           </div>
         </div>
       ))}
@@ -101,13 +86,17 @@ export default function Participants() {
           style='transparent'
           color='none'
           handleButtonClick={() => { }}
-        >초대하기 <FiUserPlus />
+        >
+          Invite Friend
+          <FiUserPlus />
         </BasicButton>
         <BasicButton
           style='transparent'
           color='none'
-          handleButtonClick={() => { }}
-        >나가기 <MdLogout />
+          handleButtonClick={handleChannelLeave}
+        >
+          Leave Channel
+          <MdLogout />
         </BasicButton>
       </div>
     </div>
