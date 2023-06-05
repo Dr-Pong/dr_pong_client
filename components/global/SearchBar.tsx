@@ -1,39 +1,29 @@
-import { useRouter } from 'next/router';
+import React, { Dispatch, SetStateAction } from 'react';
 
-import React, { useState } from 'react';
+import styles from 'styles/friends/SearchBar.module.scss';
 
-import styles from 'styles/global/SearchBar.module.scss';
+type SearchableListProps = {
+  searchKey: string;
+  setSearchKey: Dispatch<SetStateAction<string>>;
+  placeHolder: string;
+  handleOnSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
+};
 
 export default function SearchBar({
-  onSubmit,
-  initValue,
-}: {
-  onSubmit: React.Dispatch<React.SetStateAction<string>>;
-  initValue: string;
-}) {
-  const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState(initValue);
-
-  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    onSubmit(searchQuery);
-    const newQuery = encodeURIComponent(searchQuery.trim());
-    router.push(`/records/${newQuery}/`);
-  };
-
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
-  };
-
+  searchKey,
+  setSearchKey,
+  placeHolder,
+  handleOnSubmit,
+}: SearchableListProps) {
   return (
-    <form className={styles.searchBar} onSubmit={handleOnSubmit}>
+    <form onSubmit={handleOnSubmit}>
       <input
         type='text'
-        value={searchQuery}
-        onChange={handleOnChange}
-        placeholder={'Search by nickname'}
+        value={searchKey}
+        onChange={(e) => setSearchKey(e.target.value)}
+        placeholder={placeHolder}
+        className={styles.searchBar}
       />
-      <button type='submit'>{'Search'}</button>
     </form>
   );
 }

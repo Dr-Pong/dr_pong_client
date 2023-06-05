@@ -13,7 +13,7 @@ import useFriendsQuery from 'hooks/useFriendsQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
 import FriendBox from 'components/friends/FriendBox';
-import SearchBar from 'components/friends/SearchBar';
+import SearchBar from 'components/global/SearchBar';
 import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/friends/FriendTabContents.module.scss';
