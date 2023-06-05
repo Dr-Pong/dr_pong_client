@@ -8,6 +8,9 @@
   "second": "s",
   "ago": "ago",
   "a moment ago": "a moment ago",
-  "rank": "rank",
-  "normal": "normal"
+  "rank": "Ladder",
+  "normal": "Normal",
+  "nickname": "nickname",
+  "search": "search",
+  "show more": "show more"
 }

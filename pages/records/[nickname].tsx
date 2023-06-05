@@ -6,23 +6,43 @@ import React, { ReactElement, useState } from 'react';
 
 import PageHeader from 'components/global/PageHeader';
 import SearchBar from 'components/global/SearchBar';
+import SubmitButton from 'components/global/buttons/SubmitButton';
 import AppLayout from 'components/layouts/AppLayout';
 import LoginFilter from 'components/layouts/LoginFilter';
-import MatchHistory from 'components/records/MatchHistory';
+import RecordList from 'components/records/RecordList';
 
 import styles from 'styles/records/Records.module.scss';
 
 export default function Records() {
-  const router = useRouter();
   const { t } = useTranslation('records');
+  const router = useRouter();
   const defaultNickname = router.query.nickname as string; // TODO: nickname error handle when undefined or arr
   const [nickname, setNickname] = useState(defaultNickname);
+
+  const handleNicknameSearch = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    router.push(`/records/${nickname.trim()}/`);
+  };
 
   return (
     <div className={styles.recordsPageContainer}>
       <PageHeader title={t('Match History')} />
-      <SearchBar onSubmit={setNickname} initValue={defaultNickname} />
-      <MatchHistory key={nickname} nickname={nickname} />
+      <div className={styles.searchBar}>
+        <SearchBar
+          searchKey={nickname}
+          setSearchKey={setNickname}
+          placeHolder={t('nickname')}
+          handleOnSubmit={handleNicknameSearch}
+        />
+        <SubmitButton
+          style='basic'
+          color='pink'
+          handleButtonClick={handleNicknameSearch}
+        >
+          {t('search')}
+        </SubmitButton>
+      </div>
+      <RecordList key={nickname} nickname={nickname} />
     </div>
   );
 }
