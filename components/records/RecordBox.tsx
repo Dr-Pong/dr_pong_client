@@ -2,69 +2,71 @@ import { Translate } from 'next-translate';
 import useTranslation from 'next-translate/useTranslation';
 
 import React from 'react';
+import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 
 import { Record } from 'types/historyTypes';
 
 import MatchDetail from 'components/records/MatchDetail';
 import Player from 'components/records/Player';
 
-import styles from 'styles/records/Match.module.scss';
+import styles from 'styles/records/RecordBox.module.scss';
 
-export default function Match({ record }: { record: Record }) {
+export default function RecordBox({ record }: { record: Record }) {
   const { t } = useTranslation('records');
-  const { me, you: u } = record;
+  const { me, you } = record;
   const { gameId, gameType, playedAt, result } = record;
-  const [isFolded, setIsFolded] = React.useState<boolean>(true);
+  const [showDetail, setShowDetail] = React.useState<boolean>(false);
   const [isHovered, setIsHovered] = React.useState<boolean>(false);
   const date = new Date(playedAt);
-  const handleFoldedClick = () => {
-    setIsFolded(false);
+
+  const handleArrowClick = () => {
+    setShowDetail(!showDetail);
   };
-  const handleUnfoldedClick = () => {
-    setIsFolded(true);
-  };
+
   const handleHover = () => {
     setIsHovered(true);
   };
+
   const handleUnhover = () => {
     setIsHovered(false);
   };
 
   return (
-    <div className={`${styles.match} ${styles[result]}`}>
-      <div className={styles.matchBrief}>
-        <div className={styles.matchText}>
-          <div className={styles.gameType}>{t(gameType)}</div>
-          <div
-            className={styles.playedAt}
-            onTouchStart={handleHover}
-            onTouchEnd={handleUnhover}
-            onMouseOver={handleHover}
-            onMouseOut={handleUnhover}
-          >
-            {getTimeAgo(playedAt, t)}
-          </div>
-          {isFolded && (
-            <div className={styles.unfold} onClick={handleFoldedClick}>
-              {'▾'}
+    <div className={`${styles.recordBoxContainer} ${styles[result]}`}>
+      <div className={styles.basicContent}>
+        <div className={styles.leftBox}>
+          <div className={styles.typeTimeWrap}>
+            <div className={styles.gameType}>{t(gameType)}</div>
+            <div
+              className={styles.playedAt}
+              onTouchStart={handleHover}
+              onTouchEnd={handleUnhover}
+              onMouseOver={handleHover}
+              onMouseOut={handleUnhover}
+            >
+              {getTimeAgo(playedAt, t)}
             </div>
-          )}
-          {isHovered && (
-            <div className={styles.gameDate}>{date.toString()}</div>
-          )}
+            {isHovered && (
+              <div className={styles.gameDate}>
+                {date.toLocaleString('ko-KR')}
+              </div>
+            )}
+          </div>
+          <div className={styles.detailArrow} onClick={handleArrowClick}>
+            {showDetail ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
+          </div>
         </div>
-        <div className={styles.matchVisual}>
-          <Player key={me.nickname} nickname={me.nickname} imgUrl={me.imgUrl} />
-          <div className={styles.score}>{`${me.score} : ${u.score}`}</div>
-          <Player key={u.nickname} nickname={u.nickname} imgUrl={u.imgUrl} />
+        <div className={styles.playerScoreWrap}>
+          <Player nickname={me.nickname} imgUrl={me.imgUrl} />
+          <div className={styles.score}>{`${me.score} : ${you.score}`}</div>
+          <Player nickname={you.nickname} imgUrl={you.imgUrl} />
         </div>
       </div>
-      {!isFolded && (
+      {showDetail && (
         <MatchDetail
           nickname={me.nickname}
           gameId={gameId}
           gameType={gameType}
-          onUnfoldClick={handleUnfoldedClick}
         />
       )}
     </div>
