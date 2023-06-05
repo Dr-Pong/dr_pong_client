@@ -24,29 +24,31 @@ export default function ChannelRoleButtons({
   myRoleType: string,
   participant: Participant
 }) {
-  const admin = `/channels/${roomId}/admin`;
-  const kick = `/channels/${roomId}/kick`;
-  const ban = `/channels/${roomId}/ban`;
-  const mute = `/channels/${roomId}/mute`;
+  const paths = {
+    admin: `/channels/${roomId}/admin`,
+    kick: `/channels/${roomId}/kick`,
+    ban: `/channels/${roomId}/ban`,
+    mute: `/channels/${roomId}/mute`,
+  };
   const { channelRoleEvent }
     = useRelationButtons(buttonDesign, participant.nickname);
   const buttons: { [key: string]: JSX.Element[]; } = {
     owner: [
       participant.roleType === 'admin'
-        ? channelRoleEvent(<TbCrownOff />, admin, 'delete')
-        : channelRoleEvent(<TbCrown />, admin, 'post'),
-      channelRoleEvent(<GiHighKick />, kick, 'post'),
-      channelRoleEvent(<FaBan />, ban, 'post'),
+        ? channelRoleEvent(<TbCrownOff />, paths.admin, 'delete')
+        : channelRoleEvent(<TbCrown />, paths.admin, 'post'),
+      channelRoleEvent(<GiHighKick />, paths.kick, 'post'),
+      channelRoleEvent(<FaBan />, paths.ban, 'post'),
       participant.isMuted
-        ? channelRoleEvent(<BsVolumeMuteFill />, mute, 'delete')
-        : channelRoleEvent(<BsFillVolumeUpFill />, mute, 'post'),
+        ? channelRoleEvent(<BsVolumeMuteFill />, paths.mute, 'delete')
+        : channelRoleEvent(<BsFillVolumeUpFill />, paths.mute, 'post'),
     ],
     admin: [
-      channelRoleEvent(<GiHighKick />, kick, 'post'),
-      channelRoleEvent(<FaBan />, ban, 'post'),
+      channelRoleEvent(<GiHighKick />, paths.kick, 'post'),
+      channelRoleEvent(<FaBan />, paths.ban, 'post'),
       participant.isMuted
-        ? channelRoleEvent(<BsVolumeMuteFill />, mute, 'delete')
-        : channelRoleEvent(<BsFillVolumeUpFill />, mute, 'post'),
+        ? channelRoleEvent(<BsVolumeMuteFill />, paths.mute, 'delete')
+        : channelRoleEvent(<BsFillVolumeUpFill />, paths.mute, 'post'),
     ],
   };
 
