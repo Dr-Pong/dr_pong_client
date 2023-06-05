@@ -55,7 +55,7 @@ export default function Participants() {
   return (
     <div className={styles.participantsContainer}>
       <div className={styles.participant}>
-        <img src={data.me.imgUrl} className={styles.profileImage} onClick={() => handleParticipantClick(data.me.nickname)} />
+        <img src={data.me.imgUrl} className={styles.profileImage} />
         <div>
           <span>{data.me.nickname}</span>
           {isOwner ? <FaCrown /> : isAdmin ? <TbCrown /> : null}
@@ -70,7 +70,7 @@ export default function Participants() {
             {participant.roleType === 'owner' ? <FaCrown /> : participant.roleType === 'admin' ? <TbCrown /> : null}
             <ChannelRoleButtons
               roomId={roomId as string}
-              role={data.me.roleType}
+              myRoleType={data.me.roleType}
               participant={participant} />
           </div>
         </div>
