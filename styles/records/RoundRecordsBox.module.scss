@@ -1,0 +1,40 @@
+@import 'styles/records/RecordBox.module';
+@import 'styles/common';
+
+.roundRecordsBoxContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+  padding: 0.3rem;
+  color: black;
+  background: $light-grey;
+}
+
+.timeLine {
+  border: solid 1px black;
+}
+
+.rounds {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow-x: auto;
+}
+
+.round {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.7rem;
+}
+
+.increase {
+  color: $light-blue;
+  font-size: 1.3rem;
+}
+
+.decrease {
+  color: $just-pink;
+  font-size: 1.3rem;
+}
