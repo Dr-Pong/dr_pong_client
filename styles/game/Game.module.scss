@@ -1,0 +1,47 @@
+@import 'styles/common.scss';
+
+.gamePageContainer {
+  @include pageContainer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.buttonList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-inline: 1rem;
+}
+
+.button {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  border-radius: $basic-radius;
+}
+
+.ladder {
+  height: 2.7rem;
+  font-size: 1.3rem;
+  background: $just-pink;
+}
+
+.ladder:hover {
+  font-size: 1.5rem;
+}
+
+.normal {
+  height: 2.7rem;
+  font-size: 1.3rem;
+  background: $just-purple;
+}
+
+.normal:hover {
+  font-size: 1.5rem;
+}
