@@ -2,7 +2,7 @@ import useTranslation from 'next-translate/useTranslation';
 
 import React, { ReactElement } from 'react';
 
-import PrepareRoom from 'components/game/PrepareRoom';
+import GameLobby from 'components/game/GameLobby';
 import AppLayout from 'components/layouts/AppLayout';
 import LoginFilter from 'components/layouts/LoginFilter';
 
@@ -42,7 +42,7 @@ export default function Game() {
   return (
     <div className={styles.gamePageContainer}>
       {normalClicked ? (
-        <PrepareRoom />
+        <GameLobby />
       ) : (
         <div className={styles.buttonList}>
           {buttons.map((button) => button)}

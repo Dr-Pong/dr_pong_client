@@ -1,6 +1,6 @@
 import useTranslation from 'next-translate/useTranslation';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import PageHeader from 'components/global/PageHeader';
 
@@ -10,9 +10,9 @@ interface Options {
   [key: string]: boolean;
 }
 
-export default function PrepareRoom() {
+export default function GameLobby() {
   const { t } = useTranslation('game');
-  const [options, setOptions] = React.useState<Options>({
+  const [options, setOptions] = useState<Options>({
     bullet: false,
     deathMatch: false,
     loserPaysForBeer: false,
