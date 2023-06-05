@@ -1,3 +1,5 @@
+import useTranslation from 'next-translate/useTranslation';
+
 import React, { useEffect, useState } from 'react';
 
 import { Record } from 'types/historyTypes';
@@ -5,13 +7,14 @@ import { Record } from 'types/historyTypes';
 import useRecordsQuery from 'hooks/useRecordsQuery';
 
 import BasicButton from 'components/global/buttons/BasicButton';
-import Match from 'components/records/Match';
+import RecordBox from 'components/records/RecordBox';
 
-import styles from 'styles/records/MatchHistory.module.scss';
+import styles from 'styles/records/RecordList.module.scss';
 
-export default function MatchHistory({ nickname }: { nickname: string }) {
+export default function RecordList({ nickname }: { nickname: string }) {
+  const { t } = useTranslation('records');
   const { matchHistoryFetch } = useRecordsQuery(nickname);
-  const [matches, setMatches] = useState<Record[]>([]);
+  const [records, setRecords] = useState<Record[]>([]);
   const [isLastPage, setIsLastPage] = useState<boolean>(false);
   const [lastGameId, setLastGameId] = useState<number>(0);
 
@@ -20,27 +23,27 @@ export default function MatchHistory({ nickname }: { nickname: string }) {
       const data = await matchHistoryFetch(lastGameId);
       setIsLastPage(data.isLastPage);
       const { records } = data;
-      if (records) setMatches((prev) => [...prev, ...records]);
+      if (records) setRecords((prev) => [...prev, ...records]);
     };
     loadData();
   }, [lastGameId]);
 
   const handleShowMoreClick = () => {
-    setLastGameId(matches.at(-1)?.gameId ?? 0);
+    setLastGameId(records.at(-1)?.gameId ?? 0);
   };
 
   return (
-    <div className={styles.matchHistory}>
-      {matches.map((r, i) => {
-        return <Match key={i} record={r} />;
+    <div className={styles.recordListContainer}>
+      {records.map((record, i) => {
+        return <RecordBox key={i} record={record} />;
       })}
       {!isLastPage && (
         <BasicButton
-          style={'big'}
-          color={'white'}
+          style={'flex'}
+          color={'purple'}
           handleButtonClick={handleShowMoreClick}
         >
-          {'▾'}
+          {t('show more')}
         </BasicButton>
       )}
     </div>
