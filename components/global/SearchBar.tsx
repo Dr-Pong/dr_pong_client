@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 
-import styles from 'styles/friends/SearchBar.module.scss';
+import styles from 'styles/global/SearchBar.module.scss';
 
 type SearchableListProps = {
   searchKey: string;
