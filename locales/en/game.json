@@ -1,1 +1,10 @@
-{}
+{
+  "ladder": "Ladder",
+  "normal": "Normal",
+  "bullet": "Bullet Mode",
+  "deathMatch": "Death Match",
+  "loserPaysForBeer": "Loser Pays for Beer",
+  "prepare": "Prepare for the battle",
+  "on": "On",
+  "off": "Off"
+}
