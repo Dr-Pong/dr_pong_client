@@ -1,0 +1,87 @@
+@import 'styles/common';
+
+@mixin boxColumnGrid {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+@mixin resultColumnGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr;
+}
+
+.recordBoxContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 1rem;
+  border-radius: $basic-radius;
+  &.win {
+    border: solid 1px $light-blue;
+  }
+  &.lose {
+    border: solid 1px $just-pink;
+  }
+  &.tie {
+    border: solid 1px $light-grey;
+  }
+}
+
+.basicContent {
+  @include boxColumnGrid;
+}
+
+.leftBox {
+  display: grid;
+  grid-template-rows: 1fr 2rem;
+  align-items: center;
+  justify-items: center;
+  justify-self: center;
+}
+
+.typeTimeWrap {
+  position: relative;
+  .gameType {
+    margin-bottom: 0.2rem;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+  }
+  .playedAt {
+    font-size: 0.8rem;
+    text-align: center;
+  }
+  .gameDate {
+    position: absolute;
+    top: 100%;
+    left: 0%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10rem;
+    height: 1rem;
+    color: black;
+    font-size: 0.8rem;
+    background: $light-grey;
+  }
+}
+
+.playerScoreWrap {
+  @include resultColumnGrid;
+}
+
+.detailArrow {
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.score {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
