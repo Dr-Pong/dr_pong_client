@@ -64,10 +64,16 @@ export default function Participants() {
 
       {data.participants.map((participant: Participant) => (
         <div key={participant.nickname} className={styles.participant}>
-          <img src={participant.imgUrl} className={styles.profileImage} onClick={() => handleParticipantClick(participant.nickname)} />
+          <img
+            src={participant.imgUrl}
+            className={styles.profileImage}
+            onClick={() => handleParticipantClick(participant.nickname)}
+          />
           <div>
             <span>{participant.nickname}</span>
-            {participant.roleType === 'owner' ? <FaCrown /> : participant.roleType === 'admin' ? <TbCrown /> : null}
+            {participant.roleType === 'owner'
+              ? <FaCrown /> : participant.roleType === 'admin'
+                ? <TbCrown /> : null}
             <ChannelRoleButtons
               roomId={roomId as string}
               myRoleType={data.me.roleType}

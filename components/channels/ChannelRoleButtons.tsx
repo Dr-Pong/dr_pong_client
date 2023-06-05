@@ -15,12 +15,21 @@ const buttonDesign: ButtonDesign = {
   color: 'none',
 };
 
-export default function ChannelRoleButtons({ roomId, myRoleType, participant }: { roomId: string, myRoleType: string, participant: Participant }) {
+export default function ChannelRoleButtons({
+  roomId,
+  myRoleType,
+  participant
+}: {
+  roomId: string,
+  myRoleType: string,
+  participant: Participant
+}) {
   const admin = `/channels/${roomId}/admin`;
   const kick = `/channels/${roomId}/kick`;
   const ban = `/channels/${roomId}/ban`;
   const mute = `/channels/${roomId}/mute`;
-  const { channelRoleEvent } = useRelationButtons(buttonDesign, participant.nickname);
+  const { channelRoleEvent }
+    = useRelationButtons(buttonDesign, participant.nickname);
   const buttons: { [key: string]: JSX.Element[]; } = {
     owner: [
       participant.roleType === 'admin'
@@ -43,7 +52,8 @@ export default function ChannelRoleButtons({ roomId, myRoleType, participant }: 
 
   return (
     <div className={styles.buttons}>
-      {(myRoleType === 'owner' || (myRoleType === 'admin' && participant.roleType === 'normal')) &&
+      {(myRoleType === 'owner'
+        || (myRoleType === 'admin' && participant.roleType === 'normal')) &&
         buttons[myRoleType].map((c) => c)}
     </div>
   )
