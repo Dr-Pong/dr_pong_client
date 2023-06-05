@@ -15,7 +15,7 @@ const buttonDesign: ButtonDesign = {
   color: 'none',
 };
 
-export default function ChannelRoleButtons({ roomId, role, participant }: { roomId: string, role: string, participant: Participant }) {
+export default function ChannelRoleButtons({ roomId, myRoleType, participant }: { roomId: string, myRoleType: string, participant: Participant }) {
   const admin = `/channels/${roomId}/admin`;
   const kick = `/channels/${roomId}/kick`;
   const ban = `/channels/${roomId}/ban`;
@@ -43,8 +43,8 @@ export default function ChannelRoleButtons({ roomId, role, participant }: { room
 
   return (
     <div className={styles.buttons}>
-      {(role === 'owner' || (role === 'admin' && participant.roleType === 'normal')) &&
-        buttons[role].map((c) => c)}
+      {(myRoleType === 'owner' || (myRoleType === 'admin' && participant.roleType === 'normal')) &&
+        buttons[myRoleType].map((c) => c)}
     </div>
   )
 }
