@@ -1,0 +1,74 @@
+@import 'styles/common.scss';
+
+.prepareRoomContainer {
+  @include pageWithHeaderContainer;
+}
+
+.contents {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.optionList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-inline: 1rem;
+}
+
+.option {
+  display: flex;
+  justify-content: space-between;
+  width: 15rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  border-radius: $basic-radius;
+}
+
+.radios {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 5rem;
+}
+
+.buttonList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-inline: 1rem;
+}
+
+.button {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  border-radius: $basic-radius;
+}
+
+.queue {
+  height: 2.7rem;
+  font-size: 1.3rem;
+  background: $just-pink;
+}
+
+.queue:hover {
+  font-size: 1.5rem;
+}
+
+.invite {
+  height: 2.7rem;
+  font-size: 1.3rem;
+  background: $just-purple;
+}
+
+.invite:hover {
+  font-size: 1.5rem;
+}

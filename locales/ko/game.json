@@ -1,1 +1,10 @@
-{}
+{
+  "ladder": "래더",
+  "normal": "일반",
+  "bullet": "총알모드",
+  "deathMatch": "목숨걸기",
+  "loserPaysForBeer": "술값내기",
+  "prepare": "대기실",
+  "on": "켜기",
+  "off": "끄기"
+}
