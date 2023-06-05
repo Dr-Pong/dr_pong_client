@@ -1,7 +1,7 @@
 import { Translate } from 'next-translate';
 import useTranslation from 'next-translate/useTranslation';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 
 import { Record } from 'types/historyTypes';
@@ -15,8 +15,8 @@ export default function RecordBox({ record }: { record: Record }) {
   const { t } = useTranslation('records');
   const { me, you } = record;
   const { gameId, gameType, playedAt, result } = record;
-  const [showDetail, setShowDetail] = React.useState<boolean>(false);
-  const [isHovered, setIsHovered] = React.useState<boolean>(false);
+  const [showDetail, setShowDetail] = useState<boolean>(false);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
   const date = new Date(playedAt);
 
   const handleArrowClick = () => {
