@@ -12,7 +12,7 @@ import { IoSearch } from 'react-icons/io5';
 
 import useModalProvider from 'hooks/useModalProvider';
 
-import ChannelDropdown from 'components/channels/ChannelDropdown';
+import ChannelSortDropdown from 'components/channels/ChannelSortDropdown';
 import SearchBar from 'components/global/SearchBar';
 import BasicButton from 'components/global/buttons/BasicButton';
 import SubmitButton from 'components/global/buttons/SubmitButton';
@@ -44,7 +44,7 @@ export default function ChannelFilter({
 
   return (
     <div className={styles.channelFilterContainer}>
-      <ChannelDropdown order={order} setOrder={setOrder} />
+      <ChannelSortDropdown order={order} setOrder={setOrder} />
       <div className={styles.rightWrap}>
         <SearchBar
           searchKey={channelTitle}

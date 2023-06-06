@@ -12,17 +12,17 @@ import { IoMdArrowDropdown } from 'react-icons/io';
 import Dropdown from 'components/global/Dropdown';
 import BasicButton from 'components/global/buttons/BasicButton';
 
-import styles from 'styles/channels/ChannelDropdown.module.scss';
+import styles from 'styles/channels/ChannelSortDropdown.module.scss';
 
-type ChannelDropdownProps = {
+type ChannelSortDropdownProps = {
   order: string;
   setOrder: Dispatch<SetStateAction<string>>;
 };
 
-export default function ChannelDropdown({
+export default function ChannelSortDropdown({
   order,
   setOrder,
-}: ChannelDropdownProps) {
+}: ChannelSortDropdownProps) {
   const { t } = useTranslation('channels');
   const dropdownRef = useRef<HTMLUListElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -66,7 +66,7 @@ export default function ChannelDropdown({
     },
   ];
 
-  const kebabClickHandler = () => {
+  const handleSortClick = () => {
     setShowDropdown(!showDropdown);
   };
 
@@ -75,7 +75,7 @@ export default function ChannelDropdown({
       <button
         ref={buttonRef}
         className={styles.dropdownButton}
-        onClick={kebabClickHandler}
+        onClick={handleSortClick}
       >
         {order}
         <IoMdArrowDropdown />
