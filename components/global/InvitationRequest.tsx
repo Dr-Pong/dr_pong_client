@@ -11,7 +11,7 @@ import { Participant } from 'types/chatTypes';
 
 import { GrAddCircle } from 'react-icons/gr';
 
-import styles from 'styles/global/Invitation.module.scss';
+import styles from 'styles/global/InvitationRequest.module.scss';
 
 const buttonDesign: ButtonDesign = {
   style: 'round',

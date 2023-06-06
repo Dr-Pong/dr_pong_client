@@ -22,7 +22,7 @@ import ModalButton from 'components/global/buttons/ModalButton';
 import SubmitButton from 'components/global/buttons/SubmitButton';
 import ButtonRow from 'components/global/buttons/buttonContainers/ButtonRow';
 import ProfileButtons from 'components/global/buttons/buttonContainers/ProfileButtons';
-import Invitation from 'components/global/Invitation';
+import Invitation from 'components/global/InvitationRequest';
 import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
 import ModalTitle from 'components/modals/modalParts/ModalTitle';
 import Profile from 'components/myPage/profile/Profile';
