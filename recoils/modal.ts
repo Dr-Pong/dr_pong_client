@@ -12,3 +12,8 @@ export const openModalState = atom<boolean>({
   key: `openModalState/${v1()}`,
   default: false,
 });
+
+export const BackdropCloseState = atom<boolean>({
+  key: `BackdropCloseState/${v1()}`,
+  default: true,
+});

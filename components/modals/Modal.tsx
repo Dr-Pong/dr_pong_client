@@ -3,7 +3,7 @@ import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-import { modalPartsState, openModalState } from 'recoils/modal';
+import { modalPartsState, openModalState, BackdropCloseState } from 'recoils/modal';
 
 import styles from 'styles/modals/Modal.module.scss';
 
@@ -11,13 +11,16 @@ export default function Modal() {
   const [openModal, setOpenModal] = useRecoilState(openModalState);
   const { head, body, tail } = useRecoilValue(modalPartsState);
   const resetModalParts = useResetRecoilState(modalPartsState);
+  const backdropClose = useRecoilValue(BackdropCloseState);
 
   useEffect(() => {
     if (!openModal) resetModalParts();
   }, [openModal]);
+
   const handleBackdropClick = () => {
     // 조건 추가해야함
-    setOpenModal(false);
+    if (backdropClose)
+      setOpenModal(false);
   };
 
   if (openModal) {
