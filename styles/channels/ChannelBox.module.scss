@@ -1,20 +1,28 @@
-.channelBox {
+@import 'styles/common';
+
+.channelBoxContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 3rem;
-  padding: 0.5rem;
-  border: 0.1rem solid #ccc;
+  height: 2.5rem;
+  background: transparentize(white, 0.7);
+  border-radius: $basic-radius;
   cursor: pointer;
   transition: background-color 0.3s;
+  padding-inline: 1rem;
+  div {
+    display: flex;
+    align-items: center;
+  }
 }
 
-.channelBox:hover {
+.channelBoxContainer:hover {
   transform: scale(0.98);
   opacity: 0.9;
 }
 
-.lockImg {
+.lockEmoji {
+  margin-bottom: 0.3rem;
   margin-left: 0.5rem;
 }

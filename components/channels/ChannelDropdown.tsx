@@ -1,20 +1,32 @@
-import React, { useEffect, useRef, Dispatch, SetStateAction, useState } from 'react';
+import useTranslation from 'next-translate/useTranslation';
+
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { IoMdArrowDropdown } from 'react-icons/io';
+
 import Dropdown from 'components/global/Dropdown';
 import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/channels/ChannelDropdown.module.scss';
-import buttonStyles from 'styles/global/Button.module.scss';
+
+type ChannelDropdownProps = {
+  order: string;
+  setOrder: Dispatch<SetStateAction<string>>;
+};
 
 export default function ChannelDropdown({
   order,
-  setOrder
-}: {
-  order: string,
-  setOrder: Dispatch<SetStateAction<string>>
-}) {
+  setOrder,
+}: ChannelDropdownProps) {
+  const { t } = useTranslation('channels');
   const dropdownRef = useRef<HTMLUListElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const handleClickOutside = (event: MouseEvent) => {
     if (
@@ -22,12 +34,12 @@ export default function ChannelDropdown({
       !dropdownRef.current?.contains(event.target as Node) &&
       !buttonRef.current?.contains(event.target as Node)
     ) {
-      setDropdownVisible(false);
+      setShowDropdown(false);
     }
   };
 
   useEffect(() => {
-    if (dropdownVisible) {
+    if (showDropdown) {
       document.addEventListener('click', handleClickOutside);
     } else {
       document.removeEventListener('click', handleClickOutside);
@@ -35,43 +47,46 @@ export default function ChannelDropdown({
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, [dropdownVisible]);
+  }, [showDropdown]);
 
-  const recent = () => {
-    setOrder('recent');
-    setDropdownVisible(false);
-  };
-
-  const popular = () => {
-    setOrder('popular');
-    setDropdownVisible(false);
-  };
-
-  const buttons: { content: string; handler: () => void }[] = [
-    { content: 'recent', handler: recent },
-    { content: 'popular', handler: popular },
+  const buttons: { content: string; handleButtonClick: () => void }[] = [
+    {
+      content: t('recent'),
+      handleButtonClick: () => {
+        setOrder('recent');
+        setShowDropdown(false);
+      },
+    },
+    {
+      content: t('popular'),
+      handleButtonClick: () => {
+        setOrder('popular');
+        setShowDropdown(false);
+      },
+    },
   ];
 
   const kebabClickHandler = () => {
-    setDropdownVisible(!dropdownVisible);
+    setShowDropdown(!showDropdown);
   };
 
   return (
     <div className={styles.dropdownContainer}>
       <button
         ref={buttonRef}
-        className={`${buttonStyles.button} ${buttonStyles['basic']} ${buttonStyles['opaque']}`}
+        className={styles.dropdownButton}
         onClick={kebabClickHandler}
       >
         {order}
+        <IoMdArrowDropdown />
       </button>
-      <Dropdown style={'channel'} visibility={dropdownVisible}>
+      <Dropdown style={'channel'} visibility={showDropdown}>
         <ul ref={dropdownRef}>
-          {buttons.map(({ content, handler }) => (
+          {buttons.map(({ content, handleButtonClick: handler }) => (
             <li key={content}>
               <BasicButton
-                style={'thin'}
-                color={'black'}
+                style={'dropdown'}
+                color={'white'}
                 handleButtonClick={handler}
               >
                 {content}

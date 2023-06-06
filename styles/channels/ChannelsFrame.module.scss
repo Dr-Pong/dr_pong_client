@@ -1,0 +1,27 @@
+@import 'styles/common';
+
+.settingChannelListWrap {
+  padding: 1rem;
+  background: $dark-purple;
+  border-radius: $basic-radius;
+  input {
+    width: 8rem;
+  }
+}
+
+.channelList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.channelFilterContainer {
+  display: flex;
+  justify-content: space-between;
+  .rightWrap {
+    display: flex;
+    gap: 0.2rem;
+    justify-content: flex-end;
+  }
+}
