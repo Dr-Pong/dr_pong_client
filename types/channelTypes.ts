@@ -1,4 +1,4 @@
-export interface EachChannel {
+export interface Channel {
   id: number;
   title: string;
   access?: 'public' | 'protected';
@@ -6,15 +6,15 @@ export interface EachChannel {
   maxCount: number;
 }
 
-export interface AllChannels {
-  channel: EachChannel[];
+export interface ChannelList {
+  channels: Channel[];
   currentPage: number;
   totalPage: number;
 }
 
-export interface NewChannel {
-  type: string;
+export interface ChannelInfo {
+  access: string;
   title: string;
-  password: null | string;
+  password: string | null;
   capacity: number;
 }

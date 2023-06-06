@@ -15,9 +15,12 @@ const useRecordsQuery = (nickname: string) => {
       )
     ).data;
   };
+
   const matchDetailGet = (gameId: number) => {
     return get([`matchDetail`, gameId], `/users/${nickname}/records/${gameId}`);
   };
+
   return { matchHistoryFetch, matchDetailGet };
 };
+
 export default useRecordsQuery;
