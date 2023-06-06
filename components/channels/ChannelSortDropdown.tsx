@@ -82,12 +82,12 @@ export default function ChannelSortDropdown({
       </button>
       <Dropdown style={'channel'} visibility={showDropdown}>
         <ul ref={dropdownRef}>
-          {buttons.map(({ content, handleButtonClick: handler }) => (
+          {buttons.map(({ content, handleButtonClick }) => (
             <li key={content}>
               <BasicButton
                 style={'dropdown'}
                 color={'white'}
-                handleButtonClick={handler}
+                handleButtonClick={handleButtonClick}
               >
                 {content}
               </BasicButton>
