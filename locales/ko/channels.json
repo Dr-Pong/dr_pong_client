@@ -12,5 +12,6 @@
   "1~16 characters": "16글자 이내",
   "4~8 alphanumeric characters": "4~8글자 숫자/영문",
   "create": "방 만들기",
-  "save": "저장"
+  "save": "저장",
+  "submit": "제출"
 }
