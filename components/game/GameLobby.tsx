@@ -4,7 +4,9 @@ import React, { useState } from 'react';
 
 import PageHeader from 'components/global/PageHeader';
 
-import styles from 'styles/game/PrepareRoom.module.scss';
+import useModalProvider from 'hooks/useModalProvider';
+
+import styles from 'styles/game/GameLobby.module.scss';
 
 interface Options {
   [key: string]: boolean;
@@ -12,6 +14,7 @@ interface Options {
 
 export default function GameLobby() {
   const { t } = useTranslation('game');
+  const { useInvitationRequestModal, useWaitingGameMatchModal } = useModalProvider();
   const [options, setOptions] = useState<Options>({
     bullet: false,
     deathMatch: false,
@@ -20,14 +23,11 @@ export default function GameLobby() {
   const optionList = ['bullet', 'deathMatch', 'loserPaysForBeer'];
 
   const handleQueueClick = () => {
-    //요청 보내고
-    //응답 올때까지
-    //Waiting 띄워주기
-    console.log(options);
+    useWaitingGameMatchModal('queue');
   };
 
   const handleInviteClick = () => {
-    console.log(options);
+    useInvitationRequestModal('game');
   };
 
   return (

@@ -1,10 +1,18 @@
 import useTranslation from 'next-translate/useTranslation';
-import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+
+import { userState } from 'recoils/user';
+import {
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState
+} from 'recoil';
+import {
+  modalPartsState,
+  openModalState,
+  BackdropCloseState
+} from 'recoils/modal';
 
 import React, { MutableRefObject } from 'react';
-
-import { modalPartsState, openModalState } from 'recoils/modal';
-import { userState } from 'recoils/user';
 
 import { ModalParts } from 'types/modalTypes';
 import { Achievement } from 'types/userTypes';
@@ -16,25 +24,28 @@ import SearchUser from 'components/friends/SearchUser';
 import CreateChannel from 'components/channels/CreateChannel';
 import ChannelPasswordInput from 'components/channels/ChannelPasswordInput';
 import ChannelTypeSetting from 'components/channels/ChannelTypeSetting';
+import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
+import ModalTitle from 'components/modals/modalParts/ModalTitle';
+import Profile from 'components/myPage/profile/Profile';
+import Settings from 'components/settings/Settings';
 import UserImages from 'components/global/UserImages';
 import CloseModalButton from 'components/global/buttons/CloseModalButton';
 import ModalButton from 'components/global/buttons/ModalButton';
 import SubmitButton from 'components/global/buttons/SubmitButton';
 import ButtonRow from 'components/global/buttons/buttonContainers/ButtonRow';
-import ProfileButtons from 'components/global/buttons/buttonContainers/ProfileButtons';
-import Invitation from 'components/global/InvitationRequest';
-import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
-import ModalTitle from 'components/modals/modalParts/ModalTitle';
-import Profile from 'components/myPage/profile/Profile';
-import Settings from 'components/settings/Settings';
+import InvitationRequest from 'components/global/InvitationRequest';
+import ProfileButtons
+  from 'components/global/buttons/buttonContainers/ProfileButtons';
 
 import selectableItemStyles from 'styles/myPage/SelectableItem.module.scss';
+import waitingGameMatchStyles from 'styles/game/WaitingGameMatch.module.scss';
 
 const useModalProvider = () => {
   const { t } = useTranslation('common');
   const setModalParts = useSetRecoilState(modalPartsState);
   const resetModalParts = useResetRecoilState(modalPartsState);
   const setOpenModal = useSetRecoilState(openModalState);
+  const setBackdropClose = useSetRecoilState(BackdropCloseState);
   const user = useRecoilValue(userState);
 
   const useModal = (parts: ModalParts) => {
@@ -189,11 +200,39 @@ const useModalProvider = () => {
     });
   };
 
-  const useInvitationModal = (invitationType: string, roomId: string, participants: Participant[]) => {
+  const useInvitationRequestModal = (
+    invitationType: string,
+    roomId?: string,
+    participants?: Participant[]
+  ) => {
     useModal({
       head: <ModalTitle title={'Invite Friend'} closeButton />,
-      body: <Invitation invitationType={invitationType} roomId={roomId} participants={participants} />,
+      body:
+        <InvitationRequest
+          invitationType={invitationType}
+          roomId={roomId}
+          participants={participants}
+        />,
       tail: null,
+    });
+  };
+
+  const useWaitingGameMatchModal = (gameType: string) => {
+    const title = gameType === 'queue' ? 'Waiting For Match' : 'Waiting For Friend';
+    setBackdropClose(false);
+
+    useModal({
+      head: <ModalTitle title={title} />,
+      body: (
+        <div className={waitingGameMatchStyles.loadingContainer}>
+          <div className={waitingGameMatchStyles.loadingSpinner} />
+        </div>
+      ),
+      tail: (
+        <CloseModalButton style='basic' color='pink'>
+          {t('cancel')}
+        </CloseModalButton>
+      ),
     });
   };
 
@@ -209,7 +248,8 @@ const useModalProvider = () => {
     useCreateChannelModal,
     useChannelPasswordModal,
     useChannelTypeSettingModal,
-    useInvitationModal,
+    useInvitationRequestModal,
+    useWaitingGameMatchModal,
   };
 };
 
