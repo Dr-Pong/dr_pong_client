@@ -12,7 +12,7 @@ import {
   BackdropCloseState
 } from 'recoils/modal';
 
-import React, { MutableRefObject } from 'react';
+import React, { MutableRefObject, useEffect } from 'react';
 
 
 import { ModalParts } from 'types/modalTypes';
@@ -46,6 +46,10 @@ const useModalProvider = () => {
   const setOpenModal = useSetRecoilState(openModalState);
   const setBackdropClose = useSetRecoilState(BackdropCloseState);
   const user = useRecoilValue(userState);
+
+  useEffect(() => {
+    setBackdropClose(true);
+  }, []);
 
   const useModal = (parts: ModalParts) => {
     setModalParts(parts);
