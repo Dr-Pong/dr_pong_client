@@ -23,7 +23,7 @@ export default function Participants() {
   const router = useRouter();
   const { roomType, roomId } = router.query;
   const setSideBar = useSetRecoilState(sideBarState);
-  const { useProfileModal, useInvitationModal } = useModalProvider();
+  const { useProfileModal, useInvitationRequestModal } = useModalProvider();
   const { mutationDelete } = useCustomQuery();
   const { chatUsersGet } = useChatQuery(
     roomType as ChattingType,
@@ -49,7 +49,7 @@ export default function Participants() {
   };
 
   const handleFriendInvite = () => {
-    useInvitationModal('channel', roomId as string, data.participants);
+    useInvitationRequestModal('channel', roomId as string, data.participants);
   };
 
   const handleChannelLeave = () => {
