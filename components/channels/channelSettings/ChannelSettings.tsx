@@ -17,9 +17,9 @@ import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/channels/ChannelSettings.module.scss';
 
-export type SetChannelSettings = {
-  channel: ChannelInfo;
-  setChannel: React.Dispatch<SetStateAction<ChannelInfo>>;
+export type SettingFieldProps = {
+  channelInfo: ChannelInfo;
+  setChannelInfo: React.Dispatch<SetStateAction<ChannelInfo>>;
 };
 
 type FieldType = {
@@ -38,25 +38,25 @@ export default function ChannelSettings({
 }: ChannelSettingsProps) {
   const { t } = useTranslation('channels');
   const setOpenModal = useSetRecoilState(openModalState);
-  const [channelSettings, setChannelSettings] = useState<ChannelInfo>(
+  const [channelInfo, setChannelInfo] = useState<ChannelInfo>(
     defaultChannelSettings
   );
-  const { access, password } = channelSettings;
+  const { access, password } = channelInfo;
   const { mutationPost, mutationPatch } = useCustomQuery();
   const channelCreateMutation = mutationPost('/channels');
   const channelEditMutation = mutationPatch(`/channels/${roomId}`);
 
-  const handleCreateChannel = (event: FormEvent<HTMLFormElement>) => {
+  const handleChannelCreate = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (channelSettings.title) {
-      channelCreateMutation.mutate({ newChannel: channelSettings });
+    if (channelInfo.title) {
+      channelCreateMutation.mutate({ newChannel: channelInfo });
       setOpenModal(false);
     }
   };
 
-  const handleEditChannel = () => {
+  const handleChannelEdit = () => {
     if (access === 'protected' && (password === null || password === ''))
-      return null;
+      return;
     channelEditMutation.mutate(
       { access, password },
       {
@@ -71,21 +71,21 @@ export default function ChannelSettings({
     type: {
       label: t('Type'),
       input: (
-        <TypesRadio channel={channelSettings} setChannel={setChannelSettings} />
+        <TypesRadio channelInfo={channelInfo} setChannelInfo={setChannelInfo} />
       ),
     },
     title: {
       label: t('Title'),
       input: (
-        <TitleInput channel={channelSettings} setChannel={setChannelSettings} />
+        <TitleInput channelInfo={channelInfo} setChannelInfo={setChannelInfo} />
       ),
     },
     password: {
       label: t('Password'),
       input: (
         <PasswordInput
-          channel={channelSettings}
-          setChannel={setChannelSettings}
+          channelInfo={channelInfo}
+          setChannelInfo={setChannelInfo}
         />
       ),
     },
@@ -93,8 +93,8 @@ export default function ChannelSettings({
       label: t('Capacity'),
       input: (
         <CapacityRadio
-          channel={channelSettings}
-          setChannel={setChannelSettings}
+          channelInfo={channelInfo}
+          setChannelInfo={setChannelInfo}
         />
       ),
     },
@@ -104,12 +104,12 @@ export default function ChannelSettings({
     create: {
       fields: ['type', 'title', 'password', 'capacity'],
       buttonValue: 'create',
-      onSubmit: handleCreateChannel,
+      onSubmit: handleChannelCreate,
     },
     edit: {
       fields: ['type', 'password'],
       buttonValue: 'save',
-      onSubmit: handleEditChannel,
+      onSubmit: handleChannelEdit,
     },
   };
 
@@ -117,7 +117,7 @@ export default function ChannelSettings({
     <div className={styles.modalContainer}>
       <div className={styles.settingFields}>
         {types[type].fields.map((field, i) => {
-          const { label, input }: FieldType = settingFields[field];
+          const { label, input } = settingFields[field];
           return (
             <div key={i} className={styles.settingField}>
               <div className={styles.fieldName}>{label}</div>

@@ -2,28 +2,28 @@ import useTranslation from 'next-translate/useTranslation';
 
 import { ChangeEvent, useCallback } from 'react';
 
-import { SetChannelSettings } from 'components/channels/channelSettings/ChannelSettings';
+import { SettingFieldProps } from 'components/channels/channelSettings/ChannelSettings';
 
 import styles from 'styles/channels/ChannelSettings.module.scss';
 
 export default function TitleInput({
-  channel: newChannel,
-  setChannel: setNewChannel,
-}: SetChannelSettings) {
+  channelInfo,
+  setChannelInfo,
+}: SettingFieldProps) {
   const { t } = useTranslation('channels');
-  const { title } = newChannel;
+  const { title } = channelInfo;
 
   const handleTitleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const value = event.target.value;
       if (value.length <= 16) {
-        setNewChannel((prevChannel) => ({
-          ...prevChannel,
+        setChannelInfo((prev) => ({
+          ...prev,
           title: value,
         }));
       }
     },
-    [newChannel]
+    [channelInfo]
   );
 
   return (
