@@ -1,5 +1,3 @@
-import useTranslation from 'next-translate/useTranslation';
-
 import { useState } from 'react';
 
 import useFriendsQuery from 'hooks/useFriendsQuery';
@@ -20,16 +18,17 @@ const buttonDesign: ButtonDesign = {
   color: 'opaque',
 };
 
-export default function Invitation({
+type InvitationProps = {
+  invitationType: string;
+  roomId: string;
+  participants?: Participant[];
+}
+
+export default function InvitationRequest({
   invitationType,
   roomId,
   participants
-}: {
-  invitationType: string,
-  roomId: string,
-  participants: Participant[]
-}) {
-  const { t } = useTranslation('friends');
+}: InvitationProps) {
   const { allListGet } = useFriendsQuery();
   const { channelInvitation, gameInvitation }
     = useRelationButtons(buttonDesign, roomId);
@@ -41,10 +40,10 @@ export default function Invitation({
   if (isError) return <div>Error</div>;
 
   const filteredFriends: Friend[] = friends.filter((friend) => {
-    const isDuplicate = participants.some(
+    const notDuplicate = !participants?.some(
       (participant) => participant.nickname === friend.nickname
     );
-    return friend.nickname.includes(searchKey) && !isDuplicate;
+    return friend.nickname.includes(searchKey) && notDuplicate;
   });
 
   return (
@@ -53,7 +52,7 @@ export default function Invitation({
         <SearchBar
           searchKey={searchKey}
           setSearchKey={setSearchKey}
-          placeHolder={t('Search by nickname')}
+          placeHolder='Search by nickname'
         />
       </div>
       <div className={styles.friendList}>
@@ -63,7 +62,9 @@ export default function Invitation({
               <div className={styles.friendStatus}>
                 <img className={styles.img} src={friend.imgUrl} />
                 {friend.status && (
-                  <div className={`${styles.statusSignal} ${styles[friend.status]}`}></div>
+                  <div className={
+                    `${styles.statusSignal} ${styles[friend.status]}`
+                  } />
                 )}
               </div>
               <div className={styles.nickname}>
