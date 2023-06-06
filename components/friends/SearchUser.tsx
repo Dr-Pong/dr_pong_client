@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import instance from 'utils/axios';
 
 import FriendBox from 'components/friends/FriendBox';
-import { DetailDto } from 'components/myPage/profile/ProfileCard';
+import { DetailDto } from 'types/userTypes';
 
 import styles from 'styles/global/SearchBar.module.scss';
 
@@ -38,7 +38,6 @@ export default function SearchUser() {
           <div className={styles.noResult}>no user found</div>
         ) : (
           <FriendBox
-            tab={'find'}
             key={searchQuery}
             friend={{
               nickname: nickname,
