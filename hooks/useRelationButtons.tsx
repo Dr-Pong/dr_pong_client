@@ -159,6 +159,32 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
     return <ToastResultButton request={request} button={buttonProps} />;
   };
 
+  const channelInvitation = (label: React.ReactNode, nickname: string) => {
+    const request: RequestProps = {
+      api: `/channels/${target}/invitation/${nickname}`,
+      method: 'post',
+      options: {},
+    };
+    const buttonProps = {
+      ...buttonDesign,
+      children: label,
+    };
+    return <ToastResultButton request={request} button={buttonProps} />;
+  };
+
+  const gameInvitation = (label: React.ReactNode, nickname: string) => {
+    const request: RequestProps = {
+      api: `/games/${target}/invitation/${nickname}`,
+      method: 'post',
+      options: {},
+    };
+    const buttonProps = {
+      ...buttonDesign,
+      children: label,
+    };
+    return <ToastResultButton request={request} button={buttonProps} />;
+  };
+
   return {
     openProfile,
     inviteGame,
@@ -172,6 +198,8 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
     dropdown,
     spectate,
     channelRoleEvent,
+    channelInvitation,
+    gameInvitation,
   };
 };
 

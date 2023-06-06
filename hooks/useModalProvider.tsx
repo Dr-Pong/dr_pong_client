@@ -8,6 +8,7 @@ import { userState } from 'recoils/user';
 
 import { ModalParts } from 'types/modalTypes';
 import { Achievement } from 'types/userTypes';
+import { Participant } from 'types/chatTypes';
 
 import NumberInputBox from 'components/authentication/NumberInputBox';
 import RegisterCode from 'components/authentication/RegisterCode';
@@ -21,6 +22,7 @@ import ModalButton from 'components/global/buttons/ModalButton';
 import SubmitButton from 'components/global/buttons/SubmitButton';
 import ButtonRow from 'components/global/buttons/buttonContainers/ButtonRow';
 import ProfileButtons from 'components/global/buttons/buttonContainers/ProfileButtons';
+import Invitation from 'components/global/InvitationRequest';
 import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
 import ModalTitle from 'components/modals/modalParts/ModalTitle';
 import Profile from 'components/myPage/profile/Profile';
@@ -187,6 +189,13 @@ const useModalProvider = () => {
     });
   };
 
+  const useInvitationModal = (invitationType: string, roomId: string, participants: Participant[]) => {
+    useModal({
+      head: <ModalTitle title={'Invite Friend'} closeButton />,
+      body: <Invitation invitationType={invitationType} roomId={roomId} participants={participants} />,
+      tail: null,
+    });
+  };
 
   return {
     closeModal,
@@ -200,6 +209,7 @@ const useModalProvider = () => {
     useCreateChannelModal,
     useChannelPasswordModal,
     useChannelTypeSettingModal,
+    useInvitationModal,
   };
 };
 
