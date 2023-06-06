@@ -32,7 +32,25 @@ const participants: ParticipantsResponse = {
   },
   participants: [
     {
-      nickname: 'hakim',
+      nickname: 'hakim1',
+      imgUrl: 'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
+      roleType: 'admin',
+      isMuted: false
+    },
+    {
+      nickname: 'hakim3',
+      imgUrl: 'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
+      roleType: 'admin',
+      isMuted: false
+    },
+    {
+      nickname: 'hakim5',
+      imgUrl: 'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
+      roleType: 'admin',
+      isMuted: false
+    },
+    {
+      nickname: 'hakim0',
       imgUrl: 'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
       roleType: 'admin',
       isMuted: false
