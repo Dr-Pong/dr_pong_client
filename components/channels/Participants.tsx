@@ -48,7 +48,7 @@ export default function Participants() {
     useProfileModal(nickname);
   };
 
-  const hanleInviteFriend = () => {
+  const handleFriendInvite = () => {
     useInvitationModal('channel', roomId as string, data.participants);
   };
 
@@ -89,7 +89,7 @@ export default function Participants() {
         <BasicButton
           style='transparent'
           color='none'
-          handleButtonClick={hanleInviteFriend}
+          handleButtonClick={handleFriendInvite}
         >
           Invite Friend
           <FiUserPlus />
