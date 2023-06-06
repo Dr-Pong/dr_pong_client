@@ -27,22 +27,24 @@ export default function Records() {
   return (
     <div className={styles.recordsPageContainer}>
       <PageHeader title={t('Match History')} />
-      <div className={styles.searchBar}>
-        <SearchBar
-          searchKey={nickname}
-          setSearchKey={setNickname}
-          placeHolder={t('nickname')}
-          handleOnSubmit={handleNicknameSearch}
-        />
-        <SubmitButton
-          style='basic'
-          color='pink'
-          handleButtonClick={handleNicknameSearch}
-        >
-          {t('search')}
-        </SubmitButton>
+      <div>
+        <div className={styles.searchBar}>
+          <SearchBar
+            searchKey={nickname}
+            setSearchKey={setNickname}
+            placeHolder={t('nickname')}
+            handleOnSubmit={handleNicknameSearch}
+          />
+          <SubmitButton
+            style='basic'
+            color='pink'
+            handleButtonClick={handleNicknameSearch}
+          >
+            {t('search')}
+          </SubmitButton>
+        </div>
+        <RecordList key={nickname} nickname={nickname} />
       </div>
-      <RecordList key={nickname} nickname={nickname} />
     </div>
   );
 }

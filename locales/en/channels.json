@@ -1,3 +1,16 @@
 {
-  "Channels": "Channels"
+  "Channels": "Channels",
+  "channel name": "channel name",
+  "recent": "recent",
+  "popular": "popular",
+  "Type": "Type",
+  "Title": "Title",
+  "Password": "Password",
+  "Capacity": "Capacity",
+  "private": "private",
+  "public": "public",
+  "1~16 characters": "1~16 characters",
+  "4~8 alphanumeric characters": "4~8 alphanumeric characters",
+  "create": "create",
+  "save": "save"
 }

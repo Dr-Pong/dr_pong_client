@@ -1,3 +1,16 @@
 {
-  "Channels": "대화 채널"
+  "Channels": "대화 채널",
+  "channel name": "채널 이름",
+  "recent": "최신순",
+  "popular": "인기순",
+  "Type": "종류",
+  "Title": "제목",
+  "Password": "비밀번호",
+  "Capacity": "인원",
+  "private": "비공개",
+  "public": "공개",
+  "1~16 characters": "16글자 이내",
+  "4~8 alphanumeric characters": "4~8글자 숫자/영문",
+  "create": "방 만들기",
+  "save": "저장"
 }

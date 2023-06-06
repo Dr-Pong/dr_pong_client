@@ -6,23 +6,22 @@ import React, { MutableRefObject } from 'react';
 import { modalPartsState, openModalState } from 'recoils/modal';
 import { userState } from 'recoils/user';
 
+import { Participant } from 'types/chatTypes';
 import { ModalParts } from 'types/modalTypes';
 import { Achievement } from 'types/userTypes';
-import { Participant } from 'types/chatTypes';
 
 import NumberInputBox from 'components/authentication/NumberInputBox';
 import RegisterCode from 'components/authentication/RegisterCode';
+import PasswordSubmit from 'components/channels/PasswordSubmit';
+import ChannelSettings from 'components/channels/channelSettings/ChannelSettings';
 import SearchUser from 'components/friends/SearchUser';
-import CreateChannel from 'components/channels/CreateChannel';
-import ChannelPasswordInput from 'components/channels/ChannelPasswordInput';
-import ChannelTypeSetting from 'components/channels/ChannelTypeSetting';
+import Invitation from 'components/global/InvitationRequest';
 import UserImages from 'components/global/UserImages';
 import CloseModalButton from 'components/global/buttons/CloseModalButton';
 import ModalButton from 'components/global/buttons/ModalButton';
 import SubmitButton from 'components/global/buttons/SubmitButton';
 import ButtonRow from 'components/global/buttons/buttonContainers/ButtonRow';
 import ProfileButtons from 'components/global/buttons/buttonContainers/ProfileButtons';
-import Invitation from 'components/global/InvitationRequest';
 import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
 import ModalTitle from 'components/modals/modalParts/ModalTitle';
 import Profile from 'components/myPage/profile/Profile';
@@ -165,10 +164,10 @@ const useModalProvider = () => {
     });
   };
 
-  const useCreateChannelModal = () => {
+  const useChannelCreateModal = () => {
     useModal({
-      head: <ModalTitle title={'Create New Channel'} closeButton />,
-      body: <CreateChannel />,
+      head: <ModalTitle title={t('Create new channel')} closeButton />,
+      body: <ChannelSettings type='create' />,
       tail: null,
     });
   };
@@ -176,23 +175,33 @@ const useModalProvider = () => {
   const useChannelPasswordModal = (roomId: string) => {
     useModal({
       head: <ModalTitle title={'Insert Channel Password'} closeButton />,
-      body: <ChannelPasswordInput roomId={roomId} />,
+      body: <PasswordSubmit roomId={roomId} />,
       tail: null,
     });
   };
 
   const useChannelTypeSettingModal = (roomId: string) => {
     useModal({
-      head: <ModalTitle title={'Channel Access Setting'} closeButton />,
-      body: <ChannelTypeSetting roomId={roomId} />,
+      head: <ModalTitle title={t('Edit channel')} closeButton />,
+      body: <ChannelSettings roomId={roomId} type='edit' />,
       tail: null,
     });
   };
 
-  const useInvitationModal = (invitationType: string, roomId: string, participants: Participant[]) => {
+  const useInvitationModal = (
+    invitationType: string,
+    roomId: string,
+    participants: Participant[]
+  ) => {
     useModal({
       head: <ModalTitle title={'Invite Friend'} closeButton />,
-      body: <Invitation invitationType={invitationType} roomId={roomId} participants={participants} />,
+      body: (
+        <Invitation
+          invitationType={invitationType}
+          roomId={roomId}
+          participants={participants}
+        />
+      ),
       tail: null,
     });
   };
@@ -206,7 +215,7 @@ const useModalProvider = () => {
     useImageChangeModal,
     useAchievementDetailModal,
     useFriendFinderModal,
-    useCreateChannelModal,
+    useChannelCreateModal,
     useChannelPasswordModal,
     useChannelTypeSettingModal,
     useInvitationModal,

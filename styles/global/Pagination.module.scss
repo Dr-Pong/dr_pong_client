@@ -1,23 +1,27 @@
+@import 'styles/common';
+
 .nav {
   display: flex;
   gap: 0.5rem;
   align-items: center;
   justify-content: center;
   margin: 1rem;
+  button {
+    background: none;
+    border: none;
+  }
 }
 
 .pagination {
   display: inline-block;
   padding: 0.3rem;
-  color: #333;
-  background-color: #fff;
-  border: 0.1rem solid #ccc;
+  color: $light-grey;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .pagination:hover {
-  background-color: #f2f2f2;
+  background: transparentize($light-grey, 0.5);
 }
 
 .pagination[disabled] {
@@ -27,7 +31,7 @@
 
 .pagination[aria-current] {
   font-weight: bold;
-  background: deeppink;
+  background: $just-pink;
   transform: revert;
   cursor: revert;
 }

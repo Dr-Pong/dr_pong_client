@@ -31,6 +31,8 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  height: 2rem;
+  color: $just-purple;
   font-weight: 600;
 }
 
@@ -41,6 +43,7 @@
 }
 
 .closeButton {
-  font-size: 3rem;
+  color: black;
+  font-size: 1.8rem;
   cursor: pointer;
 }

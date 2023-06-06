@@ -1,16 +1,27 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useCallback } from 'react';
 
-import styles from 'styles/channels/CreateChannel.module.scss';
+import { SetChannelSettings } from 'components/channels/channelSettings/ChannelSettings';
 
-export default function CreateChannelCapacity({
-  capacity,
-  handleCapacityChange
-}: {
-  capacity: number,
-  handleCapacityChange: (event: ChangeEvent<HTMLInputElement>) => void
-}) {
+import styles from 'styles/channels/ChannelSettings.module.scss';
+
+export default function CapacityRadio({
+  channel: newChannel,
+  setChannel: setNewChannel,
+}: SetChannelSettings) {
+  const { capacity } = newChannel;
+
+  const handleCapacityChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setNewChannel((prev) => ({
+        ...prev,
+        capacity: Number(event.target.value),
+      }));
+    },
+    [newChannel]
+  );
+
   return (
-    <>
+    <div className={styles.radioWrap}>
       <label className={styles.radio} htmlFor='10'>
         <input
           type='radio'
@@ -41,6 +52,6 @@ export default function CreateChannelCapacity({
         />
         50
       </label>
-    </>
+    </div>
   );
 }

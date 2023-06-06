@@ -1,17 +1,18 @@
-import { useState, ChangeEvent } from 'react';
+import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
-import { useSetRecoilState } from 'recoil';
+import { ChangeEvent, useState } from 'react';
+
 import { openModalState } from 'recoils/modal';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
 import BasicButton from 'components/global/buttons/BasicButton';
 
-import styles from 'styles/channels/ChannelPasswordInput.module.scss';
+import styles from 'styles/channels/PasswordSubmit.module.scss';
 
-export default function ChannelPasswordInput({ roomId }: { roomId: string }) {
+export default function PasswordSubmit({ roomId }: { roomId: string }) {
   const router = useRouter();
   const setOpenModal = useSetRecoilState(openModalState);
   const { mutationPost } = useCustomQuery();
@@ -52,7 +53,11 @@ export default function ChannelPasswordInput({ roomId }: { roomId: string }) {
         />
       </div>
       <div className={styles.button}>
-        <BasicButton style='basic' color='black' handleButtonClick={handlePasswordSubmit}>
+        <BasicButton
+          style='basic'
+          color='black'
+          handleButtonClick={handlePasswordSubmit}
+        >
           Submit
         </BasicButton>
       </div>
