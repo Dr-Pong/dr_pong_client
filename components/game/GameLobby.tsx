@@ -1,6 +1,6 @@
 import useTranslation from 'next-translate/useTranslation';
 
-import React, { useState } from 'react';
+import React, { useState, Dispatch, SetStateAction, ChangeEvent } from 'react';
 
 import PageHeader from 'components/global/PageHeader';
 
@@ -72,11 +72,11 @@ function Option({
 }: {
   option: string;
   options: Options;
-  setOptions: React.Dispatch<React.SetStateAction<Options>>;
+  setOptions: Dispatch<SetStateAction<Options>>;
 }) {
   const { t } = useTranslation('game');
 
-  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setOptions((prev) => {
       return { ...prev, [name]: value === 'true' };
