@@ -1,57 +1,42 @@
 import { ChangeEvent, useCallback } from 'react';
 
-import { SetChannelSettings } from 'components/channels/channelSettings/ChannelSettings';
+import { SettingFieldProps } from 'components/channels/channelSettings/ChannelSettings';
 
 import styles from 'styles/channels/ChannelSettings.module.scss';
 
 export default function CapacityRadio({
-  channel: newChannel,
-  setChannel: setNewChannel,
-}: SetChannelSettings) {
-  const { capacity } = newChannel;
+  channelInfo,
+  setChannelInfo,
+}: SettingFieldProps) {
+  const { capacity } = channelInfo;
+  const capacities = [10, 30, 50];
 
   const handleCapacityChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      setNewChannel((prev) => ({
+      setChannelInfo((prev) => ({
         ...prev,
         capacity: Number(event.target.value),
       }));
     },
-    [newChannel]
+    [channelInfo]
   );
 
   return (
     <div className={styles.radioWrap}>
-      <label className={styles.radio} htmlFor='10'>
-        <input
-          type='radio'
-          id='10'
-          value='10'
-          checked={capacity === 10}
-          onChange={handleCapacityChange}
-        />
-        10
-      </label>
-      <label className={styles.radio} htmlFor='30'>
-        <input
-          type='radio'
-          id='30'
-          value='30'
-          checked={capacity === 30}
-          onChange={handleCapacityChange}
-        />
-        30
-      </label>
-      <label className={styles.radio} htmlFor='50'>
-        <input
-          type='radio'
-          id='50'
-          value='50'
-          checked={capacity === 50}
-          onChange={handleCapacityChange}
-        />
-        50
-      </label>
+      {capacities.map((number, i) => {
+        return (
+          <label key={i} className={styles.radio} htmlFor={`${number}`}>
+            <input
+              type='radio'
+              id={`${number}`}
+              value={`${number}`}
+              checked={capacity === number}
+              onChange={handleCapacityChange}
+            />
+            {number}
+          </label>
+        );
+      })}
     </div>
   );
 }
