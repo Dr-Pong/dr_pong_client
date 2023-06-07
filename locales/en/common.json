@@ -26,5 +26,7 @@
   "channelInv2": "channel.",
   "Create new channel": "Create new channel",
   "Edit channel": "Edit channel",
-  "Password": "Password"
+  "Password": "Password",
+  "Refresh": "Refresh",
+  "Fetch error": "An error occurred while loading data."
 }
