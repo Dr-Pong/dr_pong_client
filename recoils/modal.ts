@@ -5,10 +5,15 @@ import { ModalParts } from 'types/modalTypes';
 
 export const modalPartsState = atom<ModalParts>({
   key: `modalPartsState/${v1()}`,
-  default: { head: null, body: null, tail: null, enableBackdropClose: false },
+  default: { head: null, body: null, tail: null },
 });
 
 export const openModalState = atom<boolean>({
   key: `openModalState/${v1()}`,
+  default: false,
+});
+
+export const matchWaitingModalState = atom<boolean>({
+  key: `matchWaitingModalState/${v1()}`,
   default: false,
 });
