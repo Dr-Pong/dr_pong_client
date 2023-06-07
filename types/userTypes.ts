@@ -202,6 +202,7 @@ export class EmojisClass implements SelectablesClass {
   deselectItem(item: Selectable): EmojisClass {
     const index = this.emojis.findIndex((emoji) => emoji?.id === item.id);
     if (index !== -1) {
+      item.status = 'achieved';
       this.emojis[index] = item as Emoji;
     }
     return this;
