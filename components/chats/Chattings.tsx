@@ -13,6 +13,8 @@ import {
 
 import useChatQuery from 'hooks/useChatQuery';
 
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import ErrorRefresher from 'components/global/ErrorRefresher';
 import ChatBox from 'components/chats/ChatBox';
 import ChatInputBox from 'components/chats/ChatInputBox';
 
@@ -110,8 +112,8 @@ export default function Chattings({
       fetchNextPage();
   }, [hasNextPage, fetchNextPage, isBottomRefVisible]);
 
-  if (isLoading) return null;
-  if (isError) return null;
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <ErrorRefresher />;
 
   return (
     <div className={styles.chattings}>

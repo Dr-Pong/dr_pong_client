@@ -8,6 +8,8 @@ import ChannelBox from 'components/channels/ChannelBox';
 import ChannelFilter from 'components/channels/ChannelFilter';
 import MyChannel from 'components/channels/MyChannel';
 import Pagination from 'components/global/Pagination';
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import ErrorRefresher from 'components/global/ErrorRefresher';
 
 import styles from 'styles/channels/ChannelsFrame.module.scss';
 
@@ -37,8 +39,8 @@ export default function ChannelsFrame() {
     );
   }, [keyword]);
 
-  if (channelListGet.isLoading || channelListGet.isError) return null;
-  if (myChannelGet.isLoading || myChannelGet.isError) return null;
+  if (channelListGet.isLoading || myChannelGet.isLoading) return <LoadingSpinner />;
+  if (channelListGet.isError || myChannelGet.isError) return <ErrorRefresher />;
 
   return (
     <div className={styles.channelsFrameContainer}>

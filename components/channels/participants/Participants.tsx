@@ -16,6 +16,8 @@ import useModalProvider from 'hooks/useModalProvider';
 
 import UserBox from 'components/channels/participants/UserBox';
 import BasicButton from 'components/global/buttons/BasicButton';
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import ErrorRefresher from 'components/global/ErrorRefresher';
 
 import styles from 'styles/channels/Participants.module.scss';
 
@@ -36,13 +38,13 @@ export default function Participants() {
         setSideBar(null);
         router.push('/channels');
       },
-      onError: () => {},
+      onError: () => { },
     }
   );
 
   const { data, isLoading, isError } = chatUsersGet();
-  if (isLoading) return null;
-  if (isError) return null;
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <ErrorRefresher />;
 
   const { me, participants } = data;
 

@@ -10,6 +10,9 @@ import { ButtonDesign } from 'types/buttonTypes';
 import useCustomQuery from 'hooks/useCustomQuery';
 import useRelationButtons from 'hooks/useRelationButtons';
 
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import ErrorRefresher from 'components/global/ErrorRefresher';
+
 import styles from 'styles/global/Button.module.scss';
 
 type ProfileButtonsProps = {
@@ -60,7 +63,8 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
     },
   };
 
-  if (isLoading || isError) return null;
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <ErrorRefresher />;
   if (!profileButtonList.hasOwnProperty(data.status)) return null;
 
   return (

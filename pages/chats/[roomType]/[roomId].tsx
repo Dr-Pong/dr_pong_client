@@ -16,6 +16,8 @@ import Chattings from 'components/chats/Chattings';
 import PageHeader from 'components/global/PageHeader';
 import AppLayout from 'components/layouts/AppLayout';
 import LoginFilter from 'components/layouts/LoginFilter';
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import ErrorRefresher from 'components/global/ErrorRefresher';
 
 import styles from 'styles/chats/Chats.module.scss';
 
@@ -37,8 +39,8 @@ export default function Chats() {
   }, []);
 
   const { data, isLoading, isError } = chatUsersGet(setUserImageMap);
-  if (isLoading) return null;
-  if (isError) return null;
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <ErrorRefresher />;
 
   let buttons = [];
   const isOwner = data.me?.roleType === 'owner';

@@ -3,6 +3,9 @@ import { TopRanker } from 'types/rankTypes';
 import useCustomQuery from 'hooks/useCustomQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import ErrorRefresher from 'components/global/ErrorRefresher';
+
 import styles from 'styles/leaderboard/TopLeaders.module.scss';
 
 type TopLeadersProps = {
@@ -36,7 +39,8 @@ export default function TopLeaders({ topLeaderCount }: TopLeadersProps) {
     useProfileModal(nickname);
   };
 
-  if (isLoading) return null;
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <ErrorRefresher />;
 
   return (
     <div className={styles.topLeadersContainer}>

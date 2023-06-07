@@ -11,6 +11,8 @@ import useCustomQuery from 'hooks/useCustomQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
 import BasicButton from 'components/global/buttons/BasicButton';
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import ErrorRefresher from 'components/global/ErrorRefresher';
 
 export default function TfaField() {
   const { t } = useTranslation('settings');
@@ -25,16 +27,18 @@ export default function TfaField() {
   const inputRef = useRef<any>([]);
 
   const { mutate: mutateDelete } = mutationDelete(`/auth/tfa`, {
-    onSuccess: () => {},
-    onError: () => {},
+    onSuccess: () => { },
+    onError: () => { },
   });
 
   const { mutate: mutatePost } = mutationPost(`/auth/tfa/otp`, {
-    onSuccess: () => {},
-    onError: () => {},
+    onSuccess: () => { },
+    onError: () => { },
   });
 
-  if (isLoading) return null;
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <ErrorRefresher />;
+
   const { tfaOn } = data;
 
   const enableTfa = () => {

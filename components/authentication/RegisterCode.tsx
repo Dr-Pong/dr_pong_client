@@ -4,6 +4,9 @@ import { AuthCode } from 'types/authTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import ErrorRefresher from 'components/global/ErrorRefresher';
+
 import styles from 'styles/authentication/RegisterCode.module.scss';
 
 export default function RegisterCode() {
@@ -16,7 +19,8 @@ export default function RegisterCode() {
     setRegisterCode
   );
 
-  if (isLoading) return null;
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <ErrorRefresher />;
 
   return (
     <div className={styles.CodeContainer}>

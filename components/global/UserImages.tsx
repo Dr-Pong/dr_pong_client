@@ -2,6 +2,9 @@ import { Image } from 'types/userTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import ErrorRefresher from 'components/global/ErrorRefresher';
+
 import styles from 'styles/global/UserImages.module.scss';
 
 export default function UserImages({
@@ -12,7 +15,8 @@ export default function UserImages({
   const { get } = useCustomQuery();
   const { data, isError, isLoading } = get('user_image', `users/images`);
 
-  if (isLoading) return null;
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <ErrorRefresher />;
 
   return (
     <div className={styles.userImagesContainer}>

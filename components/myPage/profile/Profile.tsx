@@ -13,6 +13,8 @@ import ProfileCard from 'components/myPage/profile/ProfileCard';
 import ProfileImage from 'components/myPage/profile/ProfileImage';
 import StatCard from 'components/myPage/profile/StatCard';
 import StatusMessage from 'components/myPage/profile/StatusMessage';
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import ErrorRefresher from 'components/global/ErrorRefresher';
 
 import styles from 'styles/myPage/Profile.module.scss';
 
@@ -42,6 +44,9 @@ export default function Profile({ nickname }: { nickname: string }) {
     }
   }, [editable]);
 
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <ErrorRefresher />;
+
   return (
     <div className={styles.profileContainer}>
       <ProfileImage detailDto={detailDto} setDetailDto={setDetailDto} />
@@ -52,18 +57,16 @@ export default function Profile({ nickname }: { nickname: string }) {
       />
       <StatusMessage detailDto={detailDto} setDetailDto={setDetailDto} />
       <StatCard nickname={nickname} />
-      {!isLoading && !isError && (
-        <div className={styles.achievementsBox}>
-          {achievements.achievements.map((item: Achievement | null) => (
-            <SelectableItem
-              key={item?.id}
-              itemType={'achieve'}
-              item={item}
-              clickHandler={null}
-            />
-          ))}
-        </div>
-      )}
+      <div className={styles.achievementsBox}>
+        {achievements.achievements.map((item: Achievement | null) => (
+          <SelectableItem
+            key={item?.id}
+            itemType={'achieve'}
+            item={item}
+            clickHandler={null}
+          />
+        ))}
+      </div>
     </div>
   );
 }

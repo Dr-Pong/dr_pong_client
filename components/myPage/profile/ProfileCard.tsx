@@ -7,6 +7,8 @@ import { DetailDto } from 'types/userTypes';
 import useMyPageQuery from 'hooks/useMyPageQuery';
 
 import TitleDropdown from 'components/myPage/profile/TitleDropdown';
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import ErrorRefresher from 'components/global/ErrorRefresher';
 
 import styles from 'styles/myPage/ProfileCard.module.scss';
 
@@ -31,8 +33,8 @@ export default function ProfileCard({
   const { profileGet } = useMyPageQuery(nickname);
   const { isLoading, isError, data } = profileGet(setDetailDto);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error...</div>;
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <ErrorRefresher />;
 
   const { level } = data;
   const cardContents: CardContentsType[] = [

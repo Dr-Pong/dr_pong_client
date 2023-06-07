@@ -8,6 +8,8 @@ import useRecordsQuery from 'hooks/useRecordsQuery';
 
 import LadderPoint from 'components/records/LadderPoint';
 import RoundRecordsBox from 'components/records/RoundRecordsBox';
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import ErrorRefresher from 'components/global/ErrorRefresher';
 
 import styles from 'styles/records/MatchDetail.module.scss';
 
@@ -24,9 +26,10 @@ export default function MatchDetail({
 }: MatchDetailProps) {
   const { t } = useTranslation('records');
   const { matchDetailGet } = useRecordsQuery(nickname);
-  const { data, isLoading } = matchDetailGet(gameId);
+  const { data, isLoading, isError } = matchDetailGet(gameId);
 
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <ErrorRefresher />;
   const { duration, me, you, rounds } = data as RecordDetail;
 
   const parseDuration = (duration: number) => {

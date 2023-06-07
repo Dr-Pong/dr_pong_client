@@ -4,6 +4,8 @@ import { ChatList, DMRoom } from 'types/notificationTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import ErrorRefresher from 'components/global/ErrorRefresher';
 import DirectMessageBox from 'components/directMessages/DirectMessageBox';
 
 import styles from 'styles/directMessages/DirectMessages.module.scss';
@@ -17,7 +19,8 @@ export default function DirectMessages() {
     setChatList
   );
 
-  if (isLoading) return null;
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <ErrorRefresher />;
 
   return (
     <div className={styles.directMessagesContainer}>

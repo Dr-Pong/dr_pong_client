@@ -9,6 +9,8 @@ import useMyPageQuery from 'hooks/useMyPageQuery';
 
 import RankTag from 'components/myPage/profile/RankTag';
 import WinRateStat from 'components/myPage/profile/WinRateStat';
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import ErrorRefresher from 'components/global/ErrorRefresher';
 
 import styles from 'styles/myPage/StatCard.module.scss';
 
@@ -21,8 +23,8 @@ export default function StatCard({ nickname }: { nickname: string }) {
   const { statGet } = useMyPageQuery(nickname);
   const { t } = useTranslation('myPage');
   const { data, isLoading, isError } = statGet();
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error...</div>;
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <ErrorRefresher />;
   const { totalStat, seasonStat, totalRank, seasonRank } = data;
 
   const stats: StatBox[] = [

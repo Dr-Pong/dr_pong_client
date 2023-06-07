@@ -5,6 +5,8 @@ import { Invitation, Invitations } from 'types/notificationTypes';
 import useCustomQuery from 'hooks/useCustomQuery';
 
 import InvitationBox from 'components/notifications/InvitationBox';
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import ErrorRefresher from 'components/global/ErrorRefresher';
 
 export default function InvitationList() {
   const [channelInvitations, setChannelInvitations] = useState<Invitations>({
@@ -52,8 +54,8 @@ export default function InvitationList() {
     );
   };
 
-  if (gameInvitationsGet.isLoading || channelInvitationsGet.isLoading)
-    return null;
+  if (gameInvitationsGet.isLoading || channelInvitationsGet.isLoading) return <LoadingSpinner />;
+  if (gameInvitationsGet.isError || channelInvitationsGet.isError) return <ErrorRefresher />;
 
   return (
     <div>
