@@ -9,7 +9,7 @@ import styles from 'styles/modals/Modal.module.scss';
 
 export default function Modal() {
   const [openModal, setOpenModal] = useRecoilState(openModalState);
-  const { head, body, tail, enableBackdropClose } = useRecoilValue(modalPartsState);
+  const { head, body, tail } = useRecoilValue(modalPartsState);
   const resetModalParts = useResetRecoilState(modalPartsState);
 
   useEffect(() => {
@@ -17,8 +17,7 @@ export default function Modal() {
   }, [openModal]);
 
   const handleBackdropClick = () => {
-    if (enableBackdropClose)
-      setOpenModal(false);
+    setOpenModal(false);
   };
 
   if (openModal) {
