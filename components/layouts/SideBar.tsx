@@ -2,6 +2,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRecoilState } from 'recoil';
 
 import React from 'react';
+import { createPortal } from 'react-dom';
 import { IoMdClose } from 'react-icons/io';
 
 import { sideBarState } from 'recoils/sideBar';
@@ -39,7 +40,7 @@ export default function SideBar() {
 
   if (!sideBar) return null;
 
-  return (
+  return createPortal(
     <div className={styles.sideBarBackdrop} onClick={handleModalClose}>
       <div
         className={styles.sideBarContainer}
@@ -51,6 +52,7 @@ export default function SideBar() {
         <div>{sideBarTypes[sideBar]?.name}</div>
         {sideBarTypes[sideBar]?.children}
       </div>
-    </div>
+    </div>,
+    document.getElementById('sideBarRoot') as HTMLElement
   );
 }
