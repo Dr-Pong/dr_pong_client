@@ -4,7 +4,9 @@
   "bullet": "Bullet Mode",
   "deathMatch": "Death Match",
   "loserPaysForBeer": "Loser Pays for Beer",
+  "Waiting For Match": "Waiting For Match",
   "prepare": "Prepare for the battle",
+  "cancel": "cancel",
   "on": "On",
   "off": "Off"
 }
