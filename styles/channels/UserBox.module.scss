@@ -1,0 +1,39 @@
+@import 'styles/common';
+
+.userBoxContainer {
+  @include clickBox;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  cursor: unset;
+}
+
+.userBoxContainer:hover {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+.myBox {
+  border: solid 1px $just-purple;
+}
+
+.profileImage {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.nickname {
+  display: flex;
+  gap: 0.2rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}

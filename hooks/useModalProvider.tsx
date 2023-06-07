@@ -183,15 +183,15 @@ const useModalProvider = () => {
     });
   };
 
-  const useChannelPasswordModal = (roomId: string) => {
+  const usePasswordSubmitModal = (roomId: string) => {
     useModal({
-      head: <ModalTitle title={'Insert Channel Password'} closeButton />,
+      head: <ModalTitle title={t('Password')} closeButton />,
       body: <PasswordSubmit roomId={roomId} />,
       tail: null,
     });
   };
 
-  const useChannelTypeSettingModal = (roomId: string) => {
+  const useChannelEditModal = (roomId: string) => {
     useModal({
       head: <ModalTitle title={t('Edit channel')} closeButton />,
       body: <ChannelSettings roomId={roomId} type='edit' />,
@@ -199,7 +199,7 @@ const useModalProvider = () => {
     });
   };
 
-  const useInvitationRequestModal = (
+  const useInvitationModal = (
     invitationType: string,
     roomId?: string,
     participants?: Participant[]
@@ -245,10 +245,9 @@ const useModalProvider = () => {
     useAchievementDetailModal,
     useFriendFinderModal,
     useChannelCreateModal,
-    useChannelPasswordModal,
-    useChannelTypeSettingModal,
-    useInvitationRequestModal,
-    useMatchWaitingModal,
+    usePasswordSubmitModal,
+    useChannelEditModal,
+    useInvitationModal,
   };
 };
 

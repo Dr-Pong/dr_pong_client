@@ -31,6 +31,7 @@
 .dropdown {
   width: 6rem;
   height: 1.5rem;
+  font-size: $basic-font;
   background: $light-grey;
   border-bottom: solid 1px $dark-grey;
   border-radius: 0;
@@ -75,6 +76,11 @@
   height: 1.8rem;
 }
 
+.fit {
+  width: fit-content;
+  height: fit-content;
+}
+
 .square {
   width: 1.8rem;
   height: 1.8rem;
@@ -88,7 +94,7 @@
 }
 
 .transparent {
-  background-color: transparent;
+  background: transparent;
 }
 
 .black {
@@ -127,8 +133,4 @@
 
 .purple:hover {
   background: $dark-purple;
-}
-
-.none {
-  background: none;
 }

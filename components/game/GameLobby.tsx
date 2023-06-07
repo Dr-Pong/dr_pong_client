@@ -14,7 +14,7 @@ interface Options {
 
 export default function GameLobby() {
   const { t } = useTranslation('game');
-  const { useInvitationRequestModal, useMatchWaitingModal } = useModalProvider();
+  const { useInvitationModal, useMatchWaitingModal } = useModalProvider();
   const [options, setOptions] = useState<Options>({
     bullet: false,
     deathMatch: false,
@@ -27,7 +27,7 @@ export default function GameLobby() {
   };
 
   const handleInviteClick = () => {
-    useInvitationRequestModal('game');
+    useInvitationModal('game');
   };
 
   return (

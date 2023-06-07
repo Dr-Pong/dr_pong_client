@@ -6,9 +6,9 @@ import { IoMdClose } from 'react-icons/io';
 
 import { sideBarState } from 'recoils/sideBar';
 
+import Participants from 'components/channels/participants/Participants';
 import DirectMessages from 'components/directMessages/DirectMessages';
 import Notifications from 'components/notifications/Notifications';
-import Participants from 'components/channels/Participants';
 
 import styles from 'styles/layouts/SideBar.module.scss';
 
@@ -29,8 +29,8 @@ export default function SideBar() {
     },
     participants: {
       name: t('Participants'),
-      children: <Participants />
-    }
+      children: <Participants />,
+    },
   };
 
   const handleModalClose = () => {
@@ -40,10 +40,7 @@ export default function SideBar() {
   if (!sideBar) return null;
 
   return (
-    <div
-      className={styles.sideBarBackdrop}
-      onClick={handleModalClose}
-    >
+    <div className={styles.sideBarBackdrop} onClick={handleModalClose}>
       <div
         className={styles.sideBarContainer}
         onClick={(e) => {

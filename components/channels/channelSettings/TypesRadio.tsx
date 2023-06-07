@@ -2,53 +2,47 @@ import useTranslation from 'next-translate/useTranslation';
 
 import { ChangeEvent, useCallback } from 'react';
 
-import { SetChannelSettings } from 'components/channels/channelSettings/ChannelSettings';
+import { SettingFieldProps } from 'components/channels/channelSettings/ChannelSettings';
 
 import styles from 'styles/channels/ChannelSettings.module.scss';
 
 export default function TypesRadio({
-  channel: newChannel,
-  setChannel: setNewChannel,
-}: SetChannelSettings) {
+  channelInfo,
+  setChannelInfo,
+}: SettingFieldProps) {
   const { t } = useTranslation('channels');
-  const { access } = newChannel;
+  const { access } = channelInfo;
+  const channelTypes = ['public', 'private'];
 
   const handleTypeChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const value = event.target.value;
-      setNewChannel((prev) => ({
+      setChannelInfo((prev) => ({
         ...prev,
         access: value,
         password: value === 'private' ? null : prev.password,
       }));
     },
-    [newChannel]
+    [channelInfo]
   );
 
   return (
     <div className={styles.radioWrap}>
-      <label className={styles.radio} htmlFor='public'>
-        <input
-          type='radio'
-          id='public'
-          name='type'
-          value='public'
-          checked={access === 'public'}
-          onChange={handleTypeChange}
-        />
-        {t('public')}
-      </label>
-      <label className={styles.radio} htmlFor='private'>
-        <input
-          type='radio'
-          id='private'
-          name='type'
-          value='private'
-          checked={access === 'private'}
-          onChange={handleTypeChange}
-        />
-        {t('private')}
-      </label>
+      {channelTypes.map((type, i) => {
+        return (
+          <label key={i} className={styles.radio} htmlFor={type}>
+            <input
+              type='radio'
+              id={type}
+              name='type'
+              value={type}
+              checked={access === type}
+              onChange={handleTypeChange}
+            />
+            {t(type)}
+          </label>
+        );
+      })}
     </div>
   );
 }
