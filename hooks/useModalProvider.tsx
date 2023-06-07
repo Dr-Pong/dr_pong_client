@@ -9,10 +9,9 @@ import {
 import {
   modalPartsState,
   openModalState,
-  BackdropCloseState
 } from 'recoils/modal';
 
-import React, { MutableRefObject, useEffect } from 'react';
+import React, { MutableRefObject } from 'react';
 
 
 import { ModalParts } from 'types/modalTypes';
@@ -44,14 +43,11 @@ const useModalProvider = () => {
   const setModalParts = useSetRecoilState(modalPartsState);
   const resetModalParts = useResetRecoilState(modalPartsState);
   const setOpenModal = useSetRecoilState(openModalState);
-  const setBackdropClose = useSetRecoilState(BackdropCloseState);
   const user = useRecoilValue(userState);
 
-  useEffect(() => {
-    setBackdropClose(true);
-  }, []);
-
   const useModal = (parts: ModalParts) => {
+    if (parts.enableBackdropClose !== false)
+      parts.enableBackdropClose = true;
     setModalParts(parts);
     setOpenModal(true);
   };
@@ -220,9 +216,8 @@ const useModalProvider = () => {
     });
   };
 
-  const useWaitingGameMatchModal = (gameType: string) => {
+  const useMatchWaitingModal = (gameType: string) => {
     const title = gameType === 'queue' ? 'Waiting For Match' : 'Waiting For Friend';
-    setBackdropClose(false);
 
     useModal({
       head: <ModalTitle title={title} />,
@@ -236,6 +231,7 @@ const useModalProvider = () => {
           {t('cancel')}
         </CloseModalButton>
       ),
+      enableBackdropClose: false,
     });
   };
 
@@ -252,7 +248,7 @@ const useModalProvider = () => {
     useChannelPasswordModal,
     useChannelTypeSettingModal,
     useInvitationRequestModal,
-    useWaitingGameMatchModal,
+    useMatchWaitingModal,
   };
 };
 
