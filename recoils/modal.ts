@@ -12,3 +12,8 @@ export const openModalState = atom<boolean>({
   key: `openModalState/${v1()}`,
   default: false,
 });
+
+export const matchWaitingModalState = atom<boolean>({
+  key: `matchWaitingModalState/${v1()}`,
+  default: false,
+});

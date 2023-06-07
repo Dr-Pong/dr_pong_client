@@ -15,8 +15,8 @@ export default function Modal() {
   useEffect(() => {
     if (!openModal) resetModalParts();
   }, [openModal]);
+
   const handleBackdropClick = () => {
-    // 조건 추가해야함
     setOpenModal(false);
   };
 

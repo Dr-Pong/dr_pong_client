@@ -1,27 +1,35 @@
 import useTranslation from 'next-translate/useTranslation';
-import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+
+import { userState } from 'recoils/user';
+import {
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState
+} from 'recoil';
+import {
+  modalPartsState,
+  openModalState,
+} from 'recoils/modal';
 
 import React, { MutableRefObject } from 'react';
 
-import { modalPartsState, openModalState } from 'recoils/modal';
-import { userState } from 'recoils/user';
 
-import { Participant } from 'types/chatTypes';
 import { ModalParts } from 'types/modalTypes';
 import { Achievement } from 'types/userTypes';
+import { Participant } from 'types/chatTypes';
 
 import NumberInputBox from 'components/authentication/NumberInputBox';
 import RegisterCode from 'components/authentication/RegisterCode';
 import PasswordSubmit from 'components/channels/PasswordSubmit';
 import ChannelSettings from 'components/channels/channelSettings/ChannelSettings';
 import SearchUser from 'components/friends/SearchUser';
-import Invitation from 'components/global/InvitationRequest';
 import UserImages from 'components/global/UserImages';
 import CloseModalButton from 'components/global/buttons/CloseModalButton';
 import ModalButton from 'components/global/buttons/ModalButton';
 import SubmitButton from 'components/global/buttons/SubmitButton';
 import ButtonRow from 'components/global/buttons/buttonContainers/ButtonRow';
 import ProfileButtons from 'components/global/buttons/buttonContainers/ProfileButtons';
+import InvitationRequest from 'components/global/InvitationRequest';
 import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
 import ModalTitle from 'components/modals/modalParts/ModalTitle';
 import Profile from 'components/myPage/profile/Profile';
@@ -190,18 +198,17 @@ const useModalProvider = () => {
 
   const useInvitationModal = (
     invitationType: string,
-    roomId: string,
-    participants: Participant[]
+    roomId?: string,
+    participants?: Participant[]
   ) => {
     useModal({
       head: <ModalTitle title={'Invite Friend'} closeButton />,
-      body: (
-        <Invitation
+      body:
+        <InvitationRequest
           invitationType={invitationType}
           roomId={roomId}
           participants={participants}
-        />
-      ),
+        />,
       tail: null,
     });
   };

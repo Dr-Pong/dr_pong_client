@@ -9,7 +9,7 @@ import { Friend } from 'types/friendTypes';
 import { ButtonDesign } from 'types/buttonTypes';
 import { Participant } from 'types/chatTypes';
 
-import { GrAddCircle } from 'react-icons/gr';
+import { GrAddCircle, GrGamepad } from 'react-icons/gr';
 
 import styles from 'styles/global/InvitationRequest.module.scss';
 
@@ -20,7 +20,7 @@ const buttonDesign: ButtonDesign = {
 
 type InvitationProps = {
   invitationType: string;
-  roomId: string;
+  roomId?: string;
   participants?: Participant[];
 }
 
@@ -31,7 +31,7 @@ export default function InvitationRequest({
 }: InvitationProps) {
   const { allListGet } = useFriendsQuery();
   const { channelInvitation, gameInvitation }
-    = useRelationButtons(buttonDesign, roomId);
+    = useRelationButtons(buttonDesign, roomId as string);
   const [searchKey, setSearchKey] = useState<string>('');
   const [friends, setFriends] = useState<Friend[]>([]);
   const { isLoading, isError } = allListGet(setFriends);
@@ -73,7 +73,7 @@ export default function InvitationRequest({
               <div className={styles.inviteButton}>
                 {invitationType === 'channel'
                   ? channelInvitation(<GrAddCircle />, friend.nickname)
-                  : gameInvitation(<GrAddCircle />, friend.nickname)}
+                  : gameInvitation(<GrGamepad />, friend.nickname)}
               </div>
             </div>
           )

@@ -12,6 +12,8 @@ import useModalProvider from 'hooks/useModalProvider';
 
 import FriendDropdown from 'components/friends/FriendDropdown';
 import BasicButton from 'components/global/buttons/BasicButton';
+import GameInvitationButton
+  from 'components/global/buttons/GameInvitationButton';
 import ToastResultButton, {
   RequestProps,
 } from 'components/global/buttons/ToastResultButton';
@@ -173,16 +175,12 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
   };
 
   const gameInvitation = (label: React.ReactNode, nickname: string) => {
-    const request: RequestProps = {
-      api: `/games/${target}/invitation/${nickname}`,
-      method: 'post',
-      options: {},
-    };
+    const api = `/games/invitation/${nickname}`;
     const buttonProps = {
       ...buttonDesign,
       children: label,
     };
-    return <ToastResultButton request={request} button={buttonProps} />;
+    return <GameInvitationButton api={api} button={buttonProps} />;
   };
 
   return {
