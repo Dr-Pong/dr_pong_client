@@ -8,6 +8,9 @@ import { sideBarState } from 'recoils/sideBar';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import ErrorRefresher from 'components/global/ErrorRefresher';
+
 import styles from 'styles/notifications/Notifications.module.scss';
 
 export default function FriendRequestsBox() {
@@ -20,7 +23,8 @@ export default function FriendRequestsBox() {
     '/users/notifications/friends'
   );
 
-  if (isLoading) return null;
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <ErrorRefresher />;
 
   const { friendRequest } = data;
 
@@ -34,9 +38,8 @@ export default function FriendRequestsBox() {
     <div className={styles.friendRequestBox} onClick={handleRouterToFriends}>
       <span>{t('Friend requests')}</span>
       <span
-        className={`${styles.requestCount} ${
-          friendRequest === 0 && styles.noRequestCount
-        }`}
+        className={`${styles.requestCount} ${friendRequest === 0 && styles.noRequestCount
+          }`}
       >
         {data.friendRequest}
       </span>

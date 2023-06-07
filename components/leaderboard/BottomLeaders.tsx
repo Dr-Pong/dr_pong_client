@@ -3,6 +3,9 @@ import { Ranker } from 'types/rankTypes';
 import useCustomQuery from 'hooks/useCustomQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import ErrorRefresher from 'components/global/ErrorRefresher';
+
 import styles from 'styles/leaderboard/BottomLeaders.module.scss';
 
 type LeadersProps = {
@@ -26,7 +29,8 @@ export default function BottomLeaders({
     useProfileModal(nickname);
   };
 
-  if (isLoading) return null;
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <ErrorRefresher />;
 
   return (
     <div className={styles.bottomLeadersContainer}>

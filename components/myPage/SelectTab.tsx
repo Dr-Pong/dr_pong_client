@@ -14,6 +14,8 @@ import {
 import useMyPageQuery from 'hooks/useMyPageQuery';
 
 import SelectableItem from 'components/myPage/SelectableItem';
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import ErrorRefresher from 'components/global/ErrorRefresher';
 
 import styles from 'styles/myPage/SelectTab.module.scss';
 
@@ -43,7 +45,7 @@ export default function SelectTab({ nickname, itemType }: SelectTabProps) {
       return;
     }
     if (!editable) {
-      mutate({ ...selected.selectedGet() });
+      mutate({ ...selected.getSelected() });
     }
   }, [editable]);
 
@@ -77,8 +79,8 @@ export default function SelectTab({ nickname, itemType }: SelectTabProps) {
     setAllFromJSON()
   );
 
-  if (isSelectedLoading || isAllLoading) return <div>Loading...</div>;
-  if (isSelectedError || isAllError) return <div>Error...</div>;
+  if (isSelectedLoading || isAllLoading) return <LoadingSpinner />;
+  if (isSelectedError || isAllError) return <ErrorRefresher />;
 
   return (
     <div className={styles.selectTabContainer}>

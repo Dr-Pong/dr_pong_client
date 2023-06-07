@@ -4,6 +4,8 @@ import useFriendsQuery from 'hooks/useFriendsQuery';
 import useRelationButtons from 'hooks/useRelationButtons';
 
 import SearchBar from 'components/global/SearchBar';
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import ErrorRefresher from 'components/global/ErrorRefresher';
 
 import { Friend } from 'types/friendTypes';
 import { ButtonDesign } from 'types/buttonTypes';
@@ -36,8 +38,8 @@ export default function InvitationRequest({
   const [friends, setFriends] = useState<Friend[]>([]);
   const { isLoading, isError } = allListGet(setFriends);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error</div>;
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <ErrorRefresher />;
 
   const filteredFriends: Friend[] = friends.filter((friend) => {
     const notDuplicate = !participants?.some(

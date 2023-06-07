@@ -15,6 +15,8 @@ import useModalProvider from 'hooks/useModalProvider';
 import FriendBox from 'components/friends/FriendBox';
 import SearchBar from 'components/global/SearchBar';
 import BasicButton from 'components/global/buttons/BasicButton';
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import ErrorRefresher from 'components/global/ErrorRefresher';
 
 import styles from 'styles/friends/FriendTabContents.module.scss';
 
@@ -36,8 +38,8 @@ export default function FriendTabContents() {
 
   const { isLoading, isError } = query[tab](setFriends);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error</div>;
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return <ErrorRefresher />;
 
   return (
     <div className={styles.friendTabContentsContainer}>
