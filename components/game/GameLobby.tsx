@@ -19,7 +19,7 @@ interface Options {
 export default function GameLobby() {
   const { t } = useTranslation('game');
   const { useInvitationModal } = useModalProvider();
-  const setShowWaitingModal = useSetRecoilState(matchWaitingModalState);
+  const setShowMatchWaitingModal = useSetRecoilState(matchWaitingModalState);
   const [options, setOptions] = useState<Options>({
     bullet: false,
     deathMatch: false,
@@ -28,7 +28,7 @@ export default function GameLobby() {
   const optionList = ['bullet', 'deathMatch', 'loserPaysForBeer'];
 
   const handleQueueClick = () => {
-    setShowWaitingModal(true);
+    setShowMatchWaitingModal(true);
   };
 
   const handleInviteClick = () => {

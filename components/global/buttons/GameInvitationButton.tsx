@@ -16,12 +16,12 @@ export default function GameInvitationButton({
 }) {
   const { style, color, children } = button;
   const { mutationPost } = useCustomQuery();
-  const setShowWaitingModal = useSetRecoilState(matchWaitingModalState);
+  const setShowMatchWaitingModal = useSetRecoilState(matchWaitingModalState);
 
   const { mutate } = mutationPost(api);
 
   const onSuccess = () => {
-    setShowWaitingModal(true);
+    setShowMatchWaitingModal(true);
   };
 
   const onError = () => {
