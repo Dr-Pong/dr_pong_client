@@ -8,9 +8,16 @@ type ButtonStyle =
   | 'round'
   | 'square'
   | 'dropdown'
-  | 'transparent';
+  | 'fit';
 
-type ButtonColor = 'black' | 'white' | 'opaque' | 'default' | 'pink' | 'purple' | 'none';
+type ButtonColor =
+  | 'black'
+  | 'white'
+  | 'opaque'
+  | 'default'
+  | 'pink'
+  | 'purple'
+  | 'transparent';
 
 export interface ButtonDesign {
   style: ButtonStyle;

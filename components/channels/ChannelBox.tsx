@@ -13,7 +13,7 @@ import styles from 'styles/channels/ChannelBox.module.scss';
 export default function ChannelBox({ channel }: { channel: Channel }) {
   const { id, title, access, headCount, maxCount } = channel;
   const router = useRouter();
-  const { useChannelPasswordModal } = useModalProvider();
+  const { usePasswordSubmitModal } = useModalProvider();
   const { mutationPost } = useCustomQuery();
   const { mutate } = mutationPost(`channels/${id}/participants`);
 
@@ -31,11 +31,11 @@ export default function ChannelBox({ channel }: { channel: Channel }) {
 
   const handleChannelJoin = useCallback(() => {
     if (access === 'protected') {
-      useChannelPasswordModal(id.toString());
+      usePasswordSubmitModal(id.toString());
     } else {
       handleRouterToChat();
     }
-  }, [handleRouterToChat, useChannelPasswordModal]);
+  }, [handleRouterToChat, usePasswordSubmitModal]);
 
   return (
     <div className={styles.channelBoxContainer} onClick={handleChannelJoin}>
