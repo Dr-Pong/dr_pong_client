@@ -6,6 +6,7 @@ import { useRecoilState } from 'recoil';
 import { matchWaitingModalState } from 'recoils/modal';
 
 import BasicButton from 'components/global/buttons/BasicButton';
+import Loading from 'components/global/LoadingSpinner';
 
 import styles from 'styles/modals/MatchWaitingModal.module.scss';
 
@@ -29,16 +30,14 @@ export default function MatchWaitingModal() {
         <div className={styles.modalTitle}>
           {t('Waiting For Match')}
         </div>
-        <div className={styles.loadingContainer}>
-          <div className={styles.loadingSpinner} />
-          <BasicButton
-            style='basic'
-            color='pink'
-            handleButtonClick={handleMatchingCancel}
-          >
-            {t('cancel')}
-          </BasicButton>
-        </div>
+        <Loading />
+        <BasicButton
+          style='basic'
+          color='pink'
+          handleButtonClick={handleMatchingCancel}
+        >
+          {t('cancel')}
+        </BasicButton>
       </div>
     </div >,
     document.getElementById('matchWaitingModalRoot') as HTMLElement
