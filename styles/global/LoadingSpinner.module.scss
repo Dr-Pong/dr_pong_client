@@ -1,0 +1,26 @@
+.loadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.loadingSpinner {
+  display: inline-block;
+  width: 5rem;
+  height: 5rem;
+  margin: 3rem;
+  border: 0.2rem solid indigo;
+  border-top-color: #0001;
+  border-radius: 50%;
+  animation: loadingspinner 1s linear infinite;
+}
+
+@keyframes loadingspinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
