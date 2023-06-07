@@ -32,6 +32,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
           {getLayout(<Component {...pageProps} />)}
+          <div id='sideBarRoot'></div>
           <div id='modalRoot'></div>
           <div id='matchWaitingModalRoot'></div>
           <div id='alertRoot'></div>
