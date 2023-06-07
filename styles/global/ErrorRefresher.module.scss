@@ -1,0 +1,19 @@
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 4rem;
+  text-align: center;
+}
+
+.errorIcon {
+  margin-bottom: 1.2rem;
+  font-size: 5rem;
+}
+
+.errorMsg {
+  margin-bottom: 1.2rem;
+  font-weight: 400;
+  font-size: 1.5rem;
+}
