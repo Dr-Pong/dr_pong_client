@@ -1,6 +1,3 @@
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
-import { openModalState, BackdropCloseState } from 'recoils/modal';
-
 import { ButtonProps } from 'types/buttonTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
@@ -17,12 +14,12 @@ export default function GameInvitationButton({
 }) {
   const { style, color, children } = button;
   const { mutationPost } = useCustomQuery();
-  const { useWaitingGameMatchModal } = useModalProvider();
+  const { useMatchWaitingModal } = useModalProvider();
 
   const { mutate } = mutationPost(api);
 
   const onSuccess = () => {
-    useWaitingGameMatchModal('invite');
+    useMatchWaitingModal('invite');
   };
 
   const onError = () => {
