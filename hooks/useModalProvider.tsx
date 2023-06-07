@@ -36,7 +36,6 @@ import Profile from 'components/myPage/profile/Profile';
 import Settings from 'components/settings/Settings';
 
 import selectableItemStyles from 'styles/myPage/SelectableItem.module.scss';
-import waitingGameMatchStyles from 'styles/game/WaitingGameMatch.module.scss';
 
 const useModalProvider = () => {
   const { t } = useTranslation('common');
@@ -46,8 +45,6 @@ const useModalProvider = () => {
   const user = useRecoilValue(userState);
 
   const useModal = (parts: ModalParts) => {
-    if (parts.enableBackdropClose !== false)
-      parts.enableBackdropClose = true;
     setModalParts(parts);
     setOpenModal(true);
   };
@@ -213,25 +210,6 @@ const useModalProvider = () => {
           participants={participants}
         />,
       tail: null,
-    });
-  };
-
-  const useMatchWaitingModal = (gameType: string) => {
-    const title = gameType === 'queue' ? 'Waiting For Match' : 'Waiting For Friend';
-
-    useModal({
-      head: <ModalTitle title={title} />,
-      body: (
-        <div className={waitingGameMatchStyles.loadingContainer}>
-          <div className={waitingGameMatchStyles.loadingSpinner} />
-        </div>
-      ),
-      tail: (
-        <CloseModalButton style='basic' color='pink'>
-          {t('cancel')}
-        </CloseModalButton>
-      ),
-      enableBackdropClose: false,
     });
   };
 

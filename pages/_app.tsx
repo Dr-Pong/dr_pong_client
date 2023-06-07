@@ -33,6 +33,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         <RecoilRoot>
           {getLayout(<Component {...pageProps} />)}
           <div id='modalRoot'></div>
+          <div id='matchWaitingModalRoot'></div>
           <div id='alertRoot'></div>
         </RecoilRoot>
         <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
