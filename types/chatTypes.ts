@@ -1,9 +1,5 @@
-export type ChatBoxType =
-  | 'chatBox'
-  | 'myChatBox'
-  | 'systemChatBox'
-  | 'failedChatBox';
-export type ChattingType = 'channels' | 'dm';
+export type ChatType = 'me' | 'others' | 'system' | 'fail';
+export type RoomType = 'channels' | 'dm';
 
 export interface ChatUser {
   imgUrl: string;
@@ -14,22 +10,16 @@ export interface UserImageMap {
   [key: string]: string;
 }
 
-export interface ChatBoxProps {
-  id: number;
-  chatUser?: ChatUser;
-  message: string;
-  time?: Date;
-  buttons?: React.ReactNode[];
-}
-
-export interface RawChat {
+export interface Chat {
   id: number;
   message: string;
   nickname: string;
-  createdAt: Date;
+  time: Date;
+  type: ChatType;
 }
+
 export interface ChatResponse {
-  chats: RawChat[];
+  chats: Chat[];
   isLastPage: boolean;
 }
 
