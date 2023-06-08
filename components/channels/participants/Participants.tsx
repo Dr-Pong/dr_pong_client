@@ -8,16 +8,16 @@ import { MdLogout } from 'react-icons/md';
 
 import { sideBarState } from 'recoils/sideBar';
 
-import { ChattingType, Participant } from 'types/chatTypes';
+import { Participant, RoomType } from 'types/chatTypes';
 
 import useChatQuery from 'hooks/useChatQuery';
 import useCustomQuery from 'hooks/useCustomQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
 import UserBox from 'components/channels/participants/UserBox';
-import BasicButton from 'components/global/buttons/BasicButton';
-import LoadingSpinner from 'components/global/LoadingSpinner';
 import ErrorRefresher from 'components/global/ErrorRefresher';
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/channels/Participants.module.scss';
 
@@ -27,10 +27,7 @@ export default function Participants() {
   const setSideBar = useSetRecoilState(sideBarState);
   const { useInvitationModal } = useModalProvider();
   const { mutationDelete } = useCustomQuery();
-  const { chatUsersGet } = useChatQuery(
-    roomType as ChattingType,
-    roomId as string
-  );
+  const { chatUsersGet } = useChatQuery(roomType as RoomType, roomId as string);
   const channelLeaveMuatation = mutationDelete(
     `/channels/${roomId}/participants`,
     {
@@ -38,7 +35,7 @@ export default function Participants() {
         setSideBar(null);
         router.push('/channels');
       },
-      onError: () => { },
+      onError: () => {},
     }
   );
 
