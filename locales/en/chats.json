@@ -1,0 +1,10 @@
+{
+  "setadmin": "became the room manager.",
+  "unsetadmin": "is no longer room manager.",
+  "mute": "has been muted.",
+  "unmute": "has been unmuted.",
+  "join": "joined the channel.",
+  "leave": "left the channel.",
+  "kick": "has been kicked.",
+  "ban": "has been kicked."
+}
