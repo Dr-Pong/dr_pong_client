@@ -1,11 +1,16 @@
-import React, { ChangeEvent, SetStateAction, useCallback } from 'react';
+import React, {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useCallback,
+} from 'react';
 import { RiSendPlaneFill } from 'react-icons/ri';
 
 import styles from 'styles/chats/ChatInputBox.module.scss';
 
 type ChatInputBoxProps = {
   message: string;
-  setMessage: React.Dispatch<SetStateAction<string>>;
+  setMessage: Dispatch<SetStateAction<string>>;
   handleChatPost: (message: string) => void;
 };
 
