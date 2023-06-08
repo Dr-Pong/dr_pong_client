@@ -1,23 +1,24 @@
+import { useSetRecoilState } from 'recoil';
+
 import { useRouter } from 'next/router';
 
 import React, { ReactElement, useEffect, useState } from 'react';
-import { RiLockPasswordFill } from 'react-icons/ri';
 import { BsPeopleFill } from 'react-icons/bs';
+import { RiLockPasswordFill } from 'react-icons/ri';
 
-import { useSetRecoilState } from 'recoil';
 import { sideBarState } from 'recoils/sideBar';
 
-import { ChattingType, UserImageMap } from 'types/chatTypes';
+import { RoomType, UserImageMap } from 'types/chatTypes';
 
 import useChatQuery from 'hooks/useChatQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
 import Chattings from 'components/chats/Chattings';
+import ErrorRefresher from 'components/global/ErrorRefresher';
+import LoadingSpinner from 'components/global/LoadingSpinner';
 import PageHeader from 'components/global/PageHeader';
 import AppLayout from 'components/layouts/AppLayout';
 import LoginFilter from 'components/layouts/LoginFilter';
-import LoadingSpinner from 'components/global/LoadingSpinner';
-import ErrorRefresher from 'components/global/ErrorRefresher';
 
 import styles from 'styles/chats/Chats.module.scss';
 
@@ -25,13 +26,9 @@ export default function Chats() {
   const router = useRouter();
   const { roomType, roomId } = router.query;
   const setSideBar = useSetRecoilState(sideBarState);
-  const { useChannelTypeSettingModal } = useModalProvider();
   const [userImageMap, setUserImageMap] = useState<UserImageMap>({});
-
-  const { chatUsersGet } = useChatQuery(
-    roomType as ChattingType,
-    roomId as string
-  );
+  const { useChannelEditModal } = useModalProvider();
+  const { chatUsersGet } = useChatQuery(roomType as RoomType, roomId as string);
 
   useEffect(() => {
     if (roomType !== 'dm' && roomType !== 'channel') router.replace('404');
@@ -44,24 +41,29 @@ export default function Chats() {
 
   let buttons = [];
   const isOwner = data.me?.roleType === 'owner';
+
   if (roomType === 'channel') {
     if (isOwner)
       buttons.push({
         value: <RiLockPasswordFill />,
-        handleButtonClick: () => { useChannelTypeSettingModal(roomId as string); }
+        handleButtonClick: () => {
+          useChannelEditModal(roomId as string);
+        },
       });
     buttons.push({
       value: <BsPeopleFill />,
-      handleButtonClick: () => { setSideBar('participants'); }
+      handleButtonClick: () => {
+        setSideBar('participants');
+      },
     });
   }
 
   return (
-    <div className={styles.chats}>
+    <div className={styles.chatsPageContainer}>
       <PageHeader title={'chats'} buttons={buttons} />
       <Chattings
         userImageMap={userImageMap}
-        roomType={roomType as ChattingType}
+        roomType={roomType as RoomType}
         roomId={roomId as string}
       />
     </div>
