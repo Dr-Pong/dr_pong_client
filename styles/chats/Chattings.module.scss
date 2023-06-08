@@ -1,28 +1,52 @@
 @import 'styles/common.scss';
 
 .chattings {
-  disply: flex;
-  flex-direction: column;
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr 2.5rem;
+  gap: 1rem;
+  height: 100%;
+  padding: 1rem;
+  overflow-y: auto;
+  font-size: $basic-font;
+  background: linear-gradient(to right bottom, $dark-purple, $just-purple);
+  border-radius: $basic-radius;
+  place-items: stretch;
 }
 
 .chatBoxes {
   display: flex;
   flex-direction: column-reverse;
-  height: 65vh;
-  overflow-y: scroll;
+  gap: 1rem;
+  overflow-y: auto;
+  padding-inline: 0.3rem;
+}
+
+.chatBox {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
 }
 
 .preview {
-  background: rgba($purple, 0.2);
-  padding: 0.3rem;
+  position: absolute;
+  bottom: 4.3rem;
+  left: 50%;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  width: 60vw;
+  max-width: 20rem;
+  padding: 0.7rem 1rem 0.5rem 1rem;
+  color: black;
+  background: $light-grey;
+  border-radius: $basic-radius;
+  transform: translate(-50%, 0);
+  cursor: pointer;
 }
 
-.top {
-  width: 100%;
-  height: 0.3rem;
-}
-
-.bottom {
+.ref {
   width: 100%;
   height: 0.3rem;
 }
