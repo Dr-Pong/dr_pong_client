@@ -12,6 +12,7 @@
     "/myPage": ["myPage", "common"],
     "/login": ["login"],
     "/signUp": ["signUp"],
-    "/authentication": ["authentication"]
+    "/authentication": ["authentication"],
+    "/chats/[roomType]/[roomId]": ["chats"]
   }
 }

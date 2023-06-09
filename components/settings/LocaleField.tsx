@@ -4,7 +4,7 @@ import styles from 'styles/settings/LocaleField.module.scss';
 
 export default function LocaleField() {
   const router = useRouter();
-  const { locale, defaultLocale, pathname } = router;
+  const { locale, defaultLocale, pathname, query } = router;
   const currentLocale = locale || defaultLocale || 'en';
 
   const localeOptions = [
@@ -13,7 +13,9 @@ export default function LocaleField() {
   ];
 
   const handleLocaleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    router.push(pathname, pathname, { locale: e.target.id || defaultLocale });
+    router.push({ pathname, query }, pathname, {
+      locale: e.target.id || defaultLocale,
+    });
   };
 
   return (

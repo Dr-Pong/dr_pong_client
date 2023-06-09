@@ -8,9 +8,10 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 
 import { sideBarState } from 'recoils/sideBar';
 
-import { RoomType, UserImageMap } from 'types/chatTypes';
+import { ParticipantsResponse, RoomType, UserImageMap } from 'types/chatTypes';
 
 import useChatQuery from 'hooks/useChatQuery';
+import useCustomQuery from 'hooks/useCustomQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
 import Chattings from 'components/chats/Chattings';
@@ -28,6 +29,8 @@ export default function Chats() {
   const setSideBar = useSetRecoilState(sideBarState);
   const [userImageMap, setUserImageMap] = useState<UserImageMap>({});
   const { useChannelEditModal } = useModalProvider();
+  const { get } = useCustomQuery();
+  const myChannelGet = get('myChannel', '/channels/me');
   const { chatUsersGet } = useChatQuery(roomType as RoomType, roomId as string);
 
   useEffect(() => {
@@ -35,15 +38,16 @@ export default function Chats() {
     if (typeof roomId !== 'string') router.replace('/');
   }, []);
 
-  const { data, isLoading, isError } = chatUsersGet(setUserImageMap);
-  if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher />;
+  const chatUsers = chatUsersGet(setUserImageMap);
 
-  let buttons = [];
-  const isOwner = data.me?.roleType === 'owner';
+  if (chatUsers.isLoading || myChannelGet.isLoading) return <LoadingSpinner />;
+  if (chatUsers.isError || myChannelGet.isError) return <ErrorRefresher />;
+
+  const buttons = [];
+  const { me } = chatUsers.data as ParticipantsResponse;
 
   if (roomType === 'channel') {
-    if (isOwner)
+    if (me.roleType === 'owner')
       buttons.push({
         value: <RiLockPasswordFill />,
         handleButtonClick: () => {
@@ -58,9 +62,14 @@ export default function Chats() {
     });
   }
 
+  const headerTitles: { [key: string]: string } = {
+    channel: `${myChannelGet.data?.myChannel?.title}`,
+    dm: `${roomId}`,
+  };
+
   return (
     <div className={styles.chatsPageContainer}>
-      <PageHeader title={'chats'} buttons={buttons} />
+      <PageHeader title={headerTitles[roomType as string]} buttons={buttons} />
       <Chattings
         userImageMap={userImageMap}
         roomType={roomType as RoomType}

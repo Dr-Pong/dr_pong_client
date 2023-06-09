@@ -1,5 +1,5 @@
 export type ChatType = 'me' | 'others' | 'system' | 'fail';
-export type RoomType = 'channels' | 'dm';
+export type RoomType = 'channel' | 'dm';
 
 export interface ChatUser {
   imgUrl: string;

@@ -30,13 +30,13 @@ const useChatQuery = (roomType: RoomType, roomId: string) => {
       setChatUsers?.(chatUsers);
     };
 
-    if (roomType === 'dm')
-      return get('DMFriend', `/users/${roomId}/detail`, friendDetailToChatUser);
-    return get(
-      'channelParticipants',
-      `/channels/${roomId}/participants`,
-      participantsToChatUsers
-    );
+    return roomType === 'dm'
+      ? get('DMFriend', `/users/${roomId}/detail`, friendDetailToChatUser)
+      : get(
+          'channelParticipants',
+          `/channels/${roomId}/participants`,
+          participantsToChatUsers
+        );
   };
 
   const chatsGet = (handleChatJoin: (chats: Chat[]) => void, count: number) => {

@@ -6,13 +6,17 @@ type Error = {
   message: string;
 };
 
+type Response = {
+  myChannel: Channel | null;
+};
+
 export default (
   req: NextApiRequest,
-  res: NextApiResponse<Channel | null | Error>
+  res: NextApiResponse<Response | Error>
 ) => {
   if (req.method === 'GET') {
-    res.status(200).json(myChannel);
-    // res.status(200).json(null);
+    res.status(200).json({ myChannel: myChannel });
+    // res.status(200).json({ myChannel: null });
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });
   }

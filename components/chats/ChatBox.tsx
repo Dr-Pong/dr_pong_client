@@ -1,17 +1,20 @@
+import useTranslation from 'next-translate/useTranslation';
+
 import React from 'react';
 
-import { Chat, UserImageMap } from 'types/chatTypes';
+import { Chat } from 'types/chatTypes';
 
 import useModalProvider from 'hooks/useModalProvider';
 
 import styles from 'styles/chats/ChatBox.module.scss';
 
 type ChatBoxProps = {
-  userImageMap: UserImageMap;
   chat: Chat;
+  imgUrl: string;
 };
 
-function ChatBox({ userImageMap, chat }: ChatBoxProps) {
+function ChatBox({ chat, imgUrl }: ChatBoxProps) {
+  const { t } = useTranslation('chats');
   const { message, nickname, time } = chat;
   const type = chat.type as string;
   const { useProfileModal } = useModalProvider();
@@ -34,7 +37,7 @@ function ChatBox({ userImageMap, chat }: ChatBoxProps) {
           <img
             className={styles.userImage}
             onClick={imgClickHandler}
-            src={userImageMap[nickname]}
+            src={imgUrl}
             alt='img'
           />
           <div>{nickname}</div>
@@ -50,7 +53,11 @@ function ChatBox({ userImageMap, chat }: ChatBoxProps) {
         <div className={styles.message}>{message}</div>
       </div>
     ),
-    system: <div className={styles.systemContainer}>{message}</div>,
+    system: (
+      <div className={styles.systemContainer}>
+        {`"${nickname}" ${t(message)}`}
+      </div>
+    ),
   };
 
   return chatBoxes[type];
