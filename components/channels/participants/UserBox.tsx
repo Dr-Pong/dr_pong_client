@@ -53,14 +53,14 @@ export default function UserBox({ roomId, myRoleType, user }: UserBoxProps) {
   const buttons: { [key: string]: JSX.Element[] } = {
     owner: [
       adminButtons[roleType],
-      channelRoleEvent(<TbShoe />, paths.kick, 'post'),
+      channelRoleEvent(<TbShoe />, paths.kick, 'delete'),
       channelRoleEvent(<TbBan />, paths.ban, 'post'),
       muteButtons[`${isMuted}`],
     ],
     admin:
       roleType === 'normal'
         ? [
-            channelRoleEvent(<TbShoe />, paths.kick, 'post'),
+            channelRoleEvent(<TbShoe />, paths.kick, 'delete'),
             channelRoleEvent(<TbBan />, paths.ban, 'post'),
             muteButtons[`${isMuted}`],
           ]
