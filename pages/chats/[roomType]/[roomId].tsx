@@ -8,7 +8,7 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 
 import { sideBarState } from 'recoils/sideBar';
 
-import { RoomType, UserImageMap } from 'types/chatTypes';
+import { ParticipantsResponse, RoomType, UserImageMap } from 'types/chatTypes';
 
 import useChatQuery from 'hooks/useChatQuery';
 import useCustomQuery from 'hooks/useCustomQuery';
@@ -44,10 +44,10 @@ export default function Chats() {
   if (chatUsers.isError || myChannelGet.isError) return <ErrorRefresher />;
 
   const buttons = [];
-  const { me } = chatUsers.data;
+  const { me } = chatUsers.data as ParticipantsResponse;
 
   if (roomType === 'channel') {
-    if (me.roleYupe === 'owner')
+    if (me.roleType === 'owner')
       buttons.push({
         value: <RiLockPasswordFill />,
         handleButtonClick: () => {
