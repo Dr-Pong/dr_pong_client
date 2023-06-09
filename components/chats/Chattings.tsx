@@ -134,7 +134,7 @@ export default function Chattings({
           ㅤ
         </div>
         {chats.map((chat) => {
-          const { id, message } = chat;
+          const { id, message, nickname } = chat;
           return (
             <div key={chat.id} className={styles.chatBox}>
               {chat.type === 'fail' && (
@@ -145,7 +145,7 @@ export default function Chattings({
                   handleChatPost={handleChatPost}
                 />
               )}
-              <ChatBox userImageMap={userImageMap} chat={chat} />
+              <ChatBox chat={chat} imgUrl={userImageMap[nickname]} />
             </div>
           );
         })}
