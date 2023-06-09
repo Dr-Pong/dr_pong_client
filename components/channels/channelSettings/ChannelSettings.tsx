@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useSetRecoilState } from 'recoil';
 
-import { FormEvent, SetStateAction, useState } from 'react';
+import { FormEvent, SetStateAction, useState, Dispatch } from 'react';
 
 import { openModalState } from 'recoils/modal';
 
@@ -19,7 +19,7 @@ import styles from 'styles/channels/ChannelSettings.module.scss';
 
 export type SettingFieldProps = {
   channelInfo: ChannelInfo;
-  setChannelInfo: React.Dispatch<SetStateAction<ChannelInfo>>;
+  setChannelInfo: Dispatch<SetStateAction<ChannelInfo>>;
 };
 
 type FieldType = {
@@ -141,5 +141,5 @@ export const defaultChannelSettings: ChannelInfo = {
   access: 'public',
   title: '',
   password: null,
-  capacity: 10,
+  maxCount: 10,
 };
