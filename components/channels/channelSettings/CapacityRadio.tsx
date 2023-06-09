@@ -8,14 +8,14 @@ export default function CapacityRadio({
   channelInfo,
   setChannelInfo,
 }: SettingFieldProps) {
-  const { capacity } = channelInfo;
+  const { maxCount } = channelInfo;
   const capacities = [10, 30, 50];
 
   const handleCapacityChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       setChannelInfo((prev) => ({
         ...prev,
-        capacity: Number(event.target.value),
+        maxCount: Number(event.target.value),
       }));
     },
     [channelInfo]
@@ -30,7 +30,7 @@ export default function CapacityRadio({
               type='radio'
               id={`${number}`}
               value={`${number}`}
-              checked={capacity === number}
+              checked={maxCount === number}
               onChange={handleCapacityChange}
             />
             {number}

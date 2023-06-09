@@ -16,5 +16,5 @@ export interface ChannelInfo {
   access: string;
   title: string;
   password: string | null;
-  capacity: number;
+  maxCount: number;
 }
