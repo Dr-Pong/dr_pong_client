@@ -12,8 +12,7 @@ import useModalProvider from 'hooks/useModalProvider';
 
 import FriendDropdown from 'components/friends/FriendDropdown';
 import BasicButton from 'components/global/buttons/BasicButton';
-import GameInvitationButton
-  from 'components/global/buttons/GameInvitationButton';
+import GameInvitationButton from 'components/global/buttons/GameInvitationButton';
 import ToastResultButton, {
   RequestProps,
 } from 'components/global/buttons/ToastResultButton';
@@ -127,7 +126,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
   const directMessage = (label: React.ReactNode) => {
     return (
       <BasicButton style={style} color={color} handleButtonClick={closeModal}>
-        <Link href={'/chat'}>{label}</Link>
+        <Link href={`/chats/dm/${target}`}>{label}</Link>
       </BasicButton>
     );
   };
@@ -148,7 +147,11 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
     );
   };
 
-  const channelRoleEvent = (label: React.ReactNode, roleApi: string, method: 'post' | 'delete' | 'patch') => {
+  const channelRoleEvent = (
+    label: React.ReactNode,
+    roleApi: string,
+    method: 'post' | 'delete' | 'patch'
+  ) => {
     const request: RequestProps = {
       api: `${roleApi}/${target}`,
       method: method,

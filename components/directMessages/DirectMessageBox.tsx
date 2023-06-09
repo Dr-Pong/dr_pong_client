@@ -1,5 +1,7 @@
 import { useSetRecoilState } from 'recoil';
 
+import { useRouter } from 'next/router';
+
 import { sideBarState } from 'recoils/sideBar';
 
 import { DMRoom } from 'types/notificationTypes';
@@ -13,10 +15,11 @@ type DirectMessageBoxProps = {
 export default function DirectMessageBox({ dmRoom }: DirectMessageBoxProps) {
   const setSideBar = useSetRecoilState(sideBarState);
   const { nickname, imgUrl, newChats } = dmRoom;
+  const router = useRouter();
 
   const handleRouterToChat = () => {
     setSideBar(null);
-    // chat 페이지로 이동
+    router.push(`/chats/dm/${nickname}`);
   };
 
   return (
