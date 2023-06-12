@@ -32,7 +32,7 @@ export default function AuthenticationFrame() {
       <NumberInputBox inputRef={inputRef} boxNumber={6} />
       <SubmitButton
         style='basic'
-        color='black'
+        color='purple'
         handleButtonClick={checkOTPValidity}
       >
         {t('submit')}

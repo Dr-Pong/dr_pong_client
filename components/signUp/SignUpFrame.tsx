@@ -42,7 +42,7 @@ export default function SignUpFrame() {
     return true;
   };
 
-  const signUp = () => {
+  const handleSignUp = () => {
     const imgId = (
       document.querySelector(
         'input[type=radio][name=userImage]:checked'
@@ -68,7 +68,7 @@ export default function SignUpFrame() {
     <div className={styles.signUpFrame}>
       <SignUpFields />
       <Warnings wrongFields={wrongFields} />
-      <BasicButton style='basic' color='black' handleButtonClick={signUp}>
+      <BasicButton style='basic' color='pink' handleButtonClick={handleSignUp}>
         {t('sign up')}
       </BasicButton>
     </div>

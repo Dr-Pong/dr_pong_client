@@ -22,7 +22,7 @@ export default function Authentication() {
     router.push('/');
   }
   return (
-    <div className={styles.AuthenticationPageContainer}>
+    <div className={styles.authenticationPageContainer}>
       <PageHeader title={t('2fa')} />
       <AuthenticationFrame />
     </div>

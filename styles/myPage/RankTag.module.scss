@@ -1,9 +1,12 @@
-@import 'styles/common.scss';
+@import 'styles/common';
 
 .rankTagContainer {
   font-size: 0.8rem;
-  border: solid 1px white;
+  border: solid 1px $light-grey;
   border-radius: $basic-radius;
+  &.modal {
+    border: solid 1px $just-pink;
+  }
 }
 
 .bestRecord {
@@ -27,6 +30,7 @@
   flex-direction: row;
   justify-content: flex-start;
   width: fit-content;
+  color: white;
   background: $just-purple;
   padding-inline: 0.3rem;
 }

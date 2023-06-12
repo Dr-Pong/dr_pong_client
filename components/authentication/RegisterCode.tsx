@@ -4,8 +4,8 @@ import { AuthCode } from 'types/authTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
-import LoadingSpinner from 'components/global/LoadingSpinner';
 import ErrorRefresher from 'components/global/ErrorRefresher';
+import LoadingSpinner from 'components/global/LoadingSpinner';
 
 import styles from 'styles/authentication/RegisterCode.module.scss';
 
@@ -23,7 +23,7 @@ export default function RegisterCode() {
   if (isError) return <ErrorRefresher />;
 
   return (
-    <div className={styles.CodeContainer}>
+    <div className={styles.codeContainer}>
       <img
         className={styles.codeImage}
         src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/440px-QR_code_for_mobile_English_Wikipedia.svg.png'

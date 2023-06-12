@@ -1,15 +1,24 @@
-@import 'styles/common.scss';
+@import 'styles/common';
 
 .signUpPageContainer {
-  @include pageContainer;
+  @include pageWithHeaderContainer;
+  padding-block: 2rem;
 }
 
 .signUpFrame {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
   align-items: center;
   justify-content: center;
   height: 100%;
+  padding-inline: 1rem;
+}
+
+.signUpFields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .signUpField {
@@ -17,10 +26,10 @@
   grid-template-columns: 5rem 1fr;
   gap: 1rem;
   align-items: center;
-  margin-bottom: 2rem;
 }
 
 .nicknameInput {
+  justify-self: stretch;
   height: 1.8rem;
   padding-inline: 0.5rem;
 }

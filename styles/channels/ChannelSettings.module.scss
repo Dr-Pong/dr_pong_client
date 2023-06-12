@@ -12,17 +12,18 @@
 }
 
 .settingFields {
-  display: grid;
-  grid-auto-rows: 2.5rem;
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
 }
 
 .settingField {
   display: grid;
   grid-template-columns: 5rem 1fr;
-  gap: 1rem;
+  gap: 0.5rem;
   align-items: center;
   justify-items: stretch;
+  height: 2.5rem;
 }
 
 .fieldName {
@@ -37,10 +38,7 @@
 }
 
 .radio {
-  input {
-    margin-right: 0.5rem;
-    color: $just-pink;
-  }
+  @include radioLabelWrap;
 }
 
 .input {

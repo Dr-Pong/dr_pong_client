@@ -36,7 +36,7 @@ export default function Records() {
             handleOnSubmit={handleNicknameSearch}
           />
           <SubmitButton
-            style='basic'
+            style='short'
             color='pink'
             handleButtonClick={handleNicknameSearch}
           >
