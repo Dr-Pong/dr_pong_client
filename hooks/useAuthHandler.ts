@@ -1,4 +1,8 @@
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import {
+  useRecoilState,
+  useResetRecoilState,
+  useSetRecoilState
+} from 'recoil';
 
 import { useRouter } from 'next/router';
 
@@ -6,6 +10,9 @@ import { useCookies } from 'react-cookie';
 
 import { loginState } from 'recoils/login';
 import { userState } from 'recoils/user';
+import { openModalState } from 'recoils/modal';
+
+import { useQueryClient } from 'react-query';
 
 interface TokenResponse {
   accessToken: string;
@@ -14,18 +21,21 @@ const useAuthHandler = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['Authorization']);
   const [login, setLogin] = useRecoilState(loginState);
   const resetUserState = useResetRecoilState(userState);
+  const setOpenModal = useSetRecoilState(openModalState);
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const onAuthSuccess = (res: TokenResponse) => {
     const { accessToken } = res;
     const expires = new Date();
     expires.setHours(expires.getHours() + 1);
-    setCookie('Authorization', `Bearer ${accessToken}`, {
+    setCookie('Authorization', `${accessToken}`, {
       path: '/',
       expires,
       // httpOnly: true,
     });
     setLogin(true);
+    queryClient.invalidateQueries(['user_key']);
     router.push('/');
   };
 
@@ -47,6 +57,7 @@ const useAuthHandler = () => {
     removeCookie('Authorization');
     setLogin(false);
     resetUserState();
+    setOpenModal(false);
     router.push('/');
   };
 
