@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Chat, RoomType, UserImageMap } from 'types/chatTypes';
 
+import { useQueryClient } from 'react-query';
+
 import useChatQuery from 'hooks/useChatQuery';
 
 import ChatBox from 'components/chats/ChatBox';
@@ -24,6 +26,7 @@ export default function Chattings({
   roomType,
   roomId,
 }: ChattingsProps) {
+  const queryClient = useQueryClient();
   const [chats, setChats] = useState<Chat[]>([]);
   const [message, setMessage] = useState<string>('');
   const [isTopRefVisible, setIsTopRefVisible] = useState(true);
@@ -57,6 +60,7 @@ export default function Chattings({
       clearTimeout(timeout);
       if (topRef.current) observer.unobserve(topRef.current);
       if (bottomRef.current) observer.unobserve(bottomRef.current);
+      queryClient.removeQueries(['chats', roomId]);
     };
   }, []);
 
@@ -68,6 +72,19 @@ export default function Chattings({
     () => topRef.current?.scrollIntoView({ behavior: 'auto' }),
     [topRef.current]
   );
+
+  const handleChatPostSuccess = (message: string) => {
+    setChats((prev) => [
+      {
+        id: prev[0].id + 1,
+        message,
+        nickname: 'hakiim',
+        time: new Date(),
+        type: 'me',
+      },
+      ...prev,
+    ]);
+  }
 
   const handleChatPostFail = (message: string) => {
     setChats((prev) => [
@@ -88,7 +105,7 @@ export default function Chattings({
       mutate(
         { message },
         {
-          onSuccess: () => {},
+          onSuccess: () => handleChatPostSuccess(message),
           onError: () => handleChatPostFail(message),
         }
       );
