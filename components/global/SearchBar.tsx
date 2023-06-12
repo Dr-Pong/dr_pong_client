@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, FormEvent } from 'react';
 
 import styles from 'styles/global/SearchBar.module.scss';
 
@@ -6,7 +6,7 @@ type SearchableListProps = {
   searchKey: string;
   setSearchKey: Dispatch<SetStateAction<string>>;
   placeHolder: string;
-  handleOnSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
+  handleOnSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
 
 export default function SearchBar({
