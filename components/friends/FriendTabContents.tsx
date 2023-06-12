@@ -48,7 +48,6 @@ export default function FriendTabContents() {
           searchKey={searchKey}
           setSearchKey={setSearchKey}
           placeHolder={t('Search by nickname')}
-          handleOnSubmit={(e: FormEvent<HTMLFormElement>) => { e.preventDefault() }}
         />
         {tab === 'all' && (
           <BasicButton

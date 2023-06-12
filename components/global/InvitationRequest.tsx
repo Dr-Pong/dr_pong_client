@@ -55,7 +55,6 @@ export default function InvitationRequest({
           searchKey={searchKey}
           setSearchKey={setSearchKey}
           placeHolder='Search by nickname'
-          handleOnSubmit={(e: FormEvent<HTMLFormElement>) => { e.preventDefault() }}
         />
       </div>
       <div className={styles.friendList}>

@@ -6,14 +6,16 @@ type SearchableListProps = {
   searchKey: string;
   setSearchKey: Dispatch<SetStateAction<string>>;
   placeHolder: string;
-  handleOnSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  handleOnSubmit?: (event: FormEvent<HTMLFormElement>) => void;
 };
 
 export default function SearchBar({
   searchKey,
   setSearchKey,
   placeHolder,
-  handleOnSubmit,
+  handleOnSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  },
 }: SearchableListProps) {
   return (
     <form onSubmit={handleOnSubmit}>
