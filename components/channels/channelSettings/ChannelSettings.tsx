@@ -49,7 +49,7 @@ export default function ChannelSettings({
   const handleChannelCreate = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (channelInfo.title) {
-      channelCreateMutation.mutate({ newChannel: channelInfo });
+      channelCreateMutation.mutate(channelInfo);
       setOpenModal(false);
     }
   };
