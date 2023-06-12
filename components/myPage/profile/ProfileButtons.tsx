@@ -10,8 +10,8 @@ import { ButtonDesign } from 'types/buttonTypes';
 import useCustomQuery from 'hooks/useCustomQuery';
 import useRelationButtons from 'hooks/useRelationButtons';
 
-import LoadingSpinner from 'components/global/LoadingSpinner';
 import ErrorRefresher from 'components/global/ErrorRefresher';
+import LoadingSpinner from 'components/global/LoadingSpinner';
 
 import styles from 'styles/global/Button.module.scss';
 
@@ -21,7 +21,7 @@ type ProfileButtonsProps = {
 
 const buttonDesign: ButtonDesign = {
   style: 'flex',
-  color: 'black',
+  color: 'purple',
 };
 
 export default function ProfileButtons({ target }: ProfileButtonsProps) {
