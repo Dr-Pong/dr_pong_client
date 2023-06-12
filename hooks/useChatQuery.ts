@@ -33,10 +33,10 @@ const useChatQuery = (roomType: RoomType, roomId: string) => {
     return roomType === 'dm'
       ? get('DMFriend', `/users/${roomId}/detail`, friendDetailToChatUser)
       : get(
-          'channelParticipants',
-          `/channels/${roomId}/participants`,
-          participantsToChatUsers
-        );
+        'channelParticipants',
+        `/channels/${roomId}/participants`,
+        participantsToChatUsers
+      );
   };
 
   const chatsGet = (handleChatJoin: (chats: Chat[]) => void, count: number) => {
@@ -53,7 +53,7 @@ const useChatQuery = (roomType: RoomType, roomId: string) => {
     };
 
     return useInfiniteQuery(
-      'chats',
+      ['chats', roomId],
       async ({ pageParam }) => {
         const offset = pageParam;
         return fetchChats(roomId, offset);
