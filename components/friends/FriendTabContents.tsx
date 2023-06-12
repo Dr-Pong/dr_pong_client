@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue } from 'recoil';
 
-import React, { useState } from 'react';
+import React, { useState, FormEvent } from 'react';
 import { IoMdAdd } from 'react-icons/io';
 import { UseQueryResult } from 'react-query';
 
@@ -48,6 +48,7 @@ export default function FriendTabContents() {
           searchKey={searchKey}
           setSearchKey={setSearchKey}
           placeHolder={t('Search by nickname')}
+          handleOnSubmit={(e: FormEvent<HTMLFormElement>) => { e.preventDefault() }}
         />
         {tab === 'all' && (
           <BasicButton
