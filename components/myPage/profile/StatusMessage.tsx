@@ -4,18 +4,20 @@ import React from 'react';
 
 import { editableState } from 'recoils/user';
 
-import { DetailDto } from 'types/userTypes';
+import { DetailDto, ProfileStyle } from 'types/userTypes';
 
 import styles from 'styles/myPage/StatusMessage.module.scss';
 
 type StatusMessageProps = {
   detailDto: DetailDto;
   setDetailDto: React.Dispatch<React.SetStateAction<DetailDto>>;
+  style: ProfileStyle;
 };
 
 export default function StatusMessage({
   detailDto,
   setDetailDto,
+  style,
 }: StatusMessageProps) {
   const editable = useRecoilValue(editableState);
 
@@ -24,7 +26,7 @@ export default function StatusMessage({
   };
 
   return (
-    <div className={styles.statusMessageContainer}>
+    <div className={`${styles.statusMessageContainer} ${styles[style]}`}>
       {editable ? (
         <input
           className={styles.messageInput}
