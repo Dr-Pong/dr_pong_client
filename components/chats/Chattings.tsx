@@ -116,15 +116,8 @@ export default function Chattings({
   );
 
   useEffect(() => {
-    if (
-      !isTopRefVisible &&
-      chats[0] !== newestChat &&
-      chats[0].type === 'others'
-    )
-      // TODO: 소켓 달고
-      setNewestChat({ ...chats[0] }); // TODO: 소켓 달고
-    else if (chats[0] === newestChat) return; // TODO: 소켓 달고
-    else topRef.current?.scrollIntoView({ behavior: 'auto' });
+    if (chats[0] !== newestChat) setNewestChat({ ...chats[0] });
+    // TODO: 소켓 핸들링
   }, [chats]);
 
   const {
@@ -170,7 +163,7 @@ export default function Chattings({
           ㅤ
         </div>
       </div>
-      {!isTopRefVisible && newestChat && (
+      {!isTopRefVisible && newestChat && chats[0].type === 'others' && (
         <div className={styles.preview} onClick={handlePreviewClick}>
           <div>{newestChat.nickname}</div>
           <div>{messageCutter(newestChat.message)}</div>
