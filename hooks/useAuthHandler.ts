@@ -58,6 +58,7 @@ const useAuthHandler = () => {
     setLogin(false);
     resetUserState();
     setOpenModal(false);
+    queryClient.invalidateQueries(['user_key']);
     router.push('/');
   };
 
