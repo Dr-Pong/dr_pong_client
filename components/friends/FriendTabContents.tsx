@@ -13,10 +13,10 @@ import useFriendsQuery from 'hooks/useFriendsQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
 import FriendBox from 'components/friends/FriendBox';
+import ErrorRefresher from 'components/global/ErrorRefresher';
+import LoadingSpinner from 'components/global/LoadingSpinner';
 import SearchBar from 'components/global/SearchBar';
 import BasicButton from 'components/global/buttons/BasicButton';
-import LoadingSpinner from 'components/global/LoadingSpinner';
-import ErrorRefresher from 'components/global/ErrorRefresher';
 
 import styles from 'styles/friends/FriendTabContents.module.scss';
 
@@ -63,7 +63,9 @@ export default function FriendTabContents() {
         {friends
           .filter((friend) => friend.nickname.includes(searchKey))
           .map((friend) => {
-            return <FriendBox key={friend.nickname} friend={friend} />;
+            return (
+              <FriendBox key={friend.nickname} friend={friend} type={tab} />
+            );
           })}
       </div>
     </div>
