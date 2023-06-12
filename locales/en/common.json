@@ -10,12 +10,13 @@
   "message": "message",
   "Google OTP": "Google OTP",
   "authenticate": "authenticate",
-  "settings": "settings",
+  "settings": "Settings",
   "Language": "Language",
   "2fa": "Two-Factor Authentication",
   "enable": "enable",
   "disable": "disable",
   "logout": "logout",
+  "Logout": "Logout",
   "success": "Your request is done successfully.",
   "failure": "Your request has been failed.",
   "Messages": "Messages",
@@ -26,7 +27,11 @@
   "channelInv2": "channel.",
   "Create new channel": "Create new channel",
   "Edit channel": "Edit channel",
+  "Invite friend": "Invite friend",
   "Password": "Password",
   "Refresh": "Refresh",
-  "Fetch error": "An error occurred while loading data."
+  "Fetch error": "An error occurred while loading data.",
+  "Select image": "Select image",
+  "lose changes?": "Your changes will not be saved. Do you want to continue?",
+  "search by nickname": "search by nickname"
 }

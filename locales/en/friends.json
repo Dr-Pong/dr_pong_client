@@ -3,5 +3,7 @@
   "all": "all",
   "pending": "pending",
   "block": "block",
-  "Search by nickname": "Search by nickname"
+  "Search by nickname": "Search by nickname",
+  "nickname": "nickname",
+  "no user": "No user found."
 }
