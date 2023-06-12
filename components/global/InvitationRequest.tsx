@@ -1,39 +1,32 @@
+import useTranslation from 'next-translate/useTranslation';
+
 import { useState } from 'react';
 
-import useFriendsQuery from 'hooks/useFriendsQuery';
-import useRelationButtons from 'hooks/useRelationButtons';
-
-import SearchBar from 'components/global/SearchBar';
-import LoadingSpinner from 'components/global/LoadingSpinner';
-import ErrorRefresher from 'components/global/ErrorRefresher';
-
-import { Friend } from 'types/friendTypes';
-import { ButtonDesign } from 'types/buttonTypes';
 import { Participant } from 'types/chatTypes';
+import { Friend, FriendBoxType } from 'types/friendTypes';
 
-import { GrAddCircle, GrGamepad } from 'react-icons/gr';
+import useFriendsQuery from 'hooks/useFriendsQuery';
+
+import FriendBox from 'components/friends/FriendBox';
+import ErrorRefresher from 'components/global/ErrorRefresher';
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import SearchBar from 'components/global/SearchBar';
 
 import styles from 'styles/global/InvitationRequest.module.scss';
-
-const buttonDesign: ButtonDesign = {
-  style: 'round',
-  color: 'opaque',
-};
 
 type InvitationProps = {
   invitationType: string;
   roomId?: string;
   participants?: Participant[];
-}
+};
 
 export default function InvitationRequest({
   invitationType,
   roomId,
-  participants
+  participants,
 }: InvitationProps) {
+  const { t } = useTranslation('common');
   const { allListGet } = useFriendsQuery();
-  const { channelInvitation, gameInvitation }
-    = useRelationButtons(buttonDesign, roomId as string);
   const [searchKey, setSearchKey] = useState<string>('');
   const [friends, setFriends] = useState<Friend[]>([]);
   const { isLoading, isError } = allListGet(setFriends);
@@ -50,35 +43,20 @@ export default function InvitationRequest({
 
   return (
     <div className={styles.invitationModal}>
-      <div className={styles.searchBar}>
-        <SearchBar
-          searchKey={searchKey}
-          setSearchKey={setSearchKey}
-          placeHolder='Search by nickname'
-        />
-      </div>
+      <SearchBar
+        searchKey={searchKey}
+        setSearchKey={setSearchKey}
+        placeHolder={t('search by nickname')}
+      />
       <div className={styles.friendList}>
         {filteredFriends.map((friend) => {
           return (
-            <div className={styles.friendBox}>
-              <div className={styles.friendStatus}>
-                <img className={styles.img} src={friend.imgUrl} />
-                {friend.status && (
-                  <div className={
-                    `${styles.statusSignal} ${styles[friend.status]}`
-                  } />
-                )}
-              </div>
-              <div className={styles.nickname}>
-                {friend.nickname}
-              </div>
-              <div className={styles.inviteButton}>
-                {invitationType === 'channel'
-                  ? channelInvitation(<GrAddCircle />, friend.nickname)
-                  : gameInvitation(<GrGamepad />, friend.nickname)}
-              </div>
-            </div>
-          )
+            <FriendBox
+              type={invitationType as FriendBoxType}
+              friend={friend}
+              roomId={roomId}
+            />
+          );
         })}
       </div>
     </div>
