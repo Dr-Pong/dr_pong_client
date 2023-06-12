@@ -12,6 +12,10 @@ export default function Settings() {
   const { t } = useTranslation('common');
   const { onLogout } = useAuthHandler();
 
+  const handleLogout = () => {
+    onLogout();
+  };
+
   const settingFields = [
     {
       topic: t('Language'),
@@ -21,11 +25,19 @@ export default function Settings() {
       topic: t('2fa'),
       field: <TfaField />,
     },
+    {
+      topic: t('Logout'),
+      field: (
+        <BasicButton
+          style='basic'
+          color='purple'
+          handleButtonClick={handleLogout}
+        >
+          {t('logout')}
+        </BasicButton>
+      ),
+    },
   ];
-
-  const handleLogout = () => {
-    onLogout();
-  };
 
   return (
     <div className={styles.settingsContainer}>
@@ -39,15 +51,6 @@ export default function Settings() {
           );
         })}
       </ul>
-      <div className={styles.buttons}>
-        <BasicButton
-          style='basic'
-          color='black'
-          handleButtonClick={handleLogout}
-        >
-          {t('logout')}
-        </BasicButton>
-      </div>
     </div>
   );
 }
