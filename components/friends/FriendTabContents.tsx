@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue } from 'recoil';
 
-import React, { useState, FormEvent } from 'react';
+import React, { useState } from 'react';
 import { IoMdAdd } from 'react-icons/io';
 import { UseQueryResult } from 'react-query';
 

@@ -4,9 +4,6 @@ import useTranslation from 'next-translate/useTranslation';
 import { Participant } from 'types/chatTypes';
 import { Friend, FriendBoxType } from 'types/friendTypes';
 
-import { Participant } from 'types/chatTypes';
-import { Friend, FriendBoxType } from 'types/friendTypes';
-
 import useFriendsQuery from 'hooks/useFriendsQuery';
 
 import FriendBox from 'components/friends/FriendBox';
