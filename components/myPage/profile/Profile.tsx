@@ -4,21 +4,31 @@ import React, { useEffect, useState } from 'react';
 
 import { editableState, profileTabState } from 'recoils/user';
 
-import { Achievement, Achievements, DetailDto } from 'types/userTypes';
+import {
+  Achievement,
+  Achievements,
+  DetailDto,
+  ProfileStyle,
+} from 'types/userTypes';
 
 import useMyPageQuery from 'hooks/useMyPageQuery';
 
+import ErrorRefresher from 'components/global/ErrorRefresher';
+import LoadingSpinner from 'components/global/LoadingSpinner';
 import SelectableItem from 'components/myPage/SelectableItem';
 import ProfileCard from 'components/myPage/profile/ProfileCard';
 import ProfileImage from 'components/myPage/profile/ProfileImage';
 import StatCard from 'components/myPage/profile/StatCard';
 import StatusMessage from 'components/myPage/profile/StatusMessage';
-import LoadingSpinner from 'components/global/LoadingSpinner';
-import ErrorRefresher from 'components/global/ErrorRefresher';
 
 import styles from 'styles/myPage/Profile.module.scss';
 
-export default function Profile({ nickname }: { nickname: string }) {
+type ProfileProps = {
+  nickname: string;
+  style: ProfileStyle;
+};
+
+export default function Profile({ nickname, style }: ProfileProps) {
   const editable = useRecoilValue(editableState);
   const profileTab = useRecoilValue(profileTabState);
   const { selectedGet } = useMyPageQuery(nickname, 'achievements');
@@ -48,16 +58,21 @@ export default function Profile({ nickname }: { nickname: string }) {
   if (isError) return <ErrorRefresher />;
 
   return (
-    <div className={styles.profileContainer}>
+    <div className={`${styles.profileContainer} ${styles[style]}`}>
       <ProfileImage detailDto={detailDto} setDetailDto={setDetailDto} />
       <ProfileCard
         detailDto={detailDto}
         setDetailDto={setDetailDto}
         nickname={nickname}
+        style={style}
       />
-      <StatusMessage detailDto={detailDto} setDetailDto={setDetailDto} />
-      <StatCard nickname={nickname} />
-      <div className={styles.achievementsBox}>
+      <StatusMessage
+        detailDto={detailDto}
+        setDetailDto={setDetailDto}
+        style={style}
+      />
+      <StatCard nickname={nickname} style={style} />
+      <div className={`${styles.achievementsBox} ${styles[style]}`}>
         {achievements.achievements.map((item: Achievement | null) => (
           <SelectableItem
             key={item?.id}

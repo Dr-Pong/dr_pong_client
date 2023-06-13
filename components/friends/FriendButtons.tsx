@@ -2,25 +2,27 @@ import React from 'react';
 import { IoMdAdd, IoMdCheckmark, IoMdClose } from 'react-icons/io';
 import { IoChatbox } from 'react-icons/io5';
 
-import { ButtonDesign } from 'types/buttonTypes';
-import { FriendTab, SearchUser } from 'types/friendTypes';
+import { FriendBoxType } from 'types/friendTypes';
 
 import useRelationButtons from 'hooks/useRelationButtons';
 
 import styles from 'styles/friends/FriendButtons.module.scss';
 
-const buttonDesign: ButtonDesign = {
-  style: 'round',
-  color: 'opaque',
+type FriendButtonsProps = {
+  type: FriendBoxType;
+  nickname: string;
+  roomId?: string;
 };
 
 export default function FriendButtons({
-  tab,
+  type,
   nickname,
-}: {
-  tab: FriendTab | SearchUser;
-  nickname: string;
-}) {
+  roomId,
+}: FriendButtonsProps) {
+  const { channelInvitation, gameInvitation } = useRelationButtons(
+    { style: 'round', color: 'pink' },
+    nickname
+  );
   const {
     directMessage,
     dropdown,
@@ -28,7 +30,7 @@ export default function FriendButtons({
     rejectFriendRequest,
     addFriend,
     unblockUser,
-  } = useRelationButtons(buttonDesign, nickname);
+  } = useRelationButtons({ style: 'round', color: 'opaque' }, nickname);
 
   const buttons: {
     [key: string]: JSX.Element[];
@@ -43,11 +45,13 @@ export default function FriendButtons({
     ],
     block: [unblockUser(<IoMdClose />)],
     find: [addFriend(<IoMdAdd />)],
+    game: [gameInvitation(<IoMdAdd />)],
+    channel: [channelInvitation(<IoMdAdd />, roomId || '')],
   };
 
   return (
     <div className={styles.friendButtonsContainer}>
-      {buttons[tab].map((c) => c)}
+      {buttons[type].map((c) => c)}
     </div>
   );
 }

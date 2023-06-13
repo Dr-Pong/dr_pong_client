@@ -164,9 +164,9 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
     return <ToastResultButton request={request} button={buttonProps} />;
   };
 
-  const channelInvitation = (label: React.ReactNode, nickname: string) => {
+  const channelInvitation = (label: React.ReactNode, roomId: string) => {
     const request: RequestProps = {
-      api: `/channels/${target}/invitation/${nickname}`,
+      api: `/channels/${roomId}/invitation/${target}`,
       method: 'post',
       options: {},
     };
@@ -177,8 +177,8 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
     return <ToastResultButton request={request} button={buttonProps} />;
   };
 
-  const gameInvitation = (label: React.ReactNode, nickname: string) => {
-    const api = `/games/invitation/${nickname}`;
+  const gameInvitation = (label: React.ReactNode) => {
+    const api = `/games/invitation/${target}`;
     const buttonProps = {
       ...buttonDesign,
       children: label,

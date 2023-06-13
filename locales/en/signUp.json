@@ -6,5 +6,6 @@
   "Nickname": "Nickname",
   "upload file": "upload file",
   "wrong nickname": "Nickname must be between 2 and 10 alphanumeric characters.",
-  "wrong image": "Please select your profile image."
+  "wrong image": "Please select your profile image.",
+  "Set Profile": "Set Profile"
 }

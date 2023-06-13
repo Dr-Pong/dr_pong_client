@@ -12,7 +12,7 @@ $grey: #888888;
 $grey-ish: #bbbbbb;
 $green: #33bb44;
 
-$light-purple: #d19fff;
+$light-purple: #b66ff8;
 $just-purple: #6804c6;
 $dark-purple: #3a0071;
 $light-blue: #00c4ff;
@@ -77,5 +77,25 @@ $basic-font: 0.9rem;
   color: white;
   font-size: 0.8rem;
   background: $just-pink;
+  border-radius: $basic-radius;
+}
+
+@mixin radioLabelWrap {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  width: fit-content;
+  text-align: center;
+  cursor: pointer;
+  input {
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+  }
+}
+
+@mixin profileModal {
+  background: none;
+  border: solid 1px $just-purple;
   border-radius: $basic-radius;
 }

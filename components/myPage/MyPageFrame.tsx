@@ -34,7 +34,7 @@ export default function MyPageFrame() {
   };
 
   const tabs: { [key: string]: JSX.Element } = {
-    profile: <Profile nickname={nickname} key={'profile'} />,
+    profile: <Profile nickname={nickname} key={'profile'} style='page' />,
     achieve: (
       <SelectTab nickname={nickname} itemType={'achieve'} key={'achieve'} />
     ),

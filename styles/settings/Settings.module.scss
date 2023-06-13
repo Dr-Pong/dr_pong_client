@@ -3,19 +3,28 @@
 .settingsContainer {
   flex-direction: column;
   justify-content: space-between;
-  margin-inline: 1rem;
+  width: 100%;
   ul {
-    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     list-style: none;
   }
   li {
-    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 6.5rem 1fr;
+    gap: 0.5rem;
+    align-items: center;
+    justify-items: stretch;
+    height: 2.5rem;
+  }
+  form {
+    justify-self: center;
   }
 }
 
 .listTopic {
-  margin-bottom: 1rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .buttons {

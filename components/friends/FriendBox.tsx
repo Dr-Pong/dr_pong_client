@@ -1,10 +1,6 @@
-import { useRecoilValue } from 'recoil';
-
 import React from 'react';
 
-import { friendsTabState } from 'recoils/friends';
-
-import { Friend } from 'types/friendTypes';
+import { Friend, FriendBoxType } from 'types/friendTypes';
 
 import useModalProvider from 'hooks/useModalProvider';
 
@@ -12,8 +8,13 @@ import FriendButtons from 'components/friends/FriendButtons';
 
 import styles from 'styles/friends/FriendBox.module.scss';
 
-export default function FriendBox({ friend }: { friend: Friend }) {
-  const tab = useRecoilValue(friendsTabState);
+type FriendBoxProps = {
+  type: FriendBoxType;
+  friend: Friend;
+  roomId?: string;
+};
+
+export default function FriendBox({ type, friend, roomId }: FriendBoxProps) {
   const { nickname, status, imgUrl } = friend;
   const { useProfileModal } = useModalProvider();
 
@@ -23,7 +24,7 @@ export default function FriendBox({ friend }: { friend: Friend }) {
   };
 
   return (
-    <div className={styles.friendBoxContainer}>
+    <div className={`${styles.friendBoxContainer} ${styles[type]}`}>
       <div className={styles.imageStatusWrap}>
         <img className={styles.img} src={imgUrl} alt={`photo of ${nickname}`} />
         {status && (
@@ -33,7 +34,7 @@ export default function FriendBox({ friend }: { friend: Friend }) {
       <div className={styles.nickname} onClick={handleNicknameClick}>
         {nickname}
       </div>
-      <FriendButtons tab={tab} nickname={nickname} />
+      <FriendButtons type={type} nickname={nickname} roomId={roomId} />
     </div>
   );
 }

@@ -1,15 +1,15 @@
-@import 'styles/common.scss';
+@import 'styles/common';
 
-.CodeContainer {
+.codeContainer {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .codeImage {
-  width: 10rem;
-  margin-bottom: 0.5rem;
+  width: 50%;
   background: white;
 }
 
@@ -17,12 +17,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 10rem;
+  width: 100%;
   height: 2rem;
   padding-top: 0.2rem;
-  color: $blue;
-  font-size: 1.3rem;
+  color: $just-pink;
+  font-size: 1.2rem;
   letter-spacing: 0.2rem;
   text-align: center;
+  overflow-wrap: anywhere;
   background: white;
 }

@@ -5,12 +5,14 @@ import Link from 'next/link';
 import React from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 
+import { ProfileStyle } from 'types/userTypes';
+
 import useMyPageQuery from 'hooks/useMyPageQuery';
 
+import ErrorRefresher from 'components/global/ErrorRefresher';
+import LoadingSpinner from 'components/global/LoadingSpinner';
 import RankTag from 'components/myPage/profile/RankTag';
 import WinRateStat from 'components/myPage/profile/WinRateStat';
-import LoadingSpinner from 'components/global/LoadingSpinner';
-import ErrorRefresher from 'components/global/ErrorRefresher';
 
 import styles from 'styles/myPage/StatCard.module.scss';
 
@@ -19,7 +21,9 @@ type StatBox = {
   bottom: React.ReactElement;
 };
 
-export default function StatCard({ nickname }: { nickname: string }) {
+type StatCardProps = { nickname: string; style: ProfileStyle };
+
+export default function StatCard({ nickname, style }: StatCardProps) {
   const { statGet } = useMyPageQuery(nickname);
   const { t } = useTranslation('myPage');
   const { data, isLoading, isError } = statGet();
@@ -40,7 +44,7 @@ export default function StatCard({ nickname }: { nickname: string }) {
       top: (
         <div className={styles.top}>
           <div className={styles.statName}>{t('Rank')}</div>
-          <RankTag rankProps={seasonRank} isBest={false} />
+          <RankTag rankProps={seasonRank} isBest={false} style={style} />
         </div>
       ),
       bottom: <WinRateStat winRateInfo={seasonStat} />,
@@ -48,7 +52,7 @@ export default function StatCard({ nickname }: { nickname: string }) {
   ];
 
   return (
-    <div className={styles.statCardContainer}>
+    <div className={`${styles.statCardContainer} ${styles[style]}`}>
       <div className={styles.leftWrap}>
         {stats.map(({ top, bottom }: StatBox, i: number) => {
           return (
@@ -64,7 +68,7 @@ export default function StatCard({ nickname }: { nickname: string }) {
           <div>{t('History')}</div>
           <IoIosArrowForward />
         </Link>
-        <RankTag rankProps={totalRank} isBest={true} />
+        <RankTag rankProps={totalRank} isBest={true} style={style} />
       </div>
     </div>
   );
