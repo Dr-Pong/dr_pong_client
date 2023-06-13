@@ -1,14 +1,13 @@
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
-import React, { useState } from 'react';
+import React from 'react';
 
-import { openAlertState } from 'recoils/alert';
+import { alertTypeState, openAlertState } from 'recoils/alert';
 
 import { ButtonProps } from 'types/buttonTypes';
 
 import useCustomQuery, { MutationType } from 'hooks/useCustomQuery';
 
-import Alert from 'components/alerts/Alert';
 import BasicButton from 'components/global/buttons/BasicButton';
 
 export type RequestProps = {
@@ -28,8 +27,8 @@ export default function ToastResultButton({
   const { api, method, options, body } = request;
   const { style, color, children } = button;
   const { mutationPost, mutationPatch, mutationDelete } = useCustomQuery();
-  const [openAlert, setOpenAlert] = useRecoilState(openAlertState);
-  const [alert, setAlert] = useState<React.ReactNode>(null);
+  const setOpenAlert = useSetRecoilState(openAlertState);
+  const setAlertType = useSetRecoilState(alertTypeState);
   const call: { [key: string]: MutationType } = {
     post: mutationPost,
     patch: mutationPatch,
@@ -39,12 +38,12 @@ export default function ToastResultButton({
   const { mutate } = call[method](api, options);
 
   const onSuccess = () => {
-    setAlert(<Alert isError={false} />);
+    setAlertType('success');
     setOpenAlert(true);
   };
 
   const onError = () => {
-    setAlert(<Alert isError={true} />);
+    setAlertType('fail');
     setOpenAlert(true);
   };
 
@@ -56,15 +55,12 @@ export default function ToastResultButton({
   };
 
   return (
-    <>
-      <BasicButton
-        style={style}
-        color={color}
-        handleButtonClick={handleButtonClick}
-      >
-        {children}
-      </BasicButton>
-      {openAlert && alert}
-    </>
+    <BasicButton
+      style={style}
+      color={color}
+      handleButtonClick={handleButtonClick}
+    >
+      {children}
+    </BasicButton>
   );
 }
