@@ -7,10 +7,8 @@
 
 .searchBar {
   display: flex;
+  gap: 0.3rem;
   align-items: center;
   justify-content: flex-end;
   margin-bottom: 1rem;
-  form {
-    margin-left: 0.5rem;
-  }
 }

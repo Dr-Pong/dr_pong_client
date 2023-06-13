@@ -6,10 +6,10 @@ import { userState } from 'recoils/user';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
-import LoadingSpinner from 'components/global/LoadingSpinner';
-import ErrorRefresher from 'components/global/ErrorRefresher';
-
 import { LayoutProps } from 'pages/_app';
+
+import ErrorRefresher from 'components/global/ErrorRefresher';
+import LoadingSpinner from 'components/global/LoadingSpinner';
 
 export default function LoginFilter({ children }: LayoutProps) {
   const [user, setUser] = useRecoilState(userState);

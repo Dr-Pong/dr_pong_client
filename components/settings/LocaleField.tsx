@@ -22,7 +22,7 @@ export default function LocaleField() {
     <div className={styles.localeFieldContainer}>
       {localeOptions.map(({ id, value }, i) => {
         return (
-          <span key={i} className={styles.radioButtonContainer}>
+          <label key={i} className={styles.radioButton}>
             <input
               type='radio'
               name='locale'
@@ -30,8 +30,8 @@ export default function LocaleField() {
               defaultChecked={id === currentLocale}
               onChange={handleLocaleChange}
             />
-            <label htmlFor={id}>{value}</label>
-          </span>
+            {value}
+          </label>
         );
       })}
     </div>

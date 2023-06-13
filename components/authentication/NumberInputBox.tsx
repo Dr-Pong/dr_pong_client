@@ -51,17 +51,16 @@ export default function NumberInputBox({
     <div className={styles.numberInputBoxContainer}>
       {boxes.map((idx: number) => {
         return (
-          <span key={idx} className={styles.inputBoxWrap}>
-            <input
-              type='text'
-              id={`${idx}`}
-              className={styles.inputBox}
-              ref={(el) => (inputRef.current[idx] = el)}
-              onChange={handleOnChange}
-              onClick={handleClickFocus}
-              onKeyDown={handleArrowKey}
-            />
-          </span>
+          <input
+            key={idx}
+            type='text'
+            id={`${idx}`}
+            className={styles.inputBox}
+            ref={(el) => (inputRef.current[idx] = el)}
+            onChange={handleOnChange}
+            onClick={handleClickFocus}
+            onKeyDown={handleArrowKey}
+          />
         );
       })}
     </div>

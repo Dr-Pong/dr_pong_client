@@ -1,19 +1,13 @@
-.localeFieldContainer {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  font-size: 1rem;
-}
+@import 'styles/common';
 
-.radioButtonContainer {
+.localeFieldContainer {
   display: flex;
   align-items: center;
-  input {
-    width: 1.2rem;
-    height: 1.2rem;
-    margin-right: 0.5rem;
-    cursor: pointer;
-  }
-  label {
-    cursor: pointer;
-  }
+  justify-content: space-between;
+  padding-right: 0.3rem;
+}
+
+.radioButton {
+  @include radioLabelWrap;
+  width: fit-content;
 }

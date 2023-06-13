@@ -1,4 +1,4 @@
-@import 'styles/common.scss';
+@import 'styles/common';
 
 .statusMessageContainer {
   grid-column: 1/3;
@@ -6,6 +6,10 @@
   padding: 1rem;
   font-size: 1rem;
   background: $dark-blue;
+  &.modal {
+    @include profileModal;
+    height: fit-content;
+  }
 }
 
 .messageInput {

@@ -2,16 +2,17 @@ import useTranslation from 'next-translate/useTranslation';
 
 import React from 'react';
 
-import { UserRank } from 'types/userTypes';
+import { ProfileStyle, UserRank } from 'types/userTypes';
 
 import styles from 'styles/myPage/RankTag.module.scss';
 
 type RankTagProps = {
   rankProps: UserRank;
   isBest: boolean;
+  style: ProfileStyle;
 };
 
-export default function RankTag({ rankProps, isBest }: RankTagProps) {
+export default function RankTag({ rankProps, isBest, style }: RankTagProps) {
   const { t } = useTranslation('myPage');
   const { record, rank, tier } = rankProps;
 
@@ -19,7 +20,7 @@ export default function RankTag({ rankProps, isBest }: RankTagProps) {
     <div
       className={`${styles.rankTagContainer} ${
         isBest ? styles.column : styles.row
-      }`}
+      } ${styles[style]}`}
     >
       {isBest && <span className={styles.bestRecord}>{t('Best Record')}</span>}
       <span className={styles.tier}>{tier}</span>

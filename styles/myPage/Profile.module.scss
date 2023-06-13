@@ -1,4 +1,4 @@
-@import 'styles/common.scss';
+@import 'styles/common';
 
 .profileContainer {
   display: grid;
@@ -6,6 +6,9 @@
   gap: 1rem;
   align-content: stretch;
   width: 100%;
+  &.modal {
+    gap: 0.5rem;
+  }
 }
 
 .achievementsBox {
@@ -16,4 +19,7 @@
   align-items: center;
   padding: 1rem;
   background: $dark-blue;
+  &.modal {
+    @include profileModal;
+  }
 }

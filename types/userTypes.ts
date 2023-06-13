@@ -1,8 +1,10 @@
+export type ProfileStyle = 'modal' | 'page';
+
 export interface User {
   nickname: string;
   imgUrl: string;
   tfaRequired: boolean;
-  roleType: 'guest' | 'noname' | 'member' | 'admin';
+  roleType: 'guest' | 'noname' | 'member';
 }
 
 export interface UserDetail {

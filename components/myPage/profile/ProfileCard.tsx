@@ -2,13 +2,13 @@ import useTranslation from 'next-translate/useTranslation';
 
 import React, { Dispatch, SetStateAction } from 'react';
 
-import { DetailDto } from 'types/userTypes';
+import { DetailDto, ProfileStyle } from 'types/userTypes';
 
 import useMyPageQuery from 'hooks/useMyPageQuery';
 
-import TitleDropdown from 'components/myPage/profile/TitleDropdown';
-import LoadingSpinner from 'components/global/LoadingSpinner';
 import ErrorRefresher from 'components/global/ErrorRefresher';
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import TitleDropdown from 'components/myPage/profile/TitleDropdown';
 
 import styles from 'styles/myPage/ProfileCard.module.scss';
 
@@ -22,12 +22,14 @@ type ProfildCardProps = {
   nickname: string;
   detailDto: DetailDto;
   setDetailDto: Dispatch<SetStateAction<DetailDto>>;
+  style: ProfileStyle;
 };
 
 export default function ProfileCard({
   nickname,
   detailDto,
   setDetailDto,
+  style,
 }: ProfildCardProps) {
   const { t } = useTranslation('myPage');
   const { profileGet } = useMyPageQuery(nickname);
@@ -60,7 +62,7 @@ export default function ProfileCard({
   ];
 
   return (
-    <div className={styles.profileCardContainer}>
+    <div className={`${styles.profileCardContainer} ${styles[style]}`}>
       {cardContents.map(
         ({ label, content, child }: CardContentsType, i: number) => {
           return (

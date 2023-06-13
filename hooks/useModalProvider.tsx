@@ -21,19 +21,19 @@ import CloseModalButton from 'components/global/buttons/CloseModalButton';
 import ModalButton from 'components/global/buttons/ModalButton';
 import SubmitButton from 'components/global/buttons/SubmitButton';
 import ButtonRow from 'components/global/buttons/buttonContainers/ButtonRow';
-import ProfileButtons from 'components/global/buttons/buttonContainers/ProfileButtons';
 import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
 import ModalTitle from 'components/modals/modalParts/ModalTitle';
 import Profile from 'components/myPage/profile/Profile';
+import ProfileButtons from 'components/myPage/profile/ProfileButtons';
 import Settings from 'components/settings/Settings';
 
 import selectableItemStyles from 'styles/myPage/SelectableItem.module.scss';
 
 const useModalProvider = () => {
   const { t } = useTranslation('common');
+  const setOpenModal = useSetRecoilState(openModalState);
   const setModalParts = useSetRecoilState(modalPartsState);
   const resetModalParts = useResetRecoilState(modalPartsState);
-  const setOpenModal = useSetRecoilState(openModalState);
   const user = useRecoilValue(userState);
 
   const useModal = (parts: ModalParts) => {
@@ -56,7 +56,7 @@ const useModalProvider = () => {
 
   const useTfaRegisterModal = (
     inputRef: MutableRefObject<any>,
-    callback: () => void
+    handlePasswordSubmit: () => void
   ) => {
     useModal({
       head: <ModalTitle title={t('Google OTP')} />,
@@ -67,7 +67,11 @@ const useModalProvider = () => {
         </div>
       ),
       tail: (
-        <SubmitButton style='basic' color='black' handleButtonClick={callback}>
+        <SubmitButton
+          style='long'
+          color='purple'
+          handleButtonClick={handlePasswordSubmit}
+        >
           {t('authenticate')}
         </SubmitButton>
       ),
@@ -77,7 +81,7 @@ const useModalProvider = () => {
   const useProfileModal = (nickname: string) => {
     useModal({
       head: null,
-      body: <Profile nickname={nickname} />,
+      body: <Profile nickname={nickname} style='modal' />,
       tail: user.roleType !== 'guest' && user.roleType !== 'noname' && (
         <ProfileButtons target={nickname} />
       ),
@@ -87,16 +91,16 @@ const useModalProvider = () => {
   const useEditWarningModal = (callback: () => void) => {
     useModal({
       head: null,
-      body: <ModalPhrase>{'변경 사항 날라가는디 갠찬??..'}</ModalPhrase>,
+      body: <ModalPhrase>{t('lose changes?')}</ModalPhrase>,
       tail: (
         <ButtonRow
           buttonList={[
-            <CloseModalButton style='flex' color='black'>
+            <CloseModalButton style='flex' color='purple'>
               {t('cancel')}
             </CloseModalButton>,
             <ModalButton
               style='flex'
-              color='black'
+              color='purple'
               handleButtonClick={callback}
             >
               {t('Ok')}
@@ -107,25 +111,21 @@ const useModalProvider = () => {
     });
   };
 
-  const useImageChangeModal = (callback: () => void, originId: number) => {
+  const useImageChangeModal = (
+    handleImageSave: () => void,
+    originId: number
+  ) => {
     useModal({
-      head: null,
+      head: <ModalTitle title={t('Select image')} closeButton />,
       body: <UserImages selectedId={originId} />,
       tail: (
-        <ButtonRow
-          buttonList={[
-            <CloseModalButton style='flex' color='black'>
-              {t('cancel')}
-            </CloseModalButton>,
-            <ModalButton
-              style='flex'
-              color='black'
-              handleButtonClick={callback}
-            >
-              {t('Ok')}
-            </ModalButton>,
-          ]}
-        />
+        <ModalButton
+          style='long'
+          color='purple'
+          handleButtonClick={handleImageSave}
+        >
+          {t('Ok')}
+        </ModalButton>
       ),
     });
   };
@@ -149,7 +149,7 @@ const useModalProvider = () => {
         </ModalPhrase>
       ),
       tail: (
-        <CloseModalButton style='flex' color='black'>
+        <CloseModalButton style='long' color='purple'>
           {t('close')}
         </CloseModalButton>
       ),
@@ -194,7 +194,7 @@ const useModalProvider = () => {
     participants?: Participant[]
   ) => {
     useModal({
-      head: <ModalTitle title={'Invite Friend'} closeButton />,
+      head: <ModalTitle title={t('Invite friend')} closeButton />,
       body: (
         <InvitationRequest
           invitationType={invitationType}

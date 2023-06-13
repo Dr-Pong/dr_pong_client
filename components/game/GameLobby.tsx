@@ -1,14 +1,14 @@
 import useTranslation from 'next-translate/useTranslation';
-
-import React, { useState, Dispatch, SetStateAction, ChangeEvent } from 'react';
-
 import { useSetRecoilState } from 'recoil';
+
+import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+
 import { matchWaitingModalState } from 'recoils/modal';
+
+import useModalProvider from 'hooks/useModalProvider';
 
 import PageHeader from 'components/global/PageHeader';
 import MatchWaitingModal from 'components/modals/MatchWaitingModal';
-
-import useModalProvider from 'hooks/useModalProvider';
 
 import styles from 'styles/game/GameLobby.module.scss';
 

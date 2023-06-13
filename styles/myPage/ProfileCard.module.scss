@@ -1,4 +1,4 @@
-@import 'styles/common.scss';
+@import 'styles/common';
 
 .profileCardContainer {
   display: grid;
@@ -6,17 +6,21 @@
   grid-template-rows: repeat(3, 1fr);
   height: 7.7rem;
   padding: 0.5rem;
+  font-size: $basic-font;
   background: $dark-blue;
+  &.modal {
+    @include profileModal;
+    height: 6rem;
+  }
 }
 
 .profileField {
   display: grid;
   grid-template-columns: 3rem 1fr;
-  gap: 1rem;
+  gap: 0.5rem;
   align-content: center;
   align-items: center;
   justify-items: center;
-  font-size: 1rem;
 }
 
 .fieldLabel {
