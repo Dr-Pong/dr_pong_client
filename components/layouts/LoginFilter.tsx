@@ -20,7 +20,7 @@ export default function LoginFilter({ children }: LayoutProps) {
   const router = useRouter();
   const setLoginState = useSetRecoilState(loginState);
 
-  if (user.roleType === 'member' || user.roleType === 'admin')
+  if (user.roleType === 'member')
     setLoginState(true);
   else setLoginState(false);
 
