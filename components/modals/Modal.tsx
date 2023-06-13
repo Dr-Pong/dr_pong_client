@@ -17,15 +17,15 @@ export default function Modal() {
   }, [openModal]);
 
   useEffect(() => {
-    const handlePopstate = (event: PopStateEvent) => {
+    const handlePopState = (event: PopStateEvent) => {
       event.preventDefault();
       if (openModal)
         setOpenModal(false);
     };
-    window.addEventListener('popstate', handlePopstate);
+    window.addEventListener('popstate', handlePopState);
 
     return () => {
-      window.removeEventListener('popstate', handlePopstate);
+      window.removeEventListener('popstate', handlePopState);
     };
   }, [openModal]);
 
