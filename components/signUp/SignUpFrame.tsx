@@ -1,7 +1,5 @@
 import useTranslation from 'next-translate/useTranslation';
 
-import { useRouter } from 'next/router';
-
 import { useState } from 'react';
 
 import useCustomQuery from 'hooks/useCustomQuery';
@@ -11,17 +9,16 @@ import SignUpFields from 'components/signUp/SignUpFields';
 import Warnings from 'components/signUp/Warnings';
 
 import styles from 'styles/signUp/SignUp.module.scss';
+import useAuthHandler from 'hooks/useAuthHandler';
 
 export default function SignUpFrame() {
   const { t } = useTranslation('signUp');
   const { mutationPost } = useCustomQuery();
-  const router = useRouter();
+  const { onAuthSuccess } = useAuthHandler();
   const [wrongFields, setWrongFields] = useState<string[]>([]);
   const userSignUpMutation = mutationPost('/signup', {
-    onSuccess: () => {
-      router.push('/');
-    },
-    onError: () => {},
+    onSuccess: onAuthSuccess,
+    onError: () => { },
   });
 
   const isValidImgId = (imgId: string | undefined) => {

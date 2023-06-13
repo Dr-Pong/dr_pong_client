@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import useTranslation from 'next-translate/useTranslation';
 
-import { useState } from 'react';
+import { Participant } from 'types/chatTypes';
+import { Friend, FriendBoxType } from 'types/friendTypes';
 
 import { Participant } from 'types/chatTypes';
 import { Friend, FriendBoxType } from 'types/friendTypes';

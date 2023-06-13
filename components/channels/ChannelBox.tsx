@@ -10,7 +10,13 @@ import useModalProvider from 'hooks/useModalProvider';
 
 import styles from 'styles/channels/ChannelBox.module.scss';
 
-export default function ChannelBox({ channel }: { channel: Channel }) {
+export default function ChannelBox({
+  channel,
+  isMyChannel
+}: {
+  channel: Channel,
+  isMyChannel: boolean
+}) {
   const { id, title, access, headCount, maxCount } = channel;
   const router = useRouter();
   const { usePasswordSubmitModal } = useModalProvider();
@@ -24,13 +30,13 @@ export default function ChannelBox({ channel }: { channel: Channel }) {
         onSuccess: () => {
           router.push(`/chats/channel/${id}`);
         },
-        onError: () => {},
+        onError: () => { },
       }
     );
   };
 
   const handleChannelJoin = useCallback(() => {
-    if (access === 'protected') {
+    if (access === 'protected' && !isMyChannel) {
       usePasswordSubmitModal(id.toString());
     } else {
       handleRouterToChat();

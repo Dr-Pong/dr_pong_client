@@ -56,7 +56,12 @@ export default function ChannelsFrame() {
         />
         <div className={styles.channelList}>
           {channels.map((eachChannel: Channel) => {
-            return <ChannelBox channel={eachChannel} />;
+            return (
+              <ChannelBox
+                channel={eachChannel}
+                isMyChannel={eachChannel.id === myChannelGet.data.myChannel.id}
+              />
+            );
           })}
         </div>
       </div>
