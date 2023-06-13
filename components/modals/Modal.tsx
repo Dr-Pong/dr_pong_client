@@ -16,6 +16,19 @@ export default function Modal() {
     if (!openModal) resetModalParts();
   }, [openModal]);
 
+  useEffect(() => {
+    const handlePopstate = (event: PopStateEvent) => {
+      event.preventDefault();
+      if (openModal)
+        setOpenModal(false);
+    };
+    window.addEventListener('popstate', handlePopstate);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopstate);
+    };
+  }, [openModal]);
+
   const handleBackdropClick = () => {
     setOpenModal(false);
   };

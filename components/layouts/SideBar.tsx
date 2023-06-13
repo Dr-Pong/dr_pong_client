@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilState } from 'recoil';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { IoMdClose } from 'react-icons/io';
 
@@ -33,6 +33,19 @@ export default function SideBar() {
       children: <Participants />,
     },
   };
+
+  useEffect(() => {
+    const handlePopstate = (event: PopStateEvent) => {
+      event.preventDefault();
+      if (sideBar)
+        setSideBar(null);
+    };
+    window.addEventListener('popstate', handlePopstate);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopstate);
+    };
+  }, [sideBar]);
 
   const handleModalClose = () => {
     setSideBar(null);
