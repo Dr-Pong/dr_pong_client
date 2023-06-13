@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilState } from 'recoil';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { IoMdClose } from 'react-icons/io';
 
@@ -34,21 +34,34 @@ export default function SideBar() {
     },
   };
 
-  const handleModalClose = () => {
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      event.preventDefault();
+      if (sideBar)
+        setSideBar(null);
+    };
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [sideBar]);
+
+  const handleSideBarClose = () => {
     setSideBar(null);
   };
 
   if (!sideBar) return null;
 
   return createPortal(
-    <div className={styles.sideBarBackdrop} onClick={handleModalClose}>
+    <div className={styles.sideBarBackdrop} onClick={handleSideBarClose}>
       <div
         className={styles.sideBarContainer}
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
-        <IoMdClose className={styles.closeButton} onClick={handleModalClose} />
+        <IoMdClose className={styles.closeButton} onClick={handleSideBarClose} />
         <div>{sideBarTypes[sideBar]?.name}</div>
         {sideBarTypes[sideBar]?.children}
       </div>
