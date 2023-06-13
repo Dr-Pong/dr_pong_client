@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
 
-import React from 'react';
+import React, { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
 import { editableState } from 'recoils/user';
 
@@ -10,7 +10,7 @@ import styles from 'styles/myPage/StatusMessage.module.scss';
 
 type StatusMessageProps = {
   detailDto: DetailDto;
-  setDetailDto: React.Dispatch<React.SetStateAction<DetailDto>>;
+  setDetailDto: Dispatch<SetStateAction<DetailDto>>;
   style: ProfileStyle;
 };
 
@@ -21,8 +21,8 @@ export default function StatusMessage({
 }: StatusMessageProps) {
   const editable = useRecoilValue(editableState);
 
-  const statusMessageHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDetailDto({ ...detailDto, statusMessage: event.target.value });
+  const statusMessageHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setDetailDto({ ...detailDto, statusMessage: e.target.value });
   };
 
   return (

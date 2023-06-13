@@ -1,6 +1,6 @@
 import useTranslation from 'next-translate/useTranslation';
 
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 
 import { DetailDto } from 'types/userTypes';
 
@@ -18,8 +18,8 @@ export default function SearchUser() {
   const [nickname, setNickname] = useState<string>('');
   const [detailDto, setDetailDto] = useState<DetailDto | null>(null);
 
-  const handleUserSearch = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleUserSearch = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const data = (await instance.get(`/users/${searchQuery}/detail`)).data;
     setDetailDto(data);
     if (data) setNickname(searchQuery);
