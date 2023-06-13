@@ -1,7 +1,7 @@
-import React from 'react';
+import { ReactNode } from 'react';
 
 export interface ModalParts {
-  head: React.ReactNode | null;
-  body: React.ReactNode | null;
-  tail: React.ReactNode | null;
+  head: ReactNode | null;
+  body: ReactNode | null;
+  tail: ReactNode | null;
 }
