@@ -47,21 +47,21 @@ export default function SideBar() {
     };
   }, [sideBar]);
 
-  const handleModalClose = () => {
+  const handleSideBarClose = () => {
     setSideBar(null);
   };
 
   if (!sideBar) return null;
 
   return createPortal(
-    <div className={styles.sideBarBackdrop} onClick={handleModalClose}>
+    <div className={styles.sideBarBackdrop} onClick={handleSideBarClose}>
       <div
         className={styles.sideBarContainer}
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
-        <IoMdClose className={styles.closeButton} onClick={handleModalClose} />
+        <IoMdClose className={styles.closeButton} onClick={handleSideBarClose} />
         <div>{sideBarTypes[sideBar]?.name}</div>
         {sideBarTypes[sideBar]?.children}
       </div>
