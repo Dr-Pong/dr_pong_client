@@ -8,6 +8,8 @@ import { alertTypeState, openAlertState } from 'recoils/alert';
 
 import styles from 'styles/alerts/Alert.module.scss';
 
+export type AlertType = 'fail' | 'success';
+
 export default function Alert() {
   const { t } = useTranslation('common');
   const [openAlert, setOpenAlert] = useRecoilState(openAlertState);
