@@ -9,6 +9,7 @@ import {
   EmojisClass,
   Selectable,
   Selectables,
+  ProfileTab
 } from 'types/userTypes';
 
 import useMyPageQuery from 'hooks/useMyPageQuery';
@@ -26,7 +27,7 @@ export interface SelectHandler {
 
 type SelectTabProps = {
   nickname: string;
-  itemType: string;
+  itemType: ProfileTab;
 };
 
 export default function SelectTab({ nickname, itemType }: SelectTabProps) {
