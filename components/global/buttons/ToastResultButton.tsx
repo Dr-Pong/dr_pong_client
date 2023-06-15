@@ -1,6 +1,7 @@
 import { useSetRecoilState } from 'recoil';
 
 import React from 'react';
+import { QueryKey } from 'react-query';
 
 import { alertTypeState, openAlertState } from 'recoils/alert';
 
@@ -15,6 +16,7 @@ export type RequestProps = {
   method: 'post' | 'delete' | 'patch';
   options?: object;
   body?: object;
+  key?: QueryKey;
 };
 
 export default function ToastResultButton({
@@ -24,9 +26,10 @@ export default function ToastResultButton({
   request: RequestProps;
   button: ButtonProps;
 }) {
-  const { api, method, options, body } = request;
+  const { api, method, options, body, key } = request;
   const { style, color, children } = button;
-  const { mutationPost, mutationPatch, mutationDelete } = useCustomQuery();
+  const { mutationPost, mutationPatch, mutationDelete, queryClient } =
+    useCustomQuery();
   const setOpenAlert = useSetRecoilState(openAlertState);
   const setAlertType = useSetRecoilState(alertTypeState);
   const call: { [key: string]: MutationType } = {
@@ -40,6 +43,7 @@ export default function ToastResultButton({
   const onSuccess = () => {
     setAlertType('success');
     setOpenAlert(true);
+    if (key) queryClient.invalidateQueries(key);
   };
 
   const onError = () => {
