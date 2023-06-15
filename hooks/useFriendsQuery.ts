@@ -18,7 +18,7 @@ const useFriendsQuery = () => {
 
   const blockListGet = (setBlocks: (f: Friend[]) => void) => {
     const unboxer = (data: UserListResponse) => setBlocks(data.users);
-    return get('blocks', '/blocks', unboxer);
+    return get('blocks', '/users/blocks', unboxer);
   };
 
   return { allListGet, pendingListGet, blockListGet };
