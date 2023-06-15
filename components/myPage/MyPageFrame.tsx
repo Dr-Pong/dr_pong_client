@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, MouseEvent } from 'react';
 
 import { editableState, profileTabState, userState } from 'recoils/user';
 
@@ -11,6 +11,8 @@ import TabProvider from 'components/global/TabProvider';
 import BasicButton from 'components/global/buttons/BasicButton';
 import SelectTab from 'components/myPage/SelectTab';
 import Profile from 'components/myPage/profile/Profile';
+
+import { ProfileTab } from 'types/userTypes';
 
 import styles from 'styles/myPage/MyPage.module.scss';
 
@@ -22,15 +24,15 @@ export default function MyPageFrame() {
   const { nickname } = useRecoilValue(userState);
   const { useEditWarningModal } = useModalProvider();
 
-  const handleTabChange = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleTabChange = (event: MouseEvent<HTMLDivElement>) => {
     const div = event.target as HTMLDivElement;
-    if (tab === div.id) return;
+    if (tab === div.id as ProfileTab) return;
     if (editable)
       useEditWarningModal(() => {
         setEditable(false);
-        setTab(div.id);
+        setTab(div.id as ProfileTab);
       });
-    else setTab(div.id);
+    else setTab(div.id as ProfileTab);
   };
 
   const tabs: { [key: string]: JSX.Element } = {

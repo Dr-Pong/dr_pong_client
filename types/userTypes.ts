@@ -1,4 +1,5 @@
 export type ProfileStyle = 'modal' | 'page';
+export type ProfileTab = 'profile' | 'achieve' | 'emoji';
 
 export interface User {
   nickname: string;
@@ -48,6 +49,7 @@ export interface Titles {
 export interface UserImages {
   images: Image[];
 }
+
 export interface Image {
   id: number;
   url: string;
@@ -59,6 +61,7 @@ export type Selectable = {
   imgUrl: string;
   status: string;
 };
+
 export interface Achievement extends Selectable {
   content: string;
 }
@@ -66,7 +69,8 @@ export interface Achievement extends Selectable {
 export interface Achievements {
   achievements: (Achievement | null)[];
 }
-export interface Emoji extends Selectable {}
+
+export interface Emoji extends Selectable { }
 
 export interface Emojis {
   emojis: (Emoji | null)[];

@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 import { v1 } from 'uuid';
 
-import { User } from 'types/userTypes';
+import { User, ProfileTab } from 'types/userTypes';
 
 export const editableState = atom<boolean>({
   key: `editableState/${v1()}`,
@@ -18,7 +18,7 @@ export const userState = atom<User>({
   },
 });
 
-export const profileTabState = atom<string>({
+export const profileTabState = atom<ProfileTab>({
   key: `tabState/${v1()}`,
   default: 'profile',
 });

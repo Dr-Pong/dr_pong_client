@@ -22,7 +22,9 @@ export default function StatusMessage({
   const editable = useRecoilValue(editableState);
 
   const statusMessageHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setDetailDto({ ...detailDto, statusMessage: e.target.value });
+    const value = e.target.value;
+    if (value.length <= 60)
+      setDetailDto({ ...detailDto, statusMessage: value });
   };
 
   return (

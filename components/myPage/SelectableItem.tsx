@@ -10,10 +10,12 @@ import useModalProvider from 'hooks/useModalProvider';
 
 import { SelectHandler } from 'components/myPage/SelectTab';
 
+import { ProfileTab } from 'types/userTypes';
+
 import styles from 'styles/myPage/SelectableItem.module.scss';
 
 type SelectableItemProps = {
-  itemType: string;
+  itemType: ProfileTab;
   item: Achievement | Emoji | null;
   clickHandler: SelectHandler | null;
 };
