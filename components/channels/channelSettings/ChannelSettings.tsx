@@ -69,9 +69,9 @@ export default function ChannelSettings({
       channelCreateMutation.mutate(
         { ...channelInfo, title: trimmedTitle },
         {
-          onSuccess: (e: any) => {
+          onSuccess: (response: any) => {
             setOpenModal(false);
-            router.push(`/chats/channel/${e.id}`);
+            router.push(`/chats/channel/${response.id}`);
           },
           onError: (e: any) => {
             setAlertType('fail');
