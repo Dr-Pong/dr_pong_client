@@ -14,15 +14,26 @@ import styles from 'styles/friends/SearchUser.module.scss';
 
 export default function SearchUser() {
   const { t } = useTranslation('friends');
+  const [noSuchUser, setNoSuchUser] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [nickname, setNickname] = useState<string>('');
   const [detailDto, setDetailDto] = useState<DetailDto | null>(null);
 
   const handleUserSearch = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = (await instance.get(`/users/${searchQuery}/detail`)).data;
-    setDetailDto(data);
-    if (data) setNickname(searchQuery);
+    if (searchQuery) {
+      try {
+        const res = await instance.get(`users/${searchQuery}/detail`);
+        const data = res.data;
+        setDetailDto(data);
+        setNickname(searchQuery);
+        setNoSuchUser(false);
+      } catch (error) {
+        setNoSuchUser(true);
+      }
+    } else {
+      setNoSuchUser(true);
+    }
   };
 
   return (
@@ -43,7 +54,7 @@ export default function SearchUser() {
         </BasicButton>
       </div>
       <div className={styles.results}>
-        {detailDto === null ? (
+        {detailDto === null ? (noSuchUser &&
           <div className={styles.noResult}>{t('no user')}</div>
         ) : (
           <FriendBox
