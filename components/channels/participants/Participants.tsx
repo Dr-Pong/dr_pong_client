@@ -57,7 +57,7 @@ export default function Participants() {
     <div className={styles.participantsContainer}>
       <div className={styles.userList}>
         <UserBox user={me} />
-        {participants.map((participant: Participant, i: number) => (
+        {participants?.map((participant: Participant, i: number) => (
           <UserBox
             key={i}
             roomId={roomId as string}
