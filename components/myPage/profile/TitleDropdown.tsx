@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
 
-import React, { useState } from 'react';
+import React, { useState, Dispatch, SetStateAction } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
 
 import { editableState } from 'recoils/user';
@@ -19,7 +19,7 @@ import styles from 'styles/myPage/ProfileCard.module.scss';
 type TitleDropdownProps = {
   nickname: string;
   detailDto: DetailDto;
-  setDetailDto: React.Dispatch<React.SetStateAction<DetailDto>>;
+  setDetailDto: Dispatch<SetStateAction<DetailDto>>;
 };
 
 export default function TitleDropdown({

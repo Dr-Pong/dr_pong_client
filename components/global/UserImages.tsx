@@ -22,7 +22,7 @@ export default function UserImages({
     <div className={styles.userImagesContainer}>
       {data.images.map(({ id, url }: Image, i: number) => {
         return (
-          <label key={i} className={styles.userImage}>
+          <label key={i} className={styles.userImage} htmlFor={`${id}`} >
             <input
               type='radio'
               id={`${id}`}

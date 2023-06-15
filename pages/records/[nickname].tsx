@@ -2,7 +2,7 @@ import useTranslation from 'next-translate/useTranslation';
 
 import { useRouter } from 'next/router';
 
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, FormEvent } from 'react';
 
 import PageHeader from 'components/global/PageHeader';
 import SearchBar from 'components/global/SearchBar';
@@ -19,7 +19,7 @@ export default function Records() {
   const defaultNickname = router.query.nickname as string; // TODO: nickname error handle when undefined or arr
   const [nickname, setNickname] = useState(defaultNickname);
 
-  const handleNicknameSearch = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleNicknameSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     router.push(`/records/${nickname.trim()}/`);
   };
@@ -43,7 +43,7 @@ export default function Records() {
             {t('search')}
           </SubmitButton>
         </div>
-        <RecordList key={nickname} nickname={nickname} />
+        <RecordList key={defaultNickname} nickname={defaultNickname} />
       </div>
     </div>
   );

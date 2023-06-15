@@ -6,9 +6,13 @@ type Error = {
   message: string;
 };
 
+type RoomId = {
+  id: string;
+};
+
 export default (
   req: NextApiRequest,
-  res: NextApiResponse<ChannelList | Error>
+  res: NextApiResponse<ChannelList | Error | RoomId>
 ) => {
   const { page, count, order, keyword } = req.query;
   const pageNum = typeof page === 'string' ? parseInt(page) : 1;
@@ -42,7 +46,15 @@ export default (
       totalPage: totalPages,
     });
   } else if (req.method === 'POST') {
-    res.status(200).json({ message: 'Success' });
+    const { title } = req.body;
+    const isDuplicate =
+      channelsList.channels.some(channel => channel.title === title);
+
+    if (isDuplicate) {
+      res.status(400).json({ message: 'title taken' });
+    } else {
+      res.status(201).json({ id: '1' });
+    }
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });
   }

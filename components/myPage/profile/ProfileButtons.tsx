@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue } from 'recoil';
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { userState } from 'recoils/user';
 
@@ -42,7 +42,7 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
   );
 
   const profileButtonList: {
-    [key: string]: { style: string; buttons: React.ReactNode[] };
+    [key: string]: { style: string; buttons: ReactNode[] };
   } = {
     blocked: {
       style: 'buttonRowContainer',

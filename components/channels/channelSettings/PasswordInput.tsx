@@ -30,10 +30,10 @@ export default function PasswordInput({
   return (
     <input
       className={styles.input}
-      type='text'
+      type='password'
       value={password ? password : ''}
       onChange={handlePasswordChange}
-      placeholder={t('4~8 alphanumeric characters')}
+      placeholder={t('1~8 alphanumeric characters')}
       disabled={access === 'private'}
     />
   );

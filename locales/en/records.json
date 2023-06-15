@@ -12,5 +12,6 @@
   "normal": "Normal",
   "nickname": "nickname",
   "search": "search",
-  "show more": "show more"
+  "show more": "show more",
+  "no match": "No match history yet."
 }
