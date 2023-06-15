@@ -16,7 +16,7 @@ export default function SignUpFrame() {
   const { mutationPost } = useCustomQuery();
   const { onAuthSuccess } = useAuthHandler();
   const [wrongFields, setWrongFields] = useState<string[]>([]);
-  const userSignUpMutation = mutationPost('/signup', {
+  const userSignUpMutation = mutationPost('/auth/signup', {
     onSuccess: onAuthSuccess,
     onError: () => { },
   });
