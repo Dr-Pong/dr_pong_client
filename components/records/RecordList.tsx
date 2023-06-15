@@ -32,6 +32,12 @@ export default function RecordList({ nickname }: { nickname: string }) {
     setLastGameId(records.at(-1)?.gameId ?? 0);
   };
 
+  if (records.length === 0) {
+    return (
+      <div className={styles.noRecord}>{t('no match')}</div>
+    );
+  };
+
   return (
     <div className={styles.recordListContainer}>
       {records.map((record, i) => {

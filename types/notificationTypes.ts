@@ -2,7 +2,7 @@ export interface Invitation {
   id: string;
   from: string;
   createdAt: Date;
-  channelId?: number;
+  channelId?: string;
   channelName?: string;
 }
 
