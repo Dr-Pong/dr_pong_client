@@ -1,10 +1,11 @@
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import Link from 'next/link';
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { dropdownUserState } from 'recoils/friends';
+import { sideBarState } from 'recoils/sideBar';
 
 import { ButtonDesign } from 'types/buttonTypes';
 
@@ -20,9 +21,10 @@ import ToastResultButton, {
 const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
   const { useProfileModal, closeModal } = useModalProvider();
   const setDropdownUser = useSetRecoilState(dropdownUserState);
+  const [sideBar, setSideBar] = useRecoilState(sideBarState);
   const { style, color } = buttonDesign;
 
-  const openProfile = (label: React.ReactNode) => {
+  const openProfile = (label: ReactNode) => {
     return (
       <BasicButton
         style={'dropdown'}
@@ -37,7 +39,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
     );
   };
 
-  const inviteGame = (label: React.ReactNode) => {
+  const inviteGame = (label: ReactNode) => {
     return (
       <BasicButton style={style} color={color} handleButtonClick={closeModal}>
         <Link href={'/game'}>{label}</Link>
@@ -45,7 +47,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
     );
   };
 
-  const blockUser = (label: React.ReactNode) => {
+  const blockUser = (label: ReactNode) => {
     const request: RequestProps = {
       api: `/users/blocks/${target}`,
       method: 'post',
@@ -59,7 +61,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
     return <ToastResultButton request={request} button={buttonProps} />;
   };
 
-  const unblockUser = (label: React.ReactNode) => {
+  const unblockUser = (label: ReactNode) => {
     const request: RequestProps = {
       api: `/users/blocks/${target}`,
       method: 'delete',
@@ -73,7 +75,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
     return <ToastResultButton request={request} button={buttonProps} />;
   };
 
-  const addFriend = (label: React.ReactNode) => {
+  const addFriend = (label: ReactNode) => {
     const request: RequestProps = {
       api: `/users/friends/pendings/${target}`,
       method: 'post',
@@ -86,7 +88,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
     return <ToastResultButton request={request} button={buttonProps} />;
   };
 
-  const deleteFriend = (label: React.ReactNode) => {
+  const deleteFriend = (label: ReactNode) => {
     const request: RequestProps = {
       api: `/users/friends/${target}`,
       method: 'delete',
@@ -100,7 +102,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
     return <ToastResultButton request={request} button={buttonProps} />;
   };
 
-  const acceptFriendRequest = (label: React.ReactNode) => {
+  const acceptFriendRequest = (label: ReactNode) => {
     const request: RequestProps = {
       api: `/users/friends/${target}`,
       method: 'post',
@@ -114,7 +116,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
     return <ToastResultButton request={request} button={buttonProps} />;
   };
 
-  const rejectFriendRequest = (label: React.ReactNode) => {
+  const rejectFriendRequest = (label: ReactNode) => {
     const request: RequestProps = {
       api: `/users/friends/pendings/${target}`,
       method: 'delete',
@@ -128,7 +130,10 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
     return <ToastResultButton request={request} button={buttonProps} />;
   };
 
-  const directMessage = (label: React.ReactNode) => {
+  const directMessage = (label: ReactNode) => {
+    if (sideBar)
+      setSideBar(null);
+
     return (
       <BasicButton style={style} color={color} handleButtonClick={closeModal}>
         <Link href={`/chats/dm/${target}`}>{label}</Link>
@@ -140,7 +145,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
     return <FriendDropdown key={target + 'dropdown'} nickname={target} />;
   };
 
-  const spectate = (label: React.ReactNode) => {
+  const spectate = (label: ReactNode) => {
     return (
       <BasicButton
         style={'dropdown'}
@@ -153,7 +158,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
   };
 
   const channelRoleEvent = (
-    label: React.ReactNode,
+    label: ReactNode,
     roleApi: string,
     method: 'post' | 'delete' | 'patch'
   ) => {
@@ -169,7 +174,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
     return <ToastResultButton request={request} button={buttonProps} />;
   };
 
-  const channelInvitation = (label: React.ReactNode, roomId: string) => {
+  const channelInvitation = (label: ReactNode, roomId: string) => {
     const request: RequestProps = {
       api: `/channels/${roomId}/invitation/${target}`,
       method: 'post',
@@ -182,7 +187,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
     return <ToastResultButton request={request} button={buttonProps} />;
   };
 
-  const gameInvitation = (label: React.ReactNode) => {
+  const gameInvitation = (label: ReactNode) => {
     const api = `/games/invitation/${target}`;
     const buttonProps = {
       ...buttonDesign,

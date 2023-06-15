@@ -36,7 +36,8 @@ export default function TopLeaders({ topLeaderCount }: TopLeadersProps) {
 
   const handleNicknameClick = (e: React.MouseEvent<HTMLElement>) => {
     const nickname = (e.target as HTMLElement).innerHTML;
-    useProfileModal(nickname);
+    if (nickname)
+      useProfileModal(nickname);
   };
 
   if (isLoading) return <LoadingSpinner />;
@@ -45,7 +46,8 @@ export default function TopLeaders({ topLeaderCount }: TopLeadersProps) {
   return (
     <div className={styles.topLeadersContainer}>
       {leaderOrder.map(({ index, style }) => {
-        const { rank, nickname, lp, imgUrl }: TopRanker = data.top[index];
+        const { rank, nickname, lp, imgUrl }: TopRanker =
+          data.top[index] ? data.top[index] : mockData[index];
         return (
           <div className={styles.leaderBox}>
             <div className={styles.leaderRank}>
@@ -59,7 +61,7 @@ export default function TopLeaders({ topLeaderCount }: TopLeadersProps) {
               >
                 {nickname}
               </div>
-              <div>{lp}</div>
+              <div>{nickname ? lp : ''}</div>
             </div>
           </div>
         );
@@ -67,3 +69,24 @@ export default function TopLeaders({ topLeaderCount }: TopLeadersProps) {
     </div>
   );
 }
+
+const mockData: TopRanker[] = [
+  {
+    rank: 1,
+    nickname: '',
+    lp: 0,
+    imgUrl: 'https://cdn-icons-png.flaticon.com/512/3088/3088765.png'
+  },
+  {
+    rank: 2,
+    nickname: '',
+    lp: 0,
+    imgUrl: 'https://cdn-icons-png.flaticon.com/512/3088/3088765.png'
+  },
+  {
+    rank: 3,
+    nickname: '',
+    lp: 0,
+    imgUrl: 'https://cdn-icons-png.flaticon.com/512/3088/3088765.png'
+  },
+];

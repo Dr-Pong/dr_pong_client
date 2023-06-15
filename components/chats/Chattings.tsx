@@ -75,7 +75,7 @@ export default function Chattings({
   const handleChatPostSuccess = (message: string) => {
     setChats((prev) => [
       {
-        id: prev[0].id + 1,
+        id: prev[0]?.id + 1,
         message,
         nickname: 'hakiim',
         time: new Date(),
@@ -88,7 +88,7 @@ export default function Chattings({
   const handleChatPostFail = (message: string) => {
     setChats((prev) => [
       {
-        id: prev[0].id + 1,
+        id: prev[0]?.id + 1,
         message,
         nickname: '',
         time: new Date(),

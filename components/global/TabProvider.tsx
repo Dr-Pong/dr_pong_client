@@ -1,6 +1,6 @@
 import useTranslation from 'next-translate/useTranslation';
 
-import React from 'react';
+import React, { MouseEvent, ReactNode } from 'react';
 
 import styles from 'styles/global/TabProvider.module.scss';
 
@@ -8,8 +8,8 @@ type TabProviderProps = {
   namespace: string;
   tabNames: string[];
   currentTab: string;
-  handleTabClick: (event: React.MouseEvent<HTMLDivElement>) => void;
-  children: React.ReactNode;
+  handleTabClick: (event: MouseEvent<HTMLDivElement>) => void;
+  children: ReactNode;
 };
 
 export default function TabProvider({
@@ -28,9 +28,8 @@ export default function TabProvider({
             <div
               id={name}
               key={name}
-              className={`${styles.tabButton} ${
-                currentTab === name && styles.currentTabButton
-              }`}
+              className={`${styles.tabButton}
+              ${currentTab === name && styles.currentTabButton}`}
               onClick={handleTabClick}
             >
               {t(name)}

@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 
 import { FormEvent, useState } from 'react';
 
+import { alertTypeState, openAlertState } from 'recoils/alert';
 import { openModalState } from 'recoils/modal';
 
 import { ChannelInfo } from 'types/channelTypes';
@@ -20,6 +21,8 @@ import styles from 'styles/channels/ChannelSettings.module.scss';
 export default function PasswordSubmit({ roomId }: { roomId: string }) {
   const { t } = useTranslation('channels');
   const router = useRouter();
+  const setOpenAlert = useSetRecoilState(openAlertState);
+  const setAlertType = useSetRecoilState(alertTypeState);
   const setOpenModal = useSetRecoilState(openModalState);
   const [channelInfo, setChannelInfo] = useState<ChannelInfo>(
     defaultChannelSettings
@@ -38,8 +41,10 @@ export default function PasswordSubmit({ roomId }: { roomId: string }) {
           router.push(`/chats/channel/${roomId}`);
           setOpenModal(false);
         },
-        onError: () => {
-          // 비번 불일치
+        onError: (e: any) => {
+          setAlertType('fail');
+          setOpenAlert(true);
+          // Alert에 e.response.data.message를 띄워주는 것이 좋을 것 같다
         },
       }
     );

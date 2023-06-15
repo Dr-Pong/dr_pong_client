@@ -60,6 +60,8 @@ const useChatQuery = (roomType: RoomType, roomId: string) => {
       },
       {
         getNextPageParam: (lastPage) => {
+          const isLastPage = lastPage.isLastPage ?? false;
+          if (isLastPage) return undefined;
           const lastChat = lastPage.chats[lastPage.chats.length - 1];
           if (!lastChat) return undefined;
           return lastChat ? lastChat.id : undefined;

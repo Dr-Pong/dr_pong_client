@@ -1,8 +1,17 @@
+import { useRouter } from 'next/router';
+
 import useTranslation from 'next-translate/useTranslation';
 import { useSetRecoilState } from 'recoil';
 
-import { FormEvent, SetStateAction, useState, Dispatch } from 'react';
+import {
+  FormEvent,
+  SetStateAction,
+  useState,
+  Dispatch,
+  ReactElement
+} from 'react';
 
+import { alertTypeState, openAlertState } from 'recoils/alert';
 import { openModalState } from 'recoils/modal';
 
 import { ChannelInfo } from 'types/channelTypes';
@@ -24,7 +33,7 @@ export type SettingFieldProps = {
 
 type FieldType = {
   label: string;
-  input: React.ReactElement;
+  input: ReactElement;
 };
 
 type ChannelSettingsProps = {
@@ -37,7 +46,10 @@ export default function ChannelSettings({
   type,
 }: ChannelSettingsProps) {
   const { t } = useTranslation('channels');
+  const router = useRouter();
   const setOpenModal = useSetRecoilState(openModalState);
+  const setOpenAlert = useSetRecoilState(openAlertState);
+  const setAlertType = useSetRecoilState(alertTypeState);
   const [channelInfo, setChannelInfo] = useState<ChannelInfo>(
     defaultChannelSettings
   );
@@ -48,9 +60,26 @@ export default function ChannelSettings({
 
   const handleChannelCreate = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (channelInfo.title) {
-      channelCreateMutation.mutate(channelInfo);
-      setOpenModal(false);
+    const trimmedTitle = channelInfo.title.trim();
+    setChannelInfo((prev) => ({
+      ...prev,
+      title: trimmedTitle,
+    }));
+    if (trimmedTitle) {
+      channelCreateMutation.mutate(
+        { ...channelInfo, title: trimmedTitle },
+        {
+          onSuccess: (response: any) => {
+            setOpenModal(false);
+            router.push(`/chats/channel/${response.id}`);
+          },
+          onError: (e: any) => {
+            setAlertType('fail');
+            setOpenAlert(true);
+            // Alert에 e.response.data.message를 띄워주는 것이 좋을 것 같다
+          },
+        }
+      );
     }
   };
 
