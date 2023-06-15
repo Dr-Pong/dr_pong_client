@@ -37,7 +37,7 @@ function ChatBox({ chat, imgUrl }: ChatBoxProps) {
           <img
             className={styles.userImage}
             onClick={imgClickHandler}
-            src={imgUrl}
+            src={imgUrl ?? defaultImgUrl}
             alt='img'
           />
           <div>{nickname}</div>
@@ -72,3 +72,5 @@ function timeConverter(time: Date | undefined) {
   const minute = date.getMinutes();
   return `${hour}:${minute < 10 ? '0' + minute : minute}`;
 }
+
+const defaultImgUrl = '/image/ghost.png';
