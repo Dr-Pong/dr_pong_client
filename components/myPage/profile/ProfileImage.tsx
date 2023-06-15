@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue } from 'recoil';
 
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import { editableState } from 'recoils/user';
 
@@ -18,7 +18,7 @@ export default function ProfileImage({
   setDetailDto,
 }: {
   detailDto: DetailDto;
-  setDetailDto: React.Dispatch<React.SetStateAction<DetailDto>>;
+  setDetailDto: Dispatch<SetStateAction<DetailDto>>;
 }) {
   const { t } = useTranslation('myPage');
   const editable = useRecoilValue(editableState);
