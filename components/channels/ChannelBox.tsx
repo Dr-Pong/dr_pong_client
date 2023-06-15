@@ -29,7 +29,6 @@ export default function ChannelBox({
     useModalProvider();
   const setOpenAlert = useSetRecoilState(openAlertState);
   const setAlertType = useSetRecoilState(alertTypeState);
-  const { usePasswordSubmitModal } = useModalProvider();
   const { mutationPost } = useCustomQuery();
   const { mutate } = mutationPost(`channels/${id}/participants`);
 
