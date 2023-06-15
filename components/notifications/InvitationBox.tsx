@@ -15,7 +15,7 @@ import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/notifications/Notifications.module.scss';
 
-import { alertTypeState, openAlertState } from '../../recoils/alert';
+import { alertTypeState, openAlertState } from 'recoils/alert';
 
 type InvitationBoxProps = {
   type: string;
