@@ -188,6 +188,33 @@ const useModalProvider = () => {
     });
   };
 
+  const useChannelJoinConfirmModal = (callback: () => void) => {
+    useModal({
+      head: null,
+      body: (
+        <ModalPhrase>
+          {t('channel confirm')}
+        </ModalPhrase>
+      ),
+      tail: (
+        <ButtonRow
+          buttonList={[
+            <CloseModalButton style='flex' color='purple'>
+              {t('cancel')}
+            </CloseModalButton>,
+            <ModalButton
+              style='flex'
+              color='purple'
+              handleButtonClick={callback}
+            >
+              {t('Ok')}
+            </ModalButton>,
+          ]}
+        />
+      ),
+    });
+  };
+
   const useInvitationModal = (
     invitationType: string,
     roomId?: string,
@@ -217,6 +244,7 @@ const useModalProvider = () => {
     useFriendFinderModal,
     useChannelCreateModal,
     usePasswordSubmitModal,
+    useChannelJoinConfirmModal,
     useChannelEditModal,
     useInvitationModal,
   };

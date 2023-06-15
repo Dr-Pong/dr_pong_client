@@ -14,7 +14,7 @@ import Pagination from 'components/global/Pagination';
 import styles from 'styles/channels/ChannelsFrame.module.scss';
 
 export default function ChannelsFrame() {
-  const [{ channels, currentPage, totalPage }, setChennelList] =
+  const [{ channels, currentPage, totalPage }, setChannelList] =
     useState<ChannelList>(defaultChannelList);
   const [count, setCount] = useState(10);
   const [page, setPage] = useState(currentPage);
@@ -25,7 +25,7 @@ export default function ChannelsFrame() {
   );
   const { get } = useCustomQuery();
   const myChannelGet = get('myChannel', '/channels/me');
-  const channelListGet = get(['allChannels', url], url, setChennelList);
+  const channelListGet = get(['allChannels', url], url, setChannelList);
 
   useEffect(() => {
     setUrl(
@@ -60,6 +60,7 @@ export default function ChannelsFrame() {
               <ChannelBox
                 channel={eachChannel}
                 isMyChannel={eachChannel.id === myChannelGet.data.myChannel.id}
+                haveMyChannel={!!myChannelGet.data.myChannel}
               />
             );
           })}

@@ -12,14 +12,17 @@ import styles from 'styles/channels/ChannelBox.module.scss';
 
 export default function ChannelBox({
   channel,
-  isMyChannel
+  isMyChannel,
+  haveMyChannel,
 }: {
-  channel: Channel,
-  isMyChannel: boolean
+  channel: Channel;
+  isMyChannel: boolean;
+  haveMyChannel: boolean;
 }) {
   const { id, title, access, headCount, maxCount } = channel;
   const router = useRouter();
-  const { usePasswordSubmitModal } = useModalProvider();
+  const { usePasswordSubmitModal, useChannelJoinConfirmModal } =
+    useModalProvider();
   const { mutationPost } = useCustomQuery();
   const { mutate } = mutationPost(`channels/${id}/participants`);
 
@@ -30,10 +33,16 @@ export default function ChannelBox({
         onSuccess: () => {
           router.push(`/chats/channel/${id}`);
         },
-        onError: () => { },
+        onError: () => {},
       }
     );
   };
+
+  const handleJoinConfirm = useCallback(() => {
+    if (haveMyChannel) {
+      useChannelJoinConfirmModal(handleChannelJoin);
+    } else handleChannelJoin();
+  }, []);
 
   const handleChannelJoin = useCallback(() => {
     if (access === 'protected' && !isMyChannel) {
@@ -44,7 +53,7 @@ export default function ChannelBox({
   }, [handleRouterToChat, usePasswordSubmitModal]);
 
   return (
-    <div className={styles.channelBoxContainer} onClick={handleChannelJoin}>
+    <div className={styles.channelBoxContainer} onClick={handleJoinConfirm}>
       <div>
         {title}
         {access === 'protected' && <IoIosLock className={styles.lockEmoji} />}

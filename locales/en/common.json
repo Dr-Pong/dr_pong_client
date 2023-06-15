@@ -33,5 +33,6 @@
   "Fetch error": "An error occurred while loading data.",
   "Select image": "Select image",
   "lose changes?": "Your changes will not be saved. Do you want to continue?",
-  "search by nickname": "search by nickname"
+  "search by nickname": "search by nickname",
+  "channel confirm": "You will be leaved from previous channel. Do you want to continue?"
 }
