@@ -52,6 +52,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
       api: `/users/blocks/${target}`,
       method: 'post',
       options: {},
+      key: 'allfriends',
     };
     const buttonProps = {
       ...buttonDesign,
@@ -65,6 +66,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
       api: `/users/blocks/${target}`,
       method: 'delete',
       options: {},
+      key: 'blocks',
     };
     const buttonProps = {
       ...buttonDesign,
@@ -91,6 +93,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
       api: `/users/friends/${target}`,
       method: 'delete',
       options: {},
+      key: 'allfriends',
     };
     const buttonProps = {
       ...buttonDesign,
@@ -104,6 +107,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
       api: `/users/friends/${target}`,
       method: 'post',
       options: {},
+      key: 'pendings',
     };
     const buttonProps = {
       ...buttonDesign,
@@ -117,6 +121,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
       api: `/users/friends/pendings/${target}`,
       method: 'delete',
       options: {},
+      key: 'pendings',
     };
     const buttonProps = {
       ...buttonDesign,

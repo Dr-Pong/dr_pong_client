@@ -16,13 +16,17 @@ import styles from 'styles/channels/ChannelBox.module.scss';
 
 export default function ChannelBox({
   channel,
-  isMyChannel
+  isMyChannel,
+  haveMyChannel,
 }: {
-  channel: Channel,
-  isMyChannel: boolean
+  channel: Channel;
+  isMyChannel: boolean;
+  haveMyChannel: boolean;
 }) {
   const { id, title, access, headCount, maxCount } = channel;
   const router = useRouter();
+  const { usePasswordSubmitModal, useChannelJoinConfirmModal } =
+    useModalProvider();
   const setOpenAlert = useSetRecoilState(openAlertState);
   const setAlertType = useSetRecoilState(alertTypeState);
   const { usePasswordSubmitModal } = useModalProvider();
@@ -44,6 +48,12 @@ export default function ChannelBox({
     );
   };
 
+  const handleJoinConfirm = useCallback(() => {
+    if (haveMyChannel) {
+      useChannelJoinConfirmModal(handleChannelJoin);
+    } else handleChannelJoin();
+  }, []);
+
   const handleChannelJoin = useCallback(() => {
     if (access === 'protected' && !isMyChannel) {
       usePasswordSubmitModal(id.toString());
@@ -53,7 +63,7 @@ export default function ChannelBox({
   }, [handleRouterToChat, usePasswordSubmitModal]);
 
   return (
-    <div className={styles.channelBoxContainer} onClick={handleChannelJoin}>
+    <div className={styles.channelBoxContainer} onClick={handleJoinConfirm}>
       <div>
         {title}
         {access === 'protected' && <IoIosLock className={styles.lockEmoji} />}

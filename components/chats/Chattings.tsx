@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useQueryClient } from 'react-query';
 
 import { Chat, RoomType, UserImageMap } from 'types/chatTypes';
-
-import { useQueryClient } from 'react-query';
 
 import useChatQuery from 'hooks/useChatQuery';
 
@@ -84,7 +83,7 @@ export default function Chattings({
       },
       ...prev,
     ]);
-  }
+  };
 
   const handleChatPostFail = (message: string) => {
     setChats((prev) => [
@@ -106,7 +105,10 @@ export default function Chattings({
         { message },
         {
           onSuccess: () => handleChatPostSuccess(message),
-          onError: () => handleChatPostFail(message),
+          onError: (error: any) => {
+            if (error.response.status == 400) return;
+            handleChatPostFail(message);
+          },
         }
       );
       setMessage('');

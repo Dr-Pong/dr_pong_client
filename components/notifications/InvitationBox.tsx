@@ -1,6 +1,8 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useSetRecoilState } from 'recoil';
 
+import { useRouter } from 'next/router';
+
 import { IoMdCheckmark, IoMdClose } from 'react-icons/io';
 
 import { sideBarState } from 'recoils/sideBar';
@@ -12,6 +14,8 @@ import useCustomQuery from 'hooks/useCustomQuery';
 import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/notifications/Notifications.module.scss';
+
+import { alertTypeState, openAlertState } from '../../recoils/alert';
 
 type InvitationBoxProps = {
   type: string;
@@ -31,8 +35,11 @@ export default function InvitationBox({
   deleteInvitation,
 }: InvitationBoxProps) {
   const { t } = useTranslation('common');
+  const router = useRouter();
   const setSideBar = useSetRecoilState(sideBarState);
-  const { mutationPost, mutationDelete } = useCustomQuery();
+  const setOpenAlert = useSetRecoilState(openAlertState);
+  const setAlertType = useSetRecoilState(alertTypeState);
+  const { mutationPost, mutationDelete, queryClient } = useCustomQuery();
   const { id, from, createdAt, channelId, channelName } = invitation;
   const invitationProperties: { [key: string]: InvitationProperty } = {
     channel: {
@@ -54,10 +61,12 @@ export default function InvitationBox({
     {
       onSuccess: () => {
         setSideBar(null);
-        // 채널로 이동
+        if (type === 'channel') router.push(`/chats/channel/${channelId}`);
+        //TODO: if (type === 'game')
       },
       onError: () => {
-        // 실패 toast
+        setAlertType('fail');
+        setOpenAlert(true);
       },
     }
   );
@@ -67,10 +76,11 @@ export default function InvitationBox({
     {
       onSuccess: () => {
         deleteInvitation(id);
-        // 알림 지우기
+        queryClient.invalidateQueries([`notifications${toQueryKey(type)}`]);
       },
       onError: () => {
-        // 실패 toast
+        setAlertType('fail');
+        setOpenAlert(true);
       },
     }
   );
@@ -107,3 +117,7 @@ export default function InvitationBox({
     </div>
   );
 }
+
+const toQueryKey = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1) + 's';
+};

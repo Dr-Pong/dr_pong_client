@@ -5,7 +5,7 @@ type Error = {
 };
 
 type FriendRequestNotiResponse = {
-  friendRequest: number;
+  requestCount: number;
 };
 
 export default (
@@ -14,7 +14,7 @@ export default (
 ) => {
   if (req.method === 'GET') {
     res.status(200).json({
-      friendRequest: 0,
+      requestCount: 3,
     });
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });
