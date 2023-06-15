@@ -1,4 +1,4 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
@@ -15,10 +15,11 @@ import LoadingSpinner from 'components/global/LoadingSpinner';
 
 export default function LoginFilter({ children }: LayoutProps) {
   const [user, setUser] = useRecoilState(userState);
-  const { get } = useCustomQuery();
-  const { data, isLoading, isError } = get(['user_key'], '/users/me', setUser);
-  const router = useRouter();
   const setLoginState = useSetRecoilState(loginState);
+  const resetUserState = useResetRecoilState(userState);
+  const { get } = useCustomQuery();
+  const { data, isLoading, isError, error } = get(['user_key'], '/users/me', setUser);
+  const router = useRouter();
 
   if (user.roleType === 'member')
     setLoginState(true);
@@ -26,6 +27,10 @@ export default function LoginFilter({ children }: LayoutProps) {
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher />;
+  if (error) {
+    resetUserState();
+    router.push('/');
+  }
   if (user.roleType !== 'noname' && router.asPath === '/signUp')
     router.push('/');
   if (user.roleType === 'noname' && router.asPath !== '/signUp')
