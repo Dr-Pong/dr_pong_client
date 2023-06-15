@@ -36,7 +36,8 @@ export default function TopLeaders({ topLeaderCount }: TopLeadersProps) {
 
   const handleNicknameClick = (e: React.MouseEvent<HTMLElement>) => {
     const nickname = (e.target as HTMLElement).innerHTML;
-    useProfileModal(nickname);
+    if (nickname)
+      useProfileModal(nickname);
   };
 
   if (isLoading) return <LoadingSpinner />;
@@ -60,7 +61,7 @@ export default function TopLeaders({ topLeaderCount }: TopLeadersProps) {
               >
                 {nickname}
               </div>
-              <div>{lp}</div>
+              <div>{nickname ? lp : ''}</div>
             </div>
           </div>
         );
@@ -72,19 +73,19 @@ export default function TopLeaders({ topLeaderCount }: TopLeadersProps) {
 const mockData: TopRanker[] = [
   {
     rank: 1,
-    nickname: 'vacancy',
+    nickname: '',
     lp: 0,
     imgUrl: 'https://cdn-icons-png.flaticon.com/512/3088/3088765.png'
   },
   {
     rank: 2,
-    nickname: 'vacancy',
+    nickname: '',
     lp: 0,
     imgUrl: 'https://cdn-icons-png.flaticon.com/512/3088/3088765.png'
   },
   {
     rank: 3,
-    nickname: 'vacancy',
+    nickname: '',
     lp: 0,
     imgUrl: 'https://cdn-icons-png.flaticon.com/512/3088/3088765.png'
   },
