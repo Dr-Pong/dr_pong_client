@@ -71,9 +71,12 @@ const useChatQuery = (roomType: RoomType, roomId: string) => {
           const newChats = data.pages[data.pages.length - 1].chats;
           handleChatJoin(newChats);
         },
-        refetchOnMount: 'always',
+        staleTime: Infinity,
+        refetchOnMount: false,
         refetchOnWindowFocus: false,
         refetchOnReconnect: false,
+        refetchInterval: false,
+        refetchIntervalInBackground: false,
       } //TODO: onError 처리해야함
     );
   };
