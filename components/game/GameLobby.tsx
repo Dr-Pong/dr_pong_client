@@ -1,14 +1,10 @@
 import useTranslation from 'next-translate/useTranslation';
-import { useSetRecoilState } from 'recoil';
 
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
-
-import { matchWaitingModalState } from 'recoils/modal';
 
 import useModalProvider from 'hooks/useModalProvider';
 
 import PageHeader from 'components/global/PageHeader';
-import MatchWaitingModal from 'components/modals/MatchWaitingModal';
 
 import styles from 'styles/game/GameLobby.module.scss';
 
@@ -18,8 +14,7 @@ interface Options {
 
 export default function GameLobby() {
   const { t } = useTranslation('game');
-  const { useInvitationModal } = useModalProvider();
-  const setShowMatchWaitingModal = useSetRecoilState(matchWaitingModalState);
+  const { useInvitationModal, useMatchWaitingModal } = useModalProvider();
   const [options, setOptions] = useState<Options>({
     bullet: false,
     deathMatch: false,
@@ -28,7 +23,7 @@ export default function GameLobby() {
   const optionList = ['bullet', 'deathMatch', 'loserPaysForBeer'];
 
   const handleQueueClick = () => {
-    setShowMatchWaitingModal(true);
+    useMatchWaitingModal();
   };
 
   const handleInviteClick = () => {
@@ -36,41 +31,37 @@ export default function GameLobby() {
   };
 
   return (
-    <>
-      <div className={styles.prepareRoomContainer}>
-        <PageHeader title={t('prepare')} />
-        <div className={styles.contents}>
-          <div className={styles.optionList}>
-            {optionList.map((option) => {
-              return (
-                <Option
-                  key={option}
-                  option={option}
-                  options={options}
-                  setOptions={setOptions}
-                />
-              );
-            })}
-          </div>
-          <div className={styles.buttonList}>
-            <button
-              className={`${styles.button} ${styles.queue}`}
-              onClick={handleQueueClick}
-            >
-              {t('queue')}
-            </button>
-            <button
-              className={`${styles.button} ${styles.invite}`}
-              onClick={handleInviteClick}
-            >
-              {t('invite')}
-            </button>
-          </div>
+    <div className={styles.prepareRoomContainer}>
+      <PageHeader title={t('prepare')} />
+      <div className={styles.contents}>
+        <div className={styles.optionList}>
+          {optionList.map((option) => {
+            return (
+              <Option
+                key={option}
+                option={option}
+                options={options}
+                setOptions={setOptions}
+              />
+            );
+          })}
+        </div>
+        <div className={styles.buttonList}>
+          <button
+            className={`${styles.button} ${styles.queue}`}
+            onClick={handleQueueClick}
+          >
+            {t('queue')}
+          </button>
+          <button
+            className={`${styles.button} ${styles.invite}`}
+            onClick={handleInviteClick}
+          >
+            {t('invite')}
+          </button>
         </div>
       </div>
-
-      <MatchWaitingModal />
-    </>
+    </div>
   );
 }
 
