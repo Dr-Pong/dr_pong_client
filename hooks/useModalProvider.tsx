@@ -1,9 +1,18 @@
 import useTranslation from 'next-translate/useTranslation';
-import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import React, { MutableRefObject } from 'react';
 
-import { modalPartsState, openModalState } from 'recoils/modal';
+import {
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState
+} from 'recoil';
+import {
+  modalPartsState,
+  modalOnModalPartsState,
+  openModalState,
+  openModalOnModalState
+} from 'recoils/modal';
 import { userState } from 'recoils/user';
 
 import { Participant } from 'types/chatTypes';
@@ -26,14 +35,19 @@ import ModalTitle from 'components/modals/modalParts/ModalTitle';
 import Profile from 'components/myPage/profile/Profile';
 import ProfileButtons from 'components/myPage/profile/ProfileButtons';
 import Settings from 'components/settings/Settings';
+import Loading from 'components/global/LoadingSpinner';
+import BasicButton from 'components/global/buttons/BasicButton';
 
 import selectableItemStyles from 'styles/myPage/SelectableItem.module.scss';
 
 const useModalProvider = () => {
   const { t } = useTranslation('common');
   const setOpenModal = useSetRecoilState(openModalState);
+  const setOpenModalOnModal = useSetRecoilState(openModalOnModalState);
   const setModalParts = useSetRecoilState(modalPartsState);
   const resetModalParts = useResetRecoilState(modalPartsState);
+  const setModalOnModalParts = useSetRecoilState(modalOnModalPartsState);
+  const resetModalOnModalParts = useResetRecoilState(modalOnModalPartsState);
   const user = useRecoilValue(userState);
 
   const useModal = (parts: ModalParts) => {
@@ -41,10 +55,21 @@ const useModalProvider = () => {
     setOpenModal(true);
   };
 
+  const useModalOnModal = (parts: ModalParts) => {
+    setModalOnModalParts(parts);
+    setOpenModalOnModal(true);
+  }
+
   const closeModal = () => {
     resetModalParts();
     setOpenModal(false);
   };
+
+  const closeModalOnModal = () => {
+    resetModalOnModalParts();
+    // setOpenModal(false);
+    setOpenModalOnModal(false);
+  }
 
   const useSettingsModal = () => {
     useModal({
@@ -164,10 +189,10 @@ const useModalProvider = () => {
     });
   };
 
-  const useChannelCreateModal = () => {
+  const useChannelCreateModal = (haveMyChannel: boolean) => {
     useModal({
       head: <ModalTitle title={t('Create new channel')} closeButton />,
-      body: <ChannelSettings type='create' />,
+      body: <ChannelSettings haveMyChannel={haveMyChannel} type='create' />,
       tail: null,
     });
   };
@@ -233,6 +258,53 @@ const useModalProvider = () => {
     });
   };
 
+  const useChannelJoinConfirmModalOnModal = (callback: () => void) => {
+    useModalOnModal({
+      head: null,
+      body: (
+        <ModalPhrase>
+          {t('channel confirm')}
+        </ModalPhrase>
+      ),
+      tail: (
+        <ButtonRow
+          buttonList={[
+            <BasicButton
+              style='flex'
+              color='purple'
+              handleButtonClick={closeModalOnModal}
+            >
+              {t('cancel')}
+            </BasicButton>,
+            <BasicButton
+              style='flex'
+              color='purple'
+              handleButtonClick={callback}
+            >
+              {t('Ok')}
+            </BasicButton>,
+          ]}
+        />
+      ),
+    });
+  };
+
+  const useMatchWaitingModal = () => {
+    useModalOnModal({
+      head: <ModalTitle title={t('Waiting For Match')} />,
+      body: <Loading />,
+      tail: (
+        <BasicButton
+          style='basic'
+          color='pink'
+          handleButtonClick={closeModalOnModal}
+        >
+          {t('cancel')}
+        </BasicButton>
+      ),
+    });
+  };
+
   return {
     closeModal,
     useSettingsModal,
@@ -247,6 +319,8 @@ const useModalProvider = () => {
     useChannelJoinConfirmModal,
     useChannelEditModal,
     useInvitationModal,
+    useChannelJoinConfirmModalOnModal,
+    useMatchWaitingModal,
   };
 };
 

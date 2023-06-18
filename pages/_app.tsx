@@ -34,6 +34,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           {getLayout(<Component {...pageProps} />)}
           <div id='sideBarRoot'></div>
           <div id='modalRoot'></div>
+          <div id='modalOnModalState'></div>
           <div id='matchWaitingModalRoot'></div>
           <div id='alertRoot'></div>
         </RecoilRoot>

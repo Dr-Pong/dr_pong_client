@@ -8,12 +8,17 @@ export const modalPartsState = atom<ModalParts>({
   default: { head: null, body: null, tail: null },
 });
 
+export const modalOnModalPartsState = atom<ModalParts>({
+  key: `modalOnModalPartsState/${v1()}`,
+  default: { head: null, body: null, tail: null },
+});
+
 export const openModalState = atom<boolean>({
   key: `openModalState/${v1()}`,
   default: false,
 });
 
-export const matchWaitingModalState = atom<boolean>({
-  key: `matchWaitingModalState/${v1()}`,
+export const openModalOnModalState = atom<boolean>({
+  key: `openModalOnModalState/${v1()}`,
   default: false,
 });
