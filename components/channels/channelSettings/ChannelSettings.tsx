@@ -12,11 +12,12 @@ import {
 } from 'react';
 
 import { alertTypeState, openAlertState } from 'recoils/alert';
-import { openModalState } from 'recoils/modal';
+import { openModalState, openModalOnModalState } from 'recoils/modal';
 
 import { ChannelInfo } from 'types/channelTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
+import useModalProvider from 'hooks/useModalProvider';
 
 import CapacityRadio from 'components/channels/channelSettings/CapacityRadio';
 import PasswordInput from 'components/channels/channelSettings/PasswordInput';
@@ -37,11 +38,13 @@ type FieldType = {
 };
 
 type ChannelSettingsProps = {
+  haveMyChannel?: boolean;
   roomId?: string;
   type: 'create' | 'edit';
 };
 
 export default function ChannelSettings({
+  haveMyChannel,
   roomId,
   type,
 }: ChannelSettingsProps) {
@@ -50,36 +53,46 @@ export default function ChannelSettings({
   const setOpenModal = useSetRecoilState(openModalState);
   const setOpenAlert = useSetRecoilState(openAlertState);
   const setAlertType = useSetRecoilState(alertTypeState);
+  const setShowModalOnModal = useSetRecoilState(openModalOnModalState);
   const [channelInfo, setChannelInfo] = useState<ChannelInfo>(
     defaultChannelSettings
   );
   const { access, password } = channelInfo;
+  const { useChannelJoinConfirmModalOnModal } = useModalProvider();
   const { mutationPost, mutationPatch } = useCustomQuery();
   const channelCreateMutation = mutationPost('/channels');
   const channelEditMutation = mutationPatch(`/channels/${roomId}`);
 
-  const handleChannelCreate = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleChannelCreate = () => {
     const trimmedTitle = channelInfo.title.trim();
     setChannelInfo((prev) => ({
       ...prev,
       title: trimmedTitle,
     }));
-    if (trimmedTitle) {
-      channelCreateMutation.mutate(
-        { ...channelInfo, title: trimmedTitle },
-        {
-          onSuccess: (response: any) => {
-            setOpenModal(false);
-            router.push(`/chats/channel/${response.id}`);
-          },
-          onError: (e: any) => {
-            setAlertType('fail');
-            setOpenAlert(true);
-            // Alert에 e.response.data.message를 띄워주는 것이 좋을 것 같다
-          },
-        }
-      );
+    channelCreateMutation.mutate(
+      { ...channelInfo, title: trimmedTitle },
+      {
+        onSuccess: (response: any) => {
+          setShowModalOnModal(false);
+          setOpenModal(false);
+          router.push(`/chats/channel/${response.id}`);
+        },
+        onError: (e: any) => {
+          setAlertType('fail');
+          setOpenAlert(true);
+          // Alert에 e.response.data.message를 띄워주는 것이 좋을 것 같다
+        },
+      }
+    );
+  }
+
+  const handleChannelCreationCheck = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (channelInfo.title.trim()) {
+      if (haveMyChannel)
+        useChannelJoinConfirmModalOnModal(handleChannelCreate);
+      else
+        handleChannelCreate();
     }
   };
 
@@ -133,7 +146,7 @@ export default function ChannelSettings({
     create: {
       fields: ['type', 'title', 'password', 'capacity'],
       buttonValue: 'create',
-      onSubmit: handleChannelCreate,
+      onSubmit: handleChannelCreationCheck,
     },
     edit: {
       fields: ['type', 'password'],

@@ -23,12 +23,14 @@ type ChannelFilterProps = {
   order: string;
   setOrder: Dispatch<SetStateAction<string>>;
   setKeyword: Dispatch<SetStateAction<string>>;
+  haveMyChannel: boolean;
 };
 
 export default function ChannelFilter({
   order,
   setOrder,
   setKeyword,
+  haveMyChannel
 }: ChannelFilterProps) {
   const { t } = useTranslation('channels');
   const { useChannelCreateModal } = useModalProvider();
@@ -41,6 +43,10 @@ export default function ChannelFilter({
     },
     [channelTitle]
   );
+
+  const handleChannelCreation = () => {
+    useChannelCreateModal(haveMyChannel);
+  }
 
   return (
     <div className={styles.channelFilterContainer}>
@@ -62,7 +68,7 @@ export default function ChannelFilter({
         <BasicButton
           style={'square'}
           color={'pink'}
-          handleButtonClick={useChannelCreateModal}
+          handleButtonClick={handleChannelCreation}
         >
           <IoMdAdd />
         </BasicButton>
