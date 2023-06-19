@@ -4,15 +4,15 @@ import { useQueryClient } from 'react-query';
 import { Chat, RoomType, UserImageMap } from 'types/chatTypes';
 
 import useChatQuery from 'hooks/useChatQuery';
+import useChatSocket from 'hooks/useChatSocket';
 
 import ChatBox from 'components/chats/ChatBox';
+import ChatFailButtons from 'components/chats/ChatFailButtons';
 import ChatInputBox from 'components/chats/ChatInputBox';
 import ErrorRefresher from 'components/global/ErrorRefresher';
 import LoadingSpinner from 'components/global/LoadingSpinner';
 
 import styles from 'styles/chats/Chattings.module.scss';
-
-import ChatFailButtons from './ChatFailButtons';
 
 type ChattingsProps = {
   userImageMap: UserImageMap;
@@ -35,6 +35,20 @@ export default function Chattings({
   const { mutate } = useChatQuery(roomType, roomId).postChatMutation();
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const [socket, disconnectSocket] = useChatSocket(roomType);
+
+  useEffect(() => {
+    socket.connect();
+    socket.on('message', (data: Chat) => {
+      setChats((prev) => [{ ...data, id: prev[0].id + 1 }, ...prev]);
+      setNewestChat({ ...data, id: chats[0]?.id });
+    });
+
+    return () => {
+      socket.off('message');
+      disconnectSocket();
+    };
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -42,6 +56,7 @@ export default function Chattings({
         entries.forEach((entry) => {
           if (entry.target === topRef.current) {
             setIsTopRefVisible(entry.isIntersecting);
+            setNewestChat(null);
           } else if (entry.target === bottomRef.current) {
             setIsBottomRefVisible(entry.isIntersecting);
           }
@@ -119,7 +134,6 @@ export default function Chattings({
 
   useEffect(() => {
     if (chats[0] !== newestChat) setNewestChat({ ...chats[0] });
-    // TODO: 소켓 핸들링
   }, [chats]);
 
   const {
