@@ -1,12 +1,17 @@
 import { useSetRecoilState } from 'recoil';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsPeopleFill } from 'react-icons/bs';
 import { RiLockPasswordFill } from 'react-icons/ri';
 
 import { sideBarState } from 'recoils/sideBar';
 
-import { ParticipantsResponse, RoomType, UserImageMap } from 'types/chatTypes';
+import {
+  Chat,
+  ParticipantsResponse,
+  RoomType,
+  UserImageMap,
+} from 'types/chatTypes';
 
 import useChatQuery from 'hooks/useChatQuery';
 import useCustomQuery from 'hooks/useCustomQuery';
@@ -17,6 +22,8 @@ import ErrorRefresher from 'components/global/ErrorRefresher';
 import LoadingSpinner from 'components/global/LoadingSpinner';
 import PageHeader from 'components/global/PageHeader';
 
+import useChatSocket from 'hooks/useChatSocket';
+
 type ChattingsFrameProps = {
   roomType: RoomType;
   roomId: string;
@@ -24,15 +31,27 @@ type ChattingsFrameProps = {
 
 export default function ChattingsFrame({
   roomType,
-  roomId
+  roomId,
 }: ChattingsFrameProps) {
   const setSideBar = useSetRecoilState(sideBarState);
   const [userImageMap, setUserImageMap] = useState<UserImageMap>({});
   const { useChannelEditModal } = useModalProvider();
-  const { get } = useCustomQuery();
+  const { get, queryClient } = useCustomQuery();
   const myChannelGet = get('myChannel', '/channels/me');
   const { chatUsersGet } = useChatQuery(roomType as RoomType, roomId as string);
   const chatUsers = chatUsersGet(setUserImageMap);
+  const [socket, disconnectSocket] = useChatSocket(roomType);
+
+  useEffect(() => {
+    socket.connect();
+    socket.on('participants', () => {
+      queryClient.invalidateQueries('channelParticipants')
+    });
+    return () => {
+      socket.off('participants');
+      disconnectSocket();
+    };
+  }, []);
 
   const headerTitles: { [key: string]: string } = {
     channel: `${myChannelGet.data?.myChannel?.title}`,

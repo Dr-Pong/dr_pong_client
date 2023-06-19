@@ -38,7 +38,7 @@
 }
 
 .small {
-  width: 4.5rem;
+  width: 4rem;
   height: 1.5rem;
 }
 
@@ -112,6 +112,10 @@
   background: white;
 }
 
+.white:hover {
+  opacity: 0.8;
+}
+
 .opaque {
   color: white;
   background-color: transparentize(white, 0.7);
@@ -128,7 +132,7 @@
 }
 
 .pink:hover {
-  background: $dark-pink;
+  opacity: 0.9;
 }
 
 .purple {
@@ -137,5 +141,5 @@
 }
 
 .purple:hover {
-  background: $dark-purple;
+  opacity: 0.9;
 }

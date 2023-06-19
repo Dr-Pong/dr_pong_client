@@ -1,5 +1,9 @@
+import { useRecoilValue } from 'recoil';
+
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useQueryClient } from 'react-query';
+
+import { userState } from 'recoils/user';
 
 import { Chat, RoomType, UserImageMap } from 'types/chatTypes';
 
@@ -26,6 +30,7 @@ export default function Chattings({
   roomId,
 }: ChattingsProps) {
   const queryClient = useQueryClient();
+  const { nickname } = useRecoilValue(userState);
   const [chats, setChats] = useState<Chat[]>([]);
   const [message, setMessage] = useState<string>('');
   const [isTopRefVisible, setIsTopRefVisible] = useState(true);
@@ -35,18 +40,20 @@ export default function Chattings({
   const { mutate } = useChatQuery(roomType, roomId).postChatMutation();
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
-  const [socket, disconnectSocket] = useChatSocket(roomType);
+  const [socket] = useChatSocket(roomType);
 
   useEffect(() => {
-    socket.connect();
     socket.on('message', (data: Chat) => {
-      setChats((prev) => [{ ...data, id: prev[0].id + 1 }, ...prev]);
+      setChats((prev) => [{ ...data, id: prev[0]?.id + 1 }, ...prev]);
       setNewestChat({ ...data, id: chats[0]?.id });
+    });
+    socket.on('system', (data: Chat) => {
+      setChats((prev) => [{ ...data, id: prev[0]?.id + 1 }, ...prev]);
     });
 
     return () => {
       socket.off('message');
-      disconnectSocket();
+      socket.off('system');
     };
   }, []);
 
@@ -92,7 +99,7 @@ export default function Chattings({
       {
         id: prev[0]?.id + 1,
         message,
-        nickname: 'hakiim',
+        nickname,
         time: new Date(),
         type: 'me',
       },

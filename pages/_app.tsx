@@ -10,6 +10,8 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 
 import 'styles/globals.css';
 
+import LoginFilter from 'components/layouts/LoginFilter';
+
 const queryClient = new QueryClient();
 
 export type LayoutProps = {
@@ -31,11 +33,13 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     <CookiesProvider>
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
-          {getLayout(<Component {...pageProps} />)}
-          <div id='sideBarRoot'></div>
-          <div id='modalRoot'></div>
-          <div id='modalOnModalStateRoot'></div>
-          <div id='alertRoot'></div>
+          <LoginFilter>
+            {getLayout(<Component {...pageProps} />)}
+            <div id='sideBarRoot'></div>
+            <div id='modalRoot'></div>
+            <div id='upperModalRoot'></div>
+            <div id='alertRoot'></div>
+          </LoginFilter>
         </RecoilRoot>
         <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
       </QueryClientProvider>
