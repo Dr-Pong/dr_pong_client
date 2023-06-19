@@ -35,7 +35,7 @@ export default function DirectMessages() {
     <div className={styles.directMessagesContainer}>
       <BasicButton
         style='small'
-        color='purple'
+        color='white'
         handleButtonClick={handleEditClick}
       >
         {isEditable ? t('ok') : t('edit')}
