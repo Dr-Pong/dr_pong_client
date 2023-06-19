@@ -8,11 +8,10 @@ const sockets: { [key: string]: Socket } = {};
 const useChatSocket = (namespace?: string): [Socket, () => void] => {
   if (!namespace) namespace = 'global';
   const disconnect = useCallback(() => {
-    if (namespace) {
-      if (!sockets[namespace]) return;
-      sockets[namespace].disconnect();
-      delete sockets[namespace];
-    }
+    if (!namespace) return;
+    if (!sockets[namespace]) return;
+    sockets[namespace].disconnect();
+    delete sockets[namespace];
   }, [namespace]);
 
   if (sockets[namespace]) return [sockets[namespace], disconnect];
