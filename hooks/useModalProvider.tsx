@@ -103,7 +103,7 @@ const useModalProvider = () => {
               color='purple'
               handleButtonClick={callback}
             >
-              {t('Ok')}
+              {t('ok')}
             </ModalButton>,
           ]}
         />
@@ -124,7 +124,7 @@ const useModalProvider = () => {
           color='purple'
           handleButtonClick={handleImageSave}
         >
-          {t('Ok')}
+          {t('ok')}
         </ModalButton>
       ),
     });
@@ -191,11 +191,7 @@ const useModalProvider = () => {
   const useChannelJoinConfirmModal = (callback: () => void) => {
     useModal({
       head: null,
-      body: (
-        <ModalPhrase>
-          {t('channel confirm')}
-        </ModalPhrase>
-      ),
+      body: <ModalPhrase>{t('channel confirm')}</ModalPhrase>,
       tail: (
         <ButtonRow
           buttonList={[
@@ -207,7 +203,7 @@ const useModalProvider = () => {
               color='purple'
               handleButtonClick={callback}
             >
-              {t('Ok')}
+              {t('ok')}
             </ModalButton>,
           ]}
         />
