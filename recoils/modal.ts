@@ -8,8 +8,8 @@ export const modalPartsState = atom<ModalParts>({
   default: { head: null, body: null, tail: null },
 });
 
-export const modalOnModalPartsState = atom<ModalParts>({
-  key: `modalOnModalPartsState/${v1()}`,
+export const upperModalPartsState = atom<ModalParts>({
+  key: `upperModalPartsState/${v1()}`,
   default: { head: null, body: null, tail: null },
 });
 
@@ -18,7 +18,7 @@ export const openModalState = atom<boolean>({
   default: false,
 });
 
-export const openModalOnModalState = atom<boolean>({
-  key: `openModalOnModalState/${v1()}`,
+export const openUpperModalState = atom<boolean>({
+  key: `openUpperModalState/${v1()}`,
   default: false,
 });

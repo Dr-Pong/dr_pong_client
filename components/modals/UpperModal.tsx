@@ -3,34 +3,34 @@ import { createPortal } from 'react-dom';
 import { useEffect } from 'react';
 
 import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
-import { openModalOnModalState, modalOnModalPartsState } from 'recoils/modal';
+import { openUpperModalState, upperModalPartsState } from 'recoils/modal';
 
 import styles from 'styles/modals/Modal.module.scss';
 
-export default function ModalOnModal() {
-  const [openModalOnModal, setOpenModalOnModal]
-    = useRecoilState(openModalOnModalState);
-  const { head, body, tail } = useRecoilValue(modalOnModalPartsState);
-  const resetModalOnModalParts = useResetRecoilState(modalOnModalPartsState);
+export default function UpperModal() {
+  const [openUpperModal, setOpenUpperModal]
+    = useRecoilState(openUpperModalState);
+  const { head, body, tail } = useRecoilValue(upperModalPartsState);
+  const resetUpperModalParts = useResetRecoilState(upperModalPartsState);
 
   useEffect(() => {
-    if (!openModalOnModal) resetModalOnModalParts();
-  }, [openModalOnModal]);
+    if (!openUpperModal) resetUpperModalParts();
+  }, [openUpperModal]);
 
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
       event.preventDefault();
-      if (openModalOnModal)
-        setOpenModalOnModal(false);
+      if (openUpperModal)
+        setOpenUpperModal(false);
     };
     window.addEventListener('popstate', handlePopState);
 
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [openModalOnModal]);
+  }, [openUpperModal]);
 
-  if (openModalOnModal) {
+  if (openUpperModal) {
     return createPortal(
       <div className={styles.modalBackdrop}>
         <div
@@ -46,7 +46,7 @@ export default function ModalOnModal() {
           {tail}
         </div>
       </div>,
-      document.getElementById('modalOnModalStateRoot') as HTMLElement
+      document.getElementById('upperModalRoot') as HTMLElement
     );
   }
   return null;

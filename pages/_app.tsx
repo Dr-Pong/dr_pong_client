@@ -15,7 +15,7 @@ import LoginFilter from 'components/layouts/LoginFilter';
 const queryClient = new QueryClient();
 
 export type LayoutProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
