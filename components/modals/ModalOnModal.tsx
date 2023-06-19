@@ -46,7 +46,7 @@ export default function ModalOnModal() {
           {tail}
         </div>
       </div>,
-      document.getElementById('modalOnModalState') as HTMLElement
+      document.getElementById('modalOnModalStateRoot') as HTMLElement
     );
   }
   return null;
