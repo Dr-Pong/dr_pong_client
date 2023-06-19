@@ -1,17 +1,33 @@
-@import 'styles/common.scss';
+@import 'styles/common';
 
 .directMessagesContainer {
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  overflow-y: auto;
+  form {
+    align-self: flex-end;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.directMessagesWrap {
   overflow-y: auto;
 }
 
 .directMessageBox {
+  @include clickBox;
   display: grid;
   grid-template-columns: 3rem 1fr 2.5rem;
   gap: 1rem;
   align-items: center;
   margin-bottom: 0.5rem;
-  @include clickBox;
+  &.noCursor {
+    cursor: unset;
+  }
+  &.invisible {
+    display: none;
+  }
 }
 
 .profileImage {
@@ -22,4 +38,10 @@
 
 .messageCount {
   @include alertCount;
+}
+
+.deleteButton {
+  justify-self: center;
+  width: fit-content;
+  cursor: pointer;
 }
