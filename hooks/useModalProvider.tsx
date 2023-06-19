@@ -67,7 +67,6 @@ const useModalProvider = () => {
 
   const closeModalOnModal = () => {
     resetModalOnModalParts();
-    // setOpenModal(false);
     setOpenModalOnModal(false);
   }
 
@@ -214,6 +213,11 @@ const useModalProvider = () => {
   };
 
   const useChannelJoinConfirmModal = (callback: () => void) => {
+    const handleCallback = () => {
+      closeModal();
+      callback();
+    }
+
     useModal({
       head: null,
       body: (
@@ -227,13 +231,13 @@ const useModalProvider = () => {
             <CloseModalButton style='flex' color='purple'>
               {t('cancel')}
             </CloseModalButton>,
-            <ModalButton
+            <BasicButton
               style='flex'
               color='purple'
-              handleButtonClick={callback}
+              handleButtonClick={handleCallback}
             >
               {t('Ok')}
-            </ModalButton>,
+            </BasicButton>,
           ]}
         />
       ),

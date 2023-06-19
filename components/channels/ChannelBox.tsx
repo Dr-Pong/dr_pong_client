@@ -48,9 +48,11 @@ export default function ChannelBox({
   };
 
   const handleJoinConfirm = useCallback(() => {
-    if (haveMyChannel) {
+    if (haveMyChannel && !isMyChannel) {
       useChannelJoinConfirmModal(handleChannelJoin);
-    } else handleChannelJoin();
+    } else {
+      handleChannelJoin();
+    }
   }, []);
 
   const handleChannelJoin = useCallback(() => {
