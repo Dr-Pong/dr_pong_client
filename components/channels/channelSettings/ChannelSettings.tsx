@@ -53,7 +53,7 @@ export default function ChannelSettings({
   const setOpenModal = useSetRecoilState(openModalState);
   const setOpenAlert = useSetRecoilState(openAlertState);
   const setAlertType = useSetRecoilState(alertTypeState);
-  const setShowModalOnModal = useSetRecoilState(openUpperModalState);
+  const setShowUpperModal = useSetRecoilState(openUpperModalState);
   const [channelInfo, setChannelInfo] = useState<ChannelInfo>(
     defaultChannelSettings
   );
@@ -73,7 +73,7 @@ export default function ChannelSettings({
       { ...channelInfo, title: trimmedTitle },
       {
         onSuccess: (response: any) => {
-          setShowModalOnModal(false);
+          setShowUpperModal(false);
           setOpenModal(false);
           router.push(`/chats/channel/${response.id}`);
         },
