@@ -15,7 +15,7 @@ import LoginFilter from 'components/layouts/LoginFilter';
 const queryClient = new QueryClient();
 
 export type LayoutProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -37,7 +37,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
             {getLayout(<Component {...pageProps} />)}
             <div id='sideBarRoot'></div>
             <div id='modalRoot'></div>
-            <div id='matchWaitingModalRoot'></div>
+            <div id='upperModalRoot'></div>
             <div id='alertRoot'></div>
           </LoginFilter>
         </RecoilRoot>

@@ -11,6 +11,7 @@ import { Channel } from 'types/channelTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 import useModalProvider from 'hooks/useModalProvider';
+import useUpperModalProvider from 'hooks/useUpperModalProvider';
 
 import styles from 'styles/channels/ChannelBox.module.scss';
 
@@ -25,8 +26,8 @@ export default function ChannelBox({
 }) {
   const { id, title, access, headCount, maxCount } = channel;
   const router = useRouter();
-  const { usePasswordSubmitModal, useChannelJoinConfirmModal } =
-    useModalProvider();
+  const { usePasswordSubmitModal } = useModalProvider();
+  const { useChannelJoinConfirmUpperModal } = useUpperModalProvider();
   const setOpenAlert = useSetRecoilState(openAlertState);
   const setAlertType = useSetRecoilState(alertTypeState);
   const { mutationPost } = useCustomQuery();
@@ -48,9 +49,11 @@ export default function ChannelBox({
   };
 
   const handleJoinConfirm = useCallback(() => {
-    if (haveMyChannel) {
-      useChannelJoinConfirmModal(handleChannelJoin);
-    } else handleChannelJoin();
+    if (haveMyChannel && !isMyChannel) {
+      useChannelJoinConfirmUpperModal(handleChannelJoin);
+    } else {
+      handleChannelJoin();
+    }
   }, []);
 
   const handleChannelJoin = useCallback(() => {

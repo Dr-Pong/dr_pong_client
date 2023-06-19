@@ -53,13 +53,14 @@ export default function ChannelsFrame() {
           order={order}
           setOrder={setOrder}
           setKeyword={setKeyword}
+          haveMyChannel={!!myChannelGet.data.myChannel}
         />
         <div className={styles.channelList}>
           {channels.map((eachChannel: Channel) => {
             return (
               <ChannelBox
                 channel={eachChannel}
-                isMyChannel={eachChannel.id === myChannelGet.data.myChannel.id}
+                isMyChannel={eachChannel.id === myChannelGet.data.myChannel?.id}
                 haveMyChannel={!!myChannelGet.data.myChannel}
               />
             );

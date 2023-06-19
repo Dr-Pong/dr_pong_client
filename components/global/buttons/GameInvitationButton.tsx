@@ -1,9 +1,7 @@
-import { useSetRecoilState } from 'recoil';
-import { matchWaitingModalState } from 'recoils/modal';
-
 import { ButtonProps } from 'types/buttonTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
+import useUpperModalProvider from 'hooks/useUpperModalProvider';
 
 import BasicButton from 'components/global/buttons/BasicButton';
 
@@ -16,12 +14,12 @@ export default function GameInvitationButton({
 }) {
   const { style, color, children } = button;
   const { mutationPost } = useCustomQuery();
-  const setShowMatchWaitingModal = useSetRecoilState(matchWaitingModalState);
+  const { useMatchWaitingUpperModal } = useUpperModalProvider();
 
   const { mutate } = mutationPost(api);
 
   const onSuccess = () => {
-    setShowMatchWaitingModal(true);
+    useMatchWaitingUpperModal();
   };
 
   const onError = () => {

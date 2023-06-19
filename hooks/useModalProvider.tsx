@@ -1,9 +1,16 @@
 import useTranslation from 'next-translate/useTranslation';
-import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import React, { MutableRefObject } from 'react';
 
-import { modalPartsState, openModalState } from 'recoils/modal';
+import {
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState
+} from 'recoil';
+import {
+  modalPartsState,
+  openModalState,
+} from 'recoils/modal';
 import { userState } from 'recoils/user';
 
 import { Participant } from 'types/chatTypes';
@@ -164,10 +171,10 @@ const useModalProvider = () => {
     });
   };
 
-  const useChannelCreateModal = () => {
+  const useChannelCreateModal = (haveMyChannel: boolean) => {
     useModal({
       head: <ModalTitle title={t('Create new channel')} closeButton />,
-      body: <ChannelSettings type='create' />,
+      body: <ChannelSettings haveMyChannel={haveMyChannel} type='create' />,
       tail: null,
     });
   };
@@ -185,29 +192,6 @@ const useModalProvider = () => {
       head: <ModalTitle title={t('Edit channel')} closeButton />,
       body: <ChannelSettings roomId={roomId} type='edit' />,
       tail: null,
-    });
-  };
-
-  const useChannelJoinConfirmModal = (callback: () => void) => {
-    useModal({
-      head: null,
-      body: <ModalPhrase>{t('channel confirm')}</ModalPhrase>,
-      tail: (
-        <ButtonRow
-          buttonList={[
-            <CloseModalButton style='flex' color='purple'>
-              {t('cancel')}
-            </CloseModalButton>,
-            <ModalButton
-              style='flex'
-              color='purple'
-              handleButtonClick={callback}
-            >
-              {t('ok')}
-            </ModalButton>,
-          ]}
-        />
-      ),
     });
   };
 
@@ -240,7 +224,6 @@ const useModalProvider = () => {
     useFriendFinderModal,
     useChannelCreateModal,
     usePasswordSubmitModal,
-    useChannelJoinConfirmModal,
     useChannelEditModal,
     useInvitationModal,
   };

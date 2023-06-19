@@ -4,6 +4,7 @@ import Alert from 'components/alerts/Alert';
 import Header from 'components/layouts/Header';
 import NavigationBar from 'components/layouts/NavigationBar';
 import Modal from 'components/modals/Modal';
+import UpperModal from 'components/modals/UpperModal';
 
 import styles from 'styles/layouts/Layout.module.scss';
 
@@ -11,6 +12,7 @@ export default function AppLayout({ children }: LayoutProps) {
   return (
     <div id='layoutRoot'>
       <Modal />
+      <UpperModal />
       <Alert />
       <div className={styles.appLayoutContainer}>
         <Header />
