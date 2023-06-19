@@ -9,6 +9,7 @@ const useChatSocket = (namespace?: string): [Socket, () => void] => {
   if (!namespace) namespace = 'global';
   const disconnect = useCallback(() => {
     if (namespace) {
+      if (!sockets[namespace]) return;
       sockets[namespace].disconnect();
       delete sockets[namespace];
     }
@@ -28,6 +29,6 @@ const useChatSocket = (namespace?: string): [Socket, () => void] => {
   return [sockets[namespace], disconnect];
 };
 
-const chatSocketUrl = 'http://10.19.223.86:2229';
+const chatSocketUrl = 'ws://10.19.223.86:2229';
 
 export default useChatSocket;
