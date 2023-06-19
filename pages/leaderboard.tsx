@@ -4,7 +4,6 @@ import { ReactElement } from 'react';
 
 import PageHeader from 'components/global/PageHeader';
 import AppLayout from 'components/layouts/AppLayout';
-import LoginFilter from 'components/layouts/LoginFilter';
 import LeaderboardFrame from 'components/leaderboard/LeaderboardFrame';
 
 import styles from 'styles/leaderboard/Leaderboard.module.scss';
@@ -20,9 +19,5 @@ export default function Leaderboard() {
 }
 
 Leaderboard.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <LoginFilter>
-      <AppLayout>{page}</AppLayout>
-    </LoginFilter>
-  );
+  return <AppLayout>{page}</AppLayout>;
 };
