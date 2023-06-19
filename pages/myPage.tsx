@@ -5,7 +5,6 @@ import { ReactElement } from 'react';
 
 import PageHeader from 'components/global/PageHeader';
 import AppLayout from 'components/layouts/AppLayout';
-import LoginFilter from 'components/layouts/LoginFilter';
 import MyPageFrame from 'components/myPage/MyPageFrame';
 
 import styles from 'styles/myPage/MyPage.module.scss';
@@ -21,9 +20,5 @@ export default function MyPage() {
 }
 
 MyPage.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <LoginFilter>
-      <AppLayout>{page}</AppLayout>
-    </LoginFilter>
-  );
+  return <AppLayout>{page}</AppLayout>;
 };

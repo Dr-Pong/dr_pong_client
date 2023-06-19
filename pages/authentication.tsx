@@ -10,7 +10,6 @@ import { userState } from 'recoils/user';
 import AuthenticationFrame from 'components/authentication/AuthenticationFrame';
 import PageHeader from 'components/global/PageHeader';
 import Layout from 'components/layouts/Layout';
-import LoginFilter from 'components/layouts/LoginFilter';
 
 import styles from 'styles/authentication/Authentication.module.scss';
 
@@ -30,9 +29,5 @@ export default function Authentication() {
 }
 
 Authentication.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <LoginFilter>
-      <Layout>{page}</Layout>
-    </LoginFilter>
-  );
+  return <Layout>{page}</Layout>;
 };

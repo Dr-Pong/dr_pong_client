@@ -4,7 +4,6 @@ import React, { ReactElement, useState } from 'react';
 
 import GameLobby from 'components/game/GameLobby';
 import AppLayout from 'components/layouts/AppLayout';
-import LoginFilter from 'components/layouts/LoginFilter';
 
 import styles from 'styles/game/Game.module.scss';
 
@@ -53,9 +52,5 @@ export default function Game() {
 }
 
 Game.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <LoginFilter>
-      <AppLayout>{page}</AppLayout>
-    </LoginFilter>
-  );
+  return <AppLayout>{page}</AppLayout>;
 };

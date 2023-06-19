@@ -5,7 +5,6 @@ import { ReactElement } from 'react';
 import ChannelsFrame from 'components/channels/ChannelsFrame';
 import PageHeader from 'components/global/PageHeader';
 import AppLayout from 'components/layouts/AppLayout';
-import LoginFilter from 'components/layouts/LoginFilter';
 
 import styles from 'styles/channels/Channels.module.scss';
 
@@ -21,9 +20,5 @@ export default function Channels() {
 }
 
 Channels.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <LoginFilter>
-      <AppLayout>{page}</AppLayout>
-    </LoginFilter>
-  );
+  return <AppLayout>{page}</AppLayout>;
 };
