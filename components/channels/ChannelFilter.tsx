@@ -44,7 +44,7 @@ export default function ChannelFilter({
     [channelTitle]
   );
 
-  const handleChannelCreation = () => {
+  const handleChannelCreate = () => {
     useChannelCreateModal(haveMyChannel);
   }
 
@@ -68,7 +68,7 @@ export default function ChannelFilter({
         <BasicButton
           style={'square'}
           color={'pink'}
-          handleButtonClick={handleChannelCreation}
+          handleButtonClick={handleChannelCreate}
         >
           <IoMdAdd />
         </BasicButton>
