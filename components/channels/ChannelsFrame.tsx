@@ -60,7 +60,7 @@ export default function ChannelsFrame() {
             return (
               <ChannelBox
                 channel={eachChannel}
-                isMyChannel={eachChannel.id === myChannelGet.data.myChannel.id}
+                isMyChannel={eachChannel.id === myChannelGet.data.myChannel?.id}
                 haveMyChannel={!!myChannelGet.data.myChannel}
               />
             );
