@@ -3,6 +3,7 @@ import useTranslation from 'next-translate/useTranslation';
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
 import useModalProvider from 'hooks/useModalProvider';
+import useUpperModalProvider from 'hooks/useUpperModalProvider';
 
 import PageHeader from 'components/global/PageHeader';
 
@@ -14,7 +15,9 @@ interface Options {
 
 export default function GameLobby() {
   const { t } = useTranslation('game');
-  const { useInvitationModal, useMatchWaitingModal } = useModalProvider();
+  const { useInvitationModal } = useModalProvider();
+  const { useMatchWaitingUpperModal } = useUpperModalProvider();
+
   const [options, setOptions] = useState<Options>({
     bullet: false,
     deathMatch: false,
@@ -23,7 +26,7 @@ export default function GameLobby() {
   const optionList = ['bullet', 'deathMatch', 'loserPaysForBeer'];
 
   const handleQueueClick = () => {
-    useMatchWaitingModal();
+    useMatchWaitingUpperModal();
   };
 
   const handleInviteClick = () => {

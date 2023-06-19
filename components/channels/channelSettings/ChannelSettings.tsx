@@ -12,12 +12,12 @@ import {
 } from 'react';
 
 import { alertTypeState, openAlertState } from 'recoils/alert';
-import { openModalState, openModalOnModalState } from 'recoils/modal';
+import { openModalState, openUpperModalState } from 'recoils/modal';
 
 import { ChannelInfo } from 'types/channelTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
-import useModalProvider from 'hooks/useModalProvider';
+import useUpperModalProvider from 'hooks/useUpperModalProvider';
 
 import CapacityRadio from 'components/channels/channelSettings/CapacityRadio';
 import PasswordInput from 'components/channels/channelSettings/PasswordInput';
@@ -53,12 +53,12 @@ export default function ChannelSettings({
   const setOpenModal = useSetRecoilState(openModalState);
   const setOpenAlert = useSetRecoilState(openAlertState);
   const setAlertType = useSetRecoilState(alertTypeState);
-  const setShowModalOnModal = useSetRecoilState(openModalOnModalState);
+  const setShowModalOnModal = useSetRecoilState(openUpperModalState);
   const [channelInfo, setChannelInfo] = useState<ChannelInfo>(
     defaultChannelSettings
   );
   const { access, password } = channelInfo;
-  const { useChannelJoinConfirmModalOnModal } = useModalProvider();
+  const { useChannelJoinConfirmUpperModal } = useUpperModalProvider();
   const { mutationPost, mutationPatch } = useCustomQuery();
   const channelCreateMutation = mutationPost('/channels');
   const channelEditMutation = mutationPatch(`/channels/${roomId}`);
@@ -86,11 +86,11 @@ export default function ChannelSettings({
     );
   }
 
-  const handleChannelCreationCheck = (event: FormEvent<HTMLFormElement>) => {
+  const handleChannelCreateCheck = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (channelInfo.title.trim()) {
       if (haveMyChannel)
-        useChannelJoinConfirmModalOnModal(handleChannelCreate);
+        useChannelJoinConfirmUpperModal(handleChannelCreate);
       else
         handleChannelCreate();
     }
@@ -146,7 +146,7 @@ export default function ChannelSettings({
     create: {
       fields: ['type', 'title', 'password', 'capacity'],
       buttonValue: 'create',
-      onSubmit: handleChannelCreationCheck,
+      onSubmit: handleChannelCreateCheck,
     },
     edit: {
       fields: ['type', 'password'],
