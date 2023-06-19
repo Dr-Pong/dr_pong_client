@@ -33,7 +33,6 @@ import ModalTitle from 'components/modals/modalParts/ModalTitle';
 import Profile from 'components/myPage/profile/Profile';
 import ProfileButtons from 'components/myPage/profile/ProfileButtons';
 import Settings from 'components/settings/Settings';
-import BasicButton from 'components/global/buttons/BasicButton';
 
 import selectableItemStyles from 'styles/myPage/SelectableItem.module.scss';
 
