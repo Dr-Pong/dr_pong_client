@@ -10,7 +10,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 
 import 'styles/globals.css';
 
-import LoginFilter from '../components/layouts/LoginFilter';
+import LoginFilter from 'components/layouts/LoginFilter';
 
 const queryClient = new QueryClient();
 
