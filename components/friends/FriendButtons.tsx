@@ -47,6 +47,7 @@ export default function FriendButtons({
     add: [addFriend(<IoMdAdd />)],
     game: [gameInvitation(<IoMdAdd />)],
     channel: [channelInvitation(<IoMdAdd />, roomId || '')],
+    none: [],
   };
 
   return (

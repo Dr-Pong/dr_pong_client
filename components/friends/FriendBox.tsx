@@ -34,9 +34,7 @@ export default function FriendBox({ type, friend, roomId }: FriendBoxProps) {
       <div className={styles.nickname} onClick={handleNicknameClick}>
         {nickname}
       </div>
-      {type !== 'none' && (
-        <FriendButtons type={type} nickname={nickname} roomId={roomId} />
-      )}
+      <FriendButtons type={type} nickname={nickname} roomId={roomId} />
     </div>
   );
 }
