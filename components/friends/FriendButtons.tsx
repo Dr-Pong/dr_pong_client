@@ -44,7 +44,7 @@ export default function FriendButtons({
       rejectFriendRequest(<IoMdClose />),
     ],
     block: [unblockUser(<IoMdClose />)],
-    find: [addFriend(<IoMdAdd />)],
+    add: [addFriend(<IoMdAdd />)],
     game: [gameInvitation(<IoMdAdd />)],
     channel: [channelInvitation(<IoMdAdd />, roomId || '')],
   };

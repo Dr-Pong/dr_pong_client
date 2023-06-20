@@ -20,7 +20,12 @@
   width: 100%;
   padding: 1rem 0.5rem;
   border-bottom: solid 1px $just-purple;
-  &.find {
+  &.add {
+    @include modalContainer;
+    color: white;
+    background: linear-gradient(to bottom right, $light-pink, $just-yellow);
+  }
+  &.none {
     @include modalContainer;
     color: white;
     background: linear-gradient(to bottom right, $light-pink, $just-yellow);

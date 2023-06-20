@@ -29,7 +29,7 @@ export default function SearchUser() {
         const { data: relation } = await instance.get(
           `/users/${myName}/relations/${searchQuery}`
         );
-        if (userDetail && relation?.status === 'none')
+        if (userDetail && relation && relation.status !== 'blocked') {
           setResult(
             <FriendBox
               key={userDetail.nickname}
@@ -37,10 +37,10 @@ export default function SearchUser() {
                 nickname: userDetail.nickname,
                 imgUrl: userDetail.image.url,
               }}
-              type='find'
+              type={relation.status === 'none' ? 'add' : 'none'}
             />
           );
-        else setResult(<div className={styles.noResult}>{t('no user')}</div>);
+        } else setResult(<div className={styles.noResult}>{t('no user')}</div>);
       } catch (e) {
         setResult(<div className={styles.noResult}>{t('no user')}</div>);
       }
