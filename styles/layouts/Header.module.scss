@@ -11,12 +11,34 @@
   padding-inline: 1rem;
   div {
     display: flex;
-    :first-child {
-      margin-right: 0.8rem;
-    }
   }
+}
+
+
+.headerContainer > div > :first-child {
+  margin-right: 0.8rem;
+}
+
+
+.iconNewDotWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: fit-content;
 }
 
 .headerIcon {
   cursor: pointer;
+}
+
+.newDot {
+  position: absolute;
+  right: 0;
+  bottom: 5%;
+  width: 0.5rem;
+  height: 0.5rem;
+  background: $just-pink;
+  border-radius: 100%;
 }

@@ -1,11 +1,14 @@
 import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
-import { useSetRecoilState } from 'recoil';
-import { userState } from 'recoils/user';
-import { loginState } from 'recoils/login';
+import { useEffect } from 'react';
 
+import { loginState } from 'recoils/login';
+import { userState } from 'recoils/user';
+
+import useChatSocket from 'hooks/useChatSocket';
 import useCustomQuery from 'hooks/useCustomQuery';
 
 import { LayoutProps } from 'pages/_app';
@@ -18,11 +21,21 @@ export default function LoginFilter({ children }: LayoutProps) {
   const setLoginState = useSetRecoilState(loginState);
   const resetUserState = useResetRecoilState(userState);
   const { get } = useCustomQuery();
-  const { data, isLoading, isError, error } = get(['user_key'], '/users/me', setUser);
+  const { data, isLoading, isError, error } = get(
+    ['user_key'],
+    '/users/me',
+    setUser
+  );
   const router = useRouter();
+  const [socket, disconnectSocket] = useChatSocket();
 
-  if (user.roleType === 'member')
-    setLoginState(true);
+  useEffect(() => {
+    socket.connect();
+    return () => {
+      disconnectSocket();
+    };
+  }, []);
+  if (user.roleType === 'member') setLoginState(true);
   else setLoginState(false);
 
   if (isLoading) return <LoadingSpinner />;

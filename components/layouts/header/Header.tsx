@@ -1,7 +1,7 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
-import { RiSendPlaneFill, RiSettings4Fill } from 'react-icons/ri';
-import { TbBellFilled } from 'react-icons/tb';
+import React, { useEffect } from 'react';
+import { RiSettings4Fill } from 'react-icons/ri';
 
 import { sideBarState } from 'recoils/sideBar';
 import { userState } from 'recoils/user';
@@ -9,13 +9,14 @@ import { userState } from 'recoils/user';
 import useModalProvider from 'hooks/useModalProvider';
 
 import SideBar from 'components/layouts/SideBar';
+import DirectMessageButton from 'components/layouts/header/DirectMessageButton';
+import NotificationButton from 'components/layouts/header/NotificationButton';
 
 import styles from 'styles/layouts/Header.module.scss';
 
 export default function Header() {
   const { useSettingsModal } = useModalProvider();
   const { roleType } = useRecoilValue(userState);
-  const setSideBar = useSetRecoilState(sideBarState);
 
   return (
     <div>
@@ -27,18 +28,8 @@ export default function Header() {
         />
         {roleType === 'member' && (
           <div>
-            <RiSendPlaneFill
-              className={styles.headerIcon}
-              onClick={() => {
-                setSideBar('directMessage');
-              }}
-            />
-            <TbBellFilled
-              className={styles.headerIcon}
-              onClick={() => {
-                setSideBar('notification');
-              }}
-            />
+            <DirectMessageButton />
+            <NotificationButton />
           </div>
         )}
       </div>
