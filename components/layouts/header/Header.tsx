@@ -18,11 +18,6 @@ export default function Header() {
   const { useSettingsModal } = useModalProvider();
   const { roleType } = useRecoilValue(userState);
 
-  const sideBar = useRecoilValue(sideBarState);
-
-  useEffect(() => {
-    console.log(sideBar);
-  }, [sideBar]);
   return (
     <div>
       <SideBar />
