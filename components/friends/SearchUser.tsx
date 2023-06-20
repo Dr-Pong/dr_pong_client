@@ -1,8 +1,9 @@
 import useTranslation from 'next-translate/useTranslation';
+import { useRecoilValue } from 'recoil';
 
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, ReactElement, useState } from 'react';
 
-import { DetailDto } from 'types/userTypes';
+import { userState } from 'recoils/user';
 
 import instance from 'utils/axios';
 
@@ -14,25 +15,35 @@ import styles from 'styles/friends/SearchUser.module.scss';
 
 export default function SearchUser() {
   const { t } = useTranslation('friends');
-  const [noSuchUser, setNoSuchUser] = useState<boolean>(false);
+  const { nickname: myName } = useRecoilValue(userState);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [nickname, setNickname] = useState<string>('');
-  const [detailDto, setDetailDto] = useState<DetailDto | null>(null);
+  const [result, setResult] = useState<ReactElement>(<></>);
 
   const handleUserSearch = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (searchQuery) {
       try {
-        const res = await instance.get(`users/${searchQuery}/detail`);
-        const data = res.data;
-        setDetailDto(data);
-        setNickname(searchQuery);
-        setNoSuchUser(false);
-      } catch (error) {
-        setNoSuchUser(true);
+        const { data: userDetail } = await instance.get(
+          `users/${searchQuery}/detail`
+        );
+        const { data: relation } = await instance.get(
+          `/users/${myName}/relations/${searchQuery}`
+        );
+        if (userDetail && relation?.status === 'none')
+          setResult(
+            <FriendBox
+              key={userDetail.nickname}
+              friend={{
+                nickname: userDetail.nickname,
+                imgUrl: userDetail.image.url,
+              }}
+              type='find'
+            />
+          );
+        else setResult(<div className={styles.noResult}>{t('no user')}</div>);
+      } catch (e) {
+        setResult(<div className={styles.noResult}>{t('no user')}</div>);
       }
-    } else {
-      setNoSuchUser(true);
     }
   };
 
@@ -53,20 +64,7 @@ export default function SearchUser() {
           {t('search')}
         </BasicButton>
       </div>
-      <div className={styles.results}>
-        {detailDto === null ? (noSuchUser &&
-          <div className={styles.noResult}>{t('no user')}</div>
-        ) : (
-          <FriendBox
-            key={searchQuery}
-            friend={{
-              nickname: nickname,
-              imgUrl: detailDto.image.url,
-            }}
-            type='find'
-          />
-        )}
-      </div>
+      <div className={styles.results}>{result}</div>
     </div>
   );
 }
