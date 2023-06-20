@@ -38,6 +38,10 @@ export interface DetailDto {
   statusMessage: string;
 }
 
+export interface Relation {
+  status: 'none' | 'blocked' | 'friend';
+}
+
 export interface Title {
   id: number;
   title: string;
@@ -70,7 +74,7 @@ export interface Achievements {
   achievements: (Achievement | null)[];
 }
 
-export interface Emoji extends Selectable { }
+export interface Emoji extends Selectable {}
 
 export interface Emojis {
   emojis: (Emoji | null)[];

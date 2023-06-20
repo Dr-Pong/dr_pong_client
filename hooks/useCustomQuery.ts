@@ -17,7 +17,7 @@ export type MutationType = (
   | UseMutationResult<object, unknown, void, unknown>;
 const useCustomQuery = () => {
   const queryClient = useQueryClient();
-  const getDefaultOptions = {
+  const defaultOptions = {
     retry: 0,
     refetchOnWindowFocus: false,
     keepPreviousData: true,
@@ -25,8 +25,8 @@ const useCustomQuery = () => {
   const get = (
     queryKey: QueryKey,
     path: string,
-    setState?: React.Dispatch<React.SetStateAction<any>>,
-    options: object = getDefaultOptions
+    setState?: React.Dispatch<React.SetStateAction<any>> | null,
+    options?: object
   ) => {
     return useQuery(
       queryKey,
@@ -35,7 +35,7 @@ const useCustomQuery = () => {
         setState?.(data);
         return data;
       },
-      options
+      Object.assign(defaultOptions, options)
     );
   };
 
