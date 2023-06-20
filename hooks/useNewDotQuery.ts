@@ -39,15 +39,7 @@ const useFriendsQuery = () => {
       gameInvitationsGet.isError ||
       channelInvitationsGet.isError;
 
-    const newFriendNotification = friendNotificationGet.data?.requestCount > 0;
-    const newGameInvitation = gameInvitationsGet.data?.invitations?.length > 0;
-    const newChannelInvitation =
-      channelInvitationsGet.data?.invitations?.length > 0;
-
-    const newDot: boolean =
-      newFriendNotification || newGameInvitation || newChannelInvitation;
-
-    return { newDot, isLoading, isError };
+    return { isLoading, isError };
   };
 
   const directMessageNewDotGet = (
