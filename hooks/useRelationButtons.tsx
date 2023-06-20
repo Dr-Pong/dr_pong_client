@@ -1,4 +1,4 @@
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 import Link from 'next/link';
 
@@ -21,7 +21,7 @@ import ToastResultButton, {
 const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
   const { useProfileModal, closeModal } = useModalProvider();
   const setDropdownUser = useSetRecoilState(dropdownUserState);
-  const [sideBar, setSideBar] = useRecoilState(sideBarState);
+  const setSideBar = useSetRecoilState(sideBarState);
   const { style, color } = buttonDesign;
 
   const openProfile = (label: ReactNode) => {
@@ -131,11 +131,13 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
   };
 
   const directMessage = (label: ReactNode) => {
-    if (sideBar)
+    const handleButtonClick = () => {
+      closeModal();
       setSideBar(null);
+    }
 
     return (
-      <BasicButton style={style} color={color} handleButtonClick={closeModal}>
+      <BasicButton style={style} color={color} handleButtonClick={handleButtonClick}>
         <Link href={`/chats/dm/${target}`}>{label}</Link>
       </BasicButton>
     );
