@@ -79,7 +79,7 @@ export default function FriendTabContents() {
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher />;
-  console.log(globalChatSocket);
+
   return (
     <div className={styles.friendTabContentsContainer}>
       <div className={styles.utilsWrap}>

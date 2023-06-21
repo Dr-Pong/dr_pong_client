@@ -29,8 +29,8 @@ function NotificationButton() {
   }, []);
 
   const { isLoading, isError } = notificationNewDotGet(setNewDot);
-  // if (isLoading || isError) return <TbBellFilled />;
-  console.log(socket);
+  if (isLoading || isError) return <TbBellFilled />;
+
   return (
     <div className={styles.iconNewDotWrap}>
       <TbBellFilled
