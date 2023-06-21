@@ -9,7 +9,8 @@ type ButtonStyle =
   | 'square'
   | 'dropdown'
   | 'fit'
-  | 'long';
+  | 'long'
+  | 'ball';
 
 type ButtonColor =
   | 'black'
