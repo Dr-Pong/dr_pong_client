@@ -56,10 +56,18 @@
   line-height: 150%;
 }
 
+.buttonsTimeWrap {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.time {
+  color: $dark-grey;
+}
+
 .buttons {
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  align-self: end;
-  justify-self: end;
 }

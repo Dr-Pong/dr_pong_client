@@ -14,6 +14,7 @@ import { Invitation } from 'types/notificationTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
+import { timeConverter } from 'components/chats/ChatBox';
 import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/notifications/Notifications.module.scss';
@@ -106,21 +107,24 @@ export default function InvitationBox({
       <div className={styles.notification}>
         {invitationProperties[type].notification}
       </div>
-      <div className={styles.buttons}>
-        <BasicButton
-          style='ball'
-          color='purple'
-          handleButtonClick={handleInvitationAccept}
-        >
-          <IoMdCheckmark />
-        </BasicButton>
-        <BasicButton
-          style='ball'
-          color='purple'
-          handleButtonClick={handleInvitationDelete}
-        >
-          <IoMdClose />
-        </BasicButton>
+      <div className={styles.buttonsTimeWrap}>
+        <div className={styles.time}>{timeConverter(createdAt)}</div>
+        <div className={styles.buttons}>
+          <BasicButton
+            style='ball'
+            color='purple'
+            handleButtonClick={handleInvitationAccept}
+          >
+            <IoMdCheckmark />
+          </BasicButton>
+          <BasicButton
+            style='ball'
+            color='purple'
+            handleButtonClick={handleInvitationDelete}
+          >
+            <IoMdClose />
+          </BasicButton>
+        </div>
       </div>
     </div>
   );
