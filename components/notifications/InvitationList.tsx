@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Invitation, Invitations } from 'types/notificationTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
-import InvitationBox from 'components/notifications/InvitationBox';
-import LoadingSpinner from 'components/global/LoadingSpinner';
 import ErrorRefresher from 'components/global/ErrorRefresher';
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import InvitationBox from 'components/notifications/InvitationBox';
+
+import useChatSocket from 'hooks/useChatSocket';
 
 export default function InvitationList() {
   const [channelInvitations, setChannelInvitations] = useState<Invitations>({
@@ -27,6 +29,20 @@ export default function InvitationList() {
     '/users/notifications/channels',
     setChannelInvitations
   );
+  const [chatSocket] = useChatSocket();
+
+  useEffect(() => {
+    chatSocket.on('invite', (invitation: Invitation) => {
+      setChannelInvitations((prev) => {
+        return {
+          invitations: [...prev.invitations, invitation],
+        };
+      });
+    });
+    return () => {
+      chatSocket.off('invite');
+    };
+  }, []);
 
   useEffect(() => {
     setCombination(
@@ -54,8 +70,10 @@ export default function InvitationList() {
     );
   };
 
-  if (gameInvitationsGet.isLoading || channelInvitationsGet.isLoading) return <LoadingSpinner />;
-  if (gameInvitationsGet.isError || channelInvitationsGet.isError) return <ErrorRefresher />;
+  if (gameInvitationsGet.isLoading || channelInvitationsGet.isLoading)
+    return <LoadingSpinner />;
+  if (gameInvitationsGet.isError || channelInvitationsGet.isError)
+    return <ErrorRefresher />;
 
   return (
     <div>
