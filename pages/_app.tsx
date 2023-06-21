@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 
 import React, { ReactElement, ReactNode } from 'react';
 import { CookiesProvider } from 'react-cookie';
+import { Toaster } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
@@ -14,6 +15,8 @@ import 'styles/globals.css';
 const LoginFilter = dynamic(() => import('components/layouts/LoginFilter'), {
   ssr: false,
 });
+
+import 'styles/globals.css';
 
 const queryClient = new QueryClient();
 
@@ -42,6 +45,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
             <div id='modalRoot'></div>
             <div id='upperModalRoot'></div>
             <div id='alertRoot'></div>
+            <Toaster />
           </LoginFilter>
         </RecoilRoot>
         <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />

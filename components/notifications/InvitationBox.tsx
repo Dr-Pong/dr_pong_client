@@ -3,24 +3,26 @@ import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
+import { useMemo, useState } from 'react';
+import toast from 'react-hot-toast';
 import { IoMdCheckmark, IoMdClose } from 'react-icons/io';
 
+import { alertTypeState, openAlertState } from 'recoils/alert';
 import { sideBarState } from 'recoils/sideBar';
 
 import { Invitation } from 'types/notificationTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
+import { timeConverter } from 'components/chats/ChatBox';
 import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/notifications/Notifications.module.scss';
 
-import { alertTypeState, openAlertState } from 'recoils/alert';
-
 type InvitationBoxProps = {
   type: string;
   invitation: Invitation;
-  deleteInvitation: (id: string) => void;
+  toastId?: string;
 };
 
 type InvitationProperty = {
@@ -32,13 +34,14 @@ type InvitationProperty = {
 export default function InvitationBox({
   type,
   invitation,
-  deleteInvitation,
+  toastId,
 }: InvitationBoxProps) {
   const { t } = useTranslation('common');
   const router = useRouter();
   const setSideBar = useSetRecoilState(sideBarState);
   const setOpenAlert = useSetRecoilState(openAlertState);
   const setAlertType = useSetRecoilState(alertTypeState);
+  const [isDeleted, setIsDeleted] = useState<boolean>(false);
   const { mutationPost, mutationDelete, queryClient } = useCustomQuery();
   const { id, from, createdAt, channelId, channelName } = invitation;
   const invitationProperties: { [key: string]: InvitationProperty } = {
@@ -60,7 +63,7 @@ export default function InvitationBox({
     invitationProperties[type].acceptPath,
     {
       onSuccess: () => {
-        setSideBar(null);
+        toastId ? toast.remove(toastId) : setSideBar(null);
         if (type === 'channel') router.push(`/chats/channel/${channelId}`);
         //TODO: if (type === 'game')
       },
@@ -75,7 +78,7 @@ export default function InvitationBox({
     invitationProperties[type].deletePath,
     {
       onSuccess: () => {
-        deleteInvitation(id);
+        toastId ? toast.remove(toastId) : setIsDeleted(true);
         queryClient.invalidateQueries([`notifications${toQueryKey(type)}`]);
       },
       onError: () => {
@@ -84,6 +87,12 @@ export default function InvitationBox({
       },
     }
   );
+
+  const makeBoxStyle = useMemo<string>(() => {
+    let style: string = styles.invitationBox;
+    if (isDeleted) style += ` ${styles.invisible}`;
+    return style;
+  }, [isDeleted]);
 
   const handleInvitationAccept = () => {
     invitationAcceptMutation.mutate({});
@@ -94,25 +103,28 @@ export default function InvitationBox({
   };
 
   return (
-    <div className={styles.invitationBox}>
+    <div className={makeBoxStyle}>
       <div className={styles.notification}>
         {invitationProperties[type].notification}
       </div>
-      <div className={styles.buttons}>
-        <BasicButton
-          style='round'
-          color='purple'
-          handleButtonClick={handleInvitationAccept}
-        >
-          <IoMdCheckmark />
-        </BasicButton>
-        <BasicButton
-          style='round'
-          color='purple'
-          handleButtonClick={handleInvitationDelete}
-        >
-          <IoMdClose />
-        </BasicButton>
+      <div className={styles.buttonsTimeWrap}>
+        <div className={styles.time}>{timeConverter(createdAt)}</div>
+        <div className={styles.buttons}>
+          <BasicButton
+            style='ball'
+            color='purple'
+            handleButtonClick={handleInvitationAccept}
+          >
+            <IoMdCheckmark />
+          </BasicButton>
+          <BasicButton
+            style='ball'
+            color='purple'
+            handleButtonClick={handleInvitationDelete}
+          >
+            <IoMdClose />
+          </BasicButton>
+        </div>
       </div>
     </div>
   );
