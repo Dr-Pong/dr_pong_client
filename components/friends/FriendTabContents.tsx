@@ -10,6 +10,7 @@ import { friendsTabState } from 'recoils/friends';
 import { Activity, Friend } from 'types/friendTypes';
 
 import useChatSocket from 'hooks/useChatSocket';
+import useCustomQuery from 'hooks/useCustomQuery';
 import useFriendsQuery from 'hooks/useFriendsQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
@@ -24,15 +25,18 @@ import styles from 'styles/friends/FriendTabContents.module.scss';
 export default function FriendTabContents() {
   const { t } = useTranslation('friends');
   const { useFriendFinderModal } = useModalProvider();
+  const { queryClient } = useCustomQuery();
   const { allListGet, pendingListGet, blockListGet } = useFriendsQuery();
   const tab = useRecoilValue(friendsTabState);
   const [friends, setFriends] = useState<Friend[]>([]);
   const [searchKey, setSearchKey] = useState<string>('');
-  const [chatSocket] = useChatSocket();
+  const [friendsChatSocket, disconnectFriendChatSocket] =
+    useChatSocket('friends');
+  const [globalChatSocket] = useChatSocket();
 
   useEffect(() => {
-    if (tab !== 'all') return;
-    chatSocket.on('friends', (stats: { [nickname: string]: Activity }) => {
+    friendsChatSocket.connect();
+    const putFriendStatus = (stats: { [nickname: string]: Activity }) => {
       setFriends((prev) =>
         prev.map((friend) => {
           const stat = stats[friend.nickname];
@@ -40,9 +44,26 @@ export default function FriendTabContents() {
           return friend;
         })
       );
-    });
+    };
+    const invalidateAllFriends = () => {
+      queryClient.invalidateQueries('allfriends');
+    };
+    const invalidatePendings = () => {
+      queryClient.invalidateQueries('pendings');
+    };
+
+    if (tab === 'all') {
+      friendsChatSocket.on('friends', putFriendStatus);
+      globalChatSocket.on('friend', invalidateAllFriends);
+    }
+    if (tab === 'pending') {
+      globalChatSocket.on('friend', invalidatePendings);
+    }
     return () => {
-      chatSocket.off('friends');
+      friendsChatSocket.off('friends', putFriendStatus);
+      globalChatSocket.off('friend', invalidateAllFriends);
+      globalChatSocket.off('friend', invalidatePendings);
+      disconnectFriendChatSocket();
     };
   }, []);
 
@@ -58,7 +79,7 @@ export default function FriendTabContents() {
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher />;
-
+  console.log(globalChatSocket);
   return (
     <div className={styles.friendTabContentsContainer}>
       <div className={styles.utilsWrap}>
