@@ -1,9 +1,10 @@
 import useTranslation from 'next-translate/useTranslation';
 
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ChatList, DMRoom } from 'types/notificationTypes';
 
+import useChatSocket from 'hooks/useChatSocket';
 import useCustomQuery from 'hooks/useCustomQuery';
 
 import DirectMessageBox from 'components/directMessages/DirectMessageBox';
@@ -17,12 +18,34 @@ export default function DirectMessages() {
   const { t } = useTranslation('common');
   const [isEditable, setIsEditable] = useState<boolean>(false);
   const [{ chatList }, setChatList] = useState<ChatList>({ chatList: [] });
-  const { get } = useCustomQuery();
+  const { get, queryClient } = useCustomQuery();
   const { data, isLoading, isError } = get(
     ['chatList'],
     '/users/friends/chatlist',
     setChatList
   );
+  const [socket] = useChatSocket();
+
+  useEffect(() => {
+    socket.on('newChat', (nickname: string) => {
+      if (!chatList.some((dmRoom: DMRoom) => dmRoom.nickname === nickname)) {
+        queryClient.invalidateQueries(['chatList']);
+        return;
+      }
+      setChatList((prev) => {
+        return {
+          chatList: prev.chatList.map((dmRoom: DMRoom, index: number) => {
+            if (dmRoom.nickname === nickname)
+              return { ...dmRoom, unread: dmRoom.newChats + 1 };
+            return dmRoom;
+          }),
+        };
+      });
+    });
+    return () => {
+      socket.off('newChat');
+    };
+  }, []);
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher />;
