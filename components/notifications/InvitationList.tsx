@@ -66,12 +66,6 @@ export default function InvitationList() {
     });
   };
 
-  const deleteInvitation = (id: string) => {
-    setCombination((combination) =>
-      combination.filter((invitation) => invitation.id !== id)
-    );
-  };
-
   if (gameInvitationsGet.isLoading || channelInvitationsGet.isLoading)
     return <LoadingSpinner />;
   if (gameInvitationsGet.isError || channelInvitationsGet.isError)
