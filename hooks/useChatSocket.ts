@@ -15,16 +15,15 @@ const useChatSocket = (namespace?: string): [Socket, () => void] => {
   }, [namespace]);
 
   if (sockets[namespace]) return [sockets[namespace], disconnect];
-  if (namespace === 'global') {
-    sockets[namespace] = io(chatSocketUrl, { transports: ['websocket'] });
-  } else {
-    sockets[namespace] = io(chatSocketUrl + '/' + namespace, {
-      transports: ['websocket'],
-      auth: {
-        Authorization: `Bearer ${getAuthorization()}`,
-      },
-    });
-  }
+  let url = chatSocketUrl;
+  if (namespace !== 'global') url += '/' + namespace;
+
+  sockets[namespace] = io(url, {
+    transports: ['websocket'],
+    auth: {
+      Authorization: `Bearer ${getAuthorization()}`,
+    },
+  });
   return [sockets[namespace], disconnect];
 };
 
