@@ -3,7 +3,7 @@ import { useSetRecoilState } from 'recoil';
 
 import Router from 'next/router';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { friendsTabState } from 'recoils/friends';
 import { sideBarState } from 'recoils/sideBar';
@@ -26,7 +26,7 @@ export default function FriendRequestsBox() {
     '/users/notifications/friends'
   );
   const [socket] = useChatSocket();
-  const [newFriendRequest, setNewFriendRequest] = React.useState<number>(0);
+  const [newFriendRequest, setNewFriendRequest] = useState<number>(0);
 
   useEffect(() => {
     socket.on('friend', () => {
