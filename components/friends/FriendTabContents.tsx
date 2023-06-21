@@ -1,14 +1,15 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue } from 'recoil';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoMdAdd } from 'react-icons/io';
 import { UseQueryResult } from 'react-query';
 
 import { friendsTabState } from 'recoils/friends';
 
-import { Friend } from 'types/friendTypes';
+import { Activity, Friend } from 'types/friendTypes';
 
+import useChatSocket from 'hooks/useChatSocket';
 import useFriendsQuery from 'hooks/useFriendsQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
@@ -27,6 +28,24 @@ export default function FriendTabContents() {
   const tab = useRecoilValue(friendsTabState);
   const [friends, setFriends] = useState<Friend[]>([]);
   const [searchKey, setSearchKey] = useState<string>('');
+  const [chatSocket] = useChatSocket();
+
+  useEffect(() => {
+    if (tab !== 'all') return;
+    chatSocket.on('friends', (stats: { [nickname: string]: Activity }) => {
+      setFriends((prev) =>
+        prev.map((friend) => {
+          const newFriend = { ...friend };
+          const stat = stats[friend.nickname];
+          if (stat) newFriend.status = stat;
+          return newFriend;
+        })
+      );
+    });
+    return () => {
+      chatSocket.off('friends');
+    };
+  }, []);
 
   const query: {
     [key: string]: (setBlocks: (f: Friend[]) => void) => UseQueryResult;
