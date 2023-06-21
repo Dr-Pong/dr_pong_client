@@ -35,10 +35,9 @@ export default function FriendTabContents() {
     chatSocket.on('friends', (stats: { [nickname: string]: Activity }) => {
       setFriends((prev) =>
         prev.map((friend) => {
-          const newFriend = { ...friend };
           const stat = stats[friend.nickname];
-          if (stat) newFriend.status = stat;
-          return newFriend;
+          if (stat) friend.status = stat;
+          return friend;
         })
       );
     });
