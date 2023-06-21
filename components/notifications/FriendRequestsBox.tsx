@@ -3,9 +3,12 @@ import { useSetRecoilState } from 'recoil';
 
 import Router from 'next/router';
 
+import React, { useEffect } from 'react';
+
 import { friendsTabState } from 'recoils/friends';
 import { sideBarState } from 'recoils/sideBar';
 
+import useChatSocket from 'hooks/useChatSocket';
 import useCustomQuery from 'hooks/useCustomQuery';
 
 import ErrorRefresher from 'components/global/ErrorRefresher';
@@ -22,11 +25,25 @@ export default function FriendRequestsBox() {
     ['notificationFriends'],
     '/users/notifications/friends'
   );
+  const [socket] = useChatSocket();
+  const [newFriendRequest, setNewFriendRequest] = React.useState<number>(0);
+
+  useEffect(() => {
+    socket.on('friend', () => {
+      setNewFriendRequest((prev) => prev + 1);
+    });
+    return () => {
+      socket.off('newFriendRequest');
+    };
+  }, []);
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher />;
 
   const { requestCount } = data;
+
+  const totalCount =
+    requestCount + newFriendRequest > 99 ? 99 : requestCount + newFriendRequest;
 
   const handleRouterToFriends = () => {
     setSideBar(null);
@@ -39,10 +56,10 @@ export default function FriendRequestsBox() {
       <span>{t('Friend requests')}</span>
       <span
         className={`${styles.requestCount} ${
-          requestCount === 0 && styles.noRequestCount
+          totalCount === 0 && styles.noRequestCount
         }`}
       >
-        {requestCount}
+        {totalCount}
       </span>
     </div>
   );
