@@ -4,9 +4,11 @@ import { Invitation, Invitations } from 'types/notificationTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
-import InvitationBox from 'components/notifications/InvitationBox';
-import LoadingSpinner from 'components/global/LoadingSpinner';
 import ErrorRefresher from 'components/global/ErrorRefresher';
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import InvitationBox from 'components/notifications/InvitationBox';
+
+import styles from 'styles/notifications/Notifications.module.scss';
 
 export default function InvitationList() {
   const [channelInvitations, setChannelInvitations] = useState<Invitations>({
@@ -48,27 +50,16 @@ export default function InvitationList() {
     });
   };
 
-  const deleteInvitation = (id: string) => {
-    setCombination((combination) =>
-      combination.filter((invitation) => invitation.id !== id)
-    );
-  };
-
-  if (gameInvitationsGet.isLoading || channelInvitationsGet.isLoading) return <LoadingSpinner />;
-  if (gameInvitationsGet.isError || channelInvitationsGet.isError) return <ErrorRefresher />;
+  if (gameInvitationsGet.isLoading || channelInvitationsGet.isLoading)
+    return <LoadingSpinner />;
+  if (gameInvitationsGet.isError || channelInvitationsGet.isError)
+    return <ErrorRefresher />;
 
   return (
-    <div>
-      {combination.map((el, i) => {
+    <div className={styles.invitationsWrap}>
+      {combination.map((el) => {
         const type = 'channelId' in el ? 'channel' : 'game';
-        return (
-          <InvitationBox
-            key={i}
-            type={type}
-            invitation={el}
-            deleteInvitation={deleteInvitation}
-          />
-        );
+        return <InvitationBox key={el.id} type={type} invitation={el} />;
       })}
     </div>
   );
