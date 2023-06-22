@@ -43,7 +43,7 @@ export default function FriendButtons({
       acceptFriendRequest(<IoMdCheckmark />),
       rejectFriendRequest(<IoMdClose />),
     ],
-    block: [unblockUser(<IoMdClose />)],
+    blocked: [unblockUser(<IoMdClose />)],
     add: [addFriend(<IoMdAdd />)],
     game: [gameInvitation(<IoMdAdd />)],
     channel: [channelInvitation(<IoMdAdd />, roomId || '')],
@@ -52,7 +52,9 @@ export default function FriendButtons({
 
   return (
     <div className={styles.friendButtonsContainer}>
-      {buttons[type].map((c) => c)}
+      {buttons[type].map((c, i) => (
+        <div key={i}>{c}</div>
+      ))}
     </div>
   );
 }
