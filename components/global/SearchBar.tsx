@@ -1,8 +1,9 @@
-import React, { Dispatch, SetStateAction, FormEvent } from 'react';
+import React, { Dispatch, FormEvent, SetStateAction } from 'react';
 
 import styles from 'styles/global/SearchBar.module.scss';
 
 type SearchableListProps = {
+  inputId: string;
   searchKey: string;
   setSearchKey: Dispatch<SetStateAction<string>>;
   placeHolder: string;
@@ -10,6 +11,7 @@ type SearchableListProps = {
 };
 
 export default function SearchBar({
+  inputId,
   searchKey,
   setSearchKey,
   placeHolder,
@@ -20,6 +22,7 @@ export default function SearchBar({
   return (
     <form onSubmit={handleOnSubmit}>
       <input
+        id={inputId}
         type='text'
         value={searchKey}
         onChange={(e) => setSearchKey(e.target.value)}

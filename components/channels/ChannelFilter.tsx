@@ -30,7 +30,7 @@ export default function ChannelFilter({
   order,
   setOrder,
   setKeyword,
-  haveMyChannel
+  haveMyChannel,
 }: ChannelFilterProps) {
   const { t } = useTranslation('channels');
   const { useChannelCreateModal } = useModalProvider();
@@ -46,13 +46,14 @@ export default function ChannelFilter({
 
   const handleChannelCreate = () => {
     useChannelCreateModal(haveMyChannel);
-  }
+  };
 
   return (
     <div className={styles.channelFilterContainer}>
       <ChannelSortDropdown order={order} setOrder={setOrder} />
       <div className={styles.rightWrap}>
         <SearchBar
+          inputId='searchChannelInput'
           searchKey={channelTitle}
           setSearchKey={setChannelTitle}
           placeHolder={t('channel name')}
