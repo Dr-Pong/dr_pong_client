@@ -1,16 +1,9 @@
 import useTranslation from 'next-translate/useTranslation';
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import React, { MutableRefObject } from 'react';
 
-import {
-  useRecoilValue,
-  useResetRecoilState,
-  useSetRecoilState
-} from 'recoil';
-import {
-  modalPartsState,
-  openModalState,
-} from 'recoils/modal';
+import { modalPartsState, openModalState } from 'recoils/modal';
 import { userState } from 'recoils/user';
 
 import { Participant } from 'types/chatTypes';
@@ -163,9 +156,9 @@ const useModalProvider = () => {
     });
   };
 
-  const useFriendFinderModal = () => {
+  const useFriendRequestModal = () => {
     useModal({
-      head: <ModalTitle title={'Search User'} />,
+      head: <ModalTitle title={t('Add friend')} />,
       body: <SearchUser />,
       tail: null,
     });
@@ -221,7 +214,7 @@ const useModalProvider = () => {
     useEditWarningModal,
     useImageChangeModal,
     useAchievementDetailModal,
-    useFriendFinderModal,
+    useFriendRequestModal,
     useChannelCreateModal,
     usePasswordSubmitModal,
     useChannelEditModal,
