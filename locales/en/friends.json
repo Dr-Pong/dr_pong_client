@@ -2,9 +2,12 @@
   "Friends": "Friends",
   "all": "all",
   "pending": "pending",
-  "block": "block",
+  "blocked": "blocked",
   "Search by nickname": "Search by nickname",
   "nickname": "nickname",
   "no user": "No user found.",
-  "search": "search"
+  "search": "search",
+  "profile": "profile",
+  "delete": "delete",
+  "block": "block"
 }

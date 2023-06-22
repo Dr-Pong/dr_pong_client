@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue } from 'recoil';
 
-import React, { FormEvent, ReactElement, useState } from 'react';
+import React, { FormEvent, ReactElement, useEffect, useState } from 'react';
 
 import { userState } from 'recoils/user';
 
@@ -29,7 +29,12 @@ export default function SearchUser() {
         const { data: relation } = await instance.get(
           `/users/${myName}/relations/${searchQuery}`
         );
-        if (userDetail && relation && relation.status !== 'blocked') {
+        if (
+          userDetail &&
+          userDetail.nickname !== myName &&
+          relation &&
+          relation.status !== 'blocked'
+        ) {
           setResult(
             <FriendBox
               key={userDetail.nickname}
@@ -47,10 +52,15 @@ export default function SearchUser() {
     }
   };
 
+  useEffect(() => {
+    (document.getElementById('searchUserInput') as HTMLElement).focus();
+  }, []);
+
   return (
     <div className={styles.searchUserContainer}>
       <div className={styles.searchBar}>
         <SearchBar
+          inputId='searchUserInput'
           searchKey={searchQuery}
           setSearchKey={setSearchQuery}
           placeHolder={t('nickname')}

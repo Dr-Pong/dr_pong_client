@@ -2,7 +2,7 @@ import useTranslation from 'next-translate/useTranslation';
 
 import { useRouter } from 'next/router';
 
-import React, { ReactElement, useState, FormEvent } from 'react';
+import React, { FormEvent, ReactElement, useState } from 'react';
 
 import PageHeader from 'components/global/PageHeader';
 import SearchBar from 'components/global/SearchBar';
@@ -30,6 +30,7 @@ export default function Records() {
       <div>
         <div className={styles.searchBar}>
           <SearchBar
+            inputId='searchRecordInput'
             searchKey={nickname}
             setSearchKey={setNickname}
             placeHolder={t('nickname')}

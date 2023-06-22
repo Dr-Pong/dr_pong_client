@@ -1,4 +1,4 @@
-@import 'styles/common.scss';
+@import 'styles/common';
 
 .headerContainer {
   display: flex;
@@ -14,11 +14,9 @@
   }
 }
 
-
 .headerContainer > div > :first-child {
   margin-right: 0.8rem;
 }
-
 
 .iconNewDotWrap {
   position: relative;
@@ -35,10 +33,11 @@
 
 .newDot {
   position: absolute;
-  right: 0;
+  right: -5%;
   bottom: 5%;
-  width: 0.5rem;
-  height: 0.5rem;
+  width: 0.8rem;
+  height: 0.8rem;
   background: $just-pink;
+  border: solid 1.5px $dark-purple;
   border-radius: 100%;
 }

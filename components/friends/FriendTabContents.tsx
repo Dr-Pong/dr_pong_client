@@ -24,8 +24,8 @@ import styles from 'styles/friends/FriendTabContents.module.scss';
 
 export default function FriendTabContents() {
   const { t } = useTranslation('friends');
-  const { useFriendFinderModal } = useModalProvider();
   const { queryClient } = useCustomQuery();
+  const { useFriendRequestModal } = useModalProvider();
   const { allListGet, pendingListGet, blockListGet } = useFriendsQuery();
   const tab = useRecoilValue(friendsTabState);
   const [friends, setFriends] = useState<Friend[]>([]);
@@ -72,7 +72,7 @@ export default function FriendTabContents() {
   } = {
     all: allListGet,
     pending: pendingListGet,
-    block: blockListGet,
+    blocked: blockListGet,
   };
 
   const { isLoading, isError } = query[tab](setFriends);
@@ -84,6 +84,7 @@ export default function FriendTabContents() {
     <div className={styles.friendTabContentsContainer}>
       <div className={styles.utilsWrap}>
         <SearchBar
+          inputId='searchFriendInput'
           searchKey={searchKey}
           setSearchKey={setSearchKey}
           placeHolder={t('Search by nickname')}
@@ -92,7 +93,7 @@ export default function FriendTabContents() {
           <BasicButton
             style={'square'}
             color={'pink'}
-            handleButtonClick={useFriendFinderModal}
+            handleButtonClick={useFriendRequestModal}
           >
             <IoMdAdd />
           </BasicButton>

@@ -38,7 +38,7 @@ export default function Friends() {
       <PageHeader title={t('Friends')} />
       <TabProvider
         namespace={'friends'}
-        tabNames={['all', 'pending', 'block']}
+        tabNames={['all', 'pending', 'blocked']}
         currentTab={tab}
         handleTabClick={handleTabClick}
       >
