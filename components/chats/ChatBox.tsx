@@ -65,7 +65,7 @@ function ChatBox({ chat, imgUrl }: ChatBoxProps) {
 
 export default React.memo(ChatBox);
 
-function timeConverter(time: Date | undefined) {
+export function timeConverter(time: Date | undefined) {
   if (!time) return '';
   const date = new Date(time);
   const hour = date.getHours();
