@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import { RecoilRoot } from 'recoil';
 
 import type { AppProps } from 'next/app';
+import dynamic from 'next/dynamic';
 
 import React, { ReactElement, ReactNode } from 'react';
 import { CookiesProvider } from 'react-cookie';
@@ -9,7 +10,11 @@ import { Toaster } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
-import LoginFilter from 'components/layouts/LoginFilter';
+import 'styles/globals.css';
+
+const LoginFilter = dynamic(() => import('components/layouts/LoginFilter'), {
+  ssr: false,
+});
 
 import 'styles/globals.css';
 

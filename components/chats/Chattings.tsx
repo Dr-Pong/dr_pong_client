@@ -50,7 +50,9 @@ export default function Chattings({
     socket.on('system', (data: Chat) => {
       setChats((prev) => [{ ...data, id: prev[0]?.id + 1 }, ...prev]);
     });
-
+    if (roomType === 'dm') {
+      socket.emit('dear', { nickname: roomId });
+    }
     return () => {
       socket.off('message');
       socket.off('system');

@@ -7,26 +7,32 @@ import useCustomQuery from 'hooks/useCustomQuery';
 const useFriendsQuery = () => {
   const { get } = useCustomQuery();
 
-  const notificationNewDotGet = (setNewDot: (value: boolean) => void) => {
+  const notificationNewDotGet = (
+    setNewDot: Dispatch<SetStateAction<boolean>>
+  ) => {
     const friendNotificationGet = get(
-      ['notificationFriends'],
+      ['notificationDot', 'friends'],
       '/users/notifications/friends',
       (data: { requestCount: number }) => {
         setNewDot(data.requestCount > 0);
       }
     );
     const gameInvitationsGet = get(
-      ['notificationsGames'],
+      ['notificationDot', 'games'],
       '/users/notifications/games',
       (data: Invitations) => {
-        setNewDot(data.invitations.length > 0);
+        setNewDot((prev) => {
+          return prev || data.invitations.length > 0;
+        });
       }
     );
     const channelInvitationsGet = get(
-      ['notificationsChannels'],
+      ['notificationDot', 'channels'],
       '/users/notifications/channels',
       (data: Invitations) => {
-        setNewDot(data.invitations.length > 0);
+        setNewDot((prev) => {
+          return prev || data.invitations.length > 0;
+        });
       }
     );
 

@@ -17,7 +17,7 @@ export type RequestProps = {
   method: 'post' | 'delete' | 'patch';
   options?: object;
   body?: object;
-  key?: QueryKey;
+  keys?: QueryKey[];
 };
 
 export default function ToastResultButton({
@@ -27,7 +27,7 @@ export default function ToastResultButton({
   request: RequestProps;
   button: ButtonProps;
 }) {
-  const { api, method, options, body, key } = request;
+  const { api, method, options, body, keys } = request;
   const { style, color, children } = button;
   const { mutationPost, mutationPatch, mutationDelete, queryClient } =
     useCustomQuery();
@@ -45,9 +45,8 @@ export default function ToastResultButton({
   const onSuccess = () => {
     setAlertType('success');
     setOpenAlert(true);
-    if (key) queryClient.invalidateQueries(key);
-    if (dropdownUser)
-      setDropdownUser('');
+    keys?.map((key) => queryClient.invalidateQueries(key));
+    if (dropdownUser) setDropdownUser('');
   };
 
   const onError = () => {

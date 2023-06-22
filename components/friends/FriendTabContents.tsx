@@ -1,14 +1,16 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue } from 'recoil';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoMdAdd } from 'react-icons/io';
 import { UseQueryResult } from 'react-query';
 
 import { friendsTabState } from 'recoils/friends';
 
-import { Friend } from 'types/friendTypes';
+import { Activity, Friend } from 'types/friendTypes';
 
+import useChatSocket from 'hooks/useChatSocket';
+import useCustomQuery from 'hooks/useCustomQuery';
 import useFriendsQuery from 'hooks/useFriendsQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
@@ -23,10 +25,47 @@ import styles from 'styles/friends/FriendTabContents.module.scss';
 export default function FriendTabContents() {
   const { t } = useTranslation('friends');
   const { useFriendFinderModal } = useModalProvider();
+  const { queryClient } = useCustomQuery();
   const { allListGet, pendingListGet, blockListGet } = useFriendsQuery();
   const tab = useRecoilValue(friendsTabState);
   const [friends, setFriends] = useState<Friend[]>([]);
   const [searchKey, setSearchKey] = useState<string>('');
+  const [friendsChatSocket, disconnectFriendChatSocket] =
+    useChatSocket('friends');
+  const [globalChatSocket] = useChatSocket();
+
+  useEffect(() => {
+    friendsChatSocket.connect();
+    const putFriendStatus = (stats: { [nickname: string]: Activity }) => {
+      setFriends((prev) =>
+        prev.map((friend) => {
+          const stat = stats[friend.nickname];
+          if (stat) friend.status = stat;
+          return friend;
+        })
+      );
+    };
+    const invalidateAllFriends = () => {
+      queryClient.invalidateQueries('allfriends');
+    };
+    const invalidatePendings = () => {
+      queryClient.invalidateQueries('pendings');
+    };
+
+    if (tab === 'all') {
+      friendsChatSocket.on('friends', putFriendStatus);
+      globalChatSocket.on('friend', invalidateAllFriends);
+    }
+    if (tab === 'pending') {
+      globalChatSocket.on('friend', invalidatePendings);
+    }
+    return () => {
+      friendsChatSocket.off('friends', putFriendStatus);
+      globalChatSocket.off('friend', invalidateAllFriends);
+      globalChatSocket.off('friend', invalidatePendings);
+      disconnectFriendChatSocket();
+    };
+  }, []);
 
   const query: {
     [key: string]: (setBlocks: (f: Friend[]) => void) => UseQueryResult;

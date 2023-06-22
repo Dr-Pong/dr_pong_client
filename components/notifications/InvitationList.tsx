@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Invitation, Invitations } from 'types/notificationTypes';
 
+import useChatSocket from 'hooks/useChatSocket';
 import useCustomQuery from 'hooks/useCustomQuery';
 
 import ErrorRefresher from 'components/global/ErrorRefresher';
@@ -9,6 +10,7 @@ import LoadingSpinner from 'components/global/LoadingSpinner';
 import InvitationBox from 'components/notifications/InvitationBox';
 
 import styles from 'styles/notifications/Notifications.module.scss';
+
 
 export default function InvitationList() {
   const [channelInvitations, setChannelInvitations] = useState<Invitations>({
@@ -29,6 +31,20 @@ export default function InvitationList() {
     '/users/notifications/channels',
     setChannelInvitations
   );
+  const [chatSocket] = useChatSocket();
+
+  useEffect(() => {
+    chatSocket.on('invite', (invitation: Invitation) => {
+      setChannelInvitations((prev) => {
+        return {
+          invitations: [...prev.invitations, invitation],
+        };
+      });
+    });
+    return () => {
+      chatSocket.off('invite');
+    };
+  }, []);
 
   useEffect(() => {
     setCombination(

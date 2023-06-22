@@ -52,7 +52,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
       api: `/users/blocks/${target}`,
       method: 'post',
       options: {},
-      key: 'allfriends',
+      keys: ['allfriends'],
     };
     const buttonProps = {
       ...buttonDesign,
@@ -66,7 +66,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
       api: `/users/blocks/${target}`,
       method: 'delete',
       options: {},
-      key: 'blocks',
+      keys: ['blocks'],
     };
     const buttonProps = {
       ...buttonDesign,
@@ -93,7 +93,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
       api: `/users/friends/${target}`,
       method: 'delete',
       options: {},
-      key: 'allfriends',
+      keys: ['allfriends'],
     };
     const buttonProps = {
       ...buttonDesign,
@@ -107,7 +107,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
       api: `/users/friends/${target}`,
       method: 'post',
       options: {},
-      key: 'pendings',
+      keys: ['pendings', 'notificationDot'],
     };
     const buttonProps = {
       ...buttonDesign,
@@ -121,7 +121,7 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
       api: `/users/friends/pendings/${target}`,
       method: 'delete',
       options: {},
-      key: 'pendings',
+      keys: ['pendings', 'notificationDot'],
     };
     const buttonProps = {
       ...buttonDesign,
@@ -134,10 +134,14 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
     const handleButtonClick = () => {
       closeModal();
       setSideBar(null);
-    }
+    };
 
     return (
-      <BasicButton style={style} color={color} handleButtonClick={handleButtonClick}>
+      <BasicButton
+        style={style}
+        color={color}
+        handleButtonClick={handleButtonClick}
+      >
         <Link href={`/chats/dm/${target}`}>{label}</Link>
       </BasicButton>
     );

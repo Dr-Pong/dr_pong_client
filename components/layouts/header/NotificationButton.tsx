@@ -17,15 +17,14 @@ function NotificationButton() {
   const [socket] = useChatSocket();
 
   useEffect(() => {
-    socket.on('invite', () => {
+    const newDotListener = () => {
       setNewDot(true);
-    });
-    socket.on('friend', () => {
-      setNewDot(true);
-    });
+    };
+    socket.on('invite', newDotListener);
+    socket.on('friend', newDotListener);
     return () => {
-      socket.off('invite');
-      socket.off('friend');
+      socket.off('invite', newDotListener);
+      socket.off('friend', newDotListener);
     };
   }, []);
 
