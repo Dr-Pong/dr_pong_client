@@ -1,3 +1,5 @@
+export type InvitationType = 'channel' | 'game';
+
 export interface Invitation {
   id: string;
   from: string;
