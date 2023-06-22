@@ -21,7 +21,7 @@ const buttonDesign: ButtonDesign = {
 };
 
 export default function FriendDropdown({ nickname }: { nickname: string }) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('friends');
   const isDropdownVisibleFor = useRecoilValue(dropdownVisibilitySelector);
   const setDropdownUser = useSetRecoilState(dropdownUserState);
   const dropdownRef = useRef<HTMLUListElement>(null);
@@ -54,7 +54,7 @@ export default function FriendDropdown({ nickname }: { nickname: string }) {
 
   const buttons: { content: string; button: JSX.Element }[] = [
     { content: 'profile', button: openProfile(t('profile')) },
-    { content: 'spectate', button: spectate(t('spectate')) },
+    // { content: 'spectate', button: spectate(t('spectate')) },
     { content: 'delete', button: deleteFriend(t('delete')) },
     { content: 'block', button: blockUser(t('block')) },
   ];
