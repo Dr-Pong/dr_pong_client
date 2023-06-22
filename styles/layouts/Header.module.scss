@@ -14,11 +14,9 @@
   }
 }
 
-
 .headerContainer > div > :first-child {
   margin-right: 0.8rem;
 }
-
 
 .iconNewDotWrap {
   position: relative;
@@ -36,9 +34,9 @@
 .newDot {
   position: absolute;
   right: 0;
-  bottom: 5%;
-  width: 0.5rem;
-  height: 0.5rem;
+  bottom: 8%;
+  width: 0.7rem;
+  height: 0.7rem;
   background: $just-pink;
   border-radius: 100%;
 }
