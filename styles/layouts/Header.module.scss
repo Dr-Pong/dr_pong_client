@@ -1,4 +1,4 @@
-@import 'styles/common.scss';
+@import 'styles/common';
 
 .headerContainer {
   display: flex;
@@ -33,10 +33,11 @@
 
 .newDot {
   position: absolute;
-  right: 0;
-  bottom: 8%;
-  width: 0.7rem;
-  height: 0.7rem;
+  right: -5%;
+  bottom: 5%;
+  width: 0.8rem;
+  height: 0.8rem;
   background: $just-pink;
+  border: solid 1.5px $dark-purple;
   border-radius: 100%;
 }
