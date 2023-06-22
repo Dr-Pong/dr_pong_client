@@ -17,11 +17,13 @@ function DirectMessageButton() {
   const [socket] = useChatSocket();
 
   useEffect(() => {
-    socket.on('newChat', () => {
+    const newChatListener = () => {
       setNewDot(true);
-    });
+    };
+
+    socket.on('newChat', newChatListener);
     return () => {
-      socket.off('newChat');
+      socket.off('newChat', newChatListener);
     };
   }, []);
 

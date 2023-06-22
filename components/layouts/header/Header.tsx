@@ -26,7 +26,7 @@ export default function Header() {
   const [socket] = useChatSocket();
 
   useEffect(() => {
-    socket.on('invite', (data: Invitation) => {
+    const newInvitationListener = (data: Invitation) => {
       const type = 'channelId' in data ? 'channel' : 'game';
       if (sideBar !== 'notification')
         toast.custom((t) => (
@@ -37,10 +37,11 @@ export default function Header() {
             toastId={t.id}
           />
         ));
-    });
+    };
+    socket.on('invite', newInvitationListener);
 
     return () => {
-      socket.off('invite');
+      socket.off('invite', newInvitationListener);
     };
   }, []);
 

@@ -29,11 +29,12 @@ export default function FriendRequestsBox() {
   const [newFriendRequest, setNewFriendRequest] = useState<number>(0);
 
   useEffect(() => {
-    socket.on('friend', () => {
+    const newFriendRequestListener = () => {
       setNewFriendRequest((prev) => prev + 1);
-    });
+    };
+    socket.on('friend', newFriendRequestListener);
     return () => {
-      socket.off('newFriendRequest');
+      socket.off('friend', newFriendRequestListener);
     };
   }, []);
 
