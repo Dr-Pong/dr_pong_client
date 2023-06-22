@@ -2,7 +2,7 @@ import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
-import React, { useEffect } from "react";
+import React from 'react';
 import { FiUserPlus } from 'react-icons/fi';
 import { MdLogout } from 'react-icons/md';
 
@@ -20,27 +20,16 @@ import LoadingSpinner from 'components/global/LoadingSpinner';
 import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/channels/Participants.module.scss';
-import useChatSocket from "hooks/useChatSocket";
 
 export default function Participants() {
   const router = useRouter();
   const { roomType, roomId } = router.query;
   const setSideBar = useSetRecoilState(sideBarState);
   const { useInvitationModal } = useModalProvider();
-  const { mutationDelete, queryClient } = useCustomQuery();
+  const { mutationDelete } = useCustomQuery();
   const { chatUsersGet } = useChatQuery(roomType as RoomType, roomId as string);
-  const [socket] = useChatSocket(roomType as RoomType);
 
-  useEffect(() => {
-    socket.on('participants', () => {
-      queryClient.invalidateQueries('channelParticipants')
-    });
-    return () => {
-      socket.off('participants');
-    };
-  }, []);
-
-  const channelLeaveMuatation = mutationDelete(
+  const channelLeaveMutation = mutationDelete(
     `/channels/${roomId}/participants`,
     {
       onSuccess: () => {
@@ -62,7 +51,7 @@ export default function Participants() {
   };
 
   const handleChannelLeave = () => {
-    channelLeaveMuatation.mutate();
+    channelLeaveMutation.mutate();
   };
 
   return (
