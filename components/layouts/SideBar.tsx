@@ -37,8 +37,7 @@ export default function SideBar() {
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
       event.preventDefault();
-      if (sideBar)
-        setSideBar(null);
+      if (sideBar) setSideBar(null);
     };
     window.addEventListener('popstate', handlePopState);
 
@@ -61,7 +60,10 @@ export default function SideBar() {
           e.stopPropagation();
         }}
       >
-        <IoMdClose className={styles.closeButton} onClick={handleSideBarClose} />
+        <IoMdClose
+          className={styles.closeButton}
+          onClick={handleSideBarClose}
+        />
         <div>{sideBarTypes[sideBar]?.name}</div>
         {sideBarTypes[sideBar]?.children}
       </div>
