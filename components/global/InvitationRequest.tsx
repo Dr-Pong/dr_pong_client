@@ -3,7 +3,7 @@ import useTranslation from 'next-translate/useTranslation';
 import React, { useEffect, useState } from 'react';
 
 import { Participant } from 'types/chatTypes';
-import { Activity, Friend, FriendBoxType } from 'types/friendTypes';
+import { Friend, FriendBoxType, Stats } from 'types/friendTypes';
 
 import useChatSocket from 'hooks/useChatSocket';
 import useFriendsQuery from 'hooks/useFriendsQuery';
@@ -30,21 +30,22 @@ export default function InvitationRequest({
   const { allListGet } = useFriendsQuery();
   const [searchKey, setSearchKey] = useState<string>('');
   const [friends, setFriends] = useState<Friend[]>([]);
+  const [stats, setStats] = useState<Stats>({});
   const { isLoading, isError } = allListGet(setFriends);
   const [chatSocket] = useChatSocket();
 
   useEffect(() => {
-    chatSocket.on('friends', (stats: { [nickname: string]: Activity }) => {
-      setFriends((prev) =>
-        prev.map((friend) => {
-          const stat = stats[friend.nickname];
-          if (stat) friend.status = stat;
-          return friend;
-        })
-      );
-    });
+    const friendStatusListener = (newStats: Stats) => {
+      setStats((prev) => {
+        return {
+          ...prev,
+          ...newStats,
+        };
+      });
+    }
+    chatSocket.on('friends', friendStatusListener);
     return () => {
-      chatSocket.off('friends');
+      chatSocket.off('friends', friendStatusListener);
     };
   }, []);
 
@@ -73,6 +74,7 @@ export default function InvitationRequest({
               key={friend.nickname}
               type={invitationType as FriendBoxType}
               friend={friend}
+              status={stats[friend.nickname]}
               roomId={roomId}
             />
           );

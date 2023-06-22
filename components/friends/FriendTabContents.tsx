@@ -7,7 +7,7 @@ import { UseQueryResult } from 'react-query';
 
 import { friendsTabState } from 'recoils/friends';
 
-import { Activity, Friend } from 'types/friendTypes';
+import { Friend, Stats } from 'types/friendTypes';
 
 import useChatSocket from 'hooks/useChatSocket';
 import useCustomQuery from 'hooks/useCustomQuery';
@@ -29,6 +29,7 @@ export default function FriendTabContents() {
   const { allListGet, pendingListGet, blockListGet } = useFriendsQuery();
   const tab = useRecoilValue(friendsTabState);
   const [friends, setFriends] = useState<Friend[]>([]);
+  const [stats, setStats] = useState<Stats>({});
   const [searchKey, setSearchKey] = useState<string>('');
   const [friendsChatSocket, disconnectFriendChatSocket] =
     useChatSocket('friends');
@@ -36,33 +37,36 @@ export default function FriendTabContents() {
 
   useEffect(() => {
     friendsChatSocket.connect();
-    const putFriendStatus = (stats: { [nickname: string]: Activity }) => {
-      setFriends((prev) =>
-        prev.map((friend) => {
-          const stat = stats[friend.nickname];
-          if (stat) friend.status = stat;
-          return friend;
-        })
-      );
+    const friendStatusListener = (newStats: Stats) => {
+      setStats((prev) => {
+        return {
+          ...prev,
+          ...newStats,
+        };
+      });
     };
-    const invalidateAllFriends = () => {
+    const friendsListener = () => {
       queryClient.invalidateQueries('allfriends');
     };
-    const invalidatePendings = () => {
+    const pendingsListener = () => {
       queryClient.invalidateQueries('pendings');
     };
 
     if (tab === 'all') {
-      friendsChatSocket.on('friends', putFriendStatus);
-      globalChatSocket.on('friend', invalidateAllFriends);
+      friendsChatSocket.on('friends', friendStatusListener);
+      friendsChatSocket.on('friend', friendsListener);
+      globalChatSocket.on('friend', friendsListener);
     }
     if (tab === 'pending') {
-      globalChatSocket.on('friend', invalidatePendings);
+      friendsChatSocket.on('friend', pendingsListener);
+      globalChatSocket.on('friend', pendingsListener);
     }
     return () => {
-      friendsChatSocket.off('friends', putFriendStatus);
-      globalChatSocket.off('friend', invalidateAllFriends);
-      globalChatSocket.off('friend', invalidatePendings);
+      friendsChatSocket.off('friends', friendStatusListener);
+      friendsChatSocket.off('friend', friendsListener);
+      globalChatSocket.off('friend', friendsListener);
+      friendsChatSocket.off('friend', pendingsListener);
+      globalChatSocket.off('friend', pendingsListener);
       disconnectFriendChatSocket();
     };
   }, []);
@@ -104,7 +108,12 @@ export default function FriendTabContents() {
           .filter((friend) => friend.nickname.includes(searchKey))
           .map((friend) => {
             return (
-              <FriendBox key={friend.nickname} friend={friend} type={tab} />
+              <FriendBox
+                key={friend.nickname}
+                friend={friend}
+                status={stats[friend.nickname]}
+                type={tab}
+              />
             );
           })}
       </div>
