@@ -61,6 +61,7 @@ export default function InvitationRequest({
   return (
     <div className={styles.invitationModal}>
       <SearchBar
+        inputId='searchFriendInput'
         searchKey={searchKey}
         setSearchKey={setSearchKey}
         placeHolder={t('search by nickname')}
