@@ -7,9 +7,12 @@ export type FriendBoxType = FriendTab | InvitationType | 'add' | 'none';
 export type Friend = {
   nickname: string;
   imgUrl: string;
-  status?: Activity;
 };
 
 export type UserListResponse = {
   users: Friend[];
+};
+
+export type Statuses = {
+  [nickname: string]: Activity;
 };

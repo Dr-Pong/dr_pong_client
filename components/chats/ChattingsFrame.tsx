@@ -6,14 +6,10 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 
 import { sideBarState } from 'recoils/sideBar';
 
-import {
-  Chat,
-  ParticipantsResponse,
-  RoomType,
-  UserImageMap,
-} from 'types/chatTypes';
+import { ParticipantsResponse, RoomType, UserImageMap } from 'types/chatTypes';
 
 import useChatQuery from 'hooks/useChatQuery';
+import useChatSocket from 'hooks/useChatSocket';
 import useCustomQuery from 'hooks/useCustomQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
@@ -21,8 +17,6 @@ import Chattings from 'components/chats/Chattings';
 import ErrorRefresher from 'components/global/ErrorRefresher';
 import LoadingSpinner from 'components/global/LoadingSpinner';
 import PageHeader from 'components/global/PageHeader';
-
-import useChatSocket from 'hooks/useChatSocket';
 
 type ChattingsFrameProps = {
   roomType: RoomType;
@@ -44,11 +38,13 @@ export default function ChattingsFrame({
 
   useEffect(() => {
     socket.connect();
-    socket.on('participants', () => {
-      queryClient.invalidateQueries('channelParticipants')
-    });
+    const participantsListener = () => {
+      queryClient.invalidateQueries('channelParticipants');
+    };
+
+    socket.on('participants', participantsListener);
     return () => {
-      socket.off('participants');
+      socket.off('participants', participantsListener);
       disconnectSocket();
     };
   }, []);

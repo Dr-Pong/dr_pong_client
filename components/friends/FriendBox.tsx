@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Friend, FriendBoxType } from 'types/friendTypes';
+import { Activity, Friend, FriendBoxType } from 'types/friendTypes';
 
 import useModalProvider from 'hooks/useModalProvider';
 
@@ -11,11 +11,17 @@ import styles from 'styles/friends/FriendBox.module.scss';
 type FriendBoxProps = {
   type: FriendBoxType;
   friend: Friend;
+  status?: Activity;
   roomId?: string;
 };
 
-export default function FriendBox({ type, friend, roomId }: FriendBoxProps) {
-  const { nickname, status, imgUrl } = friend;
+export default function FriendBox({
+  type,
+  friend,
+  status,
+  roomId,
+}: FriendBoxProps) {
+  const { nickname, imgUrl } = friend;
   const { useProfileModal } = useModalProvider();
 
   const handleNicknameClick = (e: React.MouseEvent<HTMLElement>) => {

@@ -11,7 +11,6 @@ import InvitationBox from 'components/notifications/InvitationBox';
 
 import styles from 'styles/notifications/Notifications.module.scss';
 
-
 export default function InvitationList() {
   const [channelInvitations, setChannelInvitations] = useState<Invitations>({
     invitations: [],
@@ -34,15 +33,16 @@ export default function InvitationList() {
   const [chatSocket] = useChatSocket();
 
   useEffect(() => {
-    chatSocket.on('invite', (invitation: Invitation) => {
+    const pushInvitation = (invitation: Invitation) => {
       setChannelInvitations((prev) => {
         return {
           invitations: [...prev.invitations, invitation],
         };
       });
-    });
+    };
+    chatSocket.on('invite', pushInvitation);
     return () => {
-      chatSocket.off('invite');
+      chatSocket.off('invite', pushInvitation);
     };
   }, []);
 

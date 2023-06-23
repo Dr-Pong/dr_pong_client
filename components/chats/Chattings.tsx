@@ -43,19 +43,22 @@ export default function Chattings({
   const [socket] = useChatSocket(roomType);
 
   useEffect(() => {
-    socket.on('message', (data: Chat) => {
+    const newMessageListener = (data: Chat) => {
       setChats((prev) => [{ ...data, id: prev[0]?.id + 1 }, ...prev]);
       setNewestChat({ ...data, id: chats[0]?.id });
-    });
-    socket.on('system', (data: Chat) => {
+    };
+    const newSystemMessageListener = (data: Chat) => {
       setChats((prev) => [{ ...data, id: prev[0]?.id + 1 }, ...prev]);
-    });
+    };
+
+    socket.on('message', newMessageListener);
+    socket.on('system', newSystemMessageListener);
     if (roomType === 'dm') {
       socket.emit('dear', { nickname: roomId });
     }
     return () => {
-      socket.off('message');
-      socket.off('system');
+      socket.off('message', newMessageListener);
+      socket.off('system', newSystemMessageListener);
     };
   }, []);
 

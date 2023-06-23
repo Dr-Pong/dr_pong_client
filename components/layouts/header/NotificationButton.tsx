@@ -28,8 +28,7 @@ function NotificationButton() {
     };
   }, []);
 
-  const { isLoading, isError } = notificationNewDotGet(setNewDot);
-  if (isLoading || isError) return <TbBellFilled />;
+  notificationNewDotGet(setNewDot);
 
   return (
     <div className={styles.iconNewDotWrap}>

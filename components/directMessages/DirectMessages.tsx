@@ -27,7 +27,7 @@ export default function DirectMessages() {
   const [socket] = useChatSocket();
 
   useEffect(() => {
-    socket.on('newChat', (nickname: string) => {
+    const newChatListener = (nickname: string) => {
       if (!chatList.some((dmRoom: DMRoom) => dmRoom.nickname === nickname)) {
         queryClient.invalidateQueries(['chatList']);
         return;
@@ -41,9 +41,10 @@ export default function DirectMessages() {
           }),
         };
       });
-    });
+    };
+    socket.on('newChat', newChatListener);
     return () => {
-      socket.off('newChat');
+      socket.off('newChat', newChatListener);
     };
   }, []);
 
