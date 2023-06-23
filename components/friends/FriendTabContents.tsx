@@ -7,7 +7,7 @@ import { UseQueryResult } from 'react-query';
 
 import { friendsTabState } from 'recoils/friends';
 
-import { Friend, Stats } from 'types/friendTypes';
+import { Friend, Statuses } from 'types/friendTypes';
 
 import useChatSocket from 'hooks/useChatSocket';
 import useCustomQuery from 'hooks/useCustomQuery';
@@ -29,7 +29,7 @@ export default function FriendTabContents() {
   const { allListGet, pendingListGet, blockListGet } = useFriendsQuery();
   const tab = useRecoilValue(friendsTabState);
   const [friends, setFriends] = useState<Friend[]>([]);
-  const [stats, setStats] = useState<Stats>({});
+  const [statuses, setStatuses] = useState<Statuses>({});
   const [searchKey, setSearchKey] = useState<string>('');
   const [friendsChatSocket, disconnectFriendChatSocket] =
     useChatSocket('friends');
@@ -37,11 +37,11 @@ export default function FriendTabContents() {
 
   useEffect(() => {
     friendsChatSocket.connect();
-    const friendStatusListener = (newStats: Stats) => {
-      setStats((prev) => {
+    const friendStatusListener = (newStatuses: Statuses) => {
+      setStatuses((prev) => {
         return {
           ...prev,
-          ...newStats,
+          ...newStatuses,
         };
       });
     };
@@ -111,7 +111,7 @@ export default function FriendTabContents() {
               <FriendBox
                 key={friend.nickname}
                 friend={friend}
-                status={stats[friend.nickname]}
+                status={statuses[friend.nickname]}
                 type={tab}
               />
             );

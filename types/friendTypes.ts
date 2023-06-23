@@ -13,6 +13,6 @@ export type UserListResponse = {
   users: Friend[];
 };
 
-export type Stats = {
+export type Statuses = {
   [nickname: string]: Activity;
 };
