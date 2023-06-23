@@ -1,4 +1,4 @@
-@import 'styles/common.scss';
+@import 'styles/common';
 
 @keyframes slideIn {
   from {
@@ -36,6 +36,11 @@
   background: $light-grey;
   transform: translateX(0);
   animation: slideIn 0.3s ease-in-out;
+}
+
+.sideBarTitle {
+  padding-left: 0.3rem;
+  font-family: $bold-font;
 }
 
 .closeButton {

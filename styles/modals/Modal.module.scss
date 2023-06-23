@@ -1,4 +1,4 @@
-@import 'styles/common.scss';
+@import 'styles/common';
 
 .modalBackdrop {
   @include backdrop;
@@ -13,7 +13,7 @@
   max-height: 80vh;
   padding: 2rem 1.5rem;
   color: black;
-  font-size: $basic-font;
+  font-size: $basic-font-size;
   background: white;
   border-radius: $basic-radius;
 }
@@ -34,7 +34,9 @@
   width: 100%;
   height: fit-content;
   color: $just-purple;
-  font-weight: 600;
+  .title {
+    font-family: $bold-font;
+  }
 }
 
 .modalPhrase {

@@ -1,4 +1,4 @@
-@import 'styles/common.scss';
+@import 'styles/common';
 
 .chattings {
   position: relative;
@@ -8,7 +8,7 @@
   height: 100%;
   padding: 1rem;
   overflow-y: auto;
-  font-size: $basic-font;
+  font-size: $basic-font-size;
   background: linear-gradient(to right bottom, $dark-purple, $just-purple);
   border-radius: $basic-radius;
   place-items: stretch;

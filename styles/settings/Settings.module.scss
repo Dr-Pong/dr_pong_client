@@ -1,4 +1,4 @@
-@import 'styles/common.scss';
+@import 'styles/common';
 
 .settingsContainer {
   flex-direction: column;
@@ -24,7 +24,7 @@
 }
 
 .listTopic {
-  font-weight: 700;
+  font-family: $bold-font;
 }
 
 .buttons {

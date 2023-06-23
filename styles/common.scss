@@ -31,7 +31,12 @@ $dark-grey: #9a9a9a;
 $basic-radius: 0.3rem;
 
 /* font-size */
-$basic-font: 0.9rem;
+$basic-font-size: 0.9rem;
+
+/* font */
+$logo-font: 'SchizoidPersonality', serif;
+$regular-font: 'TTLakesNeueTrialRegular', sans-serif;
+$bold-font: 'TTLakesNeueTrialBold', sans-serif;
 
 @mixin pageContainer {
   width: 100%;

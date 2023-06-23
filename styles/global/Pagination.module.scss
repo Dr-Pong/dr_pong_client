@@ -30,7 +30,7 @@
 }
 
 .pagination[aria-current] {
-  font-weight: bold;
+  font-family: $bold-font;
   background: $just-pink;
   transform: revert;
   cursor: revert;
