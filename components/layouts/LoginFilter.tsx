@@ -20,7 +20,7 @@ export default function LoginFilter({ children }: LayoutProps) {
   const resetUserState = useResetRecoilState(userState);
   const { get } = useCustomQuery();
   const { data, isLoading, isError, error } = get(
-    ['user_key'],
+    ['userMe'],
     '/users/me',
     setUser
   );

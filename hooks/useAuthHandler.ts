@@ -36,7 +36,7 @@ const useAuthHandler = () => {
       // httpOnly: true,
     });
     setLogin(true);
-    queryClient.invalidateQueries(['user_key']);
+    queryClient.invalidateQueries(['userMe']);
     router.push('/');
   };
 
@@ -59,7 +59,7 @@ const useAuthHandler = () => {
     setLogin(false);
     resetUserState();
     setOpenModal(false);
-    queryClient.invalidateQueries(['user_key']);
+    queryClient.invalidateQueries(['userMe']);
     router.push('/');
   };
 
