@@ -36,6 +36,7 @@ export default function Home() {
 
   return (
     <div className={styles.homePageContainer}>
+      <div className={styles.logo}>Dr.Pong</div>
       <div className={styles.pageList}>
         {pages.map(({ value, route, style }, i) => {
           return (
