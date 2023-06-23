@@ -1,7 +1,8 @@
 import { useSetRecoilState } from 'recoil';
-import { openModalState } from 'recoils/modal';
 
 import { IoIosClose } from 'react-icons/io';
+
+import { openModalState } from 'recoils/modal';
 
 import styles from 'styles/modals/Modal.module.scss';
 
@@ -18,12 +19,9 @@ export default function ModalTitle({ title, closeButton }: ModalTitleProps) {
 
   return (
     <div className={styles.modalTitle}>
-      <div>{title}</div>
+      <div className={styles.title}>{title}</div>
       {closeButton && (
-        <IoIosClose
-          className={styles.closeButton}
-          onClick={handleModalClose}
-        />
+        <IoIosClose className={styles.closeButton} onClick={handleModalClose} />
       )}
     </div>
   );

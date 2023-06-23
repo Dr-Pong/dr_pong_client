@@ -64,7 +64,7 @@ export default function SideBar() {
           className={styles.closeButton}
           onClick={handleSideBarClose}
         />
-        <div>{sideBarTypes[sideBar]?.name}</div>
+        <div className={styles.sideBarTitle}>{sideBarTypes[sideBar]?.name}</div>
         {sideBarTypes[sideBar]?.children}
       </div>
     </div>,
