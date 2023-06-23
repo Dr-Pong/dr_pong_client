@@ -19,11 +19,7 @@ export default function LoginFilter({ children }: LayoutProps) {
   const [login, setLogin] = useRecoilState(loginState);
   const resetUserState = useResetRecoilState(userState);
   const { get } = useCustomQuery();
-  const { isLoading, isError } = get(
-    ['userMe'],
-    '/users/me',
-    setUser
-  );
+  const { isLoading, isError } = get(['userMe'], '/users/me', setUser);
   const router = useRouter();
   const [socket, disconnectSocket] = useChatSocket();
 
