@@ -1,19 +1,13 @@
-import {
-  useRecoilState,
-  useResetRecoilState,
-  useSetRecoilState
-} from 'recoil';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
 import { useCookies } from 'react-cookie';
+import { useQueryClient } from 'react-query';
 
 import { loginState } from 'recoils/login';
-import { userState } from 'recoils/user';
 import { openModalState } from 'recoils/modal';
-
-import { useQueryClient } from 'react-query';
-import getAuthorization from "../utils/cookieUtil";
+import { userState } from 'recoils/user';
 
 interface TokenResponse {
   accessToken: string;
