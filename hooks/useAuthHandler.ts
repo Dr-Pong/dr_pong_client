@@ -1,18 +1,13 @@
-import {
-  useRecoilState,
-  useResetRecoilState,
-  useSetRecoilState
-} from 'recoil';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
 import { useCookies } from 'react-cookie';
+import { useQueryClient } from 'react-query';
 
 import { loginState } from 'recoils/login';
-import { userState } from 'recoils/user';
 import { openModalState } from 'recoils/modal';
-
-import { useQueryClient } from 'react-query';
+import { userState } from 'recoils/user';
 
 interface TokenResponse {
   accessToken: string;
@@ -35,7 +30,7 @@ const useAuthHandler = () => {
       // httpOnly: true,
     });
     setLogin(true);
-    queryClient.invalidateQueries(['user_key']);
+    queryClient.invalidateQueries(['userMe']);
     router.push('/');
   };
 
@@ -54,11 +49,11 @@ const useAuthHandler = () => {
   };
 
   const onLogout = () => {
-    removeCookie('Authorization');
+    removeCookie('Authorization', { path: '/' });
     setLogin(false);
     resetUserState();
     setOpenModal(false);
-    queryClient.invalidateQueries(['user_key']);
+    queryClient.invalidateQueries(['userMe']);
     router.push('/');
   };
 

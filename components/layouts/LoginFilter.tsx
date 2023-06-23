@@ -1,9 +1,8 @@
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { loginState } from 'recoils/login';
 import { userState } from 'recoils/user';
@@ -13,36 +12,33 @@ import useCustomQuery from 'hooks/useCustomQuery';
 
 import { LayoutProps } from 'pages/_app';
 
-import ErrorRefresher from 'components/global/ErrorRefresher';
 import LoadingSpinner from 'components/global/LoadingSpinner';
 
 export default function LoginFilter({ children }: LayoutProps) {
   const [user, setUser] = useRecoilState(userState);
-  const setLoginState = useSetRecoilState(loginState);
+  const [login, setLogin] = useRecoilState(loginState);
   const resetUserState = useResetRecoilState(userState);
   const { get } = useCustomQuery();
-  const { data, isLoading, isError, error } = get(
-    ['user_key'],
-    '/users/me',
-    setUser
-  );
+  const { isLoading, isError } = get(['userMe'], '/users/me', setUser);
   const router = useRouter();
   const [socket, disconnectSocket] = useChatSocket();
 
   useEffect(() => {
-    socket.connect();
+    if (login) socket.connect();
+    else disconnectSocket();
     return () => {
       disconnectSocket();
     };
-  }, []);
-  if (user.roleType === 'member') setLoginState(true);
-  else setLoginState(false);
+  }, [login]);
+
+  if (user.roleType === 'member') setLogin(true);
+  else setLogin(false);
 
   if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher />;
-  if (error) {
+  if (isError) {
     resetUserState();
-    router.push('/');
+    setLogin(false);
+    if (router.asPath !== '/') router.push('/');
   }
   if (user.roleType !== 'noname' && router.asPath === '/signUp')
     router.push('/');
