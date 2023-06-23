@@ -13,6 +13,7 @@ import { userState } from 'recoils/user';
 import { openModalState } from 'recoils/modal';
 
 import { useQueryClient } from 'react-query';
+import getAuthorization from "../utils/cookieUtil";
 
 interface TokenResponse {
   accessToken: string;
@@ -54,7 +55,7 @@ const useAuthHandler = () => {
   };
 
   const onLogout = () => {
-    removeCookie('Authorization');
+    removeCookie('Authorization', { path: '/' });
     setLogin(false);
     resetUserState();
     setOpenModal(false);
