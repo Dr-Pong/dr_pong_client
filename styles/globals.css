@@ -77,6 +77,7 @@ root {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: 'TTLakesNeueTrialRegular', sans-serif;
 }
 
 html,
@@ -99,4 +100,25 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+@font-face {
+  font-family: 'SchizoidPersonality';
+  src: url('../public//font/Schizoid\ Personality.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'TTLakesNeueTrialRegular';
+  src: url('../public/font/TT\ Lakes\ Neue\ Trial\ Regular.ttf')
+    format('truetype');
+}
+
+@font-face {
+  font-family: 'TTLakesNeueTrialBold';
+  src: url('../public/font/TT\ Lakes\ Neue\ Trial\ Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'TTLakesNeueTrialThin';
+  src: url('../public/font/TT\ Lakes\ Neue\ Trial\ Thin.ttf') format('truetype');
 }
