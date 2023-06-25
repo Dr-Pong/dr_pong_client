@@ -280,7 +280,7 @@ const PongGame = ({ roomType, roomId }: PongGameProps) => {
         playerScore={playerScore}
         aiScore={aiScore}
         winner={winner}
-        color={color}
+        ballColor={color}
       />
       {((!running && !over) || over) && (
         <BasicButton style='basic' color='pink' handleButtonClick={startGame}>

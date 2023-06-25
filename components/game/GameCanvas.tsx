@@ -13,12 +13,12 @@ type GameCanvasProps = {
   playerScore: number;
   aiScore: number;
   winner: string;
-  color: string;
+  ballColor: string;
 };
 
 export default function GameCanvas(gameCanvasProps: GameCanvasProps) {
   const {
-    canvasRef, player, ai, ball, round, playerScore, aiScore, winner, color
+    canvasRef, player, ai, ball, round, playerScore, aiScore, winner, ballColor
   }: GameCanvasProps = gameCanvasProps;
   const canvasHeight = window.innerHeight * 0.7;
   const canvasWidth = canvasHeight * 0.6;
@@ -48,7 +48,7 @@ export default function GameCanvas(gameCanvasProps: GameCanvasProps) {
     ctx.fillRect(ai.x, ai.y, ai.width, ai.height);
 
     // Draw ball
-    ctx.fillStyle = color;
+    ctx.fillStyle = ballColor;
     ctx.fillRect(ball.x, ball.y, ball.width, ball.height);
 
     // Display round
