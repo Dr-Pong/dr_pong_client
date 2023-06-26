@@ -35,8 +35,8 @@ $basic-font-size: 0.9rem;
 
 /* font */
 $logo-font: 'SchizoidPersonality', serif;
-$regular-font: 'TTLakesNeueTrialRegular', sans-serif;
-$bold-font: 'TTLakesNeueTrialBold', sans-serif;
+$regular-font: 'TTLakesNeueTrialRegular', 'LeeSeoyun', sans-serif;
+$bold-font: 'TTLakesNeueTrialBold', 'GeekbleMalang2WOFF2', sans-serif;
 
 @mixin pageContainer {
   width: 100%;

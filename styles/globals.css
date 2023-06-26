@@ -77,7 +77,7 @@ root {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'TTLakesNeueTrialRegular', sans-serif;
+  font-family: 'TTLakesNeueTrialRegular', 'LeeSeoyun', sans-serif;
 }
 
 html,
@@ -111,14 +111,34 @@ a {
   font-family: 'TTLakesNeueTrialRegular';
   src: url('../public/font/TT\ Lakes\ Neue\ Trial\ Regular.ttf')
     format('truetype');
+  unicode-range: U+0041-005A, U+0061-007A, U+0030-0039;
 }
 
 @font-face {
   font-family: 'TTLakesNeueTrialBold';
   src: url('../public/font/TT\ Lakes\ Neue\ Trial\ Bold.ttf') format('truetype');
+  unicode-range: U+0041-005A, U+0061-007A, U+0030-0039;
 }
 
 @font-face {
   font-family: 'TTLakesNeueTrialThin';
   src: url('../public/font/TT\ Lakes\ Neue\ Trial\ Thin.ttf') format('truetype');
+  unicode-range: U+0041-005A, U+0061-007A, U+0030-0039;
+}
+
+@font-face {
+  font-weight: normal;
+  font-family: 'LeeSeoyun';
+  font-style: normal;
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff')
+    format('woff');
+  unicode-range: U+AC00-D7A3;
+}
+
+@font-face {
+  font-weight: normal;
+  font-family: 'GeekbleMalang2WOFF2';
+  font-style: normal;
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/GeekbleMalang2WOFF2.woff2')
+    format('woff2');
 }
