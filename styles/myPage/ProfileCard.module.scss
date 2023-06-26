@@ -6,7 +6,7 @@
   grid-template-rows: repeat(3, 1fr);
   height: 7.7rem;
   padding: 0.5rem;
-  font-size: $basic-font;
+  font-size: $basic-font-size;
   background: $dark-blue;
   &.modal {
     @include profileModal;
@@ -24,7 +24,7 @@
 }
 
 .fieldLabel {
-  font-weight: 800;
+  font-family: $bold-font;
 }
 
 .fieldContent {

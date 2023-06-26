@@ -1,4 +1,4 @@
-@import 'styles/common.scss';
+@import 'styles/common';
 
 .gamePageContainer {
   @include pageContainer;
@@ -16,14 +16,13 @@
 }
 
 .button {
-  all: unset;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 15rem;
   margin-bottom: 1rem;
-  font-weight: 700;
   border-radius: $basic-radius;
+  all: unset;
 }
 
 .ladder {

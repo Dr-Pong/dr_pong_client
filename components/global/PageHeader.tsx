@@ -11,7 +11,7 @@ type pageHeaderProps = {
 export default function PageHeader({ title, buttons }: pageHeaderProps) {
   return (
     <div className={styles.pageHeaderContainer}>
-      <span>{title}</span>
+      <span className={styles.title}>{title}</span>
       {buttons && (
         <div className={styles.buttons}>
           {buttons.map((button, index) => (

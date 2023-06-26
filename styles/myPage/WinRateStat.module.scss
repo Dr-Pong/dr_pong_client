@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  font-size: $basic-font;
+  font-size: $basic-font-size;
   margin-block: 0.3rem;
 }
 
@@ -16,8 +16,8 @@
     margin-right: 0.2rem;
   }
   div:nth-child(2) {
-    font-weight: 600;
     font-size: 1.1rem;
+    font-family: $bold-font;
   }
 }
 

@@ -1,4 +1,4 @@
-@import 'styles/common.scss';
+@import 'styles/common';
 
 .buttonRowContainer {
   display: grid;
@@ -22,7 +22,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: $basic-font;
+  font-size: $basic-font-size;
   border: none;
   border-radius: $basic-radius;
   cursor: pointer;
@@ -31,7 +31,7 @@
 .dropdown {
   width: 6rem;
   height: 1.5rem;
-  font-size: $basic-font;
+  font-size: 0.8rem;
   background: $light-grey;
   border-bottom: solid 1px $dark-grey;
   border-radius: 0;

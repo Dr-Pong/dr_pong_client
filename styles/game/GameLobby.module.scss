@@ -1,4 +1,4 @@
-@import 'styles/common.scss';
+@import 'styles/common';
 
 .prepareRoomContainer {
   @include pageWithHeaderContainer;
@@ -23,7 +23,7 @@
   justify-content: space-between;
   width: 15rem;
   margin-bottom: 1rem;
-  font-weight: 700;
+  font-family: $bold-font;
   border-radius: $basic-radius;
 }
 
@@ -43,13 +43,13 @@
 }
 
 .button {
-  all: unset;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 15rem;
   margin-bottom: 1rem;
-  font-weight: 700;
+  color: white;
+  border: none;
   border-radius: $basic-radius;
 }
 

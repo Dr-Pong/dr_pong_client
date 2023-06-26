@@ -1,13 +1,16 @@
-@import 'styles/common.scss';
+@import 'styles/common';
 
 .pageHeaderContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 2rem;
-  font-weight: 600;
   font-size: 1rem;
   border-bottom: solid 1px $just-pink;
+  .title {
+    padding-left: 0.3rem;
+    font-family: $bold-font;
+  }
 }
 
 .buttons {

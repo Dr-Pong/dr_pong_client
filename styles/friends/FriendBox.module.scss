@@ -2,7 +2,6 @@
 
 @mixin modalContainer {
   padding: 0.5rem 1rem;
-  font-weight: 600;
   border-bottom: none;
   border-radius: $basic-radius;
   img {
@@ -72,6 +71,7 @@
   flex-direction: row;
   align-items: center;
   width: fit-content;
+  font-family: $bold-font;
   cursor: pointer;
 }
 
