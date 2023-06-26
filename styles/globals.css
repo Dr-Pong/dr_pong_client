@@ -141,4 +141,5 @@ a {
   font-style: normal;
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/GeekbleMalang2WOFF2.woff2')
     format('woff2');
+  unicode-range: U+AC00-D7A3;
 }
