@@ -20,7 +20,6 @@ export default function Game() {
   const { closeUpperModal, useMatchWaitingUpperModal } = useUpperModalProvider();
   const [normalClicked, setNormalClicked] = useState(false);
   const { mutationPost, mutationDelete } = useCustomQuery();
-  const enterQueue = mutationPost(`/games/queue/ladder`);
   const exitQueue = mutationDelete(`/games/queue`, {
     onSuccess: () => {
       closeUpperModal();
@@ -30,20 +29,18 @@ export default function Game() {
       setOpenAlert(true);
     },
   });
+  const enterQueue = mutationPost(`/games/queue/ladder`, {
+    onSuccess: () => {
+      useMatchWaitingUpperModal(exitQueue.mutate);
+    },
+    onError: () => {
+      setAlertType('fail');
+      setOpenAlert(true);
+    }
+  });
 
   const handleLadderClick = () => {
-    enterQueue.mutate(
-      { mode: 'classic' },
-      {
-        onSuccess: () => {
-          useMatchWaitingUpperModal(exitQueue.mutate);
-        },
-        onError: () => {
-          setAlertType('fail');
-          setOpenAlert(true);
-        }
-      }
-    );
+    enterQueue.mutate({ mode: 'classic' });
   };
 
   const handleNormalClick = () => {
