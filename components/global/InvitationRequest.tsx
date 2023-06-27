@@ -32,7 +32,7 @@ export default function InvitationRequest({
   const [friends, setFriends] = useState<Friend[]>([]);
   const [statuses, setStatuses] = useState<Statuses>({});
   const { isLoading, isError } = allListGet(setFriends);
-  const [chatSocket] = useChatSocket();
+  const [chatSocket] = useChatSocket('friends');
 
   useEffect(() => {
     const friendStatusListener = (newStatuses: Statuses) => {
