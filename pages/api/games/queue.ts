@@ -5,9 +5,8 @@ type Error = {
 };
 
 export default (req: NextApiRequest, res: NextApiResponse<Error>) => {
-  if (req.method === 'POST') {
-    res.status(200).json({ message: 'success' });
-  } else {
+  if (req.method === 'DELETE')
+    res.status(200).json({ message: 'Leaved Queue' });
+  else
     res.status(405).json({ message: 'Method Not Allowed' });
-  }
 };
