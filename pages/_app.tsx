@@ -10,10 +10,9 @@ import { Toaster } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
-import 'styles/globals.css';
-import 'styles/globals.css';
-
 import SocketManager from 'components/global/SocketManager';
+
+import 'styles/globals.css';
 
 const LoginFilter = dynamic(() => import('components/layouts/LoginFilter'), {
   ssr: false,
