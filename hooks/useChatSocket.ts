@@ -4,19 +4,20 @@ import { useCallback } from 'react';
 
 import getAuthorization from 'utils/cookieUtil';
 
+import { SocketNamespace } from 'components/global/SocketManager';
+
 const sockets: { [key: string]: Socket } = {};
-const useChatSocket = (namespace?: string): [Socket, () => void] => {
-  if (!namespace) namespace = 'global';
+const useChatSocket = (namespace: SocketNamespace): [Socket, () => void] => {
   const disconnect = useCallback(() => {
-    if (!namespace) return;
     if (!sockets[namespace]) return;
     sockets[namespace].disconnect();
     delete sockets[namespace];
   }, [namespace]);
 
   if (sockets[namespace]) return [sockets[namespace], disconnect];
-  let url = chatSocketUrl;
-  if (namespace !== 'global') url += '/' + namespace;
+  let url;
+  if (namespace === 'global') url = chatSocketUrl;
+  else url = chatSocketUrl + '/' + namespace;
 
   sockets[namespace] = io(url, {
     transports: ['websocket'],
