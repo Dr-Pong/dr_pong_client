@@ -24,13 +24,23 @@ export default function GameLobby() {
   const { useInvitationModal } = useModalProvider();
   const { closeUpperModal, useMatchWaitingUpperModal } = useUpperModalProvider();
   const { mutationPost, mutationDelete } = useCustomQuery();
-  const enterQueue = mutationPost(`/games/queue/normal`);
   const exitQueue = mutationDelete(`/games/queue`, {
-    onSuccess: () => { closeUpperModal(); },
+    onSuccess: () => {
+      closeUpperModal();
+    },
     onError: () => {
       setAlertType('fail');
       setOpenAlert(true);
     },
+  });
+  const enterQueue = mutationPost(`/games/queue/normal`, {
+    onSuccess: () => {
+      useMatchWaitingUpperModal(exitQueue.mutate);
+    },
+    onError: () => {
+      setAlertType('fail');
+      setOpenAlert(true);
+    }
   });
 
   const [options, setOptions] = useState<Options>({
@@ -40,23 +50,8 @@ export default function GameLobby() {
   });
   const optionList = ['bullet', 'deathMatch', 'loserPaysForBeer'];
 
-  const onSuccess = () => {
-    useMatchWaitingUpperModal(exitQueue.mutate);
-  };
-
-  const onError = () => {
-    setAlertType('fail');
-    setOpenAlert(true);
-  };
-
   const handleQueueClick = () => {
-    enterQueue.mutate(
-      { mode: 'mode' },
-      {
-        onSuccess: onSuccess,
-        onError: onError,
-      }
-    )
+    enterQueue.mutate({});
   };
 
   const handleInviteClick = () => {
