@@ -104,7 +104,7 @@ a {
 
 @font-face {
   font-family: 'SchizoidPersonality';
-  src: url('../public//font/Schizoid\ Personality.otf') format('opentype');
+  src: url('../public/font/Schizoid\ Personality.otf') format('opentype');
 }
 
 @font-face {

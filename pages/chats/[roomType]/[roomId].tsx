@@ -6,6 +6,7 @@ import { RoomType } from 'types/chatTypes';
 
 import ChattingsFrame from 'components/chats/ChattingsFrame';
 import AppLayout from 'components/layouts/AppLayout';
+import SocketManager from 'components/global/SocketManager';
 
 import styles from 'styles/chats/Chats.module.scss';
 
@@ -20,6 +21,7 @@ export default function Chats() {
 
   return (
     <div className={styles.chatsPageContainer}>
+      <SocketManager key={roomId as string} namespace={roomType as RoomType} />
       <ChattingsFrame
         key={'room' + (roomId as string)}
         roomType={roomType as RoomType}

@@ -16,6 +16,7 @@ import PasswordSubmit from 'components/channels/PasswordSubmit';
 import ChannelSettings from 'components/channels/channelSettings/ChannelSettings';
 import SearchUser from 'components/friends/SearchUser';
 import InvitationRequest from 'components/global/InvitationRequest';
+import SocketManager from 'components/global/SocketManager';
 import UserImages from 'components/global/UserImages';
 import CloseModalButton from 'components/global/buttons/CloseModalButton';
 import ModalButton from 'components/global/buttons/ModalButton';
@@ -197,12 +198,15 @@ const useModalProvider = () => {
     useModal({
       head: <ModalTitle title={t('Invite friend')} closeButton />,
       body: (
-        <InvitationRequest
-          invitationType={invitationType}
-          mode={mode}
-          roomId={roomId}
-          participants={participants}
-        />
+        <>
+          <SocketManager namespace={'friends'} />
+          <InvitationRequest
+            invitationType={invitationType}
+            mode={mode}
+            roomId={roomId}
+            participants={participants}
+          />
+        </>
       ),
       tail: null,
     });

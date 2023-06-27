@@ -25,7 +25,7 @@ export default function FriendRequestsBox() {
     ['notificationFriends'],
     '/users/notifications/friends'
   );
-  const [socket] = useChatSocket();
+  const [socket] = useChatSocket('global');
   const [newFriendRequest, setNewFriendRequest] = useState<number>(0);
 
   useEffect(() => {

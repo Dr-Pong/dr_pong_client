@@ -14,7 +14,7 @@ function DirectMessageButton() {
   const setSideBar = useSetRecoilState(sideBarState);
   const [newDot, setNewDot] = useState<boolean>(false);
   const { directMessageNewDotGet } = useNewDotQuery();
-  const [socket] = useChatSocket();
+  const [socket] = useChatSocket('global');
 
   useEffect(() => {
     const newChatListener = () => {

@@ -14,7 +14,7 @@ function NotificationButton() {
   const setSideBar = useSetRecoilState(sideBarState);
   const { notificationNewDotGet } = useNewDotQuery();
   const [newDot, setNewDot] = useState<boolean>(false);
-  const [socket] = useChatSocket();
+  const [socket] = useChatSocket('global');
 
   useEffect(() => {
     const newDotListener = () => {

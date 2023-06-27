@@ -24,7 +24,7 @@ export default function DirectMessages() {
     '/users/friends/chatlist',
     setChatList
   );
-  const [socket] = useChatSocket();
+  const [socket] = useChatSocket('global');
 
   useEffect(() => {
     const newChatListener = (nickname: string) => {

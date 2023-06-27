@@ -8,7 +8,6 @@ import PageHeader from 'components/global/PageHeader';
 import SearchBar from 'components/global/SearchBar';
 import SubmitButton from 'components/global/buttons/SubmitButton';
 import AppLayout from 'components/layouts/AppLayout';
-import LoginFilter from 'components/layouts/LoginFilter';
 import RecordList from 'components/records/RecordList';
 
 import styles from 'styles/records/Records.module.scss';
@@ -51,9 +50,5 @@ export default function Records() {
 }
 
 Records.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <LoginFilter>
-      <AppLayout>{page}</AppLayout>
-    </LoginFilter>
-  );
+  return <AppLayout>{page}</AppLayout>;
 };

@@ -34,18 +34,15 @@ export default function ChattingsFrame({
   const myChannelGet = get('myChannel', '/channels/me');
   const { chatUsersGet } = useChatQuery(roomType as RoomType, roomId as string);
   const chatUsers = chatUsersGet(setUserImageMap);
-  const [socket, disconnectSocket] = useChatSocket(roomType);
+  const [socket] = useChatSocket(roomType);
 
   useEffect(() => {
-    socket.connect();
     const participantsListener = () => {
       queryClient.invalidateQueries('channelParticipants');
     };
-
     socket.on('participants', participantsListener);
     return () => {
       socket.off('participants', participantsListener);
-      disconnectSocket();
     };
   }, []);
 

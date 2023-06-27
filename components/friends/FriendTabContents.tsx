@@ -31,11 +31,11 @@ export default function FriendTabContents() {
   const [friends, setFriends] = useState<Friend[]>([]);
   const [statuses, setStatuses] = useState<Statuses>({});
   const [searchKey, setSearchKey] = useState<string>('');
-  const [friendsChatSocket, disconnectFriendChatSocket] =
-    useChatSocket('friends');
-  const [globalChatSocket] = useChatSocket();
+  const [friendsChatSocket] = useChatSocket('friends');
+  const [globalChatSocket] = useChatSocket('global');
 
   useEffect(() => {
+    friendsChatSocket.disconnect();
     friendsChatSocket.connect();
     const friendStatusListener = (newStatuses: Statuses) => {
       setStatuses((prev) => {
@@ -67,7 +67,6 @@ export default function FriendTabContents() {
       globalChatSocket.off('friend', friendsListener);
       friendsChatSocket.off('friend', pendingsListener);
       globalChatSocket.off('friend', pendingsListener);
-      disconnectFriendChatSocket();
     };
   }, []);
 
