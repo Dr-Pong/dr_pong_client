@@ -1,9 +1,13 @@
 import useTranslation from 'next-translate/useTranslation';
 
+import { useSetRecoilState } from 'recoil';
+import { alertTypeState, openAlertState } from 'recoils/alert';
+
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
 import useModalProvider from 'hooks/useModalProvider';
 import useUpperModalProvider from 'hooks/useUpperModalProvider';
+import useCustomQuery from 'hooks/useCustomQuery';
 
 import PageHeader from 'components/global/PageHeader';
 
@@ -15,8 +19,19 @@ interface Options {
 
 export default function GameLobby() {
   const { t } = useTranslation('game');
+  const setOpenAlert = useSetRecoilState(openAlertState);
+  const setAlertType = useSetRecoilState(alertTypeState);
   const { useInvitationModal } = useModalProvider();
-  const { useMatchWaitingUpperModal } = useUpperModalProvider();
+  const { closeUpperModal, useMatchWaitingUpperModal } = useUpperModalProvider();
+  const { mutationPost, mutationDelete } = useCustomQuery();
+  const enterQueue = mutationPost(`/games/queue/normal`);
+  const exitQueue = mutationDelete(`/games/queue`, {
+    onSuccess: () => { closeUpperModal(); },
+    onError: () => {
+      setAlertType('fail');
+      setOpenAlert(true);
+    },
+  });
 
   const [options, setOptions] = useState<Options>({
     bullet: false,
@@ -25,12 +40,27 @@ export default function GameLobby() {
   });
   const optionList = ['bullet', 'deathMatch', 'loserPaysForBeer'];
 
+  const onSuccess = () => {
+    useMatchWaitingUpperModal(exitQueue.mutate);
+  };
+
+  const onError = () => {
+    setAlertType('fail');
+    setOpenAlert(true);
+  };
+
   const handleQueueClick = () => {
-    useMatchWaitingUpperModal();
+    enterQueue.mutate(
+      { mode: 'mode' },
+      {
+        onSuccess: onSuccess,
+        onError: onError,
+      }
+    )
   };
 
   const handleInviteClick = () => {
-    useInvitationModal('game');
+    useInvitationModal('game', 'mode');
   };
 
   return (
