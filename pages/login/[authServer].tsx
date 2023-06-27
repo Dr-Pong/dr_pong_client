@@ -7,7 +7,6 @@ import useAuthHandler from 'hooks/useAuthHandler';
 import useCustomQuery from 'hooks/useCustomQuery';
 
 import Layout from 'components/layouts/Layout';
-import LoginFilter from 'components/layouts/LoginFilter';
 
 export default function Login() {
   const router = useRouter();
@@ -30,9 +29,5 @@ export default function Login() {
 }
 
 Login.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <LoginFilter>
-      <Layout>{page}</Layout>
-    </LoginFilter>
-  );
+  return <Layout>{page}</Layout>;
 };

@@ -9,9 +9,9 @@ import { FriendTab } from 'types/friendTypes';
 
 import FriendTabContents from 'components/friends/FriendTabContents';
 import PageHeader from 'components/global/PageHeader';
+import SocketManager from 'components/global/SocketManager';
 import TabProvider from 'components/global/TabProvider';
 import AppLayout from 'components/layouts/AppLayout';
-import SocketManager from 'components/global/SocketManager';
 
 import styles from 'styles/friends/Friends.module.scss';
 

@@ -3,7 +3,6 @@ import { ReactElement, useLayoutEffect } from 'react';
 import useAuthHandler from 'hooks/useAuthHandler';
 
 import Layout from 'components/layouts/Layout';
-import LoginFilter from 'components/layouts/LoginFilter';
 import OauthButtons from 'components/login/OauthButtons';
 
 import styles from 'styles/login/Login.module.scss';
@@ -21,9 +20,5 @@ export default function Login() {
 }
 
 Login.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <LoginFilter>
-      <Layout>{page}</Layout>
-    </LoginFilter>
-  );
+  return <Layout>{page}</Layout>;
 };
