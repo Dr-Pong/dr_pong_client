@@ -6,7 +6,6 @@ import { RoomType } from 'types/chatTypes';
 
 import ChattingsFrame from 'components/chats/ChattingsFrame';
 import AppLayout from 'components/layouts/AppLayout';
-import LoginFilter from 'components/layouts/LoginFilter';
 
 import styles from 'styles/chats/Chats.module.scss';
 
@@ -22,6 +21,7 @@ export default function Chats() {
   return (
     <div className={styles.chatsPageContainer}>
       <ChattingsFrame
+        key={'room' + (roomId as string)}
         roomType={roomType as RoomType}
         roomId={roomId as string}
       />
@@ -30,9 +30,5 @@ export default function Chats() {
 }
 
 Chats.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <LoginFilter>
-      <AppLayout>{page}</AppLayout>
-    </LoginFilter>
-  );
+  return <AppLayout>{page}</AppLayout>;
 };
