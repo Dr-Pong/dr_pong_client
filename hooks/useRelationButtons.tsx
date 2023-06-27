@@ -193,13 +193,13 @@ const useRelationButtons = (buttonDesign: ButtonDesign, target: string) => {
     return <ToastResultButton request={request} button={buttonProps} />;
   };
 
-  const gameInvitation = (label: ReactNode) => {
+  const gameInvitation = (label: ReactNode, mode: string) => {
     const api = `/games/invitation/${target}`;
     const buttonProps = {
       ...buttonDesign,
       children: label,
     };
-    return <GameInvitationButton api={api} button={buttonProps} />;
+    return <GameInvitationButton api={api} mode={mode} button={buttonProps} />;
   };
 
   return {

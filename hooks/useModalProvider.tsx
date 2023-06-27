@@ -191,6 +191,7 @@ const useModalProvider = () => {
 
   const useInvitationModal = (
     invitationType: string,
+    mode?: string,
     roomId?: string,
     participants?: Participant[]
   ) => {
@@ -201,6 +202,7 @@ const useModalProvider = () => {
           <SocketManager namespace={'friends'} />
           <InvitationRequest
             invitationType={invitationType}
+            mode={mode}
             roomId={roomId}
             participants={participants}
           />

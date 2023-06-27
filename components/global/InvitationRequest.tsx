@@ -17,12 +17,14 @@ import styles from 'styles/global/InvitationRequest.module.scss';
 
 type InvitationProps = {
   invitationType: string;
+  mode?: string;
   roomId?: string;
   participants?: Participant[];
 };
 
 export default function InvitationRequest({
   invitationType,
+  mode,
   roomId,
   participants,
 }: InvitationProps) {
@@ -75,6 +77,7 @@ export default function InvitationRequest({
               type={invitationType as FriendBoxType}
               friend={friend}
               status={statuses[friend.nickname]}
+              mode={mode}
               roomId={roomId}
             />
           );

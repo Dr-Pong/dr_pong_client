@@ -11,12 +11,14 @@ import styles from 'styles/friends/FriendButtons.module.scss';
 type FriendButtonsProps = {
   type: FriendBoxType;
   nickname: string;
+  mode?: string;
   roomId?: string;
 };
 
 export default function FriendButtons({
   type,
   nickname,
+  mode,
   roomId,
 }: FriendButtonsProps) {
   const { channelInvitation, gameInvitation } = useRelationButtons(
@@ -45,7 +47,7 @@ export default function FriendButtons({
     ],
     blocked: [unblockUser(<IoMdClose />)],
     add: [addFriend(<IoMdAdd />)],
-    game: [gameInvitation(<IoMdAdd />)],
+    game: [gameInvitation(<IoMdAdd />, mode || '')],
     channel: [channelInvitation(<IoMdAdd />, roomId || '')],
     none: [],
   };

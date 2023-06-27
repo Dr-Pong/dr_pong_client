@@ -6,6 +6,7 @@ export interface Invitation {
   createdAt: Date;
   channelId?: string;
   channelName?: string;
+  gameType?: 'ladder' | 'normal';
 }
 
 export interface Invitations {
