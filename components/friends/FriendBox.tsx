@@ -12,6 +12,7 @@ type FriendBoxProps = {
   type: FriendBoxType;
   friend: Friend;
   status?: Activity;
+  mode?: string;
   roomId?: string;
 };
 
@@ -19,6 +20,7 @@ export default function FriendBox({
   type,
   friend,
   status,
+  mode,
   roomId,
 }: FriendBoxProps) {
   const { nickname, imgUrl } = friend;
@@ -40,7 +42,7 @@ export default function FriendBox({
       <div className={styles.nickname} onClick={handleNicknameClick}>
         {nickname}
       </div>
-      <FriendButtons type={type} nickname={nickname} roomId={roomId} />
+      <FriendButtons type={type} nickname={nickname} mode={mode} roomId={roomId} />
     </div>
   );
 }
