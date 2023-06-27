@@ -23,7 +23,7 @@ export default function Header() {
   const { useSettingsModal } = useModalProvider();
   const { roleType } = useRecoilValue(userState);
   const sideBar = useRecoilValue(sideBarState);
-  const [socket] = useChatSocket();
+  const [socket] = useChatSocket('global');
 
   useEffect(() => {
     const newInvitationListener = (data: Invitation) => {

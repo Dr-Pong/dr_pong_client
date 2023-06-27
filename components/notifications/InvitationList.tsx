@@ -30,7 +30,7 @@ export default function InvitationList() {
     '/users/notifications/channels',
     setChannelInvitations
   );
-  const [chatSocket] = useChatSocket();
+  const [chatSocket] = useChatSocket('global');
 
   useEffect(() => {
     const pushInvitation = (invitation: Invitation) => {
