@@ -20,6 +20,7 @@ const useChatSocket = (namespace: SocketNamespace): [Socket, () => void] => {
   else url = chatSocketUrl + '/' + namespace;
 
   sockets[namespace] = io(url, {
+    autoConnect: false,
     transports: ['websocket'],
     auth: {
       Authorization: `Bearer ${getAuthorization()}`,
@@ -29,5 +30,5 @@ const useChatSocket = (namespace: SocketNamespace): [Socket, () => void] => {
 };
 
 const chatSocketUrl = 'ws://10.19.223.86:2229';
-
+// const chatSocketUrl = 'ws://localhost:2999';
 export default useChatSocket;
