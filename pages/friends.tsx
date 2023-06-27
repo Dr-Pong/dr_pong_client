@@ -11,6 +11,7 @@ import FriendTabContents from 'components/friends/FriendTabContents';
 import PageHeader from 'components/global/PageHeader';
 import TabProvider from 'components/global/TabProvider';
 import AppLayout from 'components/layouts/AppLayout';
+import SocketManager from 'components/global/SocketManager';
 
 import styles from 'styles/friends/Friends.module.scss';
 
@@ -35,6 +36,7 @@ export default function Friends() {
 
   return (
     <div className={styles.friendsPageContainer}>
+      <SocketManager namespace={'friends'} />
       <PageHeader title={t('Friends')} />
       <TabProvider
         namespace={'friends'}
