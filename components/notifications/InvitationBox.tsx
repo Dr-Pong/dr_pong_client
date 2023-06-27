@@ -42,30 +42,30 @@ export default function InvitationBox({
   const setOpenAlert = useSetRecoilState(openAlertState);
   const setAlertType = useSetRecoilState(alertTypeState);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
-  const { mutationPost, mutationDelete, queryClient } = useCustomQuery();
+  const { mutationPatch, mutationDelete, queryClient } = useCustomQuery();
   const { id, from, createdAt, channelId, channelName } = invitation;
   const invitationProperties: { [key: string]: InvitationProperty } = {
     channel: {
-      acceptPath: `/channels/${channelId}/magicpass`,
-      deletePath: `/users/notifications/channels/${id}`,
+      acceptPath: `/channels/${channelId}/invitation`,
+      deletePath: `/channels/${channelId}/invitation`,
       notification: `"${from}" ${t('channelInv1')} "${channelName}" ${t(
         'channelInv2'
       )}`,
     },
     game: {
-      acceptPath: ``, // todo
-      deletePath: `/users/notifications/games/${id}`,
+      acceptPath: `/games/invitation/${id}`,
+      deletePath: `/games/invitation/${id}`,
       notification: `"${from}" ${t('gameInv')}`,
     },
   };
 
-  const invitationAcceptMutation = mutationPost(
+  const invitationAcceptMutation = mutationPatch(
     invitationProperties[type].acceptPath,
     {
-      onSuccess: () => {
+      onSuccess: (response: { gameId: string }) => {
         toastId ? toast.remove(toastId) : setSideBar(null);
         if (type === 'channel') router.push(`/chats/channel/${channelId}`);
-        //TODO: if (type === 'game')
+        else if (type === 'game') router.push(`/game/normal/${response.gameId}`);
       },
       onError: () => {
         setAlertType('fail');

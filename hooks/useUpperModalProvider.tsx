@@ -1,7 +1,6 @@
 import useTranslation from 'next-translate/useTranslation';
 
 import {
-  useRecoilValue,
   useResetRecoilState,
   useSetRecoilState
 } from 'recoil';
@@ -35,10 +34,10 @@ const useUpperModalProvider = () => {
   }
 
 
-  const useChannelJoinConfirmUpperModal = (callback: () => void) => {
-    const handleCallback = () => {
+  const useChannelJoinConfirmUpperModal = (handleChannelJoin: () => void) => {
+    const handleConfirmModal = () => {
       closeUpperModal();
-      callback();
+      handleChannelJoin();
     }
 
     useUpperModal({
@@ -61,7 +60,7 @@ const useUpperModalProvider = () => {
             <BasicButton
               style='flex'
               color='purple'
-              handleButtonClick={handleCallback}
+              handleButtonClick={handleConfirmModal}
             >
               {t('Ok')}
             </BasicButton>,
@@ -71,7 +70,7 @@ const useUpperModalProvider = () => {
     });
   };
 
-  const useMatchWaitingUpperModal = () => {
+  const useMatchWaitingUpperModal = (handleGameCancel: () => void) => {
     useUpperModal({
       head: <ModalTitle title={t('Waiting For Match')} />,
       body: <Loading />,
@@ -79,7 +78,7 @@ const useUpperModalProvider = () => {
         <BasicButton
           style='basic'
           color='pink'
-          handleButtonClick={closeUpperModal}
+          handleButtonClick={handleGameCancel}
         >
           {t('cancel')}
         </BasicButton>
@@ -88,6 +87,7 @@ const useUpperModalProvider = () => {
   };
 
   return {
+    closeUpperModal,
     useChannelJoinConfirmUpperModal,
     useMatchWaitingUpperModal,
   };
