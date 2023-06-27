@@ -70,7 +70,7 @@ const useUpperModalProvider = () => {
     });
   };
 
-  const useMatchWaitingUpperModal = (handleCancelGame: () => void) => {
+  const useMatchWaitingUpperModal = (handleGameCancel: () => void) => {
     useUpperModal({
       head: <ModalTitle title={t('Waiting For Match')} />,
       body: <Loading />,
@@ -78,7 +78,7 @@ const useUpperModalProvider = () => {
         <BasicButton
           style='basic'
           color='pink'
-          handleButtonClick={handleCancelGame}
+          handleButtonClick={handleGameCancel}
         >
           {t('cancel')}
         </BasicButton>
