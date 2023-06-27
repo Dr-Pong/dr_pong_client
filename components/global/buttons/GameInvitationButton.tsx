@@ -1,5 +1,8 @@
 import { ButtonProps } from 'types/buttonTypes';
 
+import { useSetRecoilState } from 'recoil';
+import { alertTypeState, openAlertState } from 'recoils/alert';
+
 import useCustomQuery from 'hooks/useCustomQuery';
 import useUpperModalProvider from 'hooks/useUpperModalProvider';
 
@@ -7,27 +10,41 @@ import BasicButton from 'components/global/buttons/BasicButton';
 
 export default function GameInvitationButton({
   api,
+  mode,
   button,
 }: {
   api: string;
+  mode: string;
   button: ButtonProps;
 }) {
   const { style, color, children } = button;
-  const { mutationPost } = useCustomQuery();
-  const { useMatchWaitingUpperModal } = useUpperModalProvider();
-
-  const { mutate } = mutationPost(api);
+  const setOpenAlert = useSetRecoilState(openAlertState);
+  const setAlertType = useSetRecoilState(alertTypeState);
+  const { mutationPost, mutationDelete } = useCustomQuery();
+  const { closeUpperModal, useMatchWaitingUpperModal } = useUpperModalProvider();
+  const gameInvitation = mutationPost(api);
+  const cancelInvitation = mutationDelete('/games/invitation', {
+    onSuccess: () => { closeUpperModal(); },
+    onError: () => {
+      setAlertType('fail');
+      setOpenAlert(true);
+    },
+  });
 
   const onSuccess = () => {
-    useMatchWaitingUpperModal();
+    useMatchWaitingUpperModal(cancelInvitation.mutate);
   };
 
   const onError = () => {
+    setAlertType('fail');
+    setOpenAlert(true);
   };
 
   const handleButtonClick = async () => {
-    mutate(
-      {},
+    gameInvitation.mutate(
+      {
+        mode: mode
+      },
       {
         onSuccess: onSuccess,
         onError: onError,
