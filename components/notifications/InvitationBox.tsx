@@ -62,7 +62,7 @@ export default function InvitationBox({
   const invitationAcceptMutation = mutationPatch(
     invitationProperties[type].acceptPath,
     {
-      onSuccess: (response: any) => {
+      onSuccess: (response: { gameId: string }) => {
         toastId ? toast.remove(toastId) : setSideBar(null);
         if (type === 'channel') router.push(`/chats/channel/${channelId}`);
         else if (type === 'game') router.push(`/game/normal/${response.gameId}`);
