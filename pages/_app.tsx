@@ -11,12 +11,13 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
 import 'styles/globals.css';
+import 'styles/globals.css';
+
+import SocketManager from 'components/global/SocketManager';
 
 const LoginFilter = dynamic(() => import('components/layouts/LoginFilter'), {
   ssr: false,
 });
-
-import 'styles/globals.css';
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
           <LoginFilter>
+            <SocketManager namespace={'global'} />
             {getLayout(<Component {...pageProps} />)}
             <div id='sideBarRoot'></div>
             <div id='modalRoot'></div>
