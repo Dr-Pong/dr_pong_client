@@ -34,10 +34,10 @@ const useUpperModalProvider = () => {
   }
 
 
-  const useChannelJoinConfirmUpperModal = (callback: () => void) => {
-    const handleCallback = () => {
+  const useChannelJoinConfirmUpperModal = (handleChannelJoin: () => void) => {
+    const handleConfirmModal = () => {
       closeUpperModal();
-      callback();
+      handleChannelJoin();
     }
 
     useUpperModal({
@@ -60,7 +60,7 @@ const useUpperModalProvider = () => {
             <BasicButton
               style='flex'
               color='purple'
-              handleButtonClick={handleCallback}
+              handleButtonClick={handleConfirmModal}
             >
               {t('Ok')}
             </BasicButton>,
@@ -70,7 +70,7 @@ const useUpperModalProvider = () => {
     });
   };
 
-  const useMatchWaitingUpperModal = (callback: () => void) => {
+  const useMatchWaitingUpperModal = (handleCancelGame: () => void) => {
     useUpperModal({
       head: <ModalTitle title={t('Waiting For Match')} />,
       body: <Loading />,
@@ -78,7 +78,7 @@ const useUpperModalProvider = () => {
         <BasicButton
           style='basic'
           color='pink'
-          handleButtonClick={callback}
+          handleButtonClick={handleCancelGame}
         >
           {t('cancel')}
         </BasicButton>
