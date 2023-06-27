@@ -1,24 +1,49 @@
-import { useRouter } from 'next/router';
-
 import useTranslation from 'next-translate/useTranslation';
+
+import { useSetRecoilState } from 'recoil';
+import { alertTypeState, openAlertState } from 'recoils/alert';
 
 import React, { ReactElement, useState } from 'react';
 
 import GameLobby from 'components/game/GameLobby';
 import AppLayout from 'components/layouts/AppLayout';
 
+import useUpperModalProvider from 'hooks/useUpperModalProvider';
+import useCustomQuery from 'hooks/useCustomQuery';
+
 import styles from 'styles/game/Game.module.scss';
 
 export default function Game() {
-  const router = useRouter();
   const { t } = useTranslation('game');
+  const setOpenAlert = useSetRecoilState(openAlertState);
+  const setAlertType = useSetRecoilState(alertTypeState);
+  const { closeUpperModal, useMatchWaitingUpperModal } = useUpperModalProvider();
   const [normalClicked, setNormalClicked] = useState(false);
+  const { mutationPost, mutationDelete } = useCustomQuery();
+  const enterQueue = mutationPost(`/games/queue/ladder`);
+  const exitQueue = mutationDelete(`/games/queue`, {
+    onSuccess: () => {
+      closeUpperModal();
+    },
+    onError: () => {
+      setAlertType('fail');
+      setOpenAlert(true);
+    },
+  });
 
   const handleLadderClick = () => {
-    //요청 보내고
-    //응답 올때까지
-    //Waiting 띄워주기
-    router.push(`/game/ladder/1`);
+    enterQueue.mutate(
+      { mode: 'classic' },
+      {
+        onSuccess: () => {
+          useMatchWaitingUpperModal(exitQueue.mutate);
+        },
+        onError: () => {
+          setAlertType('fail');
+          setOpenAlert(true);
+        }
+      }
+    );
   };
 
   const handleNormalClick = () => {
