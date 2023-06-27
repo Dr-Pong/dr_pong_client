@@ -1,7 +1,6 @@
 import useTranslation from 'next-translate/useTranslation';
 
 import {
-  useRecoilValue,
   useResetRecoilState,
   useSetRecoilState
 } from 'recoil';
@@ -71,7 +70,7 @@ const useUpperModalProvider = () => {
     });
   };
 
-  const useMatchWaitingUpperModal = () => {
+  const useMatchWaitingUpperModal = (callback: () => void) => {
     useUpperModal({
       head: <ModalTitle title={t('Waiting For Match')} />,
       body: <Loading />,
@@ -79,7 +78,7 @@ const useUpperModalProvider = () => {
         <BasicButton
           style='basic'
           color='pink'
-          handleButtonClick={closeUpperModal}
+          handleButtonClick={callback}
         >
           {t('cancel')}
         </BasicButton>
@@ -88,6 +87,7 @@ const useUpperModalProvider = () => {
   };
 
   return {
+    closeUpperModal,
     useChannelJoinConfirmUpperModal,
     useMatchWaitingUpperModal,
   };
