@@ -8,6 +8,7 @@ import { userState } from 'recoils/user';
 import instance from 'utils/axios';
 
 import FriendBox from 'components/friends/FriendBox';
+import FriendButtons from 'components/friends/FriendButtons';
 import SearchBar from 'components/global/SearchBar';
 import BasicButton from 'components/global/buttons/BasicButton';
 
@@ -35,18 +36,19 @@ export default function SearchUser() {
           relation &&
           relation.status !== 'blocked'
         ) {
+          const type = relation.status === 'none' ? 'add' : 'none';
+          const {
+            nickname,
+            image: { url: imgUrl },
+          } = userDetail;
           setResult(
-            <FriendBox
-              key={userDetail.nickname}
-              friend={{
-                nickname: userDetail.nickname,
-                imgUrl: userDetail.image.url,
-              }}
-              type={relation.status === 'none' ? 'add' : 'none'}
-            />
+            <FriendBox key={nickname} friend={{ nickname, imgUrl }} type={type}>
+              <FriendButtons nickname={nickname} type={type} />
+            </FriendBox>
           );
         } else setResult(<div className={styles.noResult}>{t('no user')}</div>);
       } catch (e) {
+        console.log(e);
         setResult(<div className={styles.noResult}>{t('no user')}</div>);
       }
     }

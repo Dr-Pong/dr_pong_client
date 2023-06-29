@@ -4,24 +4,20 @@ import { Activity, Friend, FriendBoxType } from 'types/friendTypes';
 
 import useModalProvider from 'hooks/useModalProvider';
 
-import FriendButtons from 'components/friends/FriendButtons';
-
 import styles from 'styles/friends/FriendBox.module.scss';
 
 type FriendBoxProps = {
+  children: React.ReactNode;
   type: FriendBoxType;
   friend: Friend;
   status?: Activity;
-  mode?: string;
-  roomId?: string;
 };
 
 export default function FriendBox({
   type,
   friend,
   status,
-  mode,
-  roomId,
+  children,
 }: FriendBoxProps) {
   const { nickname, imgUrl } = friend;
   const { useProfileModal } = useModalProvider();
@@ -42,7 +38,7 @@ export default function FriendBox({
       <div className={styles.nickname} onClick={handleNicknameClick}>
         {nickname}
       </div>
-      <FriendButtons type={type} nickname={nickname} mode={mode} roomId={roomId} />
+      {children}
     </div>
   );
 }
