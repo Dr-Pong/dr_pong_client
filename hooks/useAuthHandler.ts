@@ -9,6 +9,8 @@ import { loginState } from 'recoils/login';
 import { openModalState } from 'recoils/modal';
 import { userState } from 'recoils/user';
 
+import useModalProvider from 'hooks/useModalProvider';
+
 interface TokenResponse {
   accessToken: string;
 }
@@ -17,6 +19,7 @@ const useAuthHandler = () => {
   const [login, setLogin] = useRecoilState(loginState);
   const resetUserState = useResetRecoilState(userState);
   const setOpenModal = useSetRecoilState(openModalState);
+  const { useNeedLoginModal } = useModalProvider();
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -57,12 +60,18 @@ const useAuthHandler = () => {
     router.push('/');
   };
 
+  const onUnauthorizedAttempt = () => {
+    onLogout();
+    useNeedLoginModal();
+  };
+
   return {
     onAuthSuccess,
     onAuthFailure,
     onSecondAuthFailure,
     onDupLoginAttempt,
     onLogout,
+    onUnauthorizedAttempt,
   };
 };
 
