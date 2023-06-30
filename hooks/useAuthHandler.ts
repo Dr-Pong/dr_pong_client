@@ -11,6 +11,8 @@ import { userState } from 'recoils/user';
 
 import useModalProvider from 'hooks/useModalProvider';
 
+import { sideBarState } from '../recoils/sideBar';
+
 interface TokenResponse {
   accessToken: string;
 }
@@ -18,6 +20,7 @@ const useAuthHandler = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['Authorization']);
   const [login, setLogin] = useRecoilState(loginState);
   const resetUserState = useResetRecoilState(userState);
+  const setSideBar = useSetRecoilState(sideBarState);
   const setOpenModal = useSetRecoilState(openModalState);
   const { useNeedLoginModal } = useModalProvider();
   const router = useRouter();
@@ -56,6 +59,7 @@ const useAuthHandler = () => {
     setLogin(false);
     resetUserState();
     setOpenModal(false);
+    setSideBar(null);
     queryClient.invalidateQueries(['userMe']);
     router.push('/');
   };
