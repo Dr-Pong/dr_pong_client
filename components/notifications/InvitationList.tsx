@@ -21,12 +21,12 @@ export default function InvitationList() {
   const [combination, setCombination] = useState<Invitation[]>([]);
   const { get } = useCustomQuery();
   const gameInvitationsGet = get(
-    ['notificationsGames'],
+    'notificationsGames',
     '/users/notifications/games',
     setGameInvitations
   );
   const channelInvitationsGet = get(
-    ['notificationsChannels'],
+    'notificationsChannels',
     '/users/notifications/channels',
     setChannelInvitations
   );
