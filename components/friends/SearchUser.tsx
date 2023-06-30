@@ -48,7 +48,6 @@ export default function SearchUser() {
           );
         } else setResult(<div className={styles.noResult}>{t('no user')}</div>);
       } catch (e) {
-        console.log(e);
         setResult(<div className={styles.noResult}>{t('no user')}</div>);
       }
     }
