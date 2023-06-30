@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useSetRecoilState } from 'recoil';
 
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 
 import React, { useEffect, useState } from 'react';
 
@@ -17,6 +17,7 @@ import LoadingSpinner from 'components/global/LoadingSpinner';
 import styles from 'styles/notifications/Notifications.module.scss';
 
 export default function FriendRequestsBox() {
+  const router = useRouter();
   const setSideBar = useSetRecoilState(sideBarState);
   const setFriendsTab = useSetRecoilState(friendsTabState);
   const { t } = useTranslation('common');
@@ -49,16 +50,15 @@ export default function FriendRequestsBox() {
   const handleRouterToFriends = () => {
     setSideBar(null);
     setFriendsTab('pending');
-    Router.push('/friends');
+    router.push('/friends');
   };
 
   return (
     <div className={styles.friendRequestBox} onClick={handleRouterToFriends}>
       <span>{t('Friend requests')}</span>
       <span
-        className={`${styles.requestCount} ${
-          totalCount === 0 && styles.noRequestCount
-        }`}
+        className={`${styles.requestCount} ${totalCount === 0 && styles.noRequestCount
+          }`}
       >
         {totalCount}
       </span>
