@@ -33,12 +33,18 @@ export default function LoginFilter({ children }: LayoutProps) {
 
   if (isLoading) return <LoadingSpinner />;
 
-  if (user.roleType !== 'noname' && router.asPath === '/signUp')
+  if (user.roleType !== 'noname' && router.asPath === '/signUp') {
     router.push('/');
-  if (user.roleType === 'noname' && router.asPath !== '/signUp')
+    return null;
+  }
+  if (user.roleType === 'noname' && router.asPath !== '/signUp') {
     router.push('/signUp');
-  if (user.tfaRequired && router.asPath !== '/authentication')
+    return null;
+  }
+  if (user.tfaRequired && router.asPath !== '/authentication') {
     router.push('/authentication');
+    return null;
+  }
 
   return <>{children}</>;
 }
