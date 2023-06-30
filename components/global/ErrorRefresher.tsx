@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import useTranslation from 'next-translate/useTranslation';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BiError } from 'react-icons/bi';
 
 import useAuthHandler from 'hooks/useAuthHandler';
@@ -15,10 +15,12 @@ export default function ErrorRefresher({ error }: { error?: unknown }) {
   const { onUnauthorizedAttempt } = useAuthHandler();
   const status = (error as AxiosError)?.response?.status;
 
-  if (status === 401) {
-    onUnauthorizedAttempt();
-    return null;
-  }
+  useEffect(() => {
+    if (status === 401) {
+      onUnauthorizedAttempt();
+    }
+  });
+
   const handleRefresh = () => {
     window.location.reload();
   };
