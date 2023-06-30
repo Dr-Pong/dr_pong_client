@@ -40,9 +40,9 @@ export default function Participants() {
     }
   );
 
-  const { data, isLoading, isError } = chatUsersGet();
+  const { data, isLoading, isError, error } = chatUsersGet();
   if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher />;
+  if (isError) return <ErrorRefresher error={error} />;
 
   const { me, participants } = data;
 

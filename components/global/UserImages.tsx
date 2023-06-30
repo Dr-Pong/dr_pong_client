@@ -16,7 +16,7 @@ export default function UserImages({
   const { data, isError, isLoading } = get('userImages', `users/images`);
 
   if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher />;
+  if (isError) return z
 
   return (
     <div className={styles.userImagesContainer}>

@@ -21,7 +21,7 @@ export default function FriendRequestsBox() {
   const setFriendsTab = useSetRecoilState(friendsTabState);
   const { t } = useTranslation('common');
   const { get } = useCustomQuery();
-  const { data, isLoading, isError } = get(
+  const { data, isLoading, isError, error } = get(
     ['notificationFriends'],
     '/users/notifications/friends'
   );
@@ -39,7 +39,7 @@ export default function FriendRequestsBox() {
   }, []);
 
   if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher />;
+  if (isError) return <ErrorRefresher error={error} />;
 
   const { requestCount } = data;
 

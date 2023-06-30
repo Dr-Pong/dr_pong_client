@@ -19,7 +19,7 @@ export default function DirectMessages() {
   const [isEditable, setIsEditable] = useState<boolean>(false);
   const [{ chatList }, setChatList] = useState<ChatList>({ chatList: [] });
   const { get, queryClient } = useCustomQuery();
-  const { data, isLoading, isError } = get(
+  const { data, isLoading, isError, error } = get(
     ['chatList'],
     '/users/friends/chatlist',
     setChatList
@@ -49,7 +49,7 @@ export default function DirectMessages() {
   }, []);
 
   if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher />;
+  if (isError) return <ErrorRefresher error={error} />;
 
   const handleEditClick = () => {
     setIsEditable(!isEditable);

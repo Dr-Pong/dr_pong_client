@@ -52,7 +52,9 @@ export default function ChattingsFrame({
   };
 
   if (chatUsers.isLoading || myChannelGet.isLoading) return <LoadingSpinner />;
-  if (chatUsers.isError || myChannelGet.isError) return <ErrorRefresher />;
+  if (chatUsers.isError) return <ErrorRefresher error={chatUsers.error} />;
+  if (myChannelGet.isError)
+    return <ErrorRefresher error={myChannelGet.error} />;
 
   const buttons = [];
   const { me } = chatUsers.data as ParticipantsResponse;

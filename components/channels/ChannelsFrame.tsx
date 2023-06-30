@@ -41,7 +41,10 @@ export default function ChannelsFrame() {
 
   if (channelListGet.isLoading || myChannelGet.isLoading)
     return <LoadingSpinner />;
-  if (channelListGet.isError || myChannelGet.isError) return <ErrorRefresher />;
+  if (channelListGet.isError)
+    return <ErrorRefresher error={channelListGet.error} />;
+  if (myChannelGet.isError)
+    return <ErrorRefresher error={myChannelGet.error} />;
 
   return (
     <div className={styles.channelsFrameContainer}>
