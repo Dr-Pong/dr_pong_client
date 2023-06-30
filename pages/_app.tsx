@@ -42,12 +42,12 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           <LoginFilter>
             <SocketManager namespace={'global'} />
             {getLayout(<Component {...pageProps} />)}
-            <div id='sideBarRoot'></div>
-            <div id='modalRoot'></div>
-            <div id='upperModalRoot'></div>
-            <div id='alertRoot'></div>
-            <Toaster />
           </LoginFilter>
+          <div id='sideBarRoot'></div>
+          <div id='modalRoot'></div>
+          <div id='upperModalRoot'></div>
+          <div id='alertRoot'></div>
+          <Toaster />
         </RecoilRoot>
         <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
       </QueryClientProvider>
