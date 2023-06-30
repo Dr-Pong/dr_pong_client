@@ -5,7 +5,7 @@ import { Invitations } from 'types/notificationTypes';
 import useCustomQuery from 'hooks/useCustomQuery';
 
 const useFriendsQuery = () => {
-  const { get, queryClient } = useCustomQuery();
+  const { get } = useCustomQuery();
 
   const notificationNewDotGet = (
     setNewDot: Dispatch<SetStateAction<boolean>>
@@ -61,7 +61,7 @@ const useFriendsQuery = () => {
     return { isLoading, isError };
   };
 
-  return { notificationNewDotGet, directMessageNewDotGet, queryClient };
+  return { notificationNewDotGet, directMessageNewDotGet };
 };
 
 export default useFriendsQuery;
