@@ -36,8 +36,7 @@ export default function FriendTabContents() {
   const [globalChatSocket] = useChatSocket('global');
 
   useEffect(() => {
-    friendsChatSocket.disconnect();
-    friendsChatSocket.connect();
+    friendsChatSocket.emit('status');
     const friendStatusListener = (newStatuses: Statuses) => {
       setStatuses((prev) => {
         return {

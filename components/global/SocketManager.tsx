@@ -15,12 +15,15 @@ export default function SocketManager({
   const login = useRecoilValue(loginState);
   const [socket, disconnectSocket] = useChatSocket(namespace);
 
+  if (login && socket.disconnected) {
+    socket.connect();
+  }
+
   useEffect(() => {
-    if (login && !socket?.connected) socket.connect();
-    if (!login && socket?.connected) socket.disconnect();
     return () => {
       disconnectSocket();
     };
   }, [login]);
+
   return <></>;
 }
