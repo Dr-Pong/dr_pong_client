@@ -13,7 +13,7 @@ import useCustomQuery from 'hooks/useCustomQuery';
 import instance from 'utils/axios';
 
 const useChatQuery = (roomType: RoomType, roomId: string) => {
-  const { get, mutationPost } = useCustomQuery();
+  const { get, mutationPost, queryClient } = useCustomQuery();
 
   const chatUsersGet = (setChatUsers?: (u: UserImageMap) => void) => {
     const friendDetailToChatUser = (data: DetailDto) => {
@@ -33,10 +33,10 @@ const useChatQuery = (roomType: RoomType, roomId: string) => {
     return roomType === 'dm'
       ? get('DMFriend', `/users/${roomId}/detail`, friendDetailToChatUser)
       : get(
-          'channelParticipants',
-          `/channels/${roomId}/participants`,
-          participantsToChatUsers
-        );
+        'channelParticipants',
+        `/channels/${roomId}/participants`,
+        participantsToChatUsers
+      );
   };
 
   const chatsGet = (handleChatJoin: (chats: Chat[]) => void, count: number) => {
@@ -70,6 +70,7 @@ const useChatQuery = (roomType: RoomType, roomId: string) => {
           if (data.pages.length === 0) return;
           const newChats = data.pages[data.pages.length - 1].chats;
           handleChatJoin(newChats);
+          queryClient.invalidateQueries('hasNewChat');
         },
         staleTime: Infinity,
         refetchOnMount: false,

@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction } from 'react';
 
-import { ChatList, Invitations } from 'types/notificationTypes';
+import { Invitations } from 'types/notificationTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
 const useFriendsQuery = () => {
-  const { get } = useCustomQuery();
+  const { get, queryClient } = useCustomQuery();
 
   const notificationNewDotGet = (
     setNewDot: Dispatch<SetStateAction<boolean>>
@@ -52,17 +52,16 @@ const useFriendsQuery = () => {
     setNewDot: Dispatch<SetStateAction<boolean>>
   ) => {
     const { isLoading, isError } = get(
-      ['chatList'],
-      '/users/friends/chatlist',
-      (data: ChatList) => {
-        const newDot = data.chatList?.some((chat) => chat.newChats > 0);
-        setNewDot(newDot);
+      'hasNewChat',
+      '/users/friends/chats/new',
+      ({ hasNewChat }: { hasNewChat: boolean }) => {
+        setNewDot(hasNewChat);
       }
     );
     return { isLoading, isError };
   };
 
-  return { notificationNewDotGet, directMessageNewDotGet };
+  return { notificationNewDotGet, directMessageNewDotGet, queryClient };
 };
 
 export default useFriendsQuery;

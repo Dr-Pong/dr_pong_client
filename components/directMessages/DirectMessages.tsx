@@ -45,6 +45,7 @@ export default function DirectMessages() {
     socket.on('newChat', newChatListener);
     return () => {
       socket.off('newChat', newChatListener);
+      queryClient.invalidateQueries('hasNewChat');
     };
   }, []);
 
