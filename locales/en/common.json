@@ -38,5 +38,6 @@
   "search by nickname": "search by nickname",
   "channel confirm": "You will be leaved from previous channel. Do you want to continue?",
   "Add friend": "Add friend",
-  "Participants": "Participants"
+  "Participants": "Participants",
+  "needLogin": "You need to login to continue."
 }
