@@ -11,27 +11,16 @@ import styles from 'styles/friends/FriendButtons.module.scss';
 type FriendButtonsProps = {
   type: FriendBoxType;
   nickname: string;
-  mode?: string;
-  roomId?: string;
 };
 
-export default function FriendButtons({
-  type,
-  nickname,
-  mode,
-  roomId,
-}: FriendButtonsProps) {
-  const { channelInvitation, gameInvitation } = useRelationButtons(
-    { style: 'round', color: 'pink' },
-    nickname
-  );
+export default function FriendButtons({ type, nickname }: FriendButtonsProps) {
   const {
     directMessage,
     dropdown,
     acceptFriendRequest,
     rejectFriendRequest,
-    addFriend,
     unblockUser,
+    addFriend,
   } = useRelationButtons({ style: 'round', color: 'opaque' }, nickname);
 
   const buttons: {
@@ -47,13 +36,11 @@ export default function FriendButtons({
     ],
     blocked: [unblockUser(<IoMdClose />)],
     add: [addFriend(<IoMdAdd />)],
-    game: [gameInvitation(<IoMdAdd />, mode || '')],
-    channel: [channelInvitation(<IoMdAdd />, roomId || '')],
     none: [],
   };
 
   return (
-    <div className={styles.friendButtonsContainer}>
+    <div className={styles.friendButtonsWrap}>
       {buttons[type].map((c, i) => (
         <div key={i}>{c}</div>
       ))}

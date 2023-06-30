@@ -3,29 +3,28 @@ import useTranslation from 'next-translate/useTranslation';
 import React, { useEffect, useState } from 'react';
 
 import { Participant } from 'types/chatTypes';
-import { Friend, FriendBoxType, Statuses } from 'types/friendTypes';
+import { Friend, Statuses } from 'types/friendTypes';
+import { InvitationType } from 'types/notificationTypes';
 
 import useChatSocket from 'hooks/useChatSocket';
 import useFriendsQuery from 'hooks/useFriendsQuery';
 
-import FriendBox from 'components/friends/FriendBox';
 import ErrorRefresher from 'components/global/ErrorRefresher';
+import FriendInvitationBox from 'components/global/FriendInvitationBox';
 import LoadingSpinner from 'components/global/LoadingSpinner';
 import SearchBar from 'components/global/SearchBar';
 
 import styles from 'styles/global/InvitationRequest.module.scss';
 
 type InvitationProps = {
-  invitationType: string;
-  mode?: string;
-  roomId?: string;
+  invitationType: InvitationType;
+  invitationArg: string;
   participants?: Participant[];
 };
 
 export default function InvitationRequest({
   invitationType,
-  mode,
-  roomId,
+  invitationArg,
   participants,
 }: InvitationProps) {
   const { t } = useTranslation('common');
@@ -72,13 +71,12 @@ export default function InvitationRequest({
       <div className={styles.friendList}>
         {filteredFriends.map((friend) => {
           return (
-            <FriendBox
+            <FriendInvitationBox
               key={friend.nickname}
-              type={invitationType as FriendBoxType}
               friend={friend}
               status={statuses[friend.nickname]}
-              mode={mode}
-              roomId={roomId}
+              type={invitationType as InvitationType}
+              invitationArg={invitationArg}
             />
           );
         })}

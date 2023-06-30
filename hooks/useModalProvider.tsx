@@ -8,6 +8,7 @@ import { userState } from 'recoils/user';
 
 import { Participant } from 'types/chatTypes';
 import { ModalParts } from 'types/modalTypes';
+import { InvitationType } from 'types/notificationTypes';
 import { Achievement } from 'types/userTypes';
 
 import NumberInputBox from 'components/authentication/NumberInputBox';
@@ -190,9 +191,8 @@ const useModalProvider = () => {
   };
 
   const useInvitationModal = (
-    invitationType: string,
-    mode?: string,
-    roomId?: string,
+    invitationType: InvitationType,
+    invitationArg: string,
     participants?: Participant[]
   ) => {
     useModal({
@@ -202,8 +202,7 @@ const useModalProvider = () => {
           <SocketManager namespace={'friends'} />
           <InvitationRequest
             invitationType={invitationType}
-            mode={mode}
-            roomId={roomId}
+            invitationArg={invitationArg}
             participants={participants}
           />
         </>
