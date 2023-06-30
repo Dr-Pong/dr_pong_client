@@ -8,6 +8,7 @@ import { loginState } from 'recoils/login';
 import { userState } from 'recoils/user';
 
 import useCustomQuery from 'hooks/useCustomQuery';
+import useModalProvider from 'hooks/useModalProvider';
 
 import { LayoutProps } from 'pages/_app';
 
@@ -18,6 +19,7 @@ export default function LoginFilter({ children }: LayoutProps) {
   const setLogin = useSetRecoilState(loginState);
   const resetUserState = useResetRecoilState(userState);
   const { get } = useCustomQuery();
+  const { useNeedLoginModal } = useModalProvider();
   const { isLoading } = get(['userMe'], '/users/me', setUser, {
     onSuccess: () => {
       if (user.roleType === 'member') setLogin(true);
@@ -43,6 +45,17 @@ export default function LoginFilter({ children }: LayoutProps) {
   }
   if (user.tfaRequired && router.asPath !== '/authentication') {
     router.push('/authentication');
+    return null;
+  }
+  if (
+    user.roleType === 'guest' &&
+    router.asPath !== '/' &&
+    router.asPath !== '/leaderboard' &&
+    !router.asPath.startsWith('/records') &&
+    !router.asPath.startsWith('/login')
+  ) {
+    useNeedLoginModal();
+    router.push('/');
     return null;
   }
 
