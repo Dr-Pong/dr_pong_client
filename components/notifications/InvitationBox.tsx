@@ -64,6 +64,8 @@ export default function InvitationBox({
     {
       onSuccess: (response: { gameId: string }) => {
         toastId ? toast.remove(toastId) : setSideBar(null);
+        queryClient.invalidateQueries([`notifications${toQueryKey(type)}`]);
+        queryClient.invalidateQueries(['notificationDot']);
         if (type === 'channel') router.push(`/chats/channel/${channelId}`);
         else if (type === 'game') router.push(`/game/normal/${response.gameId}`);
       },
@@ -80,6 +82,7 @@ export default function InvitationBox({
       onSuccess: () => {
         toastId ? toast.remove(toastId) : setIsDeleted(true);
         queryClient.invalidateQueries([`notifications${toQueryKey(type)}`]);
+        queryClient.invalidateQueries(['notificationDot']);
       },
       onError: () => {
         setAlertType('fail');
