@@ -8,20 +8,24 @@ import { Participant } from 'types/chatTypes';
 import useModalProvider from 'hooks/useModalProvider';
 import useRelationButtons from 'hooks/useRelationButtons';
 
-import styles from 'styles/channels/UserBox.module.scss';
+import styles from 'styles/channels/ParticipantBox.module.scss';
 
 const buttonDesign: ButtonDesign = {
   style: 'fit',
   color: 'transparent',
 };
 
-type UserBoxProps = {
+type ParticipantBoxProps = {
   roomId?: string;
   myRoleType?: string;
   user: Participant;
 };
 
-export default function UserBox({ roomId, myRoleType, user }: UserBoxProps) {
+export default function ParticipantBox({
+  roomId,
+  myRoleType,
+  user,
+}: ParticipantBoxProps) {
   const { nickname, imgUrl, roleType, isMuted } = user;
   const { useProfileModal } = useModalProvider();
   const { channelRoleEvent } = useRelationButtons(buttonDesign, nickname);
