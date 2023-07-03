@@ -14,7 +14,8 @@ import { Invitation } from 'types/notificationTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
-import { timeConverter } from 'components/chats/ChatBox';
+import { timeConverter } from 'utils/timezoneResolver';
+
 import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/notifications/Notifications.module.scss';
@@ -67,7 +68,8 @@ export default function InvitationBox({
         queryClient.invalidateQueries([`notifications${toQueryKey(type)}`]);
         queryClient.invalidateQueries(['notificationDot']);
         if (type === 'channel') router.push(`/chats/channel/${channelId}`);
-        else if (type === 'game') router.push(`/game/normal/${response.gameId}`);
+        else if (type === 'game')
+          router.push(`/game/normal/${response.gameId}`);
       },
       onError: () => {
         setAlertType('fail');
