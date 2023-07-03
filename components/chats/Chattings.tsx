@@ -155,6 +155,7 @@ export default function Chattings({
     isFetchingNextPage,
     isLoading,
     isError,
+    error,
   } = chatsGet(handleChatJoin, 20);
 
   useEffect(() => {
@@ -163,7 +164,7 @@ export default function Chattings({
   }, [hasNextPage, fetchNextPage, isBottomRefVisible]);
 
   if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher />;
+  if (isError) return <ErrorRefresher error={error} />;
 
   return (
     <div className={styles.chattings}>

@@ -211,6 +211,18 @@ const useModalProvider = () => {
     });
   };
 
+  const useLoginRequiredModal = () => {
+    useModal({
+      head: null,
+      body: <ModalPhrase>{t('needLogin')}</ModalPhrase>,
+      tail: (
+        <CloseModalButton style='long' color='purple'>
+          {t('close')}
+        </CloseModalButton>
+      ),
+    });
+  };
+
   return {
     closeModal,
     useSettingsModal,
@@ -224,6 +236,7 @@ const useModalProvider = () => {
     usePasswordSubmitModal,
     useChannelEditModal,
     useInvitationModal,
+    useLoginRequiredModal,
   };
 };
 

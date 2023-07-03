@@ -78,10 +78,10 @@ export default function FriendTabContents() {
     blocked: blockListGet,
   };
 
-  const { isLoading, isError } = query[tab](setFriends);
+  const { isLoading, isError, error } = query[tab](setFriends);
 
   if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher />;
+  if (isError) return <ErrorRefresher error={error} />;
 
   return (
     <div className={styles.friendTabContentsContainer}>

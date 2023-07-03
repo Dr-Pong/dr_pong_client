@@ -68,8 +68,10 @@ export default function InvitationList() {
 
   if (gameInvitationsGet.isLoading || channelInvitationsGet.isLoading)
     return <LoadingSpinner />;
-  if (gameInvitationsGet.isError || channelInvitationsGet.isError)
-    return <ErrorRefresher />;
+  if (gameInvitationsGet.isError)
+    return <ErrorRefresher error={gameInvitationsGet.error} />;
+  if (channelInvitationsGet.isError)
+    return <ErrorRefresher error={channelInvitationsGet.error} />;
 
   return (
     <div className={styles.invitationsWrap}>

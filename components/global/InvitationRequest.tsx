@@ -32,7 +32,7 @@ export default function InvitationRequest({
   const [searchKey, setSearchKey] = useState<string>('');
   const [friends, setFriends] = useState<Friend[]>([]);
   const [statuses, setStatuses] = useState<Statuses>({});
-  const { isLoading, isError } = allListGet(setFriends);
+  const { isLoading, isError, error } = allListGet(setFriends);
   const [chatSocket] = useChatSocket('friends');
 
   useEffect(() => {
@@ -51,7 +51,7 @@ export default function InvitationRequest({
   }, []);
 
   if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher />;
+  if (isError) return <ErrorRefresher error={error} />;
 
   const filteredFriends: Friend[] = friends.filter((friend) => {
     const notDuplicate = !participants?.some(

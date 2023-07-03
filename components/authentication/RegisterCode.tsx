@@ -13,14 +13,14 @@ export default function RegisterCode() {
   const { get } = useCustomQuery();
   const [registerCode, setRegisterCode] =
     useState<AuthCode>(defaultRegisterCode);
-  const { data, isLoading, isError } = get(
+  const { data, isLoading, isError, error } = get(
     'authTfa',
     '/auth/tfa',
     setRegisterCode
   );
 
   if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher />;
+  if (isError) return <ErrorRefresher error={error} />;
 
   return (
     <div className={styles.codeContainer}>

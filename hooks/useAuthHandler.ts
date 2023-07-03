@@ -7,7 +7,10 @@ import { useQueryClient } from 'react-query';
 
 import { loginState } from 'recoils/login';
 import { openModalState } from 'recoils/modal';
+import { sideBarState } from 'recoils/sideBar';
 import { userState } from 'recoils/user';
+
+import useModalProvider from 'hooks/useModalProvider';
 
 interface TokenResponse {
   accessToken: string;
@@ -16,7 +19,9 @@ const useAuthHandler = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['Authorization']);
   const [login, setLogin] = useRecoilState(loginState);
   const resetUserState = useResetRecoilState(userState);
+  const setSideBar = useSetRecoilState(sideBarState);
   const setOpenModal = useSetRecoilState(openModalState);
+  const { useLoginRequiredModal } = useModalProvider();
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -53,8 +58,14 @@ const useAuthHandler = () => {
     setLogin(false);
     resetUserState();
     setOpenModal(false);
+    setSideBar(null);
     queryClient.invalidateQueries(['userMe']);
     router.push('/');
+  };
+
+  const onUnauthorizedAttempt = () => {
+    onLogout();
+    useLoginRequiredModal();
   };
 
   return {
@@ -63,6 +74,7 @@ const useAuthHandler = () => {
     onSecondAuthFailure,
     onDupLoginAttempt,
     onLogout,
+    onUnauthorizedAttempt,
   };
 };
 

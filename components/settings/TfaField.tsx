@@ -19,7 +19,7 @@ export default function TfaField() {
   const { t } = useTranslation('common');
   const { nickname } = useRecoilValue(userState);
   const { get } = useCustomQuery();
-  const { data, isLoading, isError } = get(
+  const { data, isLoading, isError, error } = get(
     'usersTfa',
     `/users/${nickname}/tfa`
   );
@@ -38,7 +38,7 @@ export default function TfaField() {
   });
 
   if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher />;
+  if (isError) return <ErrorRefresher error={error} />;
 
   const { tfaOn } = data;
 
