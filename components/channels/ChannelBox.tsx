@@ -1,11 +1,12 @@
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+
 import { useRouter } from 'next/router';
 
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { IoIosLock } from 'react-icons/io';
 
-import { useSetRecoilState } from 'recoil';
-
 import { alertTypeState, openAlertState } from 'recoils/alert';
+import { loginState } from 'recoils/login';
 
 import { Channel } from 'types/channelTypes';
 
@@ -26,7 +27,8 @@ export default function ChannelBox({
 }) {
   const { id, title, access, headCount, maxCount } = channel;
   const router = useRouter();
-  const { usePasswordSubmitModal } = useModalProvider();
+  const login = useRecoilValue(loginState);
+  const { useLoginRequiredModal, usePasswordSubmitModal } = useModalProvider();
   const { useChannelJoinConfirmUpperModal } = useUpperModalProvider();
   const setOpenAlert = useSetRecoilState(openAlertState);
   const setAlertType = useSetRecoilState(alertTypeState);
@@ -49,11 +51,10 @@ export default function ChannelBox({
   };
 
   const handleJoinConfirm = useCallback(() => {
-    if (haveMyChannel && !isMyChannel) {
+    if (!login) useLoginRequiredModal();
+    else if (haveMyChannel && !isMyChannel)
       useChannelJoinConfirmUpperModal(handleChannelJoin);
-    } else {
-      handleChannelJoin();
-    }
+    else handleChannelJoin();
   }, []);
 
   const handleChannelJoin = useCallback(() => {
