@@ -6,6 +6,8 @@ import { Chat } from 'types/chatTypes';
 
 import useModalProvider from 'hooks/useModalProvider';
 
+import { timeConverter } from 'utils/timezoneResolver';
+
 import styles from 'styles/chats/ChatBox.module.scss';
 
 type ChatBoxProps = {
@@ -64,13 +66,5 @@ function ChatBox({ chat, imgUrl }: ChatBoxProps) {
 }
 
 export default React.memo(ChatBox);
-
-export function timeConverter(time: Date | undefined) {
-  if (!time) return '';
-  const date = new Date(time);
-  const hour = date.getHours();
-  const minute = date.getMinutes();
-  return `${hour}:${minute < 10 ? '0' + minute : minute}`;
-}
 
 const defaultImgUrl = '/image/ghost.png';

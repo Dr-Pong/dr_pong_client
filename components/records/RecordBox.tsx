@@ -11,6 +11,8 @@ import Player from 'components/records/Player';
 
 import styles from 'styles/records/RecordBox.module.scss';
 
+import { timezoneResolverToString } from 'utils/timezoneResolver';
+
 export default function RecordBox({ record }: { record: Record }) {
   const { t } = useTranslation('records');
   const { me, you } = record;
@@ -48,7 +50,7 @@ export default function RecordBox({ record }: { record: Record }) {
             </div>
             {isHovered && (
               <div className={styles.gameDate}>
-                {date.toLocaleString('ko-KR')}
+                {timezoneResolverToString(date)}
               </div>
             )}
           </div>
