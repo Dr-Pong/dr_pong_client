@@ -39,5 +39,6 @@
   "channel confirm": "You will be leaved from previous channel. Do you want to continue?",
   "Add friend": "Add friend",
   "Participants": "Participants",
-  "needLogin": "This feature requires login."
+  "needLogin": "This feature requires login.",
+  "move to my page": "move to my page"
 }
