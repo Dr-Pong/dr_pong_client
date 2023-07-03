@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { RoomType } from 'types/gameTypes';
 
@@ -13,6 +13,8 @@ import styles from 'styles/game/Game.module.scss';
 export default function Game() {
   const router = useRouter();
   const { roomType, roomId } = router.query;
+  const [myEmoji, setMyEmoji] = useState<string | null>(null);
+  const [opponentEmoji, setOpponentEmoji] = useState<string | null>(null);
 
   useEffect(() => {
     if (roomType !== 'ladder' && roomType !== 'normal') router.replace('404');
@@ -21,12 +23,18 @@ export default function Game() {
 
   return (
     <div className={styles.gamePageContainer}>
-      <MatchProfile />
+      <MatchProfile
+        myEmoji={myEmoji}
+        opponentEmoji={opponentEmoji}
+      />
       <PongGame
         roomType={roomType as RoomType}
         roomId={roomId as string}
       />
-      <Emojis />
+      <Emojis
+        setMyEmoji={setMyEmoji}
+        setOpponentEmoji={setOpponentEmoji}
+      />
     </div>
   );
 }
