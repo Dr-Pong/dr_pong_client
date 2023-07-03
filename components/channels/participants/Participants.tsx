@@ -14,7 +14,7 @@ import useChatQuery from 'hooks/useChatQuery';
 import useCustomQuery from 'hooks/useCustomQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
-import UserBox from 'components/channels/participants/UserBox';
+import ParticipantBox from 'components/channels/participants/ParticipantBox';
 import ErrorRefresher from 'components/global/ErrorRefresher';
 import LoadingSpinner from 'components/global/LoadingSpinner';
 import BasicButton from 'components/global/buttons/BasicButton';
@@ -25,7 +25,7 @@ export default function Participants() {
   const router = useRouter();
   const { roomType, roomId } = router.query;
   const setSideBar = useSetRecoilState(sideBarState);
-  const { useInvitationModal } = useModalProvider();
+  const { useChannelInvitationModal } = useModalProvider();
   const { mutationDelete } = useCustomQuery();
   const { chatUsersGet } = useChatQuery(roomType as RoomType, roomId as string);
 
@@ -47,7 +47,10 @@ export default function Participants() {
   const { me, participants } = data;
 
   const handleFriendInvite = () => {
-    useInvitationModal('channel', roomId as string, data.participants);
+    useChannelInvitationModal(
+      roomId as string,
+      data.participants.map((el: Participant) => el.nickname)
+    );
   };
 
   const handleChannelLeave = () => {
@@ -57,9 +60,14 @@ export default function Participants() {
   return (
     <div className={styles.participantsContainer}>
       <div className={styles.userList}>
-        <UserBox key={me?.nickname} user={me} />
+        <ParticipantBox
+          key={me?.nickname}
+          roomId={roomId as string}
+          myRoleType={me.roleType}
+          user={me}
+        />
         {participants?.map((participant: Participant, i: number) => (
-          <UserBox
+          <ParticipantBox
             key={i}
             roomId={roomId as string}
             myRoleType={me.roleType}

@@ -1,23 +1,17 @@
-import { BsFillVolumeUpFill, BsVolumeMuteFill } from 'react-icons/bs';
+import { ReactElement } from 'react';
 import { RiVipCrownFill, RiVipCrownLine } from 'react-icons/ri';
-import { TbBan, TbCrown, TbCrownOff, TbShoe } from 'react-icons/tb';
 
-import { ButtonDesign } from 'types/buttonTypes';
 import { Participant } from 'types/chatTypes';
 
 import useModalProvider from 'hooks/useModalProvider';
-import useRelationButtons from 'hooks/useRelationButtons';
+
+import ParticipantButton from 'components/channels/participants/ParticipantButton';
 
 import styles from 'styles/channels/ParticipantBox.module.scss';
 
-const buttonDesign: ButtonDesign = {
-  style: 'fit',
-  color: 'transparent',
-};
-
 type ParticipantBoxProps = {
-  roomId?: string;
-  myRoleType?: string;
+  roomId: string;
+  myRoleType: string;
   user: Participant;
 };
 
@@ -26,50 +20,28 @@ export default function ParticipantBox({
   myRoleType,
   user,
 }: ParticipantBoxProps) {
+  const rolePriority: string[] = ['owner', 'admin', 'normal'];
   const { nickname, imgUrl, roleType, isMuted } = user;
   const { useProfileModal } = useModalProvider();
-  const { channelRoleEvent } = useRelationButtons(buttonDesign, nickname);
 
-  const paths = {
-    admin: `/channels/${roomId}/admin`,
-    kick: `/channels/${roomId}/kick`,
-    ban: `/channels/${roomId}/ban`,
-    mute: `/channels/${roomId}/mute`,
-  };
-
-  const roleIcons: { [key: string]: React.ReactElement | null } = {
+  const roleIcons: { [key: string]: ReactElement | null } = {
     owner: <RiVipCrownFill />,
     admin: <RiVipCrownLine />,
     normal: null,
   };
 
-  const adminButtons = {
-    owner: <></>,
-    admin: channelRoleEvent(<TbCrownOff />, paths.admin, 'delete'),
-    normal: channelRoleEvent(<TbCrown />, paths.admin, 'post'),
+  const adminButtons: { [key: string]: JSX.Element } = {
+    admin: (
+      <ParticipantButton roomId={roomId} target={nickname} type='setAdmin' />
+    ),
+    normal: (
+      <ParticipantButton roomId={roomId} target={nickname} type='setAdmin' />
+    ),
   };
 
   const muteButtons = {
-    true: channelRoleEvent(<BsFillVolumeUpFill />, paths.mute, 'delete'),
-    false: channelRoleEvent(<BsVolumeMuteFill />, paths.mute, 'post'),
-  };
-
-  const buttons: { [key: string]: JSX.Element[] } = {
-    owner: [
-      adminButtons[roleType],
-      channelRoleEvent(<TbShoe />, paths.kick, 'delete'),
-      channelRoleEvent(<TbBan />, paths.ban, 'post'),
-      muteButtons[`${isMuted}`],
-    ],
-    admin:
-      roleType === 'normal'
-        ? [
-            channelRoleEvent(<TbShoe />, paths.kick, 'delete'),
-            channelRoleEvent(<TbBan />, paths.ban, 'post'),
-            muteButtons[`${isMuted}`],
-          ]
-        : [],
-    normal: [],
+    true: <ParticipantButton roomId={roomId} target={nickname} type='unmute' />,
+    false: <ParticipantButton roomId={roomId} target={nickname} type='mute' />,
   };
 
   const handleUserClick = () => {
@@ -90,9 +62,14 @@ export default function ParticipantBox({
         <span>{nickname}</span>
         {roleIcons[roleType]}
       </div>
-      {myRoleType && (
+      {rolePriority.indexOf(myRoleType) < rolePriority.indexOf(roleType) && (
         <div className={styles.buttons}>
-          {buttons[myRoleType].map((c) => c)}
+          {myRoleType === 'owner' &&
+            roleType !== 'owner' &&
+            adminButtons[roleType]}
+          <ParticipantButton roomId={roomId} target={nickname} type='kick' />
+          <ParticipantButton roomId={roomId} target={nickname} type='ban' />
+          {muteButtons[`${isMuted}`]}
         </div>
       )}
     </div>
