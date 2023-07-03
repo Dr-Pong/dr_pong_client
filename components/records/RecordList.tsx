@@ -25,7 +25,7 @@ export default function RecordList({ nickname }: { nickname: string }) {
       const { records } = data;
       if (records) setRecords((prev) => [...prev, ...records]);
     };
-    loadData();
+    if (nickname) loadData();
   }, [lastGameId]);
 
   const handleShowMoreClick = () => {
@@ -33,10 +33,8 @@ export default function RecordList({ nickname }: { nickname: string }) {
   };
 
   if (records.length === 0) {
-    return (
-      <div className={styles.noRecord}>{t('no match')}</div>
-    );
-  };
+    return <div className={styles.noRecord}>{t('no match')}</div>;
+  }
 
   return (
     <div className={styles.recordListContainer}>
