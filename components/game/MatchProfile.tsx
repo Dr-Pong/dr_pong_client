@@ -8,7 +8,15 @@ import useCustomQuery from 'hooks/useCustomQuery';
 
 import styles from 'styles/game/MatchProfile.module.scss';
 
-export default function MatchProfile() {
+type MatchProfileProps = {
+  myEmojiUrl: string | null;
+  opponentEmojiUrl: string | null;
+}
+
+export default function MatchProfile({
+  myEmojiUrl,
+  opponentEmojiUrl
+}: MatchProfileProps) {
   const { nickname } = useRecoilValue(userState);
   const { get } = useCustomQuery();
   const me = get('me', `/users/${nickname}/detail`);
@@ -20,7 +28,19 @@ export default function MatchProfile() {
   return (
     <div className={styles.matchProfile}>
       <div className={styles.profile}>
-        <img className={styles.profilePicture} src={opponent.data.image.url} alt="상대 프로필 사진" />
+        {/* {opponentEmojiUrl ?
+          <img className={styles.emojiPopup} src={opponentEmojiUrl} /> :
+          <img
+            className={styles.profileImg}
+            src={opponent.data.image.url}
+            alt={opponent.data.nickname}
+          />
+        } */}
+        <img
+          className={styles.profileImg}
+          src={opponent.data.image.url}
+          alt={opponent.data.nickname}
+        />
         <div className={styles.profileInfo}>
           <span className={styles.nickname}>{opponent.data.nickname}</span>
           <span className={styles.level}>Level {opponent.data.level}</span>
@@ -28,7 +48,14 @@ export default function MatchProfile() {
       </div>
       <span className={styles.vs}>vs</span>
       <div className={styles.profile}>
-        <img className={styles.profilePicture} src={me.data.image.url} alt="내 프로필 사진" />
+        {myEmojiUrl ?
+          <img className={styles.emojiPopup} src={myEmojiUrl} /> :
+          <img
+            className={styles.profileImg}
+            src={me.data.image.url}
+            alt={nickname}
+          />
+        }
         <div className={styles.profileInfo}>
           <span className={styles.nickname}>{nickname}</span>
           <span className={styles.level}>Level {me.data.level}</span>
