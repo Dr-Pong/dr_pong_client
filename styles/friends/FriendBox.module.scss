@@ -1,16 +1,5 @@
 @import 'styles/common';
 
-@mixin modalContainer {
-  padding: 0.5rem 1rem;
-  border-bottom: none;
-  border-radius: $basic-radius;
-  img {
-    width: 4rem;
-    border: solid 1px $light-grey;
-    aspect-ratio: 1/1;
-  }
-}
-
 .friendBoxContainer {
   display: grid;
   grid-template-columns: 1fr 3fr 2fr;
@@ -19,26 +8,6 @@
   width: 100%;
   padding: 1rem 0.5rem;
   border-bottom: solid 1px $just-purple;
-  &.add {
-    @include modalContainer;
-    color: white;
-    background: linear-gradient(to bottom right, $light-pink, $just-yellow);
-  }
-  &.none {
-    @include modalContainer;
-    color: white;
-    background: linear-gradient(to bottom right, $light-pink, $just-yellow);
-  }
-  &.channel {
-    @include modalContainer;
-    color: black;
-    border: solid 1px $just-pink;
-  }
-  &.game {
-    @include modalContainer;
-    color: black;
-    border: solid 1px $just-pink;
-  }
 }
 
 .imageStatusWrap {
