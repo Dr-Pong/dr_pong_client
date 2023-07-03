@@ -32,7 +32,7 @@ export default function InvitationRequest({
   const { allListGet } = useFriendsQuery();
   const [searchKey, setSearchKey] = useState<string>('');
   const [friends, setFriends] = useState<Friend[]>([]);
-  const { isLoading, isError } = allListGet(setFriends);
+  const { isLoading, isError, error } = allListGet(setFriends);
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher error={error} />;
