@@ -6,7 +6,6 @@ const timezoneResolver = (date: Date): Date => {
 };
 
 export const timezoneResolverToString = (date: Date): string => {
-  console.log(date);
   const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   if (!browserTimezone || browserTimezone === 'Asia/Seoul')
     return date.toLocaleString();
