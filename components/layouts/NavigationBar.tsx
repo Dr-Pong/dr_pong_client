@@ -23,7 +23,7 @@ type navigation = {
 
 export default function NavigationBar() {
   const login = useRecoilValue(loginState);
-  const { useNeedLoginModal } = useModalProvider();
+  const { useLoginRequiredModal } = useModalProvider();
 
   const navigations: navigation[] = [
     { value: <IoMdHome />, route: '/' },
@@ -60,7 +60,7 @@ export default function NavigationBar() {
             );
           return (
             <div key={i} className={styles.buttonBackground}>
-              <div className={styles.button} onClick={useNeedLoginModal}>
+              <div className={styles.button} onClick={useLoginRequiredModal}>
                 {value}
               </div>
             </div>

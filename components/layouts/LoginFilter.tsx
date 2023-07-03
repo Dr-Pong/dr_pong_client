@@ -19,7 +19,7 @@ export default function LoginFilter({ children }: LayoutProps) {
   const setLogin = useSetRecoilState(loginState);
   const resetUserState = useResetRecoilState(userState);
   const { get } = useCustomQuery();
-  const { useNeedLoginModal } = useModalProvider();
+  const { useLoginRequiredModal } = useModalProvider();
   const { isLoading } = get(['userMe'], '/users/me', setUser, {
     onSuccess: () => {
       if (user.roleType === 'member') setLogin(true);
@@ -54,7 +54,7 @@ export default function LoginFilter({ children }: LayoutProps) {
     !router.asPath.startsWith('/records') &&
     !router.asPath.startsWith('/login')
   ) {
-    useNeedLoginModal();
+    useLoginRequiredModal();
     router.push('/');
     return null;
   }
