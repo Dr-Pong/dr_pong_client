@@ -6,9 +6,7 @@ import React, { MutableRefObject } from 'react';
 import { modalPartsState, openModalState } from 'recoils/modal';
 import { userState } from 'recoils/user';
 
-import { Participant } from 'types/chatTypes';
 import { ModalParts } from 'types/modalTypes';
-import { InvitationType } from 'types/notificationTypes';
 import { Achievement } from 'types/userTypes';
 
 import NumberInputBox from 'components/authentication/NumberInputBox';
@@ -17,7 +15,6 @@ import PasswordSubmit from 'components/channels/PasswordSubmit';
 import ChannelSettings from 'components/channels/channelSettings/ChannelSettings';
 import SearchUser from 'components/friends/SearchUser';
 import InvitationRequest from 'components/global/InvitationRequest';
-import SocketManager from 'components/global/SocketManager';
 import UserImages from 'components/global/UserImages';
 import CloseModalButton from 'components/global/buttons/CloseModalButton';
 import ModalButton from 'components/global/buttons/ModalButton';
@@ -190,27 +187,6 @@ const useModalProvider = () => {
     });
   };
 
-  const useInvitationModal = (
-    invitationType: InvitationType,
-    invitationArg: string,
-    participants?: Participant[]
-  ) => {
-    useModal({
-      head: <ModalTitle title={t('Invite friend')} closeButton />,
-      body: (
-        <>
-          <SocketManager namespace={'friends'} />
-          <InvitationRequest
-            invitationType={invitationType}
-            invitationArg={invitationArg}
-            participants={participants}
-          />
-        </>
-      ),
-      tail: null,
-    });
-  };
-
   const useLoginRequiredModal = () => {
     useModal({
       head: null,
@@ -220,6 +196,31 @@ const useModalProvider = () => {
           {t('close')}
         </CloseModalButton>
       ),
+    });
+  };
+
+  const useChannelInvitationModal = (
+    channelId: string,
+    participantNames: string[]
+  ) => {
+    useModal({
+      head: <ModalTitle title={t('Invite friend')} closeButton />,
+      body: (
+        <InvitationRequest
+          type='channel'
+          channelId={channelId}
+          participantNames={participantNames}
+        />
+      ),
+      tail: null,
+    });
+  };
+
+  const useGameInvitationModal = (gameMode: string) => {
+    useModal({
+      head: <ModalTitle title={t('Invite friend')} closeButton />,
+      body: <InvitationRequest type='game' channelId={gameMode} />,
+      tail: null,
     });
   };
 
@@ -235,8 +236,9 @@ const useModalProvider = () => {
     useChannelCreateModal,
     usePasswordSubmitModal,
     useChannelEditModal,
-    useInvitationModal,
     useLoginRequiredModal,
+    useChannelInvitationModal,
+    useGameInvitationModal,
   };
 };
 
