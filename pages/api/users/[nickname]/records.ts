@@ -152,7 +152,7 @@ const records: Record[] = [
     you: {
       imgUrl:
         'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/donghyuk.jpeg?imwidth=100',
-      nickname: 'donghyuk',
+      nickname: 'hakim2',
       score: 3,
     },
     result: 'tie',

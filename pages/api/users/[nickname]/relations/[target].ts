@@ -25,6 +25,9 @@ export default (
 
 const relations: { [key: string]: Relation } = {
   hakim: {
+    status: 'me',
+  },
+  hakim2: {
     status: 'friend',
   },
   jiyun: {
@@ -49,6 +52,9 @@ const relations: { [key: string]: Relation } = {
     status: 'none',
   },
   jerry: {
+    status: 'none',
+  },
+  naeImDa: {
     status: 'none',
   },
 };

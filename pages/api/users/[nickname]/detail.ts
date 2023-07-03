@@ -53,6 +53,16 @@ const userDetaiils: UserDetail[] = [
     statusMessage: 'hello world',
   },
   {
+    nickname: 'hakim2',
+    image: {
+      id: 1,
+      url: 'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
+    },
+    level: 3,
+    title: null,
+    statusMessage: 'hello world',
+  },
+  {
     nickname: 'naeImDa',
     image: {
       id: 1,

@@ -24,12 +24,7 @@ export default (
 const friendsResponse: FriendsResponse = {
   users: [
     {
-      nickname: 'hakim1',
-      imgUrl:
-        'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
-    },
-    {
-      nickname: 'hakim2',
+      nickname: 'jihyukim',
       imgUrl:
         'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
     },
