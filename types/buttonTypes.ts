@@ -39,5 +39,6 @@ export interface MutationButtonProps extends ButtonProps {
     | UseMutationResult<object, unknown, void, unknown>;
   body?: object;
   queryKeys?: QueryKey[];
-  handleOnClick?: () => void;
+  handleOnSuccess?: () => void;
+  handleOnError?: () => void;
 }
