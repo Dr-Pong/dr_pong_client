@@ -22,11 +22,11 @@ export default function MutationButton({
       onSuccess: () => {
         toast.success('success');
         queryKeys?.forEach((key) => queryClient.invalidateQueries(key));
-        handleOnSuccess && handleOnSuccess();
+        handleOnSuccess?.();
       },
       onError: () => {
         toast.error('error');
-        handleOnError && handleOnError();
+        handleOnError?.();
       },
     });
   };
