@@ -13,5 +13,7 @@
   "nickname": "유저 이름",
   "search": "검색",
   "show more": "더보기",
-  "no match": "아직 전적 기록이 없습니다."
+  "no match": "아직 전적 기록이 없습니다.",
+  "How about logging in?": "로그인해서 게임을 즐기고 나만의 기록을 쌓아보세요!",
+  "login": "로그인"
 }
