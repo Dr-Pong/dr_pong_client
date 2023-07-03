@@ -2,7 +2,7 @@ import { useRecoilValue } from 'recoil';
 
 import Link from 'next/link';
 
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import {
   IoMdChatboxes,
   IoMdHome,
@@ -32,40 +32,30 @@ export default function NavigationBar() {
     { value: <IoMdPerson />, route: '/myPage' },
   ];
 
-  if (login)
-    return (
-      <div className={styles.navigationBarContainer}>
-        {navigations.map(({ value, route }, i) => {
-          return (
-            <div key={i} className={styles.buttonBackground}>
-              <Link href={route} className={styles.button}>
-                {value}
-              </Link>
-            </div>
-          );
-        })}
-      </div>
-    );
-  else
-    return (
-      <div className={styles.navigationBarContainer}>
-        {navigations.map(({ value, route }, i) => {
-          if (route === '/')
-            return (
-              <div key={i} className={styles.buttonBackground}>
-                <Link href={route} className={styles.button}>
-                  {value}
-                </Link>
-              </div>
-            );
-          return (
-            <div key={i} className={styles.buttonBackground}>
-              <div className={styles.button} onClick={useLoginRequiredModal}>
-                {value}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    );
+  const isAllowed = (route: string) => {
+    return login || route === '/';
+  };
+
+  const blockUnauthorized = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    useLoginRequiredModal();
+  };
+
+  return (
+    <div className={styles.navigationBarContainer}>
+      {navigations.map(({ value, route }, i) => {
+        return (
+          <div key={i} className={styles.buttonBackground}>
+            <Link
+              href={route}
+              className={styles.button}
+              onClick={isAllowed(route) ? () => {} : blockUnauthorized}
+            >
+              {value}
+            </Link>
+          </div>
+        );
+      })}
+    </div>
+  );
 }
