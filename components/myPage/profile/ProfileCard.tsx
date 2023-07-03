@@ -41,6 +41,14 @@ export default function ProfileCard({
   const { level } = data;
   const cardContents: CardContentsType[] = [
     {
+      label: t('Name'),
+      content: nickname,
+    },
+    {
+      label: t('Level'),
+      content: level.toString(),
+    },
+    {
       label: t('Title'),
       content: detailDto.title?.title ?? '',
       child: (
@@ -50,14 +58,6 @@ export default function ProfileCard({
           setDetailDto={setDetailDto}
         />
       ),
-    },
-    {
-      label: t('Level'),
-      content: level.toString(),
-    },
-    {
-      label: t('Name'),
-      content: nickname,
     },
   ];
 
