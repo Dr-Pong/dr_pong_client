@@ -15,7 +15,10 @@ import styles from 'styles/records/Records.module.scss';
 export default function Records() {
   const { t } = useTranslation('records');
   const router = useRouter();
-  const defaultNickname = router.query.nickname as string; // TODO: nickname error handle when undefined or arr
+  if (router.query.nickname && Array.isArray(router.query.nickname)) {
+    router.push(`/records/${router.query.nickname[0]}`);
+  }
+  const defaultNickname = (router.query.nickname as string) || ''; // TODO: nickname error handle when undefined or arr
   const [nickname, setNickname] = useState(defaultNickname);
 
   const handleNicknameSearch = (event: FormEvent<HTMLFormElement>) => {
