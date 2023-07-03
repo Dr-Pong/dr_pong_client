@@ -211,7 +211,7 @@ const useModalProvider = () => {
     });
   };
 
-  const useNeedLoginModal = () => {
+  const useLoginRequiredModal = () => {
     useModal({
       head: null,
       body: <ModalPhrase>{t('needLogin')}</ModalPhrase>,
@@ -236,7 +236,7 @@ const useModalProvider = () => {
     usePasswordSubmitModal,
     useChannelEditModal,
     useInvitationModal,
-    useNeedLoginModal,
+    useLoginRequiredModal,
   };
 };
 
