@@ -2,7 +2,7 @@
 
 .recordsPageContainer {
   @include pageWithHeaderContainer;
-  align-items: start;
+  align-items: flex-start;
 }
 
 .searchBar {
@@ -11,4 +11,29 @@
   align-items: center;
   justify-content: flex-end;
   margin-bottom: 1rem;
+}
+
+.newbieBox {
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loginSuggestion {
+  font-size: 1.5rem;
+  margin-block: 1rem;
+}
+
+.loginButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15rem;
+  margin-bottom: 1rem;
+  border-radius: $basic-radius;
+  height: 2.7rem;
+  font-size: 1.3rem;
+  background: $just-purple;
 }
