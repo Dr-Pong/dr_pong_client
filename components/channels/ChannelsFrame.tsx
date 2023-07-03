@@ -51,6 +51,7 @@ export default function ChannelsFrame() {
   if (login && myChannelGet.isError)
     return <ErrorRefresher error={myChannelGet.error} />;
 
+  const haveMyChannel = login && !!myChannelGet.data.myChannel;
   return (
     <div className={styles.channelsFrameContainer}>
       {login && myChannelGet.data.myChannel && (
@@ -61,15 +62,17 @@ export default function ChannelsFrame() {
           order={order}
           setOrder={setOrder}
           setKeyword={setKeyword}
-          haveMyChannel={!!myChannelGet.data.myChannel}
+          haveMyChannel={haveMyChannel}
         />
         <div className={styles.channelList}>
           {channels.map((eachChannel: Channel) => {
             return (
               <ChannelBox
                 channel={eachChannel}
-                isMyChannel={eachChannel.id === myChannelGet.data.myChannel?.id}
-                haveMyChannel={!!myChannelGet.data.myChannel}
+                isMyChannel={
+                  eachChannel.id === myChannelGet.data?.myChannel?.id
+                }
+                haveMyChannel={haveMyChannel}
               />
             );
           })}
