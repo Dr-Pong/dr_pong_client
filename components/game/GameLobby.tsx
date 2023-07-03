@@ -51,7 +51,9 @@ export default function GameLobby() {
   const optionList = ['bullet', 'deathMatch', 'loserPaysForBeer'];
 
   const handleQueueClick = () => {
-    enterQueue.mutate({});
+    enterQueue.mutate({
+      mode: 'mode'
+    });
   };
 
   const handleInviteClick = () => {
