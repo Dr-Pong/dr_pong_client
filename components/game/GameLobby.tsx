@@ -1,13 +1,13 @@
 import useTranslation from 'next-translate/useTranslation';
-
 import { useSetRecoilState } from 'recoil';
-import { alertTypeState, openAlertState } from 'recoils/alert';
 
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
+import { alertTypeState, openAlertState } from 'recoils/alert';
+
+import useCustomQuery from 'hooks/useCustomQuery';
 import useModalProvider from 'hooks/useModalProvider';
 import useUpperModalProvider from 'hooks/useUpperModalProvider';
-import useCustomQuery from 'hooks/useCustomQuery';
 
 import PageHeader from 'components/global/PageHeader';
 
@@ -21,8 +21,9 @@ export default function GameLobby() {
   const { t } = useTranslation('game');
   const setOpenAlert = useSetRecoilState(openAlertState);
   const setAlertType = useSetRecoilState(alertTypeState);
-  const { useInvitationModal } = useModalProvider();
-  const { closeUpperModal, useMatchWaitingUpperModal } = useUpperModalProvider();
+  const { useGameInvitationModal } = useModalProvider();
+  const { closeUpperModal, useMatchWaitingUpperModal } =
+    useUpperModalProvider();
   const { mutationPost, mutationDelete } = useCustomQuery();
   const exitQueue = mutationDelete(`/games/queue`, {
     onSuccess: () => {
@@ -40,7 +41,7 @@ export default function GameLobby() {
     onError: () => {
       setAlertType('fail');
       setOpenAlert(true);
-    }
+    },
   });
 
   const [options, setOptions] = useState<Options>({
@@ -57,7 +58,7 @@ export default function GameLobby() {
   };
 
   const handleInviteClick = () => {
-    useInvitationModal('game', 'mode');
+    useGameInvitationModal('mode');
   };
 
   return (
