@@ -1,8 +1,12 @@
-import { InvitationType } from 'types/notificationTypes';
-
 export type Activity = 'online' | 'offline' | 'inGame';
 export type FriendTab = 'all' | 'pending' | 'blocked';
-export type FriendBoxType = FriendTab | InvitationType | 'add' | 'none';
+export type UserInteraction =
+  | 'friendAdd'
+  | 'friendDelete'
+  | 'friendAccept'
+  | 'friendReject'
+  | 'block'
+  | 'unblock';
 
 export type Friend = {
   nickname: string;
