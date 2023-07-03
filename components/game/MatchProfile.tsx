@@ -9,13 +9,13 @@ import useCustomQuery from 'hooks/useCustomQuery';
 import styles from 'styles/game/MatchProfile.module.scss';
 
 type MatchProfileProps = {
-  myEmoji: string | null;
-  opponentEmoji: string | null;
+  myEmojiUrl: string | null;
+  opponentEmojiUrl: string | null;
 }
 
 export default function MatchProfile({
-  myEmoji,
-  opponentEmoji
+  myEmojiUrl,
+  opponentEmojiUrl
 }: MatchProfileProps) {
   const { nickname } = useRecoilValue(userState);
   const { get } = useCustomQuery();
@@ -28,8 +28,8 @@ export default function MatchProfile({
   return (
     <div className={styles.matchProfile}>
       <div className={styles.profile}>
-        {/* {opponentEmoji ?
-          <img className={styles.emojiPopup} src={opponentEmoji} /> :
+        {/* {opponentEmojiUrl ?
+          <img className={styles.emojiPopup} src={opponentEmojiUrl} /> :
           <img
             className={styles.profileImg}
             src={opponent.data.image.url}
@@ -48,8 +48,8 @@ export default function MatchProfile({
       </div>
       <span className={styles.vs}>vs</span>
       <div className={styles.profile}>
-        {myEmoji ?
-          <img className={styles.emojiPopup} src={myEmoji} /> :
+        {myEmojiUrl ?
+          <img className={styles.emojiPopup} src={myEmojiUrl} /> :
           <img
             className={styles.profileImg}
             src={me.data.image.url}

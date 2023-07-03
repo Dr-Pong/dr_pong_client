@@ -13,13 +13,13 @@ import { Emoji } from 'types/userTypes';
 import styles from 'styles/game/Emojis.module.scss';
 
 type EmojisProps = {
-  setMyEmoji: Dispatch<SetStateAction<string | null>>;
-  setOpponentEmoji: Dispatch<SetStateAction<string | null>>;
+  setMyEmojiUrl: Dispatch<SetStateAction<string | null>>;
+  setOpponentEmojiUrl: Dispatch<SetStateAction<string | null>>;
 };
 
 export default function Emojis({
-  setMyEmoji,
-  setOpponentEmoji
+  setMyEmojiUrl,
+  setOpponentEmojiUrl
 }: EmojisProps) {
   const { nickname } = useRecoilValue(userState);
   const { get } = useCustomQuery();
@@ -31,10 +31,10 @@ export default function Emojis({
 
   // useEffect(() => {
   //   const handler = (emojiUrl: string) => {
-  //     setOpponentEmoji(emojiUrl);
+  //     setOpponentEmojiUrl(emojiUrl);
 
   //     setTimeout(() => {
-  //       setMyEmoji(null);
+  //       setOpponentEmojiUrl(null);
   //     }, 1500);
   //   }
   //   socket.on('', handler);
@@ -44,11 +44,11 @@ export default function Emojis({
   // }, []);
 
   const handleEmojiClick = (emojiUrl: string) => {
-    setMyEmoji(emojiUrl);
+    setMyEmojiUrl(emojiUrl);
     // socket.emit(emojiUrl);
 
     setTimeout(() => {
-      setMyEmoji(null);
+      setMyEmojiUrl(null);
     }, 1500);
   };
 

@@ -13,8 +13,8 @@ import styles from 'styles/game/Game.module.scss';
 export default function Game() {
   const router = useRouter();
   const { roomType, roomId } = router.query;
-  const [myEmoji, setMyEmoji] = useState<string | null>(null);
-  const [opponentEmoji, setOpponentEmoji] = useState<string | null>(null);
+  const [myEmojiUrl, setMyEmojiUrl] = useState<string | null>(null);
+  const [opponentEmojiUrl, setOpponentEmojiUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (roomType !== 'ladder' && roomType !== 'normal') router.replace('404');
@@ -24,16 +24,16 @@ export default function Game() {
   return (
     <div className={styles.gamePageContainer}>
       <MatchProfile
-        myEmoji={myEmoji}
-        opponentEmoji={opponentEmoji}
+        myEmojiUrl={myEmojiUrl}
+        opponentEmojiUrl={opponentEmojiUrl}
       />
       <PongGame
         roomType={roomType as RoomType}
         roomId={roomId as string}
       />
       <Emojis
-        setMyEmoji={setMyEmoji}
-        setOpponentEmoji={setOpponentEmoji}
+        setMyEmojiUrl={setMyEmojiUrl}
+        setOpponentEmojiUrl={setOpponentEmojiUrl}
       />
     </div>
   );
