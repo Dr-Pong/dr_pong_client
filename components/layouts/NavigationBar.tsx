@@ -33,7 +33,7 @@ export default function NavigationBar() {
   ];
 
   const isAllowed = (route: string) => {
-    return login || route === '/';
+    return login || route === '/' || route === '/channels';
   };
 
   const blockUnauthorized = (e: MouseEvent<HTMLAnchorElement>) => {

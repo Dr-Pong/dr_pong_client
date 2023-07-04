@@ -51,6 +51,7 @@ export default function LoginFilter({ children }: LayoutProps) {
     user.roleType === 'guest' &&
     router.asPath !== '/' &&
     router.asPath !== '/leaderboard' &&
+    router.asPath !== '/channels' &&
     !router.asPath.startsWith('/records') &&
     !router.asPath.startsWith('/login')
   ) {

@@ -1,4 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+
+import React, { useEffect, useState } from 'react';
+
+import { loginState } from 'recoils/login';
 
 import { Channel, ChannelList } from 'types/channelTypes';
 
@@ -16,6 +20,7 @@ import styles from 'styles/channels/ChannelsFrame.module.scss';
 export default function ChannelsFrame() {
   const [{ channels, currentPage, totalPage }, setChannelList] =
     useState<ChannelList>(defaultChannelList);
+  const login = useRecoilValue(loginState);
   const [count, setCount] = useState(10);
   const [page, setPage] = useState(currentPage);
   const [order, setOrder] = useState<string>('recent');
@@ -43,12 +48,13 @@ export default function ChannelsFrame() {
     return <LoadingSpinner />;
   if (channelListGet.isError)
     return <ErrorRefresher error={channelListGet.error} />;
-  if (myChannelGet.isError)
+  if (login && myChannelGet.isError)
     return <ErrorRefresher error={myChannelGet.error} />;
 
+  const haveMyChannel = login && !!myChannelGet.data.myChannel;
   return (
     <div className={styles.channelsFrameContainer}>
-      {myChannelGet.data.myChannel && (
+      {login && myChannelGet.data.myChannel && (
         <MyChannel channel={myChannelGet.data.myChannel} />
       )}
       <div className={styles.settingChannelListWrap}>
@@ -56,15 +62,17 @@ export default function ChannelsFrame() {
           order={order}
           setOrder={setOrder}
           setKeyword={setKeyword}
-          haveMyChannel={!!myChannelGet.data.myChannel}
+          haveMyChannel={haveMyChannel}
         />
         <div className={styles.channelList}>
           {channels.map((eachChannel: Channel) => {
             return (
               <ChannelBox
                 channel={eachChannel}
-                isMyChannel={eachChannel.id === myChannelGet.data.myChannel?.id}
-                haveMyChannel={!!myChannelGet.data.myChannel}
+                isMyChannel={
+                  eachChannel.id === myChannelGet.data?.myChannel?.id
+                }
+                haveMyChannel={haveMyChannel}
               />
             );
           })}
