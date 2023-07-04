@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import React, { FormEvent, ReactElement, useState } from 'react';
 
-import { loginState } from 'recoils/login';
+import { userState } from 'recoils/user';
 
 import PageHeader from 'components/global/PageHeader';
 import SearchBar from 'components/global/SearchBar';
@@ -19,7 +19,7 @@ import styles from 'styles/records/Records.module.scss';
 export default function Records() {
   const { t } = useTranslation('records');
   const router = useRouter();
-  const login = useRecoilValue(loginState);
+  const user = useRecoilValue(userState);
   if (router.query.nickname && Array.isArray(router.query.nickname)) {
     router.push(`/records/${router.query.nickname[0]}`);
   }
@@ -31,7 +31,7 @@ export default function Records() {
     router.push(`/records/${nickname.trim()}`);
   };
 
-  const isNewbie = !defaultNickname && !login;
+  const isGuest = user.roleType === 'guest';
 
   return (
     <div className={styles.recordsPageContainer}>
@@ -53,9 +53,11 @@ export default function Records() {
             {t('search')}
           </SubmitButton>
         </div>
-        {isNewbie ? (
+        {isGuest ? (
           <div className={styles.newbieBox}>
-            <div className={styles.loginSuggestion}>{t('How about logging in?')}</div>
+            <div className={styles.loginSuggestion}>
+              {t('How about logging in?')}
+            </div>
             <Link href={'/login'} className={styles.loginButton}>
               {t('login')}
             </Link>
