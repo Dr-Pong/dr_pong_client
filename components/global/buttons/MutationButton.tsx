@@ -1,4 +1,6 @@
-import { toast } from 'react-hot-toast';
+import { useSetRecoilState } from 'recoil';
+
+import { alertState } from 'recoils/alert';
 
 import { MutationButtonProps } from 'types/buttonTypes';
 
@@ -17,15 +19,16 @@ export default function MutationButton({
   handleOnError,
 }: MutationButtonProps) {
   const { queryClient } = useCustomQuery();
+  const setAlert = useSetRecoilState(alertState);
   const handleMutation = () => {
     mutationRequest.mutate(body, {
       onSuccess: () => {
-        toast.success('success');
+        setAlert({ type: 'success' });
         queryKeys?.forEach((key) => queryClient.invalidateQueries(key));
         handleOnSuccess?.();
       },
       onError: () => {
-        toast.error('error');
+        setAlert({ type: 'failure' });
         handleOnError?.();
       },
     });

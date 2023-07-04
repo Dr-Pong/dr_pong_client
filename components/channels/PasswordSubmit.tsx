@@ -3,9 +3,9 @@ import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
-import { FormEvent, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 
-import { alertTypeState, openAlertState } from 'recoils/alert';
+import { alertState } from 'recoils/alert';
 import { openModalState } from 'recoils/modal';
 
 import { ChannelInfo } from 'types/channelTypes';
@@ -21,8 +21,7 @@ import styles from 'styles/channels/ChannelSettings.module.scss';
 export default function PasswordSubmit({ roomId }: { roomId: string }) {
   const { t } = useTranslation('channels');
   const router = useRouter();
-  const setOpenAlert = useSetRecoilState(openAlertState);
-  const setAlertType = useSetRecoilState(alertTypeState);
+  const setAlert = useSetRecoilState(alertState);
   const setOpenModal = useSetRecoilState(openModalState);
   const [channelInfo, setChannelInfo] = useState<ChannelInfo>(
     defaultChannelSettings
@@ -42,8 +41,7 @@ export default function PasswordSubmit({ roomId }: { roomId: string }) {
           setOpenModal(false);
         },
         onError: (e: any) => {
-          setAlertType('fail');
-          setOpenAlert(true);
+          setAlert({ type: 'failure' });
           // Alert에 e.response.data.message를 띄워주는 것이 좋을 것 같다
         },
       }

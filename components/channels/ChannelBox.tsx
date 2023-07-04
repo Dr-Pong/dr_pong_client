@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import React, { useCallback } from 'react';
 import { IoIosLock } from 'react-icons/io';
 
-import { alertTypeState, openAlertState } from 'recoils/alert';
+import { alertState } from 'recoils/alert';
 import { loginState } from 'recoils/login';
 
 import { Channel } from 'types/channelTypes';
@@ -30,8 +30,7 @@ export default function ChannelBox({
   const login = useRecoilValue(loginState);
   const { useLoginRequiredModal, usePasswordSubmitModal } = useModalProvider();
   const { useChannelJoinConfirmUpperModal } = useUpperModalProvider();
-  const setOpenAlert = useSetRecoilState(openAlertState);
-  const setAlertType = useSetRecoilState(alertTypeState);
+  const setAlert = useSetRecoilState(alertState);
   const { mutationPost } = useCustomQuery();
   const { mutate } = mutationPost(`channels/${id}/participants`);
 
@@ -43,8 +42,7 @@ export default function ChannelBox({
           router.push(`/chats/channel/${id}`);
         },
         onError: (e: any) => {
-          setAlertType('fail');
-          setOpenAlert(true);
+          setAlert({ type: 'failure' });
         },
       }
     );
