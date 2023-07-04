@@ -31,6 +31,7 @@ export default function GameInvitableFriendList({
       });
     };
     chatSocket.on('friends', friendStatusListener);
+    chatSocket.emit('status');
     return () => {
       chatSocket.off('friends', friendStatusListener);
     };
