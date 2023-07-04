@@ -1,5 +1,8 @@
-import { toast } from 'react-hot-toast';
+import { useSetRecoilState } from 'recoil';
+
 import { IoMdAdd } from 'react-icons/io';
+
+import { alertState } from 'recoils/alert';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 import useUpperModalProvider from 'hooks/useUpperModalProvider';
@@ -15,6 +18,7 @@ export default function GameInvitationButton({
   mode,
 }: GameInvitationButton) {
   const { mutationPost, mutationDelete } = useCustomQuery();
+  const setAlert = useSetRecoilState(alertState);
   const { closeUpperModal, useMatchWaitingUpperModal } =
     useUpperModalProvider();
   const gameInviteMutation = mutationPost('/games/invitation', {
@@ -22,7 +26,7 @@ export default function GameInvitationButton({
       useMatchWaitingUpperModal(invitationCancelMutation.mutate);
     },
     onError: () => {
-      toast.error('fail');
+      setAlert({ type: 'failure' });
     },
   });
   const invitationCancelMutation = mutationDelete('/games/invitation', {
@@ -30,7 +34,7 @@ export default function GameInvitationButton({
       closeUpperModal();
     },
     onError: () => {
-      toast.error('fail');
+      setAlert({ type: 'failure' });
     },
   });
 

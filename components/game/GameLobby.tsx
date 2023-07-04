@@ -3,7 +3,7 @@ import { useSetRecoilState } from 'recoil';
 
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
-import { alertTypeState, openAlertState } from 'recoils/alert';
+import { alertState } from 'recoils/alert';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 import useModalProvider from 'hooks/useModalProvider';
@@ -19,8 +19,7 @@ interface Options {
 
 export default function GameLobby() {
   const { t } = useTranslation('game');
-  const setOpenAlert = useSetRecoilState(openAlertState);
-  const setAlertType = useSetRecoilState(alertTypeState);
+  const setAlert = useSetRecoilState(alertState);
   const { useGameInvitationModal } = useModalProvider();
   const { closeUpperModal, useMatchWaitingUpperModal } =
     useUpperModalProvider();
@@ -30,8 +29,7 @@ export default function GameLobby() {
       closeUpperModal();
     },
     onError: () => {
-      setAlertType('fail');
-      setOpenAlert(true);
+      setAlert({ type: 'failure' });
     },
   });
   const enterQueue = mutationPost(`/games/queue/normal`, {
@@ -39,8 +37,7 @@ export default function GameLobby() {
       useMatchWaitingUpperModal(exitQueue.mutate);
     },
     onError: () => {
-      setAlertType('fail');
-      setOpenAlert(true);
+      setAlert({ type: 'failure' });
     },
   });
 
@@ -53,7 +50,7 @@ export default function GameLobby() {
 
   const handleQueueClick = () => {
     enterQueue.mutate({
-      mode: 'mode'
+      mode: 'mode',
     });
   };
 

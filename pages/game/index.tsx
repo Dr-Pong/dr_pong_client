@@ -1,23 +1,23 @@
 import useTranslation from 'next-translate/useTranslation';
-
 import { useSetRecoilState } from 'recoil';
-import { alertTypeState, openAlertState } from 'recoils/alert';
 
 import React, { ReactElement, useState } from 'react';
 
+import { alertState } from 'recoils/alert';
+
+import useCustomQuery from 'hooks/useCustomQuery';
+import useUpperModalProvider from 'hooks/useUpperModalProvider';
+
 import GameLobby from 'components/game/GameLobby';
 import AppLayout from 'components/layouts/AppLayout';
-
-import useUpperModalProvider from 'hooks/useUpperModalProvider';
-import useCustomQuery from 'hooks/useCustomQuery';
 
 import styles from 'styles/game/Game.module.scss';
 
 export default function Game() {
   const { t } = useTranslation('game');
-  const setOpenAlert = useSetRecoilState(openAlertState);
-  const setAlertType = useSetRecoilState(alertTypeState);
-  const { closeUpperModal, useMatchWaitingUpperModal } = useUpperModalProvider();
+  const setAlert = useSetRecoilState(alertState);
+  const { closeUpperModal, useMatchWaitingUpperModal } =
+    useUpperModalProvider();
   const [normalClicked, setNormalClicked] = useState(false);
   const { mutationPost, mutationDelete } = useCustomQuery();
   const exitQueue = mutationDelete(`/games/queue`, {
@@ -25,8 +25,7 @@ export default function Game() {
       closeUpperModal();
     },
     onError: () => {
-      setAlertType('fail');
-      setOpenAlert(true);
+      setAlert({ type: 'failure' });
     },
   });
   const enterQueue = mutationPost(`/games/queue/ladder`, {
@@ -34,9 +33,8 @@ export default function Game() {
       useMatchWaitingUpperModal(exitQueue.mutate);
     },
     onError: () => {
-      setAlertType('fail');
-      setOpenAlert(true);
-    }
+      setAlert({ type: 'failure' });
+    },
   });
 
   const handleLadderClick = () => {

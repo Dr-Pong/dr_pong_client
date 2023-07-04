@@ -1,17 +1,17 @@
-import { useRouter } from 'next/router';
-
 import useTranslation from 'next-translate/useTranslation';
 import { useSetRecoilState } from 'recoil';
 
-import {
+import { useRouter } from 'next/router';
+
+import React, {
+  Dispatch,
   FormEvent,
+  ReactElement,
   SetStateAction,
   useState,
-  Dispatch,
-  ReactElement
 } from 'react';
 
-import { alertTypeState, openAlertState } from 'recoils/alert';
+import { alertState } from 'recoils/alert';
 import { openModalState, openUpperModalState } from 'recoils/modal';
 
 import { ChannelInfo } from 'types/channelTypes';
@@ -51,8 +51,7 @@ export default function ChannelSettings({
   const { t } = useTranslation('channels');
   const router = useRouter();
   const setOpenModal = useSetRecoilState(openModalState);
-  const setOpenAlert = useSetRecoilState(openAlertState);
-  const setAlertType = useSetRecoilState(alertTypeState);
+  const setAlert = useSetRecoilState(alertState);
   const setOpenUpperModal = useSetRecoilState(openUpperModalState);
   const [channelInfo, setChannelInfo] = useState<ChannelInfo>(
     defaultChannelSettings
@@ -78,21 +77,18 @@ export default function ChannelSettings({
           router.push(`/chats/channel/${response.id}`);
         },
         onError: (e: any) => {
-          setAlertType('fail');
-          setOpenAlert(true);
+          setAlert({ type: 'failure' });
           // Alert에 e.response.data.message를 띄워주는 것이 좋을 것 같다
         },
       }
     );
-  }
+  };
 
   const handleChannelCreateCheck = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (channelInfo.title.trim()) {
-      if (haveMyChannel)
-        useChannelJoinConfirmUpperModal(handleChannelCreate);
-      else
-        handleChannelCreate();
+      if (haveMyChannel) useChannelJoinConfirmUpperModal(handleChannelCreate);
+      else handleChannelCreate();
     }
   };
 

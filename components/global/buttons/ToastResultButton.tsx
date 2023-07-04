@@ -3,7 +3,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import React from 'react';
 import { QueryKey } from 'react-query';
 
-import { alertTypeState, openAlertState } from 'recoils/alert';
+import { alertState } from 'recoils/alert';
 import { dropdownUserState } from 'recoils/friends';
 
 import { ButtonProps } from 'types/buttonTypes';
@@ -31,8 +31,7 @@ export default function ToastResultButton({
   const { style, color, children } = button;
   const { mutationPost, mutationPatch, mutationDelete, queryClient } =
     useCustomQuery();
-  const setOpenAlert = useSetRecoilState(openAlertState);
-  const setAlertType = useSetRecoilState(alertTypeState);
+  const setAlert = useSetRecoilState(alertState);
   const [dropdownUser, setDropdownUser] = useRecoilState(dropdownUserState);
   const call: { [key: string]: MutationType } = {
     post: mutationPost,
@@ -43,15 +42,13 @@ export default function ToastResultButton({
   const { mutate } = call[method](api, options);
 
   const onSuccess = () => {
-    setAlertType('success');
-    setOpenAlert(true);
+    setAlert({ type: 'success' });
     keys?.map((key) => queryClient.invalidateQueries(key));
     if (dropdownUser) setDropdownUser('');
   };
 
   const onError = () => {
-    setAlertType('fail');
-    setOpenAlert(true);
+    setAlert({ type: 'failure' });
   };
 
   const handleButtonClick = async () => {
