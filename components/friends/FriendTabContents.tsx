@@ -15,7 +15,6 @@ import useFriendsQuery from 'hooks/useFriendsQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
 import FriendBox from 'components/friends/FriendBox';
-import FriendButtons from 'components/friends/FriendButtons';
 import ErrorRefresher from 'components/global/ErrorRefresher';
 import LoadingSpinner from 'components/global/LoadingSpinner';
 import SearchBar from 'components/global/SearchBar';
@@ -109,12 +108,10 @@ export default function FriendTabContents() {
             return (
               <FriendBox
                 key={friend.nickname}
+                tab={tab}
                 friend={friend}
                 status={statuses[friend.nickname]}
-                type={tab}
-              >
-                <FriendButtons type={tab} nickname={friend.nickname} />
-              </FriendBox>
+              />
             );
           })}
       </div>

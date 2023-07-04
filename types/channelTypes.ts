@@ -1,3 +1,11 @@
+export type ParticipantInteraction =
+  | 'mute'
+  | 'unmute'
+  | 'setAdmin'
+  | 'unsetAdmin'
+  | 'kick'
+  | 'ban';
+
 export interface Channel {
   id: number;
   title: string;

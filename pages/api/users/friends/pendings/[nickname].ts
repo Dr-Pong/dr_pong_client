@@ -6,7 +6,9 @@ type Error = {
 
 export default (req: NextApiRequest, res: NextApiResponse<Error>) => {
   if (req.method === 'POST') {
-    res.status(200).json({ message: 'Invited successfully' });
+    res.status(200).json({ message: 'friend request success' });
+  } else if (req.method === 'DELETE') {
+    res.status(200).json({ message: 'friend reject success' });
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });
   }

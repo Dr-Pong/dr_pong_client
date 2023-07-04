@@ -53,3 +53,10 @@
   font-size: 1.8rem;
   cursor: pointer;
 }
+
+.InvitableFriendList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: stretch;
+}

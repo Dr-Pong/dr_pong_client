@@ -2,17 +2,25 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue } from 'recoil';
 
 import React, { FormEvent, ReactElement, useEffect, useState } from 'react';
+import { IoMdAdd } from 'react-icons/io';
 
 import { userState } from 'recoils/user';
 
+import { ButtonDesign } from 'types/buttonTypes';
+
 import instance from 'utils/axios';
 
-import FriendBox from 'components/friends/FriendBox';
-import FriendButtons from 'components/friends/FriendButtons';
+import RelationButton from 'components/friends/RelationButton';
 import SearchBar from 'components/global/SearchBar';
+import UserBox from 'components/global/UserBox';
 import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/friends/SearchUser.module.scss';
+
+const button: ButtonDesign = {
+  style: 'round',
+  color: 'opaque',
+};
 
 export default function SearchUser() {
   const { t } = useTranslation('friends');
@@ -36,15 +44,22 @@ export default function SearchUser() {
           relation &&
           relation.status !== 'blocked'
         ) {
-          const type = relation.status === 'none' ? 'add' : 'none';
           const {
             nickname,
             image: { url: imgUrl },
           } = userDetail;
           setResult(
-            <FriendBox key={nickname} friend={{ nickname, imgUrl }} type={type}>
-              <FriendButtons nickname={nickname} type={type} />
-            </FriendBox>
+            <UserBox type='add' friend={{ nickname, imgUrl }}>
+              {relation.status === 'none' && (
+                <RelationButton
+                  button={button}
+                  type='friendAdd'
+                  target={nickname}
+                >
+                  <IoMdAdd />
+                </RelationButton>
+              )}
+            </UserBox>
           );
         } else setResult(<div className={styles.noResult}>{t('no user')}</div>);
       } catch (e) {

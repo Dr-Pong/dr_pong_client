@@ -1,3 +1,5 @@
+import { QueryKey, UseMutationResult } from 'react-query';
+
 type ButtonStyle =
   | 'basic'
   | 'big'
@@ -26,9 +28,17 @@ export interface ButtonDesign {
   color: ButtonColor;
 }
 
-export interface ButtonProps {
-  style: ButtonStyle;
-  color: ButtonColor;
+export interface ButtonProps extends ButtonDesign {
   handleButtonClick?: React.FormEventHandler<HTMLFormElement>;
   children: React.ReactNode;
+}
+
+export interface MutationButtonProps extends ButtonProps {
+  mutationRequest:
+    | UseMutationResult<object, unknown, object, unknown>
+    | UseMutationResult<object, unknown, void, unknown>;
+  body?: object;
+  queryKeys?: QueryKey[];
+  handleOnSuccess?: () => void;
+  handleOnError?: () => void;
 }
