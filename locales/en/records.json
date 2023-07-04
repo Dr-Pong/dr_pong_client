@@ -13,5 +13,7 @@
   "nickname": "nickname",
   "search": "search",
   "show more": "show more",
-  "no match": "No match history yet."
+  "no match": "No match history yet.",
+  "How about logging in?": "Log in, enjoy the game and make your own records!",
+  "login": "Login"
 }
