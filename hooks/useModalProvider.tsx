@@ -14,7 +14,7 @@ import RegisterCode from 'components/authentication/RegisterCode';
 import PasswordSubmit from 'components/channels/PasswordSubmit';
 import ChannelSettings from 'components/channels/channelSettings/ChannelSettings';
 import SearchUser from 'components/friends/SearchUser';
-import InvitationRequest from 'components/global/InvitationRequest';
+import InvitationFrame from 'components/global/InvitationFrame';
 import UserImages from 'components/global/UserImages';
 import CloseModalButton from 'components/global/buttons/CloseModalButton';
 import ModalButton from 'components/global/buttons/ModalButton';
@@ -206,7 +206,7 @@ const useModalProvider = () => {
     useModal({
       head: <ModalTitle title={t('Invite friend')} closeButton />,
       body: (
-        <InvitationRequest
+        <InvitationFrame
           type='channel'
           channelId={channelId}
           participantNames={participantNames}
@@ -219,7 +219,7 @@ const useModalProvider = () => {
   const useGameInvitationModal = (gameMode: string) => {
     useModal({
       head: <ModalTitle title={t('Invite friend')} closeButton />,
-      body: <InvitationRequest type='game' channelId={gameMode} />,
+      body: <InvitationFrame type='game' channelId={gameMode} />,
       tail: null,
     });
   };

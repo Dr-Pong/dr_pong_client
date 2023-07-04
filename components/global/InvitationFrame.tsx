@@ -13,21 +13,21 @@ import LoadingSpinner from 'components/global/LoadingSpinner';
 import SearchBar from 'components/global/SearchBar';
 import SocketManager from 'components/global/SocketManager';
 
-import styles from 'styles/global/InvitationRequest.module.scss';
+import styles from 'styles/global/InvitationFrame.module.scss';
 
-type InvitationRequestProps = {
+type InvitationFrameProps = {
   type: string;
   channelId?: string;
   gameMode?: string;
   participantNames?: string[];
 };
 
-export default function InvitationRequest({
+export default function InvitationFrame({
   type,
   channelId = '',
   gameMode = '',
   participantNames,
-}: InvitationRequestProps) {
+}: InvitationFrameProps) {
   const { t } = useTranslation('common');
   const { allListGet } = useFriendsQuery();
   const [searchKey, setSearchKey] = useState<string>('');
@@ -69,7 +69,7 @@ export default function InvitationRequest({
   if (!friendList.hasOwnProperty(type)) return null;
 
   return (
-    <div className={styles.invitationModal}>
+    <div className={styles.InvitationFrameContainer}>
       <SearchBar
         inputId='searchFriendInput'
         searchKey={searchKey}
