@@ -46,8 +46,8 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           <div id='sideBarRoot'></div>
           <div id='modalRoot'></div>
           <div id='upperModalRoot'></div>
-          <div id='alertRoot'></div>
           <Toaster />
+          <div id='alertRoot'></div>
         </RecoilRoot>
         <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
       </QueryClientProvider>
