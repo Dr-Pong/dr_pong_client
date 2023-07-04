@@ -4,9 +4,9 @@ import { Activity, Friend, FriendTab } from 'types/friendTypes';
 
 import useModalProvider from 'hooks/useModalProvider';
 
-import styles from 'styles/friends/FriendBox.module.scss';
+import FriendButtons from 'components/friends/FriendButtons';
 
-import FriendButtons from './FriendButtons';
+import styles from 'styles/friends/FriendBox.module.scss';
 
 type FriendBoxProps = {
   tab: FriendTab;
