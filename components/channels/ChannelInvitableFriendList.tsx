@@ -9,20 +9,20 @@ import MutationButton from 'components/global/buttons/MutationButton';
 
 import styles from 'styles/modals/Modal.module.scss';
 
-type ChannelInviteableFriendListProps = {
+type ChannelInvitableFriendListProps = {
   roomId: string;
   friends: Friend[];
 };
 
-export default function ChannelInviteableFriendList({
+export default function ChannelInvitableFriendList({
   roomId,
   friends,
-}: ChannelInviteableFriendListProps) {
+}: ChannelInvitableFriendListProps) {
   const { mutationPost } = useCustomQuery();
   const channelInviteMutation = mutationPost(`/channels/${roomId}/invitation`);
 
   return (
-    <div className={styles.inviteableFriendList}>
+    <div className={styles.InvitableFriendList}>
       {friends.map((friend) => (
         <UserBox key={friend.nickname} type='invitation' friend={friend}>
           <MutationButton

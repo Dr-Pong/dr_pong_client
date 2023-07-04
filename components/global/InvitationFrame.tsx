@@ -6,8 +6,8 @@ import { Friend } from 'types/friendTypes';
 
 import useFriendsQuery from 'hooks/useFriendsQuery';
 
-import ChannelInviteableFriendList from 'components/channels/ChannelInviteableFriendList';
-import GameInviteableFriendList from 'components/game/GameInviteableFriendList';
+import ChannelInvitableFriendList from 'components/channels/ChannelInvitableFriendList';
+import GameInvitableFriendList from 'components/game/GameInvitableFriendList';
 import ErrorRefresher from 'components/global/ErrorRefresher';
 import LoadingSpinner from 'components/global/LoadingSpinner';
 import SearchBar from 'components/global/SearchBar';
@@ -50,7 +50,7 @@ export default function InvitationFrame({
 
   const friendList: { [key: string]: ReactNode } = {
     channel: (
-      <ChannelInviteableFriendList
+      <ChannelInvitableFriendList
         roomId={channelId}
         friends={filterChannelFriends()}
       />
@@ -58,7 +58,7 @@ export default function InvitationFrame({
     game: (
       <>
         <SocketManager namespace={'friends'} />
-        <GameInviteableFriendList
+        <GameInvitableFriendList
           mode={gameMode}
           friends={filterGameFriends()}
         />

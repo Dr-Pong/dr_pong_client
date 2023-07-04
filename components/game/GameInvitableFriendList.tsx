@@ -9,15 +9,15 @@ import UserBox from 'components/global/UserBox';
 
 import styles from 'styles/modals/Modal.module.scss';
 
-type GameInviteableFriendListProps = {
+type GameInvitableFriendListProps = {
   friends: Friend[];
   mode: string;
 };
 
-export default function GameInviteableFriendList({
+export default function GameInvitableFriendList({
   friends,
   mode,
-}: GameInviteableFriendListProps) {
+}: GameInvitableFriendListProps) {
   const [statuses, setStatuses] = useState<Statuses>({});
   const [chatSocket] = useChatSocket('friends');
 
@@ -41,7 +41,7 @@ export default function GameInviteableFriendList({
   };
 
   return (
-    <div className={styles.inviteableFriendList}>
+    <div className={styles.InvitableFriendList}>
       {filterOnlineFriends().map((friend) => (
         <UserBox key={friend.nickname} type='invitation' friend={friend}>
           <GameInvitationButton nickname={friend.nickname} mode={mode} />
