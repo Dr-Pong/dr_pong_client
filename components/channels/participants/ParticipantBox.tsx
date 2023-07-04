@@ -32,7 +32,7 @@ export default function ParticipantBox({
 
   const adminButtons: { [key: string]: JSX.Element } = {
     admin: (
-      <ParticipantButton roomId={roomId} target={nickname} type='setAdmin' />
+      <ParticipantButton roomId={roomId} target={nickname} type='unsetAdmin' />
     ),
     normal: (
       <ParticipantButton roomId={roomId} target={nickname} type='setAdmin' />
