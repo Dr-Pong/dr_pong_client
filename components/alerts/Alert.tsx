@@ -1,41 +1,42 @@
 import useTranslation from 'next-translate/useTranslation';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-import { alertTypeState, openAlertState } from 'recoils/alert';
+import { alertState } from 'recoils/alert';
 
 import styles from 'styles/alerts/Alert.module.scss';
 
-export type AlertType = 'fail' | 'success';
+export type AlertType = {
+  type: 'success' | 'failure';
+  message?: string;
+} | null;
 
 export default function Alert() {
   const { t } = useTranslation('common');
-  const [openAlert, setOpenAlert] = useRecoilState(openAlertState);
-  const alertType = useRecoilValue(alertTypeState);
-  const alertMessages: { [key: string]: string } = {
-    fail: t('failure'),
-    success: t('success'),
-  };
+  const [alert, setAlert] = useRecoilState(alertState);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (openAlert) setOpenAlert(false);
-    }, 500);
+      if (alert) setAlert(null);
+    }, 750);
     return () => {
       clearTimeout(timer);
     };
-  }, [openAlert]);
+  }, [alert]);
 
   const handleBackdropClick = () => {
-    setOpenAlert(false);
+    setAlert(null);
   };
 
-  if (openAlert)
+  if (alert)
     return createPortal(
       <div className={styles.alertBackdrop} onClick={handleBackdropClick}>
-        <div className={styles.alertContainer}>{alertMessages[alertType]}</div>
+        <div className={`${styles.alertContainer} ${styles[alert.type]}`}>
+          <span>{alert.type === 'success' ? '✅' : '❌'}</span>
+          <span>{alert.message ?? t(alert.type)}</span>
+        </div>
       </div>,
       document.getElementById('alertRoot') as HTMLElement
     );
