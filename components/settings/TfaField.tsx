@@ -68,6 +68,7 @@ export default function TfaField() {
   };
 
   const submitOTP = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     mutatePost({
       password: inputRef.current.map((input: any) => input.value).join(''),
     });

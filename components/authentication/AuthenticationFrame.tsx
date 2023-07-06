@@ -1,6 +1,6 @@
 import useTranslation from 'next-translate/useTranslation';
 
-import { useRef } from 'react';
+import { FormEvent, useRef } from "react";
 
 import useAuthHandler from 'hooks/useAuthHandler';
 import useCustomQuery from 'hooks/useCustomQuery';
@@ -19,11 +19,12 @@ export default function AuthenticationFrame() {
     onSuccess: onAuthSuccess,
     onError: onSecondAuthFailure,
   });
-  const checkOTPValidity = () => {
+  const checkOTPValidity = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     mutate({ password: extractOTP() });
   };
 
-  const extractOTP = () => {
+  const extractOTP = (): string => {
     return inputRef.current.map((input: any) => input.value).join('');
   };
 
