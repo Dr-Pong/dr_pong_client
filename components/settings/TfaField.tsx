@@ -1,13 +1,16 @@
 import useTranslation from 'next-translate/useTranslation';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import React, { useRef } from 'react';
+import React, { FormEvent, useRef } from 'react';
 import { AiFillLock, AiFillUnlock } from 'react-icons/ai';
 
+import { alertState } from 'recoils/alert';
 import { userState } from 'recoils/user';
 
+import useAuthHandler, { TokenResponse } from 'hooks/useAuthHandler';
 import useCustomQuery from 'hooks/useCustomQuery';
 import useModalProvider from 'hooks/useModalProvider';
+import useUpperModalProvider from 'hooks/useUpperModalProvider';
 
 import ErrorRefresher from 'components/global/ErrorRefresher';
 import LoadingSpinner from 'components/global/LoadingSpinner';
@@ -18,23 +21,37 @@ import styles from 'styles/settings/TfaField.module.scss';
 export default function TfaField() {
   const { t } = useTranslation('common');
   const { nickname } = useRecoilValue(userState);
-  const { get } = useCustomQuery();
+  const { get, queryClient } = useCustomQuery();
   const { data, isLoading, isError, error } = get(
     'usersTfa',
     `/users/${nickname}/tfa`
   );
   const { mutationPost, mutationDelete } = useCustomQuery();
-  const { useTfaRegisterModal } = useModalProvider();
+  const { useTfaRegisterModal } = useUpperModalProvider();
+  const { closeModal } = useModalProvider();
+  const setAlert = useSetRecoilState(alertState);
+  const { onSecondAuthRegisterSuccess } = useAuthHandler();
   const inputRef = useRef<any>([]);
 
   const { mutate: mutateDelete } = mutationDelete(`/auth/tfa`, {
-    onSuccess: () => {},
-    onError: () => {},
+    onSuccess: () => {
+      queryClient.invalidateQueries('usersTfa');
+      closeModal();
+      setAlert({ type: 'success' });
+    },
+    onError: () => {
+      setAlert({ type: 'failure' });
+    },
   });
 
-  const { mutate: mutatePost } = mutationPost(`/auth/tfa/otp`, {
-    onSuccess: () => {},
-    onError: () => {},
+  const { mutate: mutatePost } = mutationPost(`/auth/tfa`, {
+    onSuccess: (res: TokenResponse) => {
+      onSecondAuthRegisterSuccess(res);
+      setAlert({ type: 'success' });
+    },
+    onError: () => {
+      setAlert({ type: 'failure' });
+    },
   });
 
   if (isLoading) return <LoadingSpinner />;
@@ -50,7 +67,8 @@ export default function TfaField() {
     mutateDelete();
   };
 
-  const submitOTP = () => {
+  const submitOTP = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     mutatePost({
       password: inputRef.current.map((input: any) => input.value).join(''),
     });

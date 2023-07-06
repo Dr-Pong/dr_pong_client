@@ -21,9 +21,13 @@
   height: 2rem;
   padding-top: 0.2rem;
   color: $just-pink;
-  font-size: 1.2rem;
+  font-size: 1.11rem;
   letter-spacing: 0.2rem;
   text-align: center;
   overflow-wrap: anywhere;
   background: white;
+}
+
+.redirectionUrl {
+  color: $just-purple;
 }

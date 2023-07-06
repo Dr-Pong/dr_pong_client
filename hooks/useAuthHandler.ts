@@ -11,8 +11,9 @@ import { sideBarState } from 'recoils/sideBar';
 import { userState } from 'recoils/user';
 
 import useModalProvider from 'hooks/useModalProvider';
+import useUpperModalProvider from 'hooks/useUpperModalProvider';
 
-interface TokenResponse {
+export interface TokenResponse {
   accessToken: string;
 }
 const useAuthHandler = () => {
@@ -21,7 +22,8 @@ const useAuthHandler = () => {
   const resetUserState = useResetRecoilState(userState);
   const setSideBar = useSetRecoilState(sideBarState);
   const setOpenModal = useSetRecoilState(openModalState);
-  const { useLoginRequiredModal } = useModalProvider();
+  const { closeUpperModal } = useUpperModalProvider();
+  const { useLoginRequiredModal, closeModal } = useModalProvider();
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -37,6 +39,13 @@ const useAuthHandler = () => {
     setLogin(true);
     queryClient.invalidateQueries(['userMe']);
     router.push('/');
+  };
+
+  const onSecondAuthRegisterSuccess = (res: TokenResponse) => {
+    onAuthSuccess(res);
+    closeModal();
+    closeUpperModal();
+    queryClient.invalidateQueries('usersTfa');
   };
 
   const onAuthFailure = () => {
@@ -57,7 +66,7 @@ const useAuthHandler = () => {
     removeCookie('Authorization', { path: '/' });
     setLogin(false);
     resetUserState();
-    setOpenModal(false);
+    closeModal();
     setSideBar(null);
     queryClient.invalidateQueries(['userMe']);
     router.push('/');
@@ -70,6 +79,7 @@ const useAuthHandler = () => {
 
   return {
     onAuthSuccess,
+    onSecondAuthRegisterSuccess,
     onAuthFailure,
     onSecondAuthFailure,
     onDupLoginAttempt,
