@@ -53,30 +53,6 @@ const useModalProvider = () => {
     });
   };
 
-  const useTfaRegisterModal = (
-    inputRef: MutableRefObject<any>,
-    handlePasswordSubmit: () => void
-  ) => {
-    useModal({
-      head: <ModalTitle title={t('Google OTP')} />,
-      body: (
-        <div>
-          <RegisterCode />
-          <NumberInputBox inputRef={inputRef} boxNumber={6} />
-        </div>
-      ),
-      tail: (
-        <SubmitButton
-          style='long'
-          color='purple'
-          handleButtonClick={handlePasswordSubmit}
-        >
-          {t('authenticate')}
-        </SubmitButton>
-      ),
-    });
-  };
-
   const useProfileModal = (nickname: string) => {
     useModal({
       head: null,
@@ -227,7 +203,6 @@ const useModalProvider = () => {
   return {
     closeModal,
     useSettingsModal,
-    useTfaRegisterModal,
     useProfileModal,
     useEditWarningModal,
     useImageChangeModal,

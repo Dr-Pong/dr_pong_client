@@ -1,21 +1,20 @@
 import useTranslation from 'next-translate/useTranslation';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import {
-  useResetRecoilState,
-  useSetRecoilState
-} from 'recoil';
-import {
-  upperModalPartsState,
-  openUpperModalState
-} from 'recoils/modal';
+import React, { FormEvent, MutableRefObject } from 'react';
+
+import { openUpperModalState, upperModalPartsState } from 'recoils/modal';
 
 import { ModalParts } from 'types/modalTypes';
 
-import ModalTitle from 'components/modals/modalParts/ModalTitle';
-import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
-import ButtonRow from 'components/global/buttons/buttonContainers/ButtonRow';
+import NumberInputBox from 'components/authentication/NumberInputBox';
+import RegisterCode from 'components/authentication/RegisterCode';
 import Loading from 'components/global/LoadingSpinner';
 import BasicButton from 'components/global/buttons/BasicButton';
+import SubmitButton from 'components/global/buttons/SubmitButton';
+import ButtonRow from 'components/global/buttons/buttonContainers/ButtonRow';
+import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
+import UpperModalTitle from "components/modals/upperModalParts/UpperModalTitle";
 
 const useUpperModalProvider = () => {
   const { t } = useTranslation('common');
@@ -26,27 +25,22 @@ const useUpperModalProvider = () => {
   const useUpperModal = (parts: ModalParts) => {
     setUpperModalParts(parts);
     setOpenUpperModal(true);
-  }
+  };
 
   const closeUpperModal = () => {
     resetUpperModalParts();
     setOpenUpperModal(false);
-  }
-
+  };
 
   const useChannelJoinConfirmUpperModal = (handleChannelJoin: () => void) => {
     const handleConfirmModal = () => {
       closeUpperModal();
       handleChannelJoin();
-    }
+    };
 
     useUpperModal({
       head: null,
-      body: (
-        <ModalPhrase>
-          {t('channel confirm')}
-        </ModalPhrase>
-      ),
+      body: <ModalPhrase>{t('channel confirm')}</ModalPhrase>,
       tail: (
         <ButtonRow
           buttonList={[
@@ -72,7 +66,7 @@ const useUpperModalProvider = () => {
 
   const useMatchWaitingUpperModal = (handleGameCancel: () => void) => {
     useUpperModal({
-      head: <ModalTitle title={t('Waiting For Match')} />,
+      head: <UpperModalTitle title={t('Waiting For Match')} />,
       body: <Loading />,
       tail: (
         <BasicButton
@@ -86,10 +80,35 @@ const useUpperModalProvider = () => {
     });
   };
 
+  const useTfaRegisterModal = (
+    inputRef: MutableRefObject<any>,
+    handlePasswordSubmit: (e: FormEvent<HTMLFormElement>) => void
+  ) => {
+    useUpperModal({
+      head: <UpperModalTitle title={t('Google OTP')} closeButton={true} />,
+      body: (
+        <div>
+          <RegisterCode />
+          <NumberInputBox inputRef={inputRef} boxNumber={6} />
+        </div>
+      ),
+      tail: (
+        <SubmitButton
+          style='long'
+          color='purple'
+          handleButtonClick={handlePasswordSubmit}
+        >
+          {t('authenticate')}
+        </SubmitButton>
+      ),
+    });
+  };
+
   return {
     closeUpperModal,
     useChannelJoinConfirmUpperModal,
     useMatchWaitingUpperModal,
+    useTfaRegisterModal,
   };
 };
 
