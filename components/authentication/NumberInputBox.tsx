@@ -1,4 +1,4 @@
-import React, { MutableRefObject } from 'react';
+import React, { MutableRefObject, useEffect } from 'react';
 
 import styles from 'styles/authentication/NumberInputBox.module.scss';
 
@@ -21,6 +21,7 @@ export default function NumberInputBox({
       inputRef.current[currentIdx + 1].focus();
     }
   };
+
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleInputChange(e);
     handleFocusJump(e);
@@ -33,19 +34,33 @@ export default function NumberInputBox({
   const handleClickFocus = (e: React.MouseEvent<HTMLInputElement>) => {
     handleFocusOnLast(e.target as HTMLInputElement);
   };
+
   const handleArrowKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const current = e.target as HTMLInputElement;
-    let idx = parseInt(current.id);
+    const idx = parseInt(current.id);
+
     if (e.key === 'ArrowLeft' && idx > 0) {
-      idx -= 1;
+      const targetInputBox = inputRef.current[idx - 1];
+      targetInputBox.focus();
+      handleFocusOnLast(targetInputBox);
     }
+
     if (e.key === 'ArrowRight' && idx < boxNumber - 1) {
-      idx += 1;
+      const targetInputBox = inputRef.current[idx + 1];
+      targetInputBox.focus();
+      handleFocusOnLast(targetInputBox);
     }
-    const targetInputBox = inputRef.current[idx];
-    targetInputBox.focus();
-    handleFocusOnLast(targetInputBox);
+
+    if (e.key === 'Backspace' && idx > 0 && !current.value) {
+      const targetInputBox = inputRef.current[idx - 1];
+      targetInputBox.focus();
+      handleFocusOnLast(targetInputBox);
+    }
   };
+
+  useEffect(() => {
+    inputRef.current[0].focus();
+  }, []);
 
   return (
     <div className={styles.numberInputBoxContainer}>
