@@ -1,4 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
+import { useRecoilValue } from 'recoil';
+
+import { userState } from 'recoils/user';
 
 import useAuthHandler from 'hooks/useAuthHandler';
 
@@ -11,7 +14,7 @@ import styles from 'styles/settings/Settings.module.scss';
 export default function Settings() {
   const { t } = useTranslation('common');
   const { onLogout } = useAuthHandler();
-
+  const { roleType } = useRecoilValue(userState);
   const handleLogout = () => {
     onLogout();
   };
@@ -38,6 +41,8 @@ export default function Settings() {
       ),
     },
   ];
+
+  if (roleType === 'guest') settingFields.splice(1, 1);
 
   return (
     <div className={styles.settingsContainer}>
