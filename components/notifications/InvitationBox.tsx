@@ -7,7 +7,7 @@ import { useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
 import { IoMdCheckmark, IoMdClose } from 'react-icons/io';
 
-import { alertTypeState, openAlertState } from 'recoils/alert';
+import { alertState } from 'recoils/alert';
 import { sideBarState } from 'recoils/sideBar';
 
 import { Invitation } from 'types/notificationTypes';
@@ -40,8 +40,7 @@ export default function InvitationBox({
   const { t } = useTranslation('common');
   const router = useRouter();
   const setSideBar = useSetRecoilState(sideBarState);
-  const setOpenAlert = useSetRecoilState(openAlertState);
-  const setAlertType = useSetRecoilState(alertTypeState);
+  const setAlert = useSetRecoilState(alertState);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
   const { mutationPatch, mutationDelete, queryClient } = useCustomQuery();
   const { id, from, createdAt, channelId, channelName } = invitation;
@@ -72,8 +71,7 @@ export default function InvitationBox({
           router.push(`/game/normal/${response.gameId}`);
       },
       onError: () => {
-        setAlertType('fail');
-        setOpenAlert(true);
+        setAlert({ type: 'failure' });
       },
     }
   );
@@ -87,8 +85,7 @@ export default function InvitationBox({
         queryClient.invalidateQueries(['notificationDot']);
       },
       onError: () => {
-        setAlertType('fail');
-        setOpenAlert(true);
+        setAlert({ type: 'failure' });
       },
     }
   );
