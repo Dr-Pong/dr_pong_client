@@ -22,7 +22,7 @@ export default function OauthButtons() {
       name: 'Google',
       logo: <FcGoogle />,
       value: t('Login with Google'),
-      link: '/login/google?code=1234',
+      link: 'https://accounts.google.com/o/oauth2/v2/auth?client_id=565279220221-q1b3fggetohm67q9bs49q0k4hm3iqlg1.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Flogin%2Fgoogle&response_type=code&include_granted_scopes=true&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20',
     },
   ];
   return (
