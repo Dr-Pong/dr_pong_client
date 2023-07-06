@@ -1,6 +1,6 @@
 import useTranslation from 'next-translate/useTranslation';
 
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef } from 'react';
 
 import useAuthHandler from 'hooks/useAuthHandler';
 import useCustomQuery from 'hooks/useCustomQuery';
