@@ -5,8 +5,6 @@ export interface Player {
   y: number;
   width: number;
   height: number;
-  move: number;
-  speed: number;
 }
 
 export interface Ball {
@@ -14,7 +12,32 @@ export interface Ball {
   y: number;
   width: number;
   height: number;
-  moveX: number;
-  moveY: number;
-  speed: number;
 }
+
+export interface posData {
+  ballPos: { x: number, y: number };
+  playerXPos: { me: number, opponent: number };
+};
+
+export interface roundData {
+  round: number;
+  me: number;
+  opponent: number;
+  server: boolean;
+};
+
+export interface initData {
+  me: { x: number, y: number, width: number, height: number };
+  opponent: { x: number, y: number, width: number, height: number };
+  ball: { x: number, y: number, size: number };
+  server: boolean;
+  round: number;
+};
+
+export interface countdownData {
+  time: number;
+};
+
+export interface gameResult {
+  result: 'win' | 'lose' | 'tie';
+};
