@@ -1,13 +1,17 @@
 import useTranslation from 'next-translate/useTranslation';
+
 import { useSetRecoilState } from 'recoil';
 
-import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import { useRouter } from 'next/router';
+
+import React, { ChangeEvent, Dispatch, SetStateAction, useState, useEffect } from 'react';
 
 import { alertState } from 'recoils/alert';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 import useModalProvider from 'hooks/useModalProvider';
 import useUpperModalProvider from 'hooks/useUpperModalProvider';
+import useGameSocket from 'hooks/useGameSocket';
 
 import PageHeader from 'components/global/PageHeader';
 
@@ -20,6 +24,8 @@ interface Options {
 export default function GameLobby() {
   const { t } = useTranslation('game');
   const setAlert = useSetRecoilState(alertState);
+  const router = useRouter();
+  const [socket, disconnect] = useGameSocket('matching');
   const { useGameInvitationModal } = useModalProvider();
   const { closeUpperModal, useMatchWaitingUpperModal } =
     useUpperModalProvider();
@@ -27,6 +33,8 @@ export default function GameLobby() {
   const exitQueue = mutationDelete(`/games/queue`, {
     onSuccess: () => {
       closeUpperModal();
+      socket.connect();
+      socket.once('joinGame', joinGameListener);
     },
     onError: () => {
       setAlert({ type: 'failure' });
@@ -35,6 +43,8 @@ export default function GameLobby() {
   const enterQueue = mutationPost(`/games/queue/normal`, {
     onSuccess: () => {
       useMatchWaitingUpperModal(exitQueue.mutate);
+      socket.connect();
+      socket.once('joinGame', joinGameListener);
     },
     onError: () => {
       setAlert({ type: 'failure' });
@@ -50,13 +60,24 @@ export default function GameLobby() {
 
   const handleQueueClick = () => {
     enterQueue.mutate({
-      mode: 'mode',
+      mode: 'mode'
     });
   };
 
   const handleInviteClick = () => {
     useGameInvitationModal('mode');
   };
+
+  const joinGameListener = (data: { roomId: string }) => {
+    closeUpperModal();
+    router.push(`/game/normal/${data.roomId}`);
+  }
+
+  useEffect(() => {
+    return () => {
+      if (socket.connected) disconnect();
+    }
+  }, []);
 
   return (
     <div className={styles.prepareRoomContainer}>
