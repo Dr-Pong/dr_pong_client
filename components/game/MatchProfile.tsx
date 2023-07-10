@@ -60,7 +60,7 @@ export default function MatchProfile({
         }
         <div className={styles.profileInfo}>
           <span className={styles.nickname}>{opponent?.nickname}</span>
-          {/* <span className={styles.level}>{opponent?.title?.title}</span> */}
+          <span className={styles.title}>{opponent?.title?.title}</span>
         </div>
       </div>
       <span className={styles.vs}>vs</span>
@@ -75,7 +75,7 @@ export default function MatchProfile({
         }
         <div className={styles.profileInfo}>
           <span className={styles.nickname}>{nickname}</span>
-          {/* <span className={styles.level}>{me.data.title.title}</span> */}
+          <span className={styles.title}>{me.data.title?.title}</span>
         </div>
       </div>
     </div>
