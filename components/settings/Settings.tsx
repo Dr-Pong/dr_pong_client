@@ -35,18 +35,18 @@ export default function Settings() {
       field: <LocaleField />,
     },
     {
-      topic: t('bgm'),
+      topic: t('BGM'),
       field: <Bgm />,
     },
     {
-      topic: t('sound effect'),
+      topic: t('Sound Effect'),
       field: <SoundEffect />,
     },
   ];
 
   const settingFieldsForGuest = [
     {
-      topic: t('login'),
+      topic: t('Login'),
       field: (
         <BasicButton
           style='basic'
