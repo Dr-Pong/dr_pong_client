@@ -16,7 +16,7 @@ import ErrorRefresher from 'components/global/ErrorRefresher';
 import LoadingSpinner from 'components/global/LoadingSpinner';
 import BasicButton from 'components/global/buttons/BasicButton';
 
-import styles from 'styles/settings/TfaField.module.scss';
+import styles from 'styles/settings/SettingField.module.scss';
 
 export default function TfaField() {
   const { t } = useTranslation('common');
@@ -88,7 +88,7 @@ export default function TfaField() {
   };
 
   return (
-    <div className={styles.tfaFieldContainer}>
+    <div className={styles.fieldContainer}>
       <BasicButton
         style='basic'
         color='purple'
