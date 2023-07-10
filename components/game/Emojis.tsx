@@ -7,6 +7,7 @@ import ErrorRefresher from 'components/global/ErrorRefresher';
 import LoadingSpinner from 'components/global/LoadingSpinner';
 
 import useCustomQuery from 'hooks/useCustomQuery';
+import useGameSocket from 'hooks/useGameSocket';
 
 import { Emoji } from 'types/userTypes';
 
@@ -22,44 +23,48 @@ export default function Emojis({
   setOpponentEmojiUrl
 }: EmojisProps) {
   const { nickname } = useRecoilValue(userState);
+  const [socket] = useGameSocket('game');
   const { get } = useCustomQuery();
   const { data, isLoading, isError } =
-    get('', `/users/${nickname}/emojis?selected=true`);
+    get('emoji', `/users/${nickname}/emojis?selected=true`);
+  const canvasHeight = window.innerHeight * 0.7;
+  const canvasWidth = canvasHeight * 0.625;
 
-  if (isLoading) return <LoadingSpinner />
-  if (isError) return <ErrorRefresher />
+  const emojiListener = (url: string) => {
+    setOpponentEmojiUrl(url);
 
-  // useEffect(() => {
-  //   const handler = (emojiUrl: string) => {
-  //     setOpponentEmojiUrl(emojiUrl);
+    setTimeout(() => {
+      setOpponentEmojiUrl(null);
+    }, 1500);
+  };
 
-  //     setTimeout(() => {
-  //       setOpponentEmojiUrl(null);
-  //     }, 1500);
-  //   }
-  //   socket.on('', handler);
-  //   return (() => {
-  //     socket.off('', handler);
-  //   })
-  // }, []);
+  useEffect(() => {
+    socket.on('opponentEmoji', emojiListener);
+    return (() => {
+      socket.off('opponentEmoji', emojiListener);
+    })
+  }, []);
 
-  const handleEmojiClick = (emojiUrl: string) => {
-    setMyEmojiUrl(emojiUrl);
-    // socket.emit(emojiUrl);
+  const handleEmojiClick = (url: string) => {
+    setMyEmojiUrl(url);
+    socket.emit('myEmoji', url);
 
     setTimeout(() => {
       setMyEmojiUrl(null);
     }, 1500);
   };
 
+  if (isLoading) return <LoadingSpinner />
+  if (isError) return <ErrorRefresher />
+
   return (
-    <div className={styles.emojisContainer}>
-      {data?.emojis.map((emoji: Emoji) => (
+    <div className={styles.emojisContainer} style={{ width: `${canvasWidth}px` }}>
+      {data?.emojis?.map((emoji: Emoji) => (
         <img
-          key={emoji.id}
+          key={emoji?.id}
           className={styles.emoji}
-          src={emoji.imgUrl}
-          onClick={() => handleEmojiClick(emoji.imgUrl)}
+          src={emoji?.imgUrl}
+          onClick={() => handleEmojiClick(emoji?.imgUrl)}
         />
       ))}
     </div>

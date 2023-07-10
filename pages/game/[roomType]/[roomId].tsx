@@ -4,9 +4,11 @@ import React, { useState, useEffect } from 'react';
 
 import { RoomType } from 'types/gameTypes';
 
+import SocketManager from 'components/global/SocketManager';
 import MatchProfile from 'components/game/MatchProfile';
 import PongGame from 'components/game/PongGame';
 import Emojis from 'components/game/Emojis';
+
 
 import styles from 'styles/game/Game.module.scss';
 
@@ -23,6 +25,7 @@ export default function Game() {
 
   return (
     <div className={styles.gamePageContainer}>
+      <SocketManager namespace={'game'} />
       <MatchProfile
         myEmojiUrl={myEmojiUrl}
         opponentEmojiUrl={opponentEmojiUrl}

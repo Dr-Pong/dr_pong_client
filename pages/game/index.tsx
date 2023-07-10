@@ -1,11 +1,15 @@
 import useTranslation from 'next-translate/useTranslation';
+
+import { useRouter } from 'next/router';
+
 import { useSetRecoilState } from 'recoil';
 
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 
 import { alertState } from 'recoils/alert';
 
 import useCustomQuery from 'hooks/useCustomQuery';
+import useGameSocket from 'hooks/useGameSocket';
 import useUpperModalProvider from 'hooks/useUpperModalProvider';
 
 import GameLobby from 'components/game/GameLobby';
@@ -15,9 +19,11 @@ import styles from 'styles/game/Game.module.scss';
 
 export default function Game() {
   const { t } = useTranslation('game');
+  const router = useRouter();
   const setAlert = useSetRecoilState(alertState);
   const { closeUpperModal, useMatchWaitingUpperModal } =
     useUpperModalProvider();
+  const [socket, disconnect] = useGameSocket('matching');
   const [normalClicked, setNormalClicked] = useState(false);
   const { mutationPost, mutationDelete } = useCustomQuery();
   const exitQueue = mutationDelete(`/games/queue`, {
@@ -31,11 +37,18 @@ export default function Game() {
   const enterQueue = mutationPost(`/games/queue/ladder`, {
     onSuccess: () => {
       useMatchWaitingUpperModal(exitQueue.mutate);
+      socket.connect();
+      socket.once('joinGame', joinGameListener);
     },
     onError: () => {
       setAlert({ type: 'failure' });
     },
   });
+
+  const joinGameListener = (data: { roomId: string }) => {
+    closeUpperModal();
+    router.push(`/game/ladder/${data.roomId}`);
+  }
 
   const handleLadderClick = () => {
     enterQueue.mutate({ mode: 'classic' });
@@ -44,6 +57,12 @@ export default function Game() {
   const handleNormalClick = () => {
     setNormalClicked(true);
   };
+
+  useEffect(() => {
+    return () => {
+      if (socket.connected) disconnect();
+    }
+  }, []);
 
   const buttons = [
     <button

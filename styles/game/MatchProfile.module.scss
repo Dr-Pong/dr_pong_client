@@ -3,7 +3,7 @@
 .matchProfile {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .profile {
@@ -35,7 +35,7 @@
   font-weight: 800;
 }
 
-.level {
+.title {
   color: gray;
   font-size: 0.8rem;
 }
