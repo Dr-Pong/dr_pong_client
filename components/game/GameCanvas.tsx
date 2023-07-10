@@ -1,24 +1,27 @@
 import { useState, useEffect, useRef, MutableRefObject } from 'react';
 
+import { useRouter } from 'next/router';
+
 import useGameSocket from 'hooks/useGameSocket';
 
-import { Player, Ball, posData, roundData, initData, countdownData, gameResult } from 'types/gameTypes';
+import {
+  Player,
+  Ball,
+  posData,
+  roundData,
+  initData,
+  countdownData,
+  gameResult
+} from 'types/gameTypes';
 
 import styles from 'styles/game/GameCanvas.module.scss';
 
-type GameCanvasProps = {
-  canvasRef: MutableRefObject<HTMLCanvasElement | null>;
-  canvasWidth: number;
-  canvasHeight: number;
-}
-
-export default function GameCanvas({
-  canvasRef,
-  canvasWidth,
-  canvasHeight
-}: GameCanvasProps) {
+export default function GameCanvas() {
   const [socket] = useGameSocket('game');
-  // const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const router = useRouter();
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const canvasHeight = window.innerHeight * 0.7;
+  const canvasWidth = canvasHeight * 0.625;
   const canvas = canvasRef.current;
   const context = canvas?.getContext('2d');
   const netWidth = canvasWidth / 20;
@@ -87,14 +90,17 @@ export default function GameCanvas({
 
   const gameEndListener = (data: gameResult) => {
     setResult(data.result);
+    setTimeout(() => {
+      router.push('/game');
+    }, 2000);
   };
 
   useEffect(() => {
     socket.once('initData', initListener);
+    socket.once('gameEnd', gameEndListener);
     socket.on('time', countdownListener);
     socket.on('posUpdate', updateListener);
     socket.on('roundUpdate', roundListener);
-    socket.once('gameEnd', gameEndListener);
 
     return () => {
       socket.off('time', countdownListener);
@@ -128,7 +134,6 @@ export default function GameCanvas({
   const drawRound = (ctx: CanvasRenderingContext2D) => {
     ctx.font = '1.3rem Arial';
     ctx.fillText(`Round: ${round}`, 10, canvasHeight / 2 - 10);
-
     ctx.font = '1.5rem Arial';
     ctx.fillStyle = '#f868e1';
     ctx.fillText(`${myScore}`, canvasWidth - 30, netY + netHeight + 26);
