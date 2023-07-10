@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
 
-import React, { useState, Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
 
 import { editableState } from 'recoils/user';
@@ -11,8 +11,8 @@ import { DetailDto } from 'types/userTypes';
 import useMyPageQuery from 'hooks/useMyPageQuery';
 
 import Dropdown from 'components/global/Dropdown';
-import LoadingSpinner from 'components/global/LoadingSpinner';
 import ErrorRefresher from 'components/global/ErrorRefresher';
+import LoadingSpinner from 'components/global/LoadingSpinner';
 
 import styles from 'styles/myPage/ProfileCard.module.scss';
 
@@ -40,12 +40,22 @@ export default function TitleDropdown({
     setDropdownVisibility(!dropdownVisibility);
   };
 
+  const handleBackdropClick = () => {
+    setDropdownVisibility(false);
+  };
+
   return (
     <div className={styles.titleDropdownContainer}>
       {editable && (
         <IoMdArrowDropdown
           className={styles.dropdownArrow}
           onClick={handleDropdownClick}
+        />
+      )}
+      {dropdownVisibility && (
+        <div
+          className={styles.dropdownBackdrop}
+          onClick={handleBackdropClick}
         />
       )}
       <Dropdown style={'title'} visibility={editable && dropdownVisibility}>
