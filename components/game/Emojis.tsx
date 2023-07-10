@@ -27,36 +27,38 @@ export default function Emojis({
   const { get } = useCustomQuery();
   const { data, isLoading, isError } =
     get('emoji', `/users/${nickname}/emojis?selected=true`);
+  const canvasHeight = window.innerHeight * 0.7;
+  const canvasWidth = canvasHeight * 0.625;
 
-  if (isLoading) return <LoadingSpinner />
-  if (isError) return <ErrorRefresher />
-
-  const emojiListener = (emojiUrl: string) => {
-    setOpponentEmojiUrl(emojiUrl);
+  const emojiListener = (url: string) => {
+    setOpponentEmojiUrl(url);
 
     setTimeout(() => {
       setOpponentEmojiUrl(null);
     }, 1500);
   };
 
-  // useEffect(() => {
-  //   socket.on('opponentEmoji', emojiListener);
-  //   return (() => {
-  //     socket.off('opponentEmoji', emojiListener);
-  //   })
-  // }, []);
+  useEffect(() => {
+    socket.on('opponentEmoji', emojiListener);
+    return (() => {
+      socket.off('opponentEmoji', emojiListener);
+    })
+  }, []);
 
-  const handleEmojiClick = (emojiUrl: string) => {
-    setMyEmojiUrl(emojiUrl);
-    socket.emit('myEmoji', emojiUrl);
+  const handleEmojiClick = (url: string) => {
+    setMyEmojiUrl(url);
+    socket.emit('myEmoji', url);
 
     setTimeout(() => {
       setMyEmojiUrl(null);
     }, 1500);
   };
 
+  if (isLoading) return <LoadingSpinner />
+  if (isError) return <ErrorRefresher />
+
   return (
-    <div className={styles.emojisContainer}>
+    <div className={styles.emojisContainer} style={{ width: `${canvasWidth}px` }}>
       {data?.emojis?.map((emoji: Emoji) => (
         <img
           key={emoji?.id}
