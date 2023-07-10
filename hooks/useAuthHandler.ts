@@ -38,6 +38,8 @@ const useAuthHandler = () => {
     });
     setLogin(true);
     queryClient.invalidateQueries(['userMe']);
+    closeModal();
+    closeUpperModal();
     router.push('/');
   };
 
@@ -51,15 +53,23 @@ const useAuthHandler = () => {
   const onAuthFailure = () => {
     removeCookie('Authorization', { path: '/' });
     setLogin(false);
+    closeModal();
+    closeUpperModal();
     router.push('/login');
   };
 
   const onSecondAuthFailure = () => {
     router.push('/authentication');
+    closeModal();
+    closeUpperModal();
   };
 
   const onDupLoginAttempt = () => {
-    if (login) router.push('/');
+    if (login) {
+      router.push('/');
+      closeModal();
+      closeUpperModal();
+    }
   };
 
   const onLogout = () => {
@@ -67,6 +77,7 @@ const useAuthHandler = () => {
     setLogin(false);
     resetUserState();
     closeModal();
+    closeUpperModal();
     setSideBar(null);
     queryClient.invalidateQueries(['userMe']);
     router.push('/');
