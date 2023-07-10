@@ -34,10 +34,10 @@ export default function Game() {
         roomType={roomType as RoomType}
         roomId={roomId as string}
       />
-      {/* <Emojis
+      <Emojis
         setMyEmojiUrl={setMyEmojiUrl}
         setOpponentEmojiUrl={setOpponentEmojiUrl}
-      /> */}
+      />
     </div>
   );
 }
