@@ -9,20 +9,20 @@ import { useSoundEffect } from 'hooks/useSoundEffect';
 
 import BasicButton from 'components/global/buttons/BasicButton';
 
-import styles from 'styles/settings/TfaField.module.scss';
+import styles from 'styles/settings/SettingField.module.scss';
 
-export default function SoundEffect() {
+export default function SoundEffectField() {
   const [soundEffectOn, setSoundEffectOn] = useRecoilState(soundEffectState);
   const { audios, loaded } = useSoundEffect({
     cork: 'sound/cork.mp3',
   });
-  const enableBgm = () => {
+  const enableSoundEffect = () => {
     localStorage.setItem('soundEffectOn', 'true');
     setSoundEffectOn(true);
     if (loaded) audios.get('cork')(true);
   };
 
-  const disableBgm = () => {
+  const disableSoundEffect = () => {
     localStorage.removeItem('soundEffectOn');
     setSoundEffectOn(false);
   };
@@ -30,11 +30,13 @@ export default function SoundEffect() {
   if (!loaded) return null;
 
   return (
-    <div className={styles.tfaFieldContainer}>
+    <div className={styles.fieldContainer}>
       <BasicButton
         style='basic'
         color='purple'
-        handleButtonClick={soundEffectOn ? disableBgm : enableBgm}
+        handleButtonClick={
+          soundEffectOn ? disableSoundEffect : enableSoundEffect
+        }
       >
         {soundEffectOn ? <HiSpeakerXMark /> : <HiSpeakerWave />}
       </BasicButton>

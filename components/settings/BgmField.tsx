@@ -9,9 +9,9 @@ import { useBgm } from 'hooks/useBgm';
 
 import BasicButton from 'components/global/buttons/BasicButton';
 
-import styles from 'styles/settings/TfaField.module.scss';
+import styles from 'styles/settings/SettingField.module.scss';
 
-export default function Bgm() {
+export default function BgmField() {
   const [bgmOn, setBgmOn] = useRecoilState(bgmState);
   const { audios, loaded } = useBgm({
     bgm: '/sound/bgm.mp3',
@@ -28,7 +28,7 @@ export default function Bgm() {
 
   if (!loaded) return null;
   return (
-    <div className={styles.tfaFieldContainer}>
+    <div className={styles.fieldContainer}>
       <BasicButton
         style='basic'
         color='purple'

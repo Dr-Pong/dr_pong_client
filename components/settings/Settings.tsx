@@ -10,9 +10,9 @@ import { userState } from 'recoils/user';
 import useAuthHandler from 'hooks/useAuthHandler';
 
 import BasicButton from 'components/global/buttons/BasicButton';
-import Bgm from 'components/settings/Bgm';
+import BgmField from 'components/settings/BgmField';
 import LocaleField from 'components/settings/LocaleField';
-import SoundEffect from 'components/settings/SoundEffect';
+import SoundEffectField from 'components/settings/SoundEffectField';
 import TfaField from 'components/settings/TfaField';
 
 import styles from 'styles/settings/Settings.module.scss';
@@ -36,11 +36,11 @@ export default function Settings() {
     },
     {
       topic: t('BGM'),
-      field: <Bgm />,
+      field: <BgmField />,
     },
     {
       topic: t('Sound Effect'),
-      field: <SoundEffect />,
+      field: <SoundEffectField />,
     },
   ];
 
