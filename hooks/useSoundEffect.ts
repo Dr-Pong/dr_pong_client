@@ -1,4 +1,8 @@
+import { useSetRecoilState } from 'recoil';
+
 import { useEffect, useState } from 'react';
+
+import { soundEffectState } from 'recoils/sound';
 
 type AudioPlayer = (isSoundOn?: boolean) => void;
 const audios: Map<string, AudioPlayer> = new Map();
@@ -7,8 +11,10 @@ export function useSoundEffect(data: Record<string, string>): {
   audios: typeof audios;
 } {
   const [loaded, setLoaded] = useState(false);
+  const setSoundEffectOn = useSetRecoilState(soundEffectState);
 
   useEffect(() => {
+    setSoundEffectOn(localStorage.getItem('soundEffectOn') === 'true');
     const promises: Promise<void>[] = [];
 
     const AudioContext = window.AudioContext;

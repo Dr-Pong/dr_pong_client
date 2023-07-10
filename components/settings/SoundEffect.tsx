@@ -17,11 +17,13 @@ export default function SoundEffect() {
     cork: 'sound/cork.mp3',
   });
   const enableBgm = () => {
+    localStorage.setItem('soundEffectOn', 'true');
     setSoundEffectOn(true);
     if (loaded) audios.get('cork')(true);
   };
 
   const disableBgm = () => {
+    localStorage.removeItem('soundEffectOn');
     setSoundEffectOn(false);
   };
 
