@@ -1,10 +1,13 @@
+import nipplejs from 'nipplejs';
+
 import React, { useEffect } from 'react';
 
-import GameCanvas from 'components/game/GameCanvas';
+import { RoomType } from 'types/gameTypes';
 
 import useGameSocket from 'hooks/useGameSocket';
 
-import { RoomType } from 'types/gameTypes';
+import GameCanvas from 'components/game/GameCanvas';
+import Joystick from 'components/joystick/Joystick';
 
 import styles from 'styles/game/PongGame.module.scss';
 
@@ -60,21 +63,35 @@ const PongGame = ({ roomType, roomId }: PongGameProps) => {
     };
   }, []);
 
-  const achievementListener = () => {
-
-  };
+  const achievementListener = () => {};
 
   useEffect(() => {
     socket.on('achievement', achievementListener);
 
     return () => {
       socket.off('achievement', achievementListener);
-    }
+    };
   }, []);
 
+  const onJoy = (data: nipplejs.JoystickOutputData) => {
+    const x = data?.direction?.x;
+    if (x === 'left') {
+      socket.emit('keyPress', { roomId: roomId, key: 'left' });
+    }
+    if (x === 'right') {
+      socket.emit('keyPress', { roomId: roomId, key: 'right' });
+    }
+  };
+
+  const offJoy = () => {
+    socket.emit('keyRelease', { roomId: roomId, key: 'left' });
+    socket.emit('keyRelease', { roomId: roomId, key: 'right' });
+  };
+
   return (
-    <div className={styles.pongGame}>
+    <div id='pongGame' className={styles.pongGame}>
       <GameCanvas />
+      {isTouchScreen && <Joystick onJoy={onJoy} offJoy={offJoy} />}
     </div>
   );
 };
