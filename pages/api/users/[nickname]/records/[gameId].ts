@@ -393,8 +393,8 @@ export default (
         res.status(200).json({
           duration: 222,
           me: {
-            lp: 4200,
-            lpChange: 0,
+            lp: 3010,
+            lpChange: 42,
           },
           you: {
             lp: 4000,
