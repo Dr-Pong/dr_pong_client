@@ -1,8 +1,11 @@
+import useTranslation from 'next-translate/useTranslation';
 import nipplejs from 'nipplejs';
 
 import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 import { RoomType, gameResult } from 'types/gameTypes';
+import { Achievement } from 'types/userTypes';
 
 import useGameSocket from 'hooks/useGameSocket';
 
@@ -22,6 +25,7 @@ type PongGameProps = {
 };
 
 const PongGame = ({ roomType, roomId }: PongGameProps) => {
+  const { t } = useTranslation('achievement');
   const [socket] = useGameSocket('game');
   const [isEnd, setIsEnd] = useState(false);
 
@@ -69,7 +73,17 @@ const PongGame = ({ roomType, roomId }: PongGameProps) => {
     };
   }, []);
 
-  const achievementListener = () => {};
+  const achievementListener = (achievement: Achievement) => {
+    toast(`${t(achievement.name)} ${t('achieved')}!`, {
+      icon: (
+        <img
+          src={achievement.imgUrl}
+          style={{ width: '7rem' }}
+          alt={achievement.name}
+        />
+      ),
+    });
+  };
 
   useEffect(() => {
     socket.on('achievement', achievementListener);

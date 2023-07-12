@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import React, { MutableRefObject } from 'react';
+import React from 'react';
 
 import { modalPartsState, openModalState } from 'recoils/modal';
 import { userState } from 'recoils/user';
@@ -9,8 +9,6 @@ import { userState } from 'recoils/user';
 import { ModalParts } from 'types/modalTypes';
 import { Achievement } from 'types/userTypes';
 
-import NumberInputBox from 'components/authentication/NumberInputBox';
-import RegisterCode from 'components/authentication/RegisterCode';
 import PasswordSubmit from 'components/channels/PasswordSubmit';
 import ChannelSettings from 'components/channels/channelSettings/ChannelSettings';
 import SearchUser from 'components/friends/SearchUser';
@@ -18,7 +16,6 @@ import InvitationFrame from 'components/global/InvitationFrame';
 import UserImages from 'components/global/UserImages';
 import CloseModalButton from 'components/global/buttons/CloseModalButton';
 import ModalButton from 'components/global/buttons/ModalButton';
-import SubmitButton from 'components/global/buttons/SubmitButton';
 import ButtonRow from 'components/global/buttons/buttonContainers/ButtonRow';
 import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
 import ModalTitle from 'components/modals/modalParts/ModalTitle';
