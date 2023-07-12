@@ -31,7 +31,6 @@ const useRecordsQuery = (nickname: string) => {
   };
 
   const matchDetailGet = (gameId: number) => {
-    console.log('path', `/users/${nickname}/records/${gameId}`);
     return get([`matchDetail`, gameId], `/users/${nickname}/records/${gameId}`);
   };
 
