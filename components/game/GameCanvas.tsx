@@ -109,9 +109,6 @@ export default function GameCanvas() {
 
   const gameEndListener = (data: gameResult) => {
     setResult(data.result);
-    setTimeout(() => {
-      router.push('/game');
-    }, 2000);
   };
 
   useEffect(() => {
