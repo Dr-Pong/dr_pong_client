@@ -1,0 +1,39 @@
+@import 'styles/common';
+
+.expBarContainer {
+  width: 100%;
+  margin-block: 1rem;
+}
+
+.expBarTitle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.expBar {
+  width: 100%;
+  height: 1rem;
+  background-color: $light-grey;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.expBarProgress {
+  height: 100%;
+}
+.expBarProgressAnimation {
+  height: 100%;
+  background-color: $light-purple;
+  animation: progressAnimation 1.5s ease-in-out;
+}
+
+@keyframes progressAnimation {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
