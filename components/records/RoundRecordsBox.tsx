@@ -5,10 +5,17 @@ import { Round } from 'types/historyTypes';
 
 import styles from 'styles/records/RoundRecordsBox.module.scss';
 
-export default function RoundRecordsBox({ rounds }: { rounds: Round[] }) {
+type RecordTheme = 'white' | 'transparent';
+export default function RoundRecordsBox({
+  rounds,
+  theme = 'white',
+}: {
+  rounds: Round[];
+  theme?: RecordTheme;
+}) {
   return (
-    <div className={styles.roundRecordsBoxContainer}>
-      <div className={styles.timeLine}></div>
+    <div className={`${styles.roundRecordsBoxContainer} ${styles[theme]}`}>
+      <div className={`${styles.timeLine} ${styles[theme]}`}></div>
       <div className={styles.rounds}>
         {rounds.map(({ meWin, bounces }, i) => {
           return (

@@ -16,11 +16,25 @@ const useRecordsQuery = (nickname: string) => {
     ).data;
   };
 
+  const gameResultGet = () => {
+    return get(
+      [`gameResult`],
+      `/users/${nickname}/records?lastGameId=0&count=1`
+    );
+  };
+
+  const expResultGet = (gameId: number) => {
+    return get(
+      [`expResult`, gameId],
+      `/users/${nickname}/records/${gameId}/exp`
+    );
+  };
+
   const matchDetailGet = (gameId: number) => {
     return get([`matchDetail`, gameId], `/users/${nickname}/records/${gameId}`);
   };
 
-  return { matchHistoryFetch, matchDetailGet };
+  return { matchHistoryFetch, gameResultGet, expResultGet, matchDetailGet };
 };
 
 export default useRecordsQuery;

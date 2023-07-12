@@ -7,5 +7,20 @@
   "prepare": "Prepare for the battle",
   "cancel": "cancel",
   "on": "On",
-  "off": "Off"
+  "off": "Off",
+  "exp": "Exp",
+  "level up": "Level Up",
+  "Egg": "Egg",
+  "Student": "Student",
+  "Bachelor": "Bachelor",
+  "Master": "Master",
+  "Doctor": "Doctor",
+  "Professor": "Professor",
+  "LP": "LP",
+  "match detail": "Match Detail",
+  "match result": "Match Result",
+  "confirm": "Confirm",
+  "win": "Win",
+  "lose": "Lose",
+  "tie": "Tie"
 }

@@ -1,12 +1,13 @@
 import nipplejs from 'nipplejs';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { RoomType } from 'types/gameTypes';
+import { RoomType, gameResult } from 'types/gameTypes';
 
 import useGameSocket from 'hooks/useGameSocket';
 
 import GameCanvas from 'components/game/GameCanvas';
+import GameResult from 'components/game/result/GameResult';
 import Joystick from 'components/joystick/Joystick';
 
 import styles from 'styles/game/PongGame.module.scss';
@@ -22,6 +23,7 @@ type PongGameProps = {
 
 const PongGame = ({ roomType, roomId }: PongGameProps) => {
   const [socket] = useGameSocket('game');
+  const [isEnd, setIsEnd] = useState(false);
 
   let leftPressed = false;
   let rightPressed = false;
@@ -49,12 +51,16 @@ const PongGame = ({ roomType, roomId }: PongGameProps) => {
     }
   };
 
+  const gameResultPopper = (data: gameResult) => {
+    setIsEnd(true);
+  };
+
   useEffect(() => {
     if (!isTouchScreen) {
       document.addEventListener('keydown', handleKeyPress);
       document.addEventListener('keyup', handleKeyRelease);
     }
-
+    socket.once('gameEnd', gameResultPopper);
     return () => {
       if (!isTouchScreen) {
         document.removeEventListener('keydown', handleKeyPress);
@@ -88,6 +94,9 @@ const PongGame = ({ roomType, roomId }: PongGameProps) => {
     socket.emit('keyRelease', { roomId: roomId, key: 'right' });
   };
 
+  if (isEnd) {
+    return <GameResult />;
+  }
   return (
     <div id='pongGame' className={styles.pongGame}>
       <GameCanvas />

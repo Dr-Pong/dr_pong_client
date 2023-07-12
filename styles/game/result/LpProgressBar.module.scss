@@ -1,0 +1,65 @@
+@import 'styles/common';
+
+.lpProgressBarContainer {
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.lpProgressBarTitle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.2rem;
+}
+
+.lpChange {
+  width: 30%;
+  right: 0;
+}
+
+.lpProgressBar {
+  width: 100%;
+  height: 3rem;
+  position: relative;
+}
+
+.startPoint {
+  position: absolute;
+  top: 0.5rem;
+  left: 0;
+}
+
+.endPoint {
+  position: absolute;
+  top: 0.5rem;
+  right: 0;
+}
+
+.lpProgressBarScale {
+  position: absolute;
+  top: 2rem;
+  left: 0;
+  width: 100%;
+  height: 0.5rem;
+  background-color: white;
+}
+
+.lpProgressBarScaleMarks {}
+
+.scaleMark {
+  position: absolute;
+  top: 1.5rem;
+  width: 1px;
+  height: 1rem;
+  background-color: white;
+}
+
+.arrow {
+  position: absolute;
+  transform-origin: bottom;
+  width: 1rem;
+  height: 1rem;
+  background-color: $light-purple;
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+}
