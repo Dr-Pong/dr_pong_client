@@ -7,11 +7,10 @@ import { RoomType, gameResult } from 'types/gameTypes';
 import useGameSocket from 'hooks/useGameSocket';
 
 import GameCanvas from 'components/game/GameCanvas';
+import GameResult from 'components/game/result/GameResult';
 import Joystick from 'components/joystick/Joystick';
 
 import styles from 'styles/game/PongGame.module.scss';
-
-import GameResult from './result/GameResult';
 
 export const isTouchScreen =
   typeof window !== 'undefined' &&
