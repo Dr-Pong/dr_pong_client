@@ -51,7 +51,9 @@ const PongGame = ({ roomType, roomId }: PongGameProps) => {
     }
   };
 
-  const gameResultPopper = (data: gameResult) => {};
+  const gameResultPopper = (data: gameResult) => {
+    setIsEnd(true);
+  };
 
   useEffect(() => {
     if (!isTouchScreen) {
@@ -67,9 +69,7 @@ const PongGame = ({ roomType, roomId }: PongGameProps) => {
     };
   }, []);
 
-  const achievementListener = () => {
-    setIsEnd(true);
-  };
+  const achievementListener = () => {};
 
   useEffect(() => {
     socket.on('achievement', achievementListener);
