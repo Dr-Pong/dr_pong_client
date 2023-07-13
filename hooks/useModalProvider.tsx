@@ -12,6 +12,7 @@ import { Achievement } from 'types/userTypes';
 import PasswordSubmit from 'components/channels/PasswordSubmit';
 import ChannelSettings from 'components/channels/channelSettings/ChannelSettings';
 import SearchUser from 'components/friends/SearchUser';
+import GameGuide from 'components/game/GameGuide';
 import InvitationFrame from 'components/global/InvitationFrame';
 import UserImages from 'components/global/UserImages';
 import CloseModalButton from 'components/global/buttons/CloseModalButton';
@@ -197,6 +198,14 @@ const useModalProvider = () => {
     });
   };
 
+  const useGameInstructionModal = () => {
+    useModal({
+      head: <ModalTitle title={t('guide')} closeButton />,
+      body: <GameGuide />,
+      tail: null,
+    });
+  };
+
   return {
     closeModal,
     useSettingsModal,
@@ -211,6 +220,7 @@ const useModalProvider = () => {
     useLoginRequiredModal,
     useChannelInvitationModal,
     useGameInvitationModal,
+    useGameInstructionModal,
   };
 };
 

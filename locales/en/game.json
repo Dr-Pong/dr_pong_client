@@ -24,5 +24,6 @@
   "confirm": "Confirm",
   "win": "Win",
   "lose": "Lose",
-  "tie": "Tie"
+  "tie": "Tie",
+  "guide": "Hitchhiker's Guide To Dr.Pong"
 }

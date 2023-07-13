@@ -1,8 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
+import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
-
-import { useSetRecoilState } from 'recoil';
 
 import React, { ReactElement, useState } from 'react';
 
@@ -10,6 +9,7 @@ import { alertState } from 'recoils/alert';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 import useGameSocket from 'hooks/useGameSocket';
+import useModalProvider from 'hooks/useModalProvider';
 import useUpperModalProvider from 'hooks/useUpperModalProvider';
 
 import GameLobby from 'components/game/GameLobby';
@@ -21,6 +21,7 @@ export default function Game() {
   const { t } = useTranslation('game');
   const router = useRouter();
   const setAlert = useSetRecoilState(alertState);
+  const { useGameInstructionModal } = useModalProvider();
   const { closeUpperModal, useMatchWaitingUpperModal } =
     useUpperModalProvider();
   const [socket, disconnect] = useGameSocket('matching');
@@ -47,7 +48,7 @@ export default function Game() {
   const joinGameListener = (data: { roomId: string }) => {
     closeUpperModal();
     router.push(`/game/ladder/${data.roomId}`);
-  }
+  };
 
   const handleLadderClick = () => {
     enterQueue.mutate({ mode: 'classic' });
@@ -71,6 +72,13 @@ export default function Game() {
       onClick={handleNormalClick}
     >
       {t('normal')}
+    </button>,
+    <button
+      key={'guide'}
+      className={`${styles.button} ${styles.guide}`}
+      onClick={useGameInstructionModal}
+    >
+      {t('guide')}
     </button>,
   ];
 
