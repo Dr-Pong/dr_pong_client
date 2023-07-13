@@ -53,7 +53,7 @@ export default function GameResult() {
         color={'pink'}
         handleButtonClick={handleConfirmClick}
       >
-        {t('confrim')}
+        {t('confirm')}
       </BasicButton>
     </div>
   );

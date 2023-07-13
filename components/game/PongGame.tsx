@@ -10,7 +10,6 @@ import { Achievement, Title } from 'types/userTypes';
 import useGameSocket from 'hooks/useGameSocket';
 
 import GameCanvas from 'components/game/GameCanvas';
-import GameResult from 'components/game/result/GameResult';
 import Joystick from 'components/joystick/Joystick';
 
 import styles from 'styles/game/PongGame.module.scss';
@@ -30,11 +29,10 @@ const PongGame = ({
   roomType,
   roomId,
   canvasWidth,
-  canvasHeight
+  canvasHeight,
 }: PongGameProps) => {
   const { t } = useTranslation('achievement');
   const [socket] = useGameSocket('game');
-  const [isEnd, setIsEnd] = useState(false);
 
   let leftPressed = false;
   let rightPressed = false;
@@ -62,16 +60,11 @@ const PongGame = ({
     }
   };
 
-  const gameResultPopper = (data: gameResult) => {
-    setIsEnd(true);
-  };
-
   useEffect(() => {
     if (!isTouchScreen) {
       document.addEventListener('keydown', handleKeyPress);
       document.addEventListener('keyup', handleKeyRelease);
     }
-    socket.once('gameEnd', gameResultPopper);
     return () => {
       if (!isTouchScreen) {
         document.removeEventListener('keydown', handleKeyPress);
@@ -125,15 +118,9 @@ const PongGame = ({
     socket.emit('keyRelease', { roomId: roomId, key: 'right' });
   };
 
-  if (isEnd) {
-    return <GameResult />;
-  }
   return (
     <div id='pongGame' className={styles.pongGame}>
-      <GameCanvas
-        canvasHeight={canvasHeight}
-        canvasWidth={canvasWidth}
-      />
+      <GameCanvas canvasHeight={canvasHeight} canvasWidth={canvasWidth} />
       {isTouchScreen && <Joystick onJoy={onJoy} offJoy={offJoy} />}
     </div>
   );
