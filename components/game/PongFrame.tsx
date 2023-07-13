@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 import { gameResult } from 'types/gameTypes';
 
+import useGameSocket from 'hooks/useGameSocket';
+
 import Emojis from 'components/game/Emojis';
 import MatchProfile from 'components/game/MatchProfile';
 import GameResult from 'components/game/result/GameResult';
-
-import useGameSocket from '../../hooks/useGameSocket';
 
 export default function PongFrame({
   canvasWidth,
