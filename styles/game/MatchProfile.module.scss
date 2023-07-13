@@ -2,8 +2,9 @@
 
 .matchProfile {
   display: flex;
+  width: 100%;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 .profile {
@@ -12,16 +13,16 @@
 }
 
 .profileImg {
-  width: 3rem;
-  height: 3rem;
-  margin-right: 1rem;
+  width: 6vh;
+  height: 6vh;
+  margin-right: 1vh;
   border-radius: 50%;
 }
 
 .emojiPopup {
-  width: 3rem;
-  height: 3rem;
-  margin-right: 1rem;
+  width: 6vh;
+  height: 6vh;
+  margin-right: 1vh;
   border-radius: 50%;
   animation: shake 0.5s infinite;
 }
@@ -37,12 +38,12 @@
 
 .title {
   color: gray;
-  font-size: 0.8rem;
+  font-size: 2vh;
 }
 
 .vs {
   font-weight: 800;
-  font-size: 1.5rem;
+  font-size: 4vh;
 }
 
 @keyframes shake {
