@@ -44,7 +44,8 @@ export default function GameCanvas({
   const [server, setServer] = useState(false);
   const [countdown, setCountdown] = useState(-1);
   const [result, setResult] = useState('');
-  const [ratio, setRatio] = useState<Player>(initialData);
+  const [playerRatio, setPlayerRatio] = useState<Player>(initialData);
+  const [ballWidthRatio, setWidthBallRatio] = useState(0);
 
   const initListener = (data: initData) => {
     setServer(data.server);
@@ -67,12 +68,13 @@ export default function GameCanvas({
       width: data.ball.size * canvasHeight,
       height: data.ball.size * canvasHeight,
     });
-    setRatio({
+    setPlayerRatio({
       x: data.me.x,
       y: data.me.y,
       width: data.me.width,
       height: data.me.height,
     });
+    setWidthBallRatio(data.ball.size);
   };
 
   const countdownListener = (data: countdownData) => {
@@ -84,22 +86,24 @@ export default function GameCanvas({
     setMe((prevMe) => ({
       ...prevMe,
       x: data.playerXPos.me * canvasWidth,
-      y: ratio.y * canvasHeight,
-      width: ratio.width * canvasWidth,
-      height: ratio.height * canvasHeight
+      y: playerRatio.y * canvasHeight,
+      width: playerRatio.width * canvasWidth,
+      height: playerRatio.height * canvasHeight
     }));
     setOpponent((prevOpponent) => ({
       ...prevOpponent,
       x: data.playerXPos.opponent * canvasWidth,
-      width: ratio.width * canvasWidth,
-      height: ratio.height * canvasHeight
+      width: playerRatio.width * canvasWidth,
+      height: playerRatio.height * canvasHeight
     }));
     setBall((prevBall) => {
-      ballSize = prevBall.width;
+      ballSize = ballWidthRatio * canvasHeight;
       return {
         ...prevBall,
         x: data.ballPos.x * canvasWidth,
         y: data.ballPos.y * canvasHeight,
+        width: ballWidthRatio * canvasHeight,
+        height: ballWidthRatio * canvasHeight,
       };
     });
     setBallPath((prev) => {
