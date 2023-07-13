@@ -18,11 +18,13 @@ import styles from 'styles/game/MatchProfile.module.scss';
 type MatchProfileProps = {
   myEmojiUrl: string | null;
   opponentEmojiUrl: string | null;
+  canvasWidth: number;
 }
 
 export default function MatchProfile({
   myEmojiUrl,
-  opponentEmojiUrl
+  opponentEmojiUrl,
+  canvasWidth
 }: MatchProfileProps) {
   const { nickname } = useRecoilValue(userState);
   const [socket] = useGameSocket('game');
@@ -48,7 +50,7 @@ export default function MatchProfile({
   if (me.isError) return <ErrorRefresher />;
 
   return (
-    <div className={styles.matchProfile}>
+    <div className={styles.matchProfile} style={{ width: `${canvasWidth}px` }}>
       <div className={styles.profile}>
         {opponentEmojiUrl ?
           <img className={styles.emojiPopup} src={opponentEmojiUrl} /> :

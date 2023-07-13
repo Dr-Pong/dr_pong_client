@@ -16,12 +16,18 @@ import useGameSocket from 'hooks/useGameSocket';
 
 import styles from 'styles/game/GameCanvas.module.scss';
 
-export default function GameCanvas() {
+type GameCanvasProps = {
+  canvasHeight: number;
+  canvasWidth: number;
+};
+
+export default function GameCanvas({
+  canvasHeight,
+  canvasWidth
+}: GameCanvasProps) {
   const [socket] = useGameSocket('game');
   const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const canvasHeight = window.innerHeight * 0.7;
-  const canvasWidth = canvasHeight * 0.625;
   const canvas = canvasRef.current;
   const context = canvas?.getContext('2d');
   const netWidth = canvasWidth / 20;
@@ -38,6 +44,7 @@ export default function GameCanvas() {
   const [server, setServer] = useState(false);
   const [countdown, setCountdown] = useState(-1);
   const [result, setResult] = useState('');
+  const [ratio, setRatio] = useState<Player>(initialData);
 
   const initListener = (data: initData) => {
     setServer(data.server);
@@ -60,6 +67,12 @@ export default function GameCanvas() {
       width: data.ball.size * canvasHeight,
       height: data.ball.size * canvasHeight,
     });
+    setRatio({
+      x: data.me.x,
+      y: data.me.y,
+      width: data.me.width,
+      height: data.me.height,
+    });
   };
 
   const countdownListener = (data: countdownData) => {
@@ -67,14 +80,19 @@ export default function GameCanvas() {
   };
 
   const updateListener = (data: posData) => {
-    let ballSize;
+    let ballSize: number;
     setMe((prevMe) => ({
       ...prevMe,
       x: data.playerXPos.me * canvasWidth,
+      y: ratio.y * canvasHeight,
+      width: ratio.width * canvasWidth,
+      height: ratio.height * canvasHeight
     }));
-    setOpponent((prevMe) => ({
-      ...prevMe,
+    setOpponent((prevOpponent) => ({
+      ...prevOpponent,
       x: data.playerXPos.opponent * canvasWidth,
+      width: ratio.width * canvasWidth,
+      height: ratio.height * canvasHeight
     }));
     setBall((prevBall) => {
       ballSize = prevBall.width;
@@ -122,7 +140,7 @@ export default function GameCanvas() {
       socket.off('posUpdate', updateListener);
       socket.off('roundUpdate', roundListener);
     };
-  }, []);
+  }, [canvasHeight, canvasWidth, me, opponent]);
 
   const drawNet = (ctx: CanvasRenderingContext2D) => {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -167,15 +185,15 @@ export default function GameCanvas() {
     ctx.fillStyle = '#00ffff';
     countdown === 0
       ? ctx.fillText(
-          'Game Start!!',
-          canvasWidth / 2 - 80,
-          canvasHeight / 2 - 10
-        )
+        'Game Start!!',
+        canvasWidth / 2 - 80,
+        canvasHeight / 2 - 10
+      )
       : ctx.fillText(
-          `${countdown}`,
-          canvasWidth / 2 - 5,
-          canvasHeight / 2 - 10
-        );
+        `${countdown}`,
+        canvasWidth / 2 - 5,
+        canvasHeight / 2 - 10
+      );
     ctx.font = '2rem Arial';
     ctx.fillStyle = '#ffff00';
     server
@@ -207,7 +225,7 @@ export default function GameCanvas() {
     round,
     myScore,
     opponentScore,
-    result,
+    result
   ]);
 
   return (

@@ -16,19 +16,19 @@ import styles from 'styles/game/Emojis.module.scss';
 type EmojisProps = {
   setMyEmojiUrl: Dispatch<SetStateAction<string | null>>;
   setOpponentEmojiUrl: Dispatch<SetStateAction<string | null>>;
+  canvasWidth: number;
 };
 
 export default function Emojis({
   setMyEmojiUrl,
-  setOpponentEmojiUrl
+  setOpponentEmojiUrl,
+  canvasWidth
 }: EmojisProps) {
   const { nickname } = useRecoilValue(userState);
   const [socket] = useGameSocket('game');
   const { get } = useCustomQuery();
   const { data, isLoading, isError } =
     get('emoji', `/users/${nickname}/emojis?selected=true`);
-  const canvasHeight = window.innerHeight * 0.7;
-  const canvasWidth = canvasHeight * 0.625;
 
   const emojiListener = (url: string) => {
     setOpponentEmojiUrl(url);
