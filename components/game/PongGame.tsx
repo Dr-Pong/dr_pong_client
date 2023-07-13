@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import { RoomType, gameResult } from 'types/gameTypes';
-import { Achievement } from 'types/userTypes';
+import { Achievement, Title } from 'types/userTypes';
 
 import useGameSocket from 'hooks/useGameSocket';
 
@@ -85,11 +85,21 @@ const PongGame = ({ roomType, roomId }: PongGameProps) => {
     });
   };
 
+  const titleListener = (title: Title) => {
+    toast(
+      <span>
+        <h3 style={{ display: 'inline' }}>{`『${'pisciner'}』 `}</h3>
+        <span>{`${t('title achieved')}!`}</span>
+      </span>
+    );
+  };
+
   useEffect(() => {
     socket.on('achievement', achievementListener);
-
+    socket.on('title', titleListener);
     return () => {
       socket.off('achievement', achievementListener);
+      socket.off('title', titleListener);
     };
   }, []);
 
