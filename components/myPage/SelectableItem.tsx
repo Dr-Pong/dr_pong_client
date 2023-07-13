@@ -5,12 +5,11 @@ import React from 'react';
 import { editableState, profileTabState } from 'recoils/user';
 
 import { Achievement, Emoji } from 'types/userTypes';
+import { ProfileTab } from 'types/userTypes';
 
-import useModalProvider from 'hooks/useModalProvider';
+import useUpperModalProvider from 'hooks/useUpperModalProvider';
 
 import { SelectHandler } from 'components/myPage/SelectTab';
-
-import { ProfileTab } from 'types/userTypes';
 
 import styles from 'styles/myPage/SelectableItem.module.scss';
 
@@ -32,7 +31,7 @@ export default function SelectableItem({
   };
   const editable = useRecoilValue(editableState);
   const tab = useRecoilValue(profileTabState);
-  const { useAchievementDetailModal } = useModalProvider();
+  const { useAchievementDetailModal } = useUpperModalProvider();
   const handleItemClick = () => {
     if (itemType === 'emoji') return;
     const achievement = item as Achievement;

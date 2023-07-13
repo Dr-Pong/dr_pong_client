@@ -1,12 +1,16 @@
 import useTranslation from 'next-translate/useTranslation';
+import { useSetRecoilState } from 'recoil';
 
 import Link from 'next/link';
 
 import React from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 
+import { sideBarState } from 'recoils/sideBar';
+
 import { ProfileStyle } from 'types/userTypes';
 
+import useModalProvider from 'hooks/useModalProvider';
 import useMyPageQuery from 'hooks/useMyPageQuery';
 
 import ErrorRefresher from 'components/global/ErrorRefresher';
@@ -27,6 +31,14 @@ export default function StatCard({ nickname, style }: StatCardProps) {
   const { statGet } = useMyPageQuery(nickname);
   const { t } = useTranslation('myPage');
   const { data, isLoading, isError } = statGet();
+  const setSidebar = useSetRecoilState(sideBarState);
+  const { closeModal } = useModalProvider();
+
+  const flushOnMove = () => {
+    closeModal();
+    setSidebar(null);
+  };
+
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher />;
   const { totalStat, seasonStat, totalRank, seasonRank } = data;
@@ -64,7 +76,11 @@ export default function StatCard({ nickname, style }: StatCardProps) {
         })}
       </div>
       <div className={styles.rightWrap}>
-        <Link href={`records/${nickname}`} className={styles.historyLink}>
+        <Link
+          href={`/records/${nickname}`}
+          className={styles.historyLink}
+          onClick={flushOnMove}
+        >
           <div>{t('History')}</div>
           <IoIosArrowForward />
         </Link>

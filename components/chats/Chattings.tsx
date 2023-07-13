@@ -119,7 +119,7 @@ export default function Chattings({
         message,
         nickname: '',
         time: new Date(),
-        type: 'failure',
+        type: 'fail',
       },
       ...prev,
     ]);

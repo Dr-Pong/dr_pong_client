@@ -6,16 +6,19 @@ import React, { FormEvent, MutableRefObject } from 'react';
 import { openUpperModalState, upperModalPartsState } from 'recoils/modal';
 
 import { ModalParts } from 'types/modalTypes';
+import { Achievement } from 'types/userTypes';
 
 import NumberInputBox from 'components/authentication/NumberInputBox';
 import RegisterCode from 'components/authentication/RegisterCode';
 import Loading from 'components/global/LoadingSpinner';
+import SocketManager from 'components/global/SocketManager';
 import BasicButton from 'components/global/buttons/BasicButton';
 import SubmitButton from 'components/global/buttons/SubmitButton';
 import ButtonRow from 'components/global/buttons/buttonContainers/ButtonRow';
 import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
-import UpperModalTitle from "components/modals/upperModalParts/UpperModalTitle";
-import SocketManager from 'components/global/SocketManager';
+import UpperModalTitle from 'components/modals/upperModalParts/UpperModalTitle';
+
+import selectableItemStyles from 'styles/myPage/SelectableItem.module.scss';
 
 const useUpperModalProvider = () => {
   const { t } = useTranslation('common');
@@ -46,6 +49,7 @@ const useUpperModalProvider = () => {
         <ButtonRow
           buttonList={[
             <BasicButton
+              key={'close'}
               style='flex'
               color='purple'
               handleButtonClick={closeUpperModal}
@@ -53,6 +57,7 @@ const useUpperModalProvider = () => {
               {t('cancel')}
             </BasicButton>,
             <BasicButton
+              key={'confirm'}
               style='flex'
               color='purple'
               handleButtonClick={handleConfirmModal}
@@ -110,11 +115,42 @@ const useUpperModalProvider = () => {
     });
   };
 
+  const useAchievementDetailModal = (achievement: Achievement) => {
+    const { name, imgUrl, content } = achievement;
+    useUpperModal({
+      head: <UpperModalTitle title={name} />,
+      body: (
+        <ModalPhrase>
+          {
+            <div>
+              <img
+                className={selectableItemStyles.itemImage}
+                src={imgUrl}
+                alt={name}
+              />
+              <div>{content}</div>
+            </div>
+          }
+        </ModalPhrase>
+      ),
+      tail: (
+        <BasicButton
+          style='basic'
+          color='purple'
+          handleButtonClick={closeUpperModal}
+        >
+          {t('close')}
+        </BasicButton>
+      ),
+    });
+  };
+
   return {
     closeUpperModal,
     useChannelJoinConfirmUpperModal,
     useMatchWaitingUpperModal,
     useTfaRegisterModal,
+    useAchievementDetailModal,
   };
 };
 

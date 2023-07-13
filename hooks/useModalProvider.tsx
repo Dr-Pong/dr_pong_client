@@ -7,7 +7,6 @@ import { modalPartsState, openModalState } from 'recoils/modal';
 import { userState } from 'recoils/user';
 
 import { ModalParts } from 'types/modalTypes';
-import { Achievement } from 'types/userTypes';
 
 import PasswordSubmit from 'components/channels/PasswordSubmit';
 import ChannelSettings from 'components/channels/channelSettings/ChannelSettings';
@@ -23,8 +22,6 @@ import ModalTitle from 'components/modals/modalParts/ModalTitle';
 import Profile from 'components/myPage/profile/Profile';
 import ProfileButtons from 'components/myPage/profile/ProfileButtons';
 import Settings from 'components/settings/Settings';
-
-import selectableItemStyles from 'styles/myPage/SelectableItem.module.scss';
 
 const useModalProvider = () => {
   const { t } = useTranslation('common');
@@ -99,32 +96,6 @@ const useModalProvider = () => {
         >
           {t('ok')}
         </ModalButton>
-      ),
-    });
-  };
-
-  const useAchievementDetailModal = (achievement: Achievement) => {
-    const { name, imgUrl, content } = achievement;
-    useModal({
-      head: <ModalTitle title={name} />,
-      body: (
-        <ModalPhrase>
-          {
-            <div>
-              <img
-                className={selectableItemStyles.itemImage}
-                src={imgUrl}
-                alt={name}
-              />
-              <div>{content}</div>
-            </div>
-          }
-        </ModalPhrase>
-      ),
-      tail: (
-        <CloseModalButton style='long' color='purple'>
-          {t('close')}
-        </CloseModalButton>
       ),
     });
   };
@@ -212,7 +183,6 @@ const useModalProvider = () => {
     useProfileModal,
     useEditWarningModal,
     useImageChangeModal,
-    useAchievementDetailModal,
     useFriendRequestModal,
     useChannelCreateModal,
     usePasswordSubmitModal,

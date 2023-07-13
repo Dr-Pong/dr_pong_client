@@ -7,16 +7,16 @@ import { editableState } from 'recoils/user';
 import {
   AchievementsClass,
   EmojisClass,
+  ProfileTab,
   Selectable,
   Selectables,
-  ProfileTab
 } from 'types/userTypes';
 
 import useMyPageQuery from 'hooks/useMyPageQuery';
 
-import SelectableItem from 'components/myPage/SelectableItem';
-import LoadingSpinner from 'components/global/LoadingSpinner';
 import ErrorRefresher from 'components/global/ErrorRefresher';
+import LoadingSpinner from 'components/global/LoadingSpinner';
+import SelectableItem from 'components/myPage/SelectableItem';
 
 import styles from 'styles/myPage/SelectTab.module.scss';
 
