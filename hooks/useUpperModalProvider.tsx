@@ -15,6 +15,7 @@ import SubmitButton from 'components/global/buttons/SubmitButton';
 import ButtonRow from 'components/global/buttons/buttonContainers/ButtonRow';
 import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
 import UpperModalTitle from "components/modals/upperModalParts/UpperModalTitle";
+import SocketManager from 'components/global/SocketManager';
 
 const useUpperModalProvider = () => {
   const { t } = useTranslation('common');
@@ -66,7 +67,12 @@ const useUpperModalProvider = () => {
 
   const useMatchWaitingUpperModal = (handleGameCancel: () => void) => {
     useUpperModal({
-      head: <UpperModalTitle title={t('Waiting For Match')} />,
+      head: (
+        <>
+          <SocketManager namespace='matching' />
+          <UpperModalTitle title={t('Waiting For Match')} />
+        </>
+      ),
       body: <Loading />,
       tail: (
         <BasicButton

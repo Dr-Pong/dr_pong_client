@@ -7,7 +7,14 @@ import { loginState } from 'recoils/login';
 import useChatSocket from 'hooks/useChatSocket';
 import useGameSocket from 'hooks/useGameSocket';
 
-export type SocketNamespace = 'friends' | 'global' | 'channel' | 'dm' | 'game';
+export type SocketNamespace =
+  | 'friends'
+  | 'global'
+  | 'channel'
+  | 'dm'
+  | 'game'
+  | 'matching';
+
 export default function SocketManager({
   namespace,
 }: {
@@ -18,14 +25,19 @@ export default function SocketManager({
   const [gameSocket, disconnectGameSocket] = useGameSocket(namespace);
 
   if (login) {
-    if (namespace === 'game' && gameSocket.disconnected) gameSocket.connect();
-    else if (chatSocket.disconnected) chatSocket.connect();
+    if ((namespace === 'game' || namespace === 'matching')
+      && gameSocket.disconnected)
+      gameSocket.connect();
+    else if (chatSocket.disconnected)
+      chatSocket.connect();
   }
 
   useEffect(() => {
     return () => {
-      if (namespace === 'game') disconnectGameSocket();
-      else disconnectChatSocket();
+      if (namespace === 'game' || namespace === 'matching')
+        disconnectGameSocket();
+      else
+        disconnectChatSocket();
     };
   }, [login]);
 
