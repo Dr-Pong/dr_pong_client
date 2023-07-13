@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 import { useSetRecoilState } from 'recoil';
 
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 
 import { alertState } from 'recoils/alert';
 
@@ -37,7 +37,6 @@ export default function Game() {
   const enterQueue = mutationPost(`/games/queue/ladder`, {
     onSuccess: () => {
       useMatchWaitingUpperModal(exitQueue.mutate);
-      socket.connect();
       socket.once('joinGame', joinGameListener);
     },
     onError: () => {
@@ -57,12 +56,6 @@ export default function Game() {
   const handleNormalClick = () => {
     setNormalClicked(true);
   };
-
-  useEffect(() => {
-    return () => {
-      if (socket.connected) disconnect();
-    }
-  }, []);
 
   const buttons = [
     <button
