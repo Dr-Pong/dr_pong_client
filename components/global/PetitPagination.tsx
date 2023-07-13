@@ -9,7 +9,7 @@ type PaginationProps = {
   setPage: Dispatch<SetStateAction<number>>;
 };
 
-export default function PettiPagenation({
+export default function PettiPagination({
   total,
   page,
   setPage,

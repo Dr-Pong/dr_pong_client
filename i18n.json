@@ -6,7 +6,7 @@
     "/": ["home"],
     "/channels": ["channels"],
     "/friends": ["friends"],
-    "/game": ["game", "achievement"],
+    "/game": ["game", "achievement", "common", "guide"],
     "/leaderboard": ["leaderboard"],
     "/records/[[...nickname]]": ["records"],
     "/myPage": ["myPage", "common", "achievement"],
