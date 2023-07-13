@@ -31,7 +31,7 @@ export default function MatchDetail({
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher />;
   const { duration, me, you, rounds } = data as RecordDetail;
-
+  console.log(data);
   const parseDuration = (duration: number) => {
     const minutes = Math.floor(duration / 60);
     const seconds = duration % 60;
@@ -43,7 +43,7 @@ export default function MatchDetail({
     <div className={styles.matchDetailContainer}>
       <div className={styles.duration}>{parseDuration(duration)}</div>
       <div className={styles.infographics}>
-        {gameType === 'rank' && (
+        {gameType === 'ladder' && (
           <div className={styles.ladderPoints}>
             <LadderPoint lp={me.lp} lpChange={me.lpChange} />
             <div></div>
