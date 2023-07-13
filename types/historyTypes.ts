@@ -1,6 +1,6 @@
 export interface Record {
   gameId: number;
-  gameType: 'rank' | 'normal';
+  gameType: 'ladder' | 'normal';
   playedAt: string;
   me: PlayerResult;
   you: PlayerResult;

@@ -40,7 +40,7 @@ export default function GameResultDetail({
         <RoundRecordsBox rounds={rounds} theme={'transparent'} />
       </div>
       <ExpProgressBar gameId={gameId} />
-      {gameType === 'rank' && <LpProgressBar lpData={me} />}
+      {gameType === 'ladder' && <LpProgressBar lpData={me} />}
     </div>
   );
 }

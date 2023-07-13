@@ -51,7 +51,7 @@ export default (
 const records: Record[] = [
   {
     gameId: 1,
-    gameType: 'rank',
+    gameType: 'ladder',
     playedAt: '2023-04-25T00:00:00Z',
     me: {
       imgUrl:
@@ -87,7 +87,7 @@ const records: Record[] = [
   },
   {
     gameId: 3,
-    gameType: 'rank',
+    gameType: 'ladder',
     playedAt: '2023-05-02T17:00:00Z',
     me: {
       imgUrl:
@@ -141,7 +141,7 @@ const records: Record[] = [
   },
   {
     gameId: 6,
-    gameType: 'rank',
+    gameType: 'ladder',
     playedAt: '2023-05-03T10:00:00Z',
     me: {
       imgUrl:

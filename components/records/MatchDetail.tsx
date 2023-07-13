@@ -43,7 +43,7 @@ export default function MatchDetail({
     <div className={styles.matchDetailContainer}>
       <div className={styles.duration}>{parseDuration(duration)}</div>
       <div className={styles.infographics}>
-        {gameType === 'rank' && (
+        {gameType === 'ladder' && (
           <div className={styles.ladderPoints}>
             <LadderPoint lp={me.lp} lpChange={me.lpChange} />
             <div></div>
