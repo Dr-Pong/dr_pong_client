@@ -31,7 +31,7 @@ export default function MatchDetail({
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher />;
   const { duration, me, you, rounds } = data as RecordDetail;
-  console.log(data);
+
   const parseDuration = (duration: number) => {
     const minutes = Math.floor(duration / 60);
     const seconds = duration % 60;
