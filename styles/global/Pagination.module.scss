@@ -24,6 +24,19 @@
   background: transparentize($light-grey, 0.5);
 }
 
+.pettiPagination {
+  display: inline-block;
+  padding: 0.3rem;
+  color: $just-blue;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pettiPagination[disabled] {
+  cursor: not-allowed;
+  opacity: 0.2;
+}
+
 .pagination[disabled] {
   cursor: not-allowed;
   opacity: 0.5;
