@@ -133,12 +133,17 @@ export default function GameCanvas({
     socket.once('initData', initListener);
     socket.once('gameEnd', gameEndListener);
     socket.on('time', countdownListener);
-    socket.on('posUpdate', updateListener);
     socket.on('roundUpdate', roundListener);
     return () => {
       socket.off('time', countdownListener);
-      socket.off('posUpdate', updateListener);
       socket.off('roundUpdate', roundListener);
+    };
+  }, []);
+
+  useEffect(() => {
+    socket.on('posUpdate', updateListener);
+    return () => {
+      socket.off('posUpdate', updateListener);
     };
   }, [canvasHeight, canvasWidth, me, opponent]);
 
