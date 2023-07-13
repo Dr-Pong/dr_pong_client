@@ -4,7 +4,7 @@ import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
-import React, { ChangeEvent, Dispatch, SetStateAction, useState, useEffect } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 import { alertState } from 'recoils/alert';
 
@@ -17,15 +17,12 @@ import PageHeader from 'components/global/PageHeader';
 
 import styles from 'styles/game/GameLobby.module.scss';
 
-interface Options {
-  [key: string]: boolean;
-}
-
 export default function GameLobby() {
   const { t } = useTranslation('game');
   const setAlert = useSetRecoilState(alertState);
   const router = useRouter();
   const [socket, disconnect] = useGameSocket('matching');
+  const [gameMode, setGameMode] = useState<string>('classic');
   const { useGameInvitationModal } = useModalProvider();
   const { closeUpperModal, useMatchWaitingUpperModal } =
     useUpperModalProvider();
@@ -33,7 +30,6 @@ export default function GameLobby() {
   const exitQueue = mutationDelete(`/games/queue`, {
     onSuccess: () => {
       closeUpperModal();
-      socket.connect();
       socket.once('joinGame', joinGameListener);
     },
     onError: () => {
@@ -43,7 +39,6 @@ export default function GameLobby() {
   const enterQueue = mutationPost(`/games/queue/normal`, {
     onSuccess: () => {
       useMatchWaitingUpperModal(exitQueue.mutate);
-      socket.connect();
       socket.once('joinGame', joinGameListener);
     },
     onError: () => {
@@ -51,47 +46,47 @@ export default function GameLobby() {
     },
   });
 
-  const [options, setOptions] = useState<Options>({
-    bullet: false,
-    deathMatch: false,
-    loserPaysForBeer: false,
-  });
-  const optionList = ['bullet', 'deathMatch', 'loserPaysForBeer'];
+  const modeList = ['classic', 'randomBounce'];
 
   const handleQueueClick = () => {
     enterQueue.mutate({
-      mode: 'mode'
+      mode: gameMode
     });
   };
 
   const handleInviteClick = () => {
-    useGameInvitationModal('mode');
+    useGameInvitationModal(gameMode);
+  };
+
+  const handleModeChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setGameMode(value);
   };
 
   const joinGameListener = (data: { roomId: string }) => {
     closeUpperModal();
     router.push(`/game/normal/${data.roomId}`);
-  }
-
-  useEffect(() => {
-    return () => {
-      if (socket.connected) disconnect();
-    }
-  }, []);
+  };
 
   return (
     <div className={styles.prepareRoomContainer}>
       <PageHeader title={t('prepare')} />
       <div className={styles.contents}>
-        <div className={styles.optionList}>
-          {optionList.map((option) => {
+        <div className={styles.modeList}>
+          <div className={styles.mode}>{t('mode')}</div>
+          {modeList.map((mode, i) => {
             return (
-              <Option
-                key={option}
-                option={option}
-                options={options}
-                setOptions={setOptions}
-              />
+              <label key={i} className={styles.radio} htmlFor={mode}>
+                <input
+                  type='radio'
+                  id={mode}
+                  name='mode'
+                  value={mode}
+                  checked={gameMode === mode}
+                  onChange={handleModeChange}
+                />
+                {t(mode)}
+              </label>
             );
           })}
         </div>
@@ -109,55 +104,6 @@ export default function GameLobby() {
             {t('invite')}
           </button>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function Option({
-  option,
-  options,
-  setOptions,
-}: {
-  option: string;
-  options: Options;
-  setOptions: Dispatch<SetStateAction<Options>>;
-}) {
-  const { t } = useTranslation('game');
-
-  const handleRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setOptions((prev) => {
-      return { ...prev, [name]: value === 'true' };
-    });
-  };
-
-  return (
-    <div key={option} className={styles.option}>
-      {t(option)}
-      <div className={styles.radios}>
-        <label className={'radio'}>
-          <input
-            type='radio'
-            id={option + 'true'}
-            name={option}
-            value={'true'}
-            defaultChecked={options[option] === true}
-            onChange={handleRadioChange}
-          />
-          {t('on')}
-        </label>
-        <label className={'radio'}>
-          <input
-            type='radio'
-            id={option + 'false'}
-            name={option}
-            value={'false'}
-            defaultChecked={options[option] === false}
-            onChange={handleRadioChange}
-          />
-          {t('off')}
-        </label>
       </div>
     </div>
   );

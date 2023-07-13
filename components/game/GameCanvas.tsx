@@ -16,12 +16,18 @@ import useGameSocket from 'hooks/useGameSocket';
 
 import styles from 'styles/game/GameCanvas.module.scss';
 
-export default function GameCanvas() {
+type GameCanvasProps = {
+  canvasHeight: number;
+  canvasWidth: number;
+};
+
+export default function GameCanvas({
+  canvasHeight,
+  canvasWidth
+}: GameCanvasProps) {
   const [socket] = useGameSocket('game');
   const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const canvasHeight = window.innerHeight * 0.7;
-  const canvasWidth = canvasHeight * 0.625;
   const canvas = canvasRef.current;
   const context = canvas?.getContext('2d');
   const netWidth = canvasWidth / 20;
@@ -38,6 +44,8 @@ export default function GameCanvas() {
   const [server, setServer] = useState(false);
   const [countdown, setCountdown] = useState(-1);
   const [result, setResult] = useState('');
+  const [playerRatio, setPlayerRatio] = useState<Player>(initialData);
+  const [ballWidthRatio, setWidthBallRatio] = useState(0);
 
   const initListener = (data: initData) => {
     setServer(data.server);
@@ -60,6 +68,13 @@ export default function GameCanvas() {
       width: data.ball.size * canvasHeight,
       height: data.ball.size * canvasHeight,
     });
+    setPlayerRatio({
+      x: data.me.x,
+      y: data.me.y,
+      width: data.me.width,
+      height: data.me.height,
+    });
+    setWidthBallRatio(data.ball.size);
   };
 
   const countdownListener = (data: countdownData) => {
@@ -67,21 +82,28 @@ export default function GameCanvas() {
   };
 
   const updateListener = (data: posData) => {
-    let ballSize;
+    let ballSize: number;
     setMe((prevMe) => ({
       ...prevMe,
       x: data.playerXPos.me * canvasWidth,
+      y: playerRatio.y * canvasHeight,
+      width: playerRatio.width * canvasWidth,
+      height: playerRatio.height * canvasHeight
     }));
-    setOpponent((prevMe) => ({
-      ...prevMe,
+    setOpponent((prevOpponent) => ({
+      ...prevOpponent,
       x: data.playerXPos.opponent * canvasWidth,
+      width: playerRatio.width * canvasWidth,
+      height: playerRatio.height * canvasHeight
     }));
     setBall((prevBall) => {
-      ballSize = prevBall.width;
+      ballSize = ballWidthRatio * canvasHeight;
       return {
         ...prevBall,
         x: data.ballPos.x * canvasWidth,
         y: data.ballPos.y * canvasHeight,
+        width: ballWidthRatio * canvasHeight,
+        height: ballWidthRatio * canvasHeight,
       };
     });
     setBallPath((prev) => {
@@ -115,14 +137,19 @@ export default function GameCanvas() {
     socket.once('initData', initListener);
     socket.once('gameEnd', gameEndListener);
     socket.on('time', countdownListener);
-    socket.on('posUpdate', updateListener);
     socket.on('roundUpdate', roundListener);
     return () => {
       socket.off('time', countdownListener);
-      socket.off('posUpdate', updateListener);
       socket.off('roundUpdate', roundListener);
     };
   }, []);
+
+  useEffect(() => {
+    socket.on('posUpdate', updateListener);
+    return () => {
+      socket.off('posUpdate', updateListener);
+    };
+  }, [canvasHeight, canvasWidth, me, opponent]);
 
   const drawNet = (ctx: CanvasRenderingContext2D) => {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -167,15 +194,15 @@ export default function GameCanvas() {
     ctx.fillStyle = '#00ffff';
     countdown === 0
       ? ctx.fillText(
-          'Game Start!!',
-          canvasWidth / 2 - 80,
-          canvasHeight / 2 - 10
-        )
+        'Game Start!!',
+        canvasWidth / 2 - 80,
+        canvasHeight / 2 - 10
+      )
       : ctx.fillText(
-          `${countdown}`,
-          canvasWidth / 2 - 5,
-          canvasHeight / 2 - 10
-        );
+        `${countdown}`,
+        canvasWidth / 2 - 5,
+        canvasHeight / 2 - 10
+      );
     ctx.font = '2rem Arial';
     ctx.fillStyle = '#ffff00';
     server
@@ -207,7 +234,7 @@ export default function GameCanvas() {
     round,
     myScore,
     opponentScore,
-    result,
+    result
   ]);
 
   return (

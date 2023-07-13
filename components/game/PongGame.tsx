@@ -22,9 +22,16 @@ export const isTouchScreen =
 type PongGameProps = {
   roomType: RoomType;
   roomId: string;
+  canvasWidth: number;
+  canvasHeight: number;
 };
 
-const PongGame = ({ roomType, roomId }: PongGameProps) => {
+const PongGame = ({
+  roomType,
+  roomId,
+  canvasWidth,
+  canvasHeight
+}: PongGameProps) => {
   const { t } = useTranslation('achievement');
   const [socket] = useGameSocket('game');
   const [isEnd, setIsEnd] = useState(false);
@@ -123,7 +130,10 @@ const PongGame = ({ roomType, roomId }: PongGameProps) => {
   }
   return (
     <div id='pongGame' className={styles.pongGame}>
-      <GameCanvas />
+      <GameCanvas
+        canvasHeight={canvasHeight}
+        canvasWidth={canvasWidth}
+      />
       {isTouchScreen && <Joystick onJoy={onJoy} offJoy={offJoy} />}
     </div>
   );

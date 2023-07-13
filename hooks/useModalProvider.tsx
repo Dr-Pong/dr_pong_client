@@ -192,7 +192,7 @@ const useModalProvider = () => {
   const useGameInvitationModal = (gameMode: string) => {
     useModal({
       head: <ModalTitle title={t('Invite friend')} closeButton />,
-      body: <InvitationFrame type='game' channelId={gameMode} />,
+      body: <InvitationFrame type='game' gameMode={gameMode} />,
       tail: null,
     });
   };
