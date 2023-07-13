@@ -2,7 +2,7 @@ import useTranslation from 'next-translate/useTranslation';
 
 import React, { useState } from 'react';
 
-import PettiPagenation from 'components/global/PettiPagenation';
+import PetitPagination from 'components/global/PetitPagination';
 
 type Manual = {
   image?: string;
@@ -27,7 +27,7 @@ export default function GameGuide() {
         {current.image && <img src={current.image} alt={current.alt} />}
         <div>{current.text}</div>
       </div>
-      <PettiPagenation total={manual.length} page={page} setPage={setPage} />
+      <PetitPagination total={manual.length} page={page} setPage={setPage} />
     </div>
   );
 }
