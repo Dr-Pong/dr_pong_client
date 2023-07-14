@@ -171,7 +171,7 @@ const useModalProvider = () => {
 
   const useGameInstructionModal = () => {
     useModal({
-      head: <ModalTitle title={t('guide')} closeButton />,
+      head: null,
       body: <GameGuide />,
       tail: null,
     });
