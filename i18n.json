@@ -2,7 +2,7 @@
   "locales": ["ko", "en"],
   "defaultLocale": "en",
   "pages": {
-    "*": ["common"],
+    "*": ["common", "myPage"],
     "/": ["home"],
     "/channels": ["channels"],
     "/friends": ["friends"],
