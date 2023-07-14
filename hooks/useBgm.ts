@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
 type AudioPlayer = () => void;
-const audios: Map<string, AudioPlayer> = new Map();
+const bgms: Map<string, AudioPlayer> = new Map();
 export function useBgm(data: Record<string, string>): {
   loaded: boolean;
-  audios: typeof audios;
+  bgms: typeof bgms;
 } {
   const [loaded, setLoaded] = useState(false);
 
@@ -15,7 +15,7 @@ export function useBgm(data: Record<string, string>): {
     const audioContext = new AudioContext();
 
     Object.keys(data).forEach((key) => {
-      if (audios.has(key)) {
+      if (bgms.has(key)) {
         return;
       }
       const sourceUrl = data[key];
@@ -26,7 +26,7 @@ export function useBgm(data: Record<string, string>): {
         .then((audioBuffer) => {
           const sourceNodes: AudioBufferSourceNode[] = [];
 
-          audios.set(key, () => {
+          bgms.set(key, () => {
             const trackSource = audioContext.createBufferSource();
             trackSource.buffer = audioBuffer;
             trackSource.connect(audioContext.destination);
@@ -39,7 +39,7 @@ export function useBgm(data: Record<string, string>): {
             trackSource.start();
           });
 
-          audios.set(key + '_stop', () => {
+          bgms.set(key + '_stop', () => {
             sourceNodes.forEach((node) => node.stop());
             sourceNodes.length = 0;
           });
@@ -55,6 +55,6 @@ export function useBgm(data: Record<string, string>): {
 
   return {
     loaded,
-    audios,
+    bgms,
   };
 }
