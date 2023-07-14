@@ -1,1 +1,13 @@
-{}
+{
+  "control": "How to Control",
+  "control_description_pc": "Move the bar left and right using the arrow keys on the keyboard.",
+  "control_description_mobile": "Touch anywhere on the game screen and drag left or right to move the bar.",
+  "spin": "Spin",
+  "spin_description": "When the ball touches the bar while it's moving, it gains rotation in the direction of movement. The ball will be curved according to the rotation direction.",
+  "ladder": "Ladder Game",
+  "ladder_description": "Compete against random opponents. Your rank is determined by LP, and you will be matched with opponents of similar rank.",
+  "normal": "Normal Game",
+  "normal_description": "Enjoy the game with random opponents or invite friends! Matches are made regardless of rank, allowing you to play the game without worrying about losing LP. In Random Bounce mode, the direction of the ball is randomized. Enjoy the thrill of unpredictability!",
+  "result": "Game Result",
+  "result_description": "The upward arrow represents the rounds you won, while the downward arrow represents the rounds you lost. The number below indicates how many times the ball was exchanged."
+}
