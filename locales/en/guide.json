@@ -5,7 +5,7 @@
   "spin": "Spin",
   "spin_description": "When the ball touches the bar while it's moving, it gains rotation in the direction of movement. The ball will be curved according to the rotation direction.",
   "ladder": "Ladder Game",
-  "ladder_description": "Compete against random opponents. Your rank is determined by LP, and you will be matched with opponents of similar rank.",
+  "ladder_description": "Compete against random opponents. You will be matched with opponents of similar LP.",
   "normal": "Normal Game",
   "normal_description": "Enjoy the game with random opponents or invite friends! Matches are made regardless of rank, allowing you to play the game without worrying about losing LP. In Random Bounce mode, the direction of the ball is randomized. Enjoy the thrill of unpredictability!",
   "result": "Game Result",
