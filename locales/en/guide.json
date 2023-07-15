@@ -9,5 +9,5 @@
   "normal": "Normal Game",
   "normal_description": "Enjoy the game with random opponents or invite friends! Matches are made regardless of rank, allowing you to play the game without worrying about losing LP. In Random Bounce mode, the direction of the ball is randomized. Enjoy the thrill of unpredictability!",
   "result": "Game Result",
-  "result_description": "The upward arrow represents the rounds you won, while the downward arrow represents the rounds you lost. The number below indicates how many times the ball was exchanged."
+  "result_description": "The upward arrow represents the rounds you won, while the downward arrow represents the rounds you lost. The numbers below indicate how many times the ball was exchanged in each round."
 }
