@@ -9,8 +9,8 @@ module.exports = {
   ...nextConfig,
   ...nextTranslate(),
   i18n: {
-    locales: ['en', 'ko'],
-    defaultLocale: 'en',
-    localeDetection: false,
+    locales: ['default', 'en', 'ko'],
+    defaultLocale: 'default',
+    localeDetection: true,
   },
 };
