@@ -35,7 +35,6 @@ export default function FriendTabContents() {
   const [globalChatSocket] = useChatSocket('global');
 
   useEffect(() => {
-    friendsChatSocket.emit('status');
     const friendStatusListener = (newStatuses: Statuses) => {
       setStatuses((prev) => {
         return {
@@ -68,6 +67,10 @@ export default function FriendTabContents() {
       globalChatSocket.off('friend', pendingsListener);
     };
   }, []);
+
+  useEffect(() => {
+    friendsChatSocket.emit('status');
+  }, [friends]);
 
   const query: {
     [key: string]: (setBlocks: (f: Friend[]) => void) => UseQueryResult;
