@@ -6,7 +6,12 @@ import { soundEffectState } from 'recoils/sound';
 
 type AudioPlayer = (isSoundOn?: boolean) => void;
 const effects: Map<string, AudioPlayer> = new Map();
-export function useSoundEffect(data: Record<string, string>): {
+const data = {
+  cork: '/sound/cork.mp3',
+  pong: '/sound/pong.mp3',
+  hit: '/sound/hit.mp3',
+};
+export function useSoundEffect(): {
   loaded: boolean;
   effects: typeof effects;
 } {

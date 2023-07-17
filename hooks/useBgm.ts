@@ -1,13 +1,21 @@
+import { useRecoilValue } from 'recoil';
+
 import { useEffect, useState } from 'react';
 
-type AudioPlayer = () => void;
+import { bgmState } from 'recoils/sound';
+
+type AudioPlayer = (isBgmOn?: boolean) => void;
 const bgms: Map<string, AudioPlayer> = new Map();
-export function useBgm(data: Record<string, string>): {
+const data = {
+  bgm: '/sound/bgm.mp3',
+  game: '/sound/bgm2.mp3',
+};
+export function useBgm(): {
   loaded: boolean;
   bgms: typeof bgms;
 } {
   const [loaded, setLoaded] = useState(false);
-
+  const bgmOn = useRecoilValue(bgmState);
   useEffect(() => {
     const promises: Promise<void>[] = [];
 
@@ -26,14 +34,19 @@ export function useBgm(data: Record<string, string>): {
         .then((audioBuffer) => {
           const sourceNodes: AudioBufferSourceNode[] = [];
 
-          bgms.set(key, () => {
+          bgms.set(key, (isBgmOn: boolean) => {
+            bgms.forEach((value, key) => {
+              if (key.endsWith('_stop')) {
+                value();
+              }
+            });
+            if (!isBgmOn) return;
             const trackSource = audioContext.createBufferSource();
             trackSource.buffer = audioBuffer;
             trackSource.connect(audioContext.destination);
             trackSource.loop = true;
             if (audioContext.state === 'suspended') {
               audioContext.resume();
-              return;
             }
             sourceNodes.push(trackSource);
             trackSource.start();
