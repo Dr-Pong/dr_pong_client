@@ -13,12 +13,10 @@ import styles from 'styles/settings/SettingField.module.scss';
 
 export default function BgmField() {
   const [bgmOn, setBgmOn] = useRecoilState(bgmState);
-  const { bgms, loaded } = useBgm({
-    bgm: '/sound/bgm.mp3',
-  });
+  const { bgms, loaded } = useBgm();
   const enableBgm = () => {
-    bgms.get('bgm')();
     setBgmOn(true);
+    bgms.get('bgm')(true);
   };
 
   const disableBgm = () => {
