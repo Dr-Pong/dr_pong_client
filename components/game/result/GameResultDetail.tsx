@@ -2,7 +2,7 @@ import { Fireworks, FireworksTypes } from 'fireworks-js';
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue } from 'recoil';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { userState } from 'recoils/user';
 
@@ -27,7 +27,7 @@ export default function GameResultDetail({
   const { nickname } = useRecoilValue(userState);
   const { matchDetailGet } = useRecordsQuery(nickname);
   const { data, isLoading, isError, error } = matchDetailGet(gameId);
-  const [showFireworks, setShowFireworks] = React.useState(false);
+  const [showFireworks, setShowFireworks] = useState(false);
 
   useEffect(() => {
     if (showFireworks) {
