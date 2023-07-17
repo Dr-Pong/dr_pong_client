@@ -1,6 +1,6 @@
 import useTranslation from 'next-translate/useTranslation';
 
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import LadderPoint from 'components/records/LadderPoint';
 
@@ -8,8 +8,10 @@ import styles from 'styles/game/result/LpProgressBar.module.scss';
 
 export default function LpProgressBar({
   lpData,
+  setShowFireworks,
 }: {
   lpData: { lp: number; lpChange: number };
+  setShowFireworks: Dispatch<SetStateAction<boolean>>;
 }) {
   const { t } = useTranslation('game');
   const getTierName = (lp: number): string[] => {
@@ -33,6 +35,11 @@ export default function LpProgressBar({
   const [start, end] = getRankSection(startLp);
   const [startTier, endTier] = getTierName(startLp);
   const position = ((lp - start) / (end - start)) * 100;
+
+  if (lp >= end) {
+    setShowFireworks(true);
+  }
+
   const scaleMarks = () => {
     const marks = [];
     for (let i = 0; i <= 20; i++) {

@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue } from 'recoil';
 
-import React from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 
 import { userState } from 'recoils/user';
 
@@ -12,7 +12,13 @@ import LoadingSpinner from 'components/global/LoadingSpinner';
 
 import styles from 'styles/game/result/ExpProgressBar.module.scss';
 
-export default function ExpProgressBar({ gameId }: { gameId: number }) {
+export default function ExpProgressBar({
+  gameId,
+  setShowFireworks,
+}: {
+  gameId: number;
+  setShowFireworks: Dispatch<SetStateAction<boolean>>;
+}) {
   const { t } = useTranslation('game');
   const { nickname } = useRecoilValue(userState);
   const { expResultGet } = useRecordsQuery(nickname);
@@ -27,6 +33,10 @@ export default function ExpProgressBar({ gameId }: { gameId: number }) {
     expChange + beforeExp >= levelExp
       ? t('level up')
       : `${expChange + beforeExp}/${levelExp}`;
+  if (expChange + beforeExp >= levelExp) {
+    setShowFireworks(true);
+  }
+
   return (
     <div className={styles.expBarContainer}>
       <div className={styles.expBarTitle}>
