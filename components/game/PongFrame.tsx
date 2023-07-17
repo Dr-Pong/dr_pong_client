@@ -2,10 +2,11 @@ import { useRecoilValue } from 'recoil';
 
 import React, { useEffect, useState } from 'react';
 
-import { soundEffectState } from 'recoils/sound';
+import { bgmState, soundEffectState } from 'recoils/sound';
 
 import { gameResult } from 'types/gameTypes';
 
+import { useBgm } from 'hooks/useBgm';
 import useGameSocket from 'hooks/useGameSocket';
 import { useSoundEffect } from 'hooks/useSoundEffect';
 
@@ -24,7 +25,9 @@ export default function PongFrame({
   const [opponentEmojiUrl, setOpponentEmojiUrl] = useState<string | null>(null);
   const [isEnd, setIsEnd] = useState(false);
   const [socket] = useGameSocket('game');
-  const { effects } = useSoundEffect({});
+  const { bgms } = useBgm();
+  const bgmOn = useRecoilValue(bgmState);
+  const { effects } = useSoundEffect();
   const isSoundEffectOn = useRecoilValue(soundEffectState);
 
   const touchSound = () => {
@@ -32,12 +35,14 @@ export default function PongFrame({
   };
 
   useEffect(() => {
+    bgms.get('game')?.(bgmOn);
     socket.once('gameEnd', (data: gameResult) => {
       setIsEnd(true);
     });
     socket.on('barTouch', touchSound);
     socket.on('wallTouch', touchSound);
     return () => {
+      bgms.get('bgm')?.(bgmOn);
       socket.off('barTouch', touchSound);
       socket.off('wallTouch', touchSound);
     };
