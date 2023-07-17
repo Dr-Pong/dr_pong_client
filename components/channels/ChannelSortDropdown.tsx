@@ -77,7 +77,7 @@ export default function ChannelSortDropdown({
         className={styles.dropdownButton}
         onClick={handleSortClick}
       >
-        {order}
+        {t(order)}
         <IoMdArrowDropdown />
       </button>
       <Dropdown style={'channel'} visibility={showDropdown}>
