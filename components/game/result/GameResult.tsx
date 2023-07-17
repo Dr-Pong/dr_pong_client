@@ -35,26 +35,29 @@ export default function GameResult() {
   const { gameId, gameType, me, you, result }: Record = data.records[0];
 
   return (
-    <div className={styles.gameResultContainer}>
-      <div className={styles.versusPlayer}>
-        <div className={styles.versus}> vs </div>
-        <Player nickname={you.nickname} imgUrl={you.imgUrl} />
-      </div>
-      <div className={styles.gameResultBox}>
-        <div className={styles.gameResult}>
-          <div className={styles.gameResultTitle}>{t('game result')}</div>
-          <div className={styles.gameResultType}>{t(result)}</div>
+    <div className={styles.resultScreen}>
+      <div className={styles.gameResultContainer}>
+        <div className={styles.versusPlayer}>
+          <div className={styles.versus}> vs </div>
+          <Player nickname={you.nickname} imgUrl={you.imgUrl} />
         </div>
-        <div className={styles.gameScore}>{`${me.score} : ${you.score}`}</div>
+        <div className={styles.gameResultBox}>
+          <div className={styles.gameResult}>
+            <div className={styles.gameResultTitle}>{t('game result')}</div>
+            <div className={styles.gameResultType}>{t(result)}</div>
+          </div>
+          <div className={styles.gameScore}>{`${me.score} : ${you.score}`}</div>
+        </div>
+        <GameResultDetail gameId={gameId} gameType={gameType} />
+        <BasicButton
+          style={'basic'}
+          color={'pink'}
+          handleButtonClick={handleConfirmClick}
+        >
+          {t('confirm')}
+        </BasicButton>
       </div>
-      <GameResultDetail gameId={gameId} gameType={gameType} />
-      <BasicButton
-        style={'basic'}
-        color={'pink'}
-        handleButtonClick={handleConfirmClick}
-      >
-        {t('confirm')}
-      </BasicButton>
+      <div id={'fireworks'} className={styles.fireworks} />
     </div>
   );
 }
