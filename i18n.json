@@ -1,12 +1,14 @@
 {
-  "locales": ["ko", "en"],
-  "defaultLocale": "en",
+  "locales": ["default", "ko", "en"],
+  "defaultLocale": "default",
+  "localeDetection": true,
   "pages": {
     "*": ["common", "myPage"],
     "/": ["home"],
     "/channels": ["channels"],
     "/friends": ["friends"],
-    "/game": ["game", "achievement", "common", "guide"],
+    "/game": ["game", "guide"],
+    "/game/[roomType]/[roomId]": ["game", "achievement"],
     "/leaderboard": ["leaderboard"],
     "/records/[[...nickname]]": ["records"],
     "/myPage": ["myPage", "common", "achievement"],

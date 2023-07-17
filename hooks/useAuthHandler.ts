@@ -17,7 +17,10 @@ export interface TokenResponse {
   accessToken: string;
 }
 const useAuthHandler = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(['Authorization']);
+  const [cookies, setCookie, removeCookie] = useCookies([
+    'Authorization',
+    'NEXT_LOCALE',
+  ]);
   const [login, setLogin] = useRecoilState(loginState);
   const resetUserState = useResetRecoilState(userState);
   const setSideBar = useSetRecoilState(sideBarState);
@@ -40,6 +43,10 @@ const useAuthHandler = () => {
     queryClient.invalidateQueries(['userMe']);
     closeModal();
     closeUpperModal();
+    const locale = navigator.language.split('-')[0];
+    setCookie('NEXT_LOCALE', locale === 'ko' ? 'ko' : 'en', {
+      path: '/',
+    });
     router.push('/');
   };
 
