@@ -13,13 +13,11 @@ import styles from 'styles/settings/SettingField.module.scss';
 
 export default function SoundEffectField() {
   const [soundEffectOn, setSoundEffectOn] = useRecoilState(soundEffectState);
-  const { audios, loaded } = useSoundEffect({
-    cork: 'sound/cork.mp3',
-  });
+  const { effects, loaded } = useSoundEffect();
   const enableSoundEffect = () => {
     localStorage.setItem('soundEffectOn', 'true');
     setSoundEffectOn(true);
-    if (loaded) audios.get('cork')(true);
+    if (loaded) effects.get('cork')(true);
   };
 
   const disableSoundEffect = () => {

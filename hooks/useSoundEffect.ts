@@ -5,10 +5,15 @@ import { useEffect, useState } from 'react';
 import { soundEffectState } from 'recoils/sound';
 
 type AudioPlayer = (isSoundOn?: boolean) => void;
-const audios: Map<string, AudioPlayer> = new Map();
-export function useSoundEffect(data: Record<string, string>): {
+const effects: Map<string, AudioPlayer> = new Map();
+const data = {
+  cork: '/sound/cork.mp3',
+  pong: '/sound/pong.mp3',
+  hit: '/sound/hit.mp3',
+};
+export function useSoundEffect(): {
   loaded: boolean;
-  audios: typeof audios;
+  effects: typeof effects;
 } {
   const [loaded, setLoaded] = useState(false);
   const setSoundEffectOn = useSetRecoilState(soundEffectState);
@@ -20,7 +25,7 @@ export function useSoundEffect(data: Record<string, string>): {
     const AudioContext = window.AudioContext;
     const audioContext = new AudioContext();
 
-    audios.set('ping', (isSoundOn: boolean) => {
+    effects.set('ping', (isSoundOn: boolean) => {
       if (!isSoundOn) return;
       const oscillator = audioContext.createOscillator();
       oscillator.type = 'triangle';
@@ -31,7 +36,7 @@ export function useSoundEffect(data: Record<string, string>): {
     });
 
     Object.keys(data).forEach((key) => {
-      if (audios.has(key)) {
+      if (effects.has(key)) {
         return;
       }
       const sourceUrl = data[key];
@@ -42,7 +47,7 @@ export function useSoundEffect(data: Record<string, string>): {
         .then((audioBuffer) => {
           const sourceNodes: AudioBufferSourceNode[] = [];
 
-          audios.set(key, (isSoundOn: boolean) => {
+          effects.set(key, (isSoundOn: boolean) => {
             if (!isSoundOn) return;
             const trackSource = audioContext.createBufferSource();
             trackSource.buffer = audioBuffer;
@@ -65,6 +70,6 @@ export function useSoundEffect(data: Record<string, string>): {
 
   return {
     loaded,
-    audios,
+    effects,
   };
 }

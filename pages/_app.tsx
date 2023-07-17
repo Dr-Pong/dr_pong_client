@@ -11,6 +11,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
 import SocketManager from 'components/global/SocketManager';
+import SoundManager from 'components/layouts/SoundManager';
 
 import 'styles/globals.css';
 
@@ -41,6 +42,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         <RecoilRoot>
           <LoginFilter>
             <SocketManager namespace={'global'} />
+            <SoundManager />
             {getLayout(<Component {...pageProps} />)}
           </LoginFilter>
           <div id='sideBarRoot'></div>
