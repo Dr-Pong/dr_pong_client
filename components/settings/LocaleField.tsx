@@ -1,9 +1,12 @@
 import { useRouter } from 'next/router';
 
+import { useCookies } from 'react-cookie';
+
 import styles from 'styles/settings/LocaleField.module.scss';
 
 export default function LocaleField() {
   const router = useRouter();
+  const [cookies, setCookie] = useCookies();
   const { locale, defaultLocale, pathname, query } = router;
   const currentLocale = locale || defaultLocale || 'en';
 
@@ -15,6 +18,9 @@ export default function LocaleField() {
   const handleLocaleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     router.push({ pathname, query }, pathname, {
       locale: e.target.id || defaultLocale,
+    });
+    setCookie('NEXT_LOCALE', e.target.id || defaultLocale, {
+      path: '/',
     });
   };
 
