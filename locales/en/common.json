@@ -46,5 +46,8 @@
   "Participants": "Participants",
   "needLogin": "This feature requires login.",
   "move to my page": "move to my page",
-  "guide": "Hitchhiker's Guide To Dr.Pong"
+  "guide": "Hitchhiker's Guide To Dr.Pong",
+  "inGameNotify": "There is a game in progress.",
+  "backToGame": "Go back to game",
+  "multiConnectWarning": "You are logged in from a new environment."
 }
