@@ -41,10 +41,6 @@ const useAuthHandler = () => {
     queryClient.invalidateQueries(['userMe']);
     closeModal();
     closeUpperModal();
-    const locale = navigator.language.split('-')[0];
-    setCookie('NEXT_LOCALE', locale === 'ko' ? 'ko' : 'en', {
-      path: '/',
-    });
     router.push('/');
   };
 
