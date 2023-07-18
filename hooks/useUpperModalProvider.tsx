@@ -169,7 +169,7 @@ const useUpperModalProvider = () => {
     });
   };
 
-  const multiConnectWarningMoal = (onLogout: () => void) => {
+  const multiConnectWarningModal = (onLogout: () => void) => {
     const handleLogout = () => {
       closeUpperModal();
       onLogout();
@@ -197,7 +197,7 @@ const useUpperModalProvider = () => {
     useTfaRegisterModal,
     useAchievementDetailModal,
     useIsInGameModal,
-    multiConnectWarningMoal,
+    multiConnectWarningModal,
   };
 };
 

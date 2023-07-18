@@ -15,11 +15,11 @@ import styles from 'styles/layouts/Layout.module.scss';
 export default function Layout({ children }: LayoutProps) {
   const [socket] = useChatSocket('global');
   const { onLogout } = useAuthHandler();
-  const { multiConnectWarningMoal } = useUpperModalProvider();
+  const { multiConnectWarningModal } = useUpperModalProvider();
 
   useEffect(() => {
     const multiConnectListener = () => {
-      multiConnectWarningMoal(onLogout);
+      multiConnectWarningModal(onLogout);
     };
     socket.on('multiConnect', multiConnectListener);
     return () => {

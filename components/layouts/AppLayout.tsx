@@ -17,7 +17,7 @@ import styles from 'styles/layouts/Layout.module.scss';
 export default function AppLayout({ children }: LayoutProps) {
   const [socket] = useChatSocket('global');
   const { onLogout } = useAuthHandler();
-  const { useIsInGameModal, multiConnectWarningMoal } = useUpperModalProvider();
+  const { useIsInGameModal, multiConnectWarningModal } = useUpperModalProvider();
 
   useEffect(() => {
     const isInGameListener = (data: { roomId: string }) => {
@@ -25,7 +25,7 @@ export default function AppLayout({ children }: LayoutProps) {
       useIsInGameModal(data.roomId);
     };
     const multiConnectListener = () => {
-      multiConnectWarningMoal(onLogout);
+      multiConnectWarningModal(onLogout);
     };
     socket.on('isInGame', isInGameListener);
     socket.on('multiConnect', multiConnectListener);
