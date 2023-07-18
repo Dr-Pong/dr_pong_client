@@ -1,6 +1,6 @@
 {
-  "locales": ["default", "ko", "en"],
-  "defaultLocale": "default",
+  "locales": ["ko", "en"],
+  "defaultLocale": "en",
   "localeDetection": true,
   "pages": {
     "*": ["common", "myPage"],
