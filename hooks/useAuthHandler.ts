@@ -6,7 +6,6 @@ import { useCookies } from 'react-cookie';
 import { useQueryClient } from 'react-query';
 
 import { loginState } from 'recoils/login';
-import { openModalState } from 'recoils/modal';
 import { sideBarState } from 'recoils/sideBar';
 import { userState } from 'recoils/user';
 
@@ -17,11 +16,13 @@ export interface TokenResponse {
   accessToken: string;
 }
 const useAuthHandler = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(['Authorization']);
+  const [cookies, setCookie, removeCookie] = useCookies([
+    'Authorization',
+    'NEXT_LOCALE',
+  ]);
   const [login, setLogin] = useRecoilState(loginState);
   const resetUserState = useResetRecoilState(userState);
   const setSideBar = useSetRecoilState(sideBarState);
-  const setOpenModal = useSetRecoilState(openModalState);
   const { closeUpperModal } = useUpperModalProvider();
   const { useLoginRequiredModal, closeModal } = useModalProvider();
   const router = useRouter();
