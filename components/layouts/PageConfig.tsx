@@ -18,7 +18,7 @@ export default function PageConfig() {
         path: '/',
       });
       const { pathname, query } = router;
-      router.push({ pathname, query }, pathname, {
+      router.replace({ pathname, query }, pathname, {
         locale: locale === 'ko' ? 'ko' : 'en',
       });
     }
