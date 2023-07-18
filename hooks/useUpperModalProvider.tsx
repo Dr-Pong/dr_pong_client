@@ -1,4 +1,6 @@
 import useTranslation from 'next-translate/useTranslation';
+import { useRouter } from 'next/router';
+
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import React, { FormEvent, MutableRefObject } from 'react';
@@ -22,6 +24,7 @@ import selectableItemStyles from 'styles/myPage/SelectableItem.module.scss';
 
 const useUpperModalProvider = () => {
   const { t } = useTranslation('common');
+  const router = useRouter();
   const setOpenUpperModal = useSetRecoilState(openUpperModalState);
   const setUpperModalParts = useSetRecoilState(upperModalPartsState);
   const resetUpperModalParts = useResetRecoilState(upperModalPartsState);
@@ -145,12 +148,56 @@ const useUpperModalProvider = () => {
     });
   };
 
+  const useIsInGameModal = (roomId: string) => {
+    const handelBackToGame = () => {
+      closeUpperModal();
+      router.push(`/game/ladder/${roomId}`);
+    };
+
+    useUpperModal({
+      head: null,
+      body: <ModalPhrase>{t('inGameNotify')}</ModalPhrase>,
+      tail: (
+        <BasicButton
+          style='long'
+          color='purple'
+          handleButtonClick={handelBackToGame}
+        >
+          {t('backToGame')}
+        </BasicButton>
+      ),
+    });
+  };
+
+  const multiConnectWarningMoal = (onLogout: () => void) => {
+    const handleLogout = () => {
+      closeUpperModal();
+      onLogout();
+    };
+
+    useUpperModal({
+      head: null,
+      body: <ModalPhrase>{t('multiConnectWarning')}</ModalPhrase>,
+      tail: (
+        <BasicButton
+          style='basic'
+          color='purple'
+          handleButtonClick={handleLogout}
+        >
+          {t('logout')}
+        </BasicButton>
+      ),
+    });
+  };
+
   return {
     closeUpperModal,
     useChannelJoinConfirmUpperModal,
     useMatchWaitingUpperModal,
     useTfaRegisterModal,
     useAchievementDetailModal,
+    useIsInGameModal,
+    multiConnectWarningMoal,
   };
 };
 
