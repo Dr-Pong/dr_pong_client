@@ -19,7 +19,7 @@ export default function ChannelInvitableFriendList({
   friends,
 }: ChannelInvitableFriendListProps) {
   const { mutationPost } = useCustomQuery();
-  const channelInviteMutation = mutationPost(`/channels/${roomId}/invitation`);
+  const channelInviteMutation = mutationPost(`invitations/channels/${roomId}`);
 
   return (
     <div className={styles.InvitableFriendList}>

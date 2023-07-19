@@ -21,7 +21,7 @@ export default function GameInvitationButton({
   const setAlert = useSetRecoilState(alertState);
   const { closeUpperModal, useMatchWaitingUpperModal } =
     useUpperModalProvider();
-  const gameInviteMutation = mutationPost('/games/invitation', {
+  const gameInviteMutation = mutationPost('/invitations/games', {
     onSuccess: () => {
       useMatchWaitingUpperModal(invitationCancelMutation.mutate);
     },
@@ -29,7 +29,7 @@ export default function GameInvitationButton({
       setAlert({ type: 'failure' });
     },
   });
-  const invitationCancelMutation = mutationDelete('/games/invitation', {
+  const invitationCancelMutation = mutationDelete('/invitations/games', {
     onSuccess: () => {
       closeUpperModal();
     },
