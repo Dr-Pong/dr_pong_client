@@ -18,7 +18,7 @@ export default (
 };
 
 const stat: UserRank = {
-  record: null,
-  rank: null,
-  tier: 'student',
+  bestLp: 4000,
+  rank: 11,
+  tier: 'doctor',
 };

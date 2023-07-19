@@ -14,7 +14,7 @@ type RankTagProps = {
 
 export default function RankTag({ rankProps, isBest, style }: RankTagProps) {
   const { t } = useTranslation('myPage');
-  const { record, rank, tier } = rankProps;
+  const { bestLp, rank, tier } = rankProps;
 
   return (
     <div
@@ -26,7 +26,7 @@ export default function RankTag({ rankProps, isBest, style }: RankTagProps) {
       <span className={styles.tier}>{tier}</span>
       {tier === 'doctor' && (
         <>
-          {record && <span className={styles.record}>{`${record} LP`}</span>}
+          {bestLp && <span className={styles.record}>{`${bestLp} LP`}</span>}
           {rank && (
             <span className={styles.rank}>{`${rank}${t(
               rankSignSelector(rank)

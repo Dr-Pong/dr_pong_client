@@ -27,7 +27,7 @@ export interface UserStat {
 }
 
 export interface UserRank {
-  record: number | null;
+  bestLp: number | null;
   rank: number | null;
   tier: 'doctor' | 'master' | 'bachelor' | 'student' | 'egg';
 }
