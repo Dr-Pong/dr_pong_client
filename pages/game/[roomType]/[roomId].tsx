@@ -1,12 +1,13 @@
 import { useRouter } from 'next/router';
 
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 
 import { RoomType } from 'types/gameTypes';
 
 import PongFrame from 'components/game/PongFrame';
 import PongGame from 'components/game/PongGame';
 import SocketManager from 'components/global/SocketManager';
+import Layout from 'components/layouts/Layout';
 
 import styles from 'styles/game/Game.module.scss';
 
@@ -47,3 +48,7 @@ export default function Game() {
     </div>
   );
 }
+
+Game.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
+};
