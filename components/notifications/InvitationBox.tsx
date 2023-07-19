@@ -46,15 +46,15 @@ export default function InvitationBox({
   const { id, from, createdAt, channelId, channelName } = invitation;
   const invitationProperties: { [key: string]: InvitationProperty } = {
     channel: {
-      acceptPath: `/channels/${channelId}/invitation`,
-      deletePath: `/channels/${channelId}/invitation`,
+      acceptPath: `/invitations/channels/${channelId}`,
+      deletePath: `/invitations/channels/${channelId}`,
       notification: `"${from}" ${t('channelInv1')} "${channelName}" ${t(
         'channelInv2'
       )}`,
     },
     game: {
-      acceptPath: `/games/invitation/${id}`,
-      deletePath: `/games/invitation/${id}`,
+      acceptPath: `/invitations/games/${id}`,
+      deletePath: `/invitations/games/${id}`,
       notification: `"${from}" ${t('gameInv')}`,
     },
   };
