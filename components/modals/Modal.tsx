@@ -19,8 +19,7 @@ export default function Modal() {
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
       event.preventDefault();
-      if (openModal)
-        setOpenModal(false);
+      if (openModal) setOpenModal(false);
     };
     window.addEventListener('popstate', handlePopState);
 

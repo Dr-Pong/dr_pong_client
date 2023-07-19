@@ -52,6 +52,8 @@ export default function ToastResultButton({
   };
 
   const handleButtonClick = async () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     mutate(body, {
       onSuccess: onSuccess,
       onError: onError,

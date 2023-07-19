@@ -12,8 +12,6 @@ export default (req: NextApiRequest, res: NextApiResponse<Error>) => {
       res.status(200).json({ message: `Waiting For Normal Match` });
     else if (gameType === 'normal')
       res.status(200).json({ message: `Waiting For Normal Match (${mode})` });
-    else
-      res.status(405).json({ message: 'Method Not Allowed' });
-  } else
-    res.status(405).json({ message: 'Method Not Allowed' });
+    else res.status(405).json({ message: 'Method Not Allowed' });
+  } else res.status(405).json({ message: 'Method Not Allowed' });
 };

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { ButtonProps } from 'types/buttonTypes';
 
 import styles from 'styles/global/Button.module.scss';

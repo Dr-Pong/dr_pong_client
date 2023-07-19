@@ -1,24 +1,26 @@
 import { useRouter } from 'next/router';
 
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-
-import { useBgm } from 'hooks/useBgm';
-import { useSoundEffect } from 'hooks/useSoundEffect';
-import useChatSocket from 'hooks/useChatSocket';
-import useUpperModalProvider from 'hooks/useUpperModalProvider';
-import useAuthHandler from 'hooks/useAuthHandler';
 
 import { isInGame } from 'types/gameTypes';
 
+import useAuthHandler from 'hooks/useAuthHandler';
+import { useBgm } from 'hooks/useBgm';
+import useChatSocket from 'hooks/useChatSocket';
+import { useSoundEffect } from 'hooks/useSoundEffect';
+import useUpperModalProvider from 'hooks/useUpperModalProvider';
+
 export default function PageConfig() {
-  const { bgms, loaded: bgmLoaded } = useBgm();
-  const { effects, loaded: effectLoaded } = useSoundEffect();
   const [cookie, setCookie] = useCookies(['NEXT_LOCALE']);
   const router = useRouter();
   const [socket] = useChatSocket('global');
   const { onLogout } = useAuthHandler();
-  const { useIsInGameModal, multiConnectWarningModal } = useUpperModalProvider();
+  const { useIsInGameModal, multiConnectWarningModal } =
+    useUpperModalProvider();
+
+  useBgm();
+  useSoundEffect();
 
   useEffect(() => {
     if (!cookie.NEXT_LOCALE) {
@@ -32,7 +34,7 @@ export default function PageConfig() {
       });
     }
     const isInGameListener = (data: isInGame) => {
-      useIsInGameModal(data);
+      if (data?.roomId) useIsInGameModal(data);
     };
     const multiConnectListener = () => {
       multiConnectWarningModal(onLogout);

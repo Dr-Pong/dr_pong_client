@@ -1,3 +1,5 @@
+import React from 'react';
+
 import styles from 'styles/modals/Modal.module.scss';
 
 type ModalPhraseProps = {

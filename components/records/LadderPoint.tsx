@@ -1,3 +1,4 @@
+import React from 'react';
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 
 import styles from 'styles/records/MatchDetail.module.scss';

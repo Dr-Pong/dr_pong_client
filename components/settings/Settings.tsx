@@ -1,8 +1,6 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue } from 'recoil';
 
-import Link from 'next/link';
-
 import React from 'react';
 
 import { userState } from 'recoils/user';

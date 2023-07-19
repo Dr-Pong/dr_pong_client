@@ -3,6 +3,7 @@ import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
+import React from 'react';
 import { useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
 import { IoMdCheckmark, IoMdClose } from 'react-icons/io';

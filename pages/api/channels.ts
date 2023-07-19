@@ -47,8 +47,9 @@ export default (
     });
   } else if (req.method === 'POST') {
     const { title } = req.body;
-    const isDuplicate =
-      channelsList.channels.some(channel => channel.title === title);
+    const isDuplicate = channelsList.channels.some(
+      (channel) => channel.title === title
+    );
 
     if (isDuplicate) {
       res.status(400).json({ message: 'title taken' });

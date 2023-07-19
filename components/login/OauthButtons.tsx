@@ -1,5 +1,6 @@
 import useTranslation from 'next-translate/useTranslation';
 
+import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 
 import styles from 'styles/login/OauthButtons.module.scss';
@@ -16,7 +17,7 @@ export default function OauthButtons() {
         />
       ),
       value: t('Login with 42Intra'),
-      link: 'https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-9178ebee1b15304ba011ca8b7e3b17306c8c6b8c5e6d2bf5bfda8c6c57b5a24b&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Flogin%2F42&response_type=code',
+      link: 'https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-bc99ada89d2b3e468936bd14df51fb5ff27e0bb6ce188a255b423e46731bdafc&redirect_uri=http%3A%2F%2F10.19.223.101%3A3000%2Flogin%2F42&response_type=code',
     },
     {
       name: 'Google',

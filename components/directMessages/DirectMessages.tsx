@@ -19,7 +19,7 @@ export default function DirectMessages() {
   const [isEditable, setIsEditable] = useState<boolean>(false);
   const [{ chatList }, setChatList] = useState<ChatList>({ chatList: [] });
   const { get, queryClient } = useCustomQuery();
-  const { data, isLoading, isError, error } = get(
+  const { isLoading, isError, error } = get(
     ['chatList'],
     '/users/friends/chatlist',
     setChatList
@@ -34,7 +34,7 @@ export default function DirectMessages() {
       }
       setChatList((prev) => {
         return {
-          chatList: prev.chatList.map((dmRoom: DMRoom, index: number) => {
+          chatList: prev.chatList.map((dmRoom: DMRoom) => {
             if (dmRoom.nickname === nickname)
               return { ...dmRoom, unread: dmRoom.newChats + 1 };
             return dmRoom;

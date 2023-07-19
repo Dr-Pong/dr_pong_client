@@ -1,10 +1,12 @@
+import React from 'react';
+
 import { Ranker } from 'types/rankTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
-import LoadingSpinner from 'components/global/LoadingSpinner';
 import ErrorRefresher from 'components/global/ErrorRefresher';
+import LoadingSpinner from 'components/global/LoadingSpinner';
 
 import styles from 'styles/leaderboard/BottomLeaders.module.scss';
 

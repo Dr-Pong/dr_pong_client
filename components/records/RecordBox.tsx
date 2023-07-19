@@ -6,12 +6,12 @@ import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 
 import { Record } from 'types/historyTypes';
 
+import { timezoneResolverToString } from 'utils/timezoneResolver';
+
 import MatchDetail from 'components/records/MatchDetail';
 import Player from 'components/records/Player';
 
 import styles from 'styles/records/RecordBox.module.scss';
-
-import { timezoneResolverToString } from 'utils/timezoneResolver';
 
 export default function RecordBox({ record }: { record: Record }) {
   const { t } = useTranslation('records');

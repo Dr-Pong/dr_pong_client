@@ -9,7 +9,7 @@ export default (
   req: NextApiRequest,
   res: NextApiResponse<ChatResponse | Error>
 ) => {
-  const { roomId, offset, count } = req.query;
+  const { offset, count } = req.query;
 
   if (req.method === 'GET') {
     let chats;

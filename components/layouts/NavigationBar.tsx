@@ -49,7 +49,7 @@ export default function NavigationBar() {
             <Link
               href={route}
               className={styles.button}
-              onClick={isAllowed(route) ? () => {} : blockUnauthorized}
+              onClick={isAllowed(route) ? null : blockUnauthorized}
             >
               {value}
             </Link>

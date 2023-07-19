@@ -95,7 +95,7 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher />;
-  if (!relationStatuses.hasOwnProperty(data.status)) return null;
+  if (!Object.prototype.hasOwnProperty.call(data, 'status')) return null;
 
   return (
     <div className={styles.profileButtonsContainer}>

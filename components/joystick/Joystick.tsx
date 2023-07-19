@@ -9,7 +9,7 @@ const Joystick = ({
   onJoy?: (data: nipplejs.JoystickOutputData) => void;
   offJoy?: () => void;
 }) => {
-  const joystickRef = useRef({});
+  const joystickRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     import('nipplejs').then((nipplejs) => {
@@ -32,7 +32,7 @@ const Joystick = ({
         offJoy?.();
       });
 
-      joystickRef.current = joystick;
+      joystickRef.current = joystick as any;
     });
   }, []);
 

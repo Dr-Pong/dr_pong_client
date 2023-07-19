@@ -1,5 +1,4 @@
 import useTranslation from 'next-translate/useTranslation';
-
 import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
@@ -9,9 +8,9 @@ import React, { ChangeEvent, useState } from 'react';
 import { alertState } from 'recoils/alert';
 
 import useCustomQuery from 'hooks/useCustomQuery';
+import useGameSocket from 'hooks/useGameSocket';
 import useModalProvider from 'hooks/useModalProvider';
 import useUpperModalProvider from 'hooks/useUpperModalProvider';
-import useGameSocket from 'hooks/useGameSocket';
 
 import PageHeader from 'components/global/PageHeader';
 
@@ -21,7 +20,7 @@ export default function GameLobby() {
   const { t } = useTranslation('game');
   const setAlert = useSetRecoilState(alertState);
   const router = useRouter();
-  const [socket, disconnect] = useGameSocket('matching');
+  const [socket] = useGameSocket('matching');
   const [gameMode, setGameMode] = useState<string>('classic');
   const { useGameInvitationModal } = useModalProvider();
   const { closeUpperModal, useMatchWaitingUpperModal } =
@@ -50,7 +49,7 @@ export default function GameLobby() {
 
   const handleQueueClick = () => {
     enterQueue.mutate({
-      mode: gameMode
+      mode: gameMode,
     });
   };
 
