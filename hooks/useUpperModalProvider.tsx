@@ -1,15 +1,15 @@
 import useTranslation from 'next-translate/useTranslation';
-import { useRouter } from 'next/router';
-
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
+
+import { useRouter } from 'next/router';
 
 import React, { FormEvent, MutableRefObject } from 'react';
 
 import { openUpperModalState, upperModalPartsState } from 'recoils/modal';
 
+import { isInGame } from 'types/gameTypes';
 import { ModalParts } from 'types/modalTypes';
 import { Achievement } from 'types/userTypes';
-import { isInGame } from 'types/gameTypes';
 
 import NumberInputBox from 'components/authentication/NumberInputBox';
 import RegisterCode from 'components/authentication/RegisterCode';
@@ -82,7 +82,7 @@ const useUpperModalProvider = () => {
           <UpperModalTitle title={t('Waiting For Match')} />
         </>
       ),
-      body: <Loading />,
+      body: <Loading useTimer={true} />,
       tail: (
         <BasicButton
           style='basic'
