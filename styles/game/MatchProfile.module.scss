@@ -13,16 +13,16 @@
 }
 
 .profileImg {
-  width: 6vh;
-  height: 6vh;
-  margin-right: 1vh;
+  width: 6dvh;
+  height: 6dvh;
+  margin-right: 1dvh;
   border-radius: 50%;
 }
 
 .emojiPopup {
-  width: 6vh;
-  height: 6vh;
-  margin-right: 1vh;
+  width: 6dvh;
+  height: 6dvh;
+  margin-right: 1dvh;
   border-radius: 50%;
   animation: shake 0.5s infinite;
 }
@@ -38,12 +38,12 @@
 
 .title {
   color: gray;
-  font-size: 2vh;
+  font-size: 2dvh;
 }
 
 .vs {
   font-weight: 800;
-  font-size: 4vh;
+  font-size: 4dvh;
 }
 
 @keyframes shake {
