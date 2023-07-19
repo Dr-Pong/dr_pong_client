@@ -18,10 +18,9 @@ const Joystick = ({
         // For example:
         zone: document.getElementById('pongGame'),
         mode: 'dynamic',
-        position: { left: '50%', top: '50%' },
         color: 'rgba(154, 154, 154, 0.3)',
         size: 75,
-        dynamicPage: true,
+        restJoystick: true,
       });
 
       // Add event listeners to handle joystick movements
