@@ -47,3 +47,8 @@ export interface ExpResult {
   expChange: number;
   levelExp: number;
 }
+
+export interface isInGame {
+  roomType: 'normal' | 'ladder';
+  roomId: string;
+}

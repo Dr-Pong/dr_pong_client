@@ -9,6 +9,7 @@ import { openUpperModalState, upperModalPartsState } from 'recoils/modal';
 
 import { ModalParts } from 'types/modalTypes';
 import { Achievement } from 'types/userTypes';
+import { isInGame } from 'types/gameTypes';
 
 import NumberInputBox from 'components/authentication/NumberInputBox';
 import RegisterCode from 'components/authentication/RegisterCode';
@@ -148,10 +149,10 @@ const useUpperModalProvider = () => {
     });
   };
 
-  const useIsInGameModal = (roomId: string) => {
+  const useIsInGameModal = (roomData: isInGame) => {
     const handelBackToGame = () => {
       closeUpperModal();
-      router.push(`/game/ladder/${roomId}`);
+      router.push(`/game/${roomData.roomType}/${roomData.roomId}`);
     };
 
     useUpperModal({
