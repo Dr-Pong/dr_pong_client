@@ -17,6 +17,7 @@ export interface Ball {
 export interface posData {
   ballPos: { x: number; y: number };
   playerXPos: { me: number; opponent: number };
+  gameTime: number;
 }
 
 export interface roundData {
@@ -32,6 +33,7 @@ export interface initData {
   ball: { x: number; y: number; size: number };
   server: boolean;
   round: number;
+  gameTime: number;
 }
 
 export interface countdownData {

@@ -43,6 +43,7 @@ export default function GameCanvas({
   const [result, setResult] = useState('');
   const [playerRatio, setPlayerRatio] = useState<Player>(initialData);
   const [ballWidthRatio, setWidthBallRatio] = useState(0);
+  const [remainingTime, setRemainingTime] = useState(0);
 
   const initListener = (data: initData) => {
     setServer(data.server);
@@ -72,6 +73,7 @@ export default function GameCanvas({
       height: data.me.height,
     });
     setWidthBallRatio(data.ball.size);
+    setRemainingTime(data.gameTime);
   };
 
   const countdownListener = (data: countdownData) => {
@@ -116,6 +118,7 @@ export default function GameCanvas({
       }
       return ballPath;
     });
+    if (data.gameTime !== remainingTime) setRemainingTime(data.gameTime);
   };
 
   const roundListener = (data: roundData) => {
@@ -178,12 +181,22 @@ export default function GameCanvas({
 
   const drawRound = (ctx: CanvasRenderingContext2D) => {
     ctx.font = '1.3rem Arial';
-    ctx.fillText(`Round: ${round}`, 10, canvasHeight / 2 - 10);
+    ctx.fillText(`Round: ${round}`, 10, netY + netHeight + 26);
     ctx.font = '1.5rem Arial';
     ctx.fillStyle = '#f868e1';
     ctx.fillText(`${myScore}`, canvasWidth - 30, netY + netHeight + 26);
     ctx.fillStyle = '#6804c6';
     ctx.fillText(`${opponentScore}`, canvasWidth - 30, netY - 10);
+  };
+
+  const drawGametime = (ctx: CanvasRenderingContext2D) => {
+    ctx.font = '1.5rem Arial';
+    ctx.fillStyle = '#6804c6';
+    const time = remainingTime / 1000;
+    if (time >= 10)
+      ctx.fillText(`${time.toFixed(0)}`, 10, canvasHeight / 2 - 10);
+    else if (time <= 0) ctx.fillText(`0.0`, 10, canvasHeight / 2 - 10);
+    else ctx.fillText(`${time.toFixed(1)}`, 10, canvasHeight / 2 - 10);
   };
 
   const drawCountdown = (ctx: CanvasRenderingContext2D) => {
@@ -219,6 +232,7 @@ export default function GameCanvas({
       drawNet(context);
       drawRound(context);
       drawBarBall(context);
+      drawGametime(context);
       if (countdown !== -1) drawCountdown(context);
       if (result) drawGameResult(context);
     }
