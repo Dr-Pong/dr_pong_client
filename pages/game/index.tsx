@@ -24,7 +24,7 @@ export default function Game() {
   const { useGameInstructionModal } = useModalProvider();
   const { closeUpperModal, useMatchWaitingUpperModal } =
     useUpperModalProvider();
-  const [socket, disconnect] = useGameSocket('matching');
+  const [socket] = useGameSocket('matching');
   const [normalClicked, setNormalClicked] = useState(false);
   const { mutationPost, mutationDelete } = useCustomQuery();
   const exitQueue = mutationDelete(`/games/queue`, {

@@ -1,7 +1,12 @@
 import useTranslation from 'next-translate/useTranslation';
+import { useSetRecoilState } from 'recoil';
 
+import React from 'react';
 import { useState } from 'react';
 
+import { alertState } from 'recoils/alert';
+
+import useAuthHandler from 'hooks/useAuthHandler';
 import useCustomQuery from 'hooks/useCustomQuery';
 
 import BasicButton from 'components/global/buttons/BasicButton';
@@ -9,16 +14,18 @@ import SignUpFields from 'components/signUp/SignUpFields';
 import Warnings from 'components/signUp/Warnings';
 
 import styles from 'styles/signUp/SignUp.module.scss';
-import useAuthHandler from 'hooks/useAuthHandler';
 
 export default function SignUpFrame() {
   const { t } = useTranslation('signUp');
   const { mutationPost } = useCustomQuery();
   const { onAuthSuccess } = useAuthHandler();
+  const setAlert = useSetRecoilState(alertState);
   const [wrongFields, setWrongFields] = useState<string[]>([]);
   const userSignUpMutation = mutationPost('/auth/signup', {
     onSuccess: onAuthSuccess,
-    onError: () => { },
+    onError: () => {
+      setAlert({ type: 'failure' });
+    },
   });
 
   const isValidImgId = (imgId: string | undefined) => {

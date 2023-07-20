@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 
 import { useRouter } from 'next/router';
 
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 
 import { userState } from 'recoils/user';
 

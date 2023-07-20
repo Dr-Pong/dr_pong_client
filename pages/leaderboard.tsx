@@ -1,6 +1,6 @@
 import useTranslation from 'next-translate/useTranslation';
 
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 
 import PageHeader from 'components/global/PageHeader';
 import AppLayout from 'components/layouts/AppLayout';

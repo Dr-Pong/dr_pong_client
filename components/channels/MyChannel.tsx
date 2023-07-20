@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
 
+import React from 'react';
+
 import { Channel } from 'types/channelTypes';
 
 import styles from 'styles/channels/MyChannel.module.scss';

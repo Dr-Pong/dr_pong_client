@@ -1,3 +1,5 @@
+import React from 'react';
+
 import BottomLeaders from 'components/leaderboard/BottomLeaders';
 import TopLeaders from 'components/leaderboard/TopLeaders';
 

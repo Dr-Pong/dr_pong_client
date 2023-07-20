@@ -15,7 +15,7 @@ export default (
   const { target } = req.query;
 
   if (req.method === 'GET') {
-    if (relations.hasOwnProperty(target as string))
+    if (Object.prototype.hasOwnProperty.call(relations, target as string))
       res.status(200).json(relations[target as string]);
     res.status(400).json({ message: 'No such user' });
   } else {

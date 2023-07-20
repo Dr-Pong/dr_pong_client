@@ -1,5 +1,6 @@
 import { useSetRecoilState } from 'recoil';
 
+import React from 'react';
 import { IoIosClose } from 'react-icons/io';
 
 import { openUpperModalState } from 'recoils/modal';

@@ -9,7 +9,7 @@ export default (
   req: NextApiRequest,
   res: NextApiResponse<Records | RecordDetail | Error>
 ) => {
-  const { count, lastGameId } = req.query;
+  const { lastGameId } = req.query;
   if (req.method === 'GET') {
     if (req.query.nickname !== 'hakim') {
       res.status(200).json({

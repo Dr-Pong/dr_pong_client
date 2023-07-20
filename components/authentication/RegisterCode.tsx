@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-
-import { AuthCode } from 'types/authTypes';
+import React from 'react';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
@@ -32,9 +30,3 @@ export default function RegisterCode() {
     </div>
   );
 }
-
-const defaultRegisterCode: AuthCode = {
-  redirectionUrl: '',
-  qrCode: '',
-  secretKey: '',
-};

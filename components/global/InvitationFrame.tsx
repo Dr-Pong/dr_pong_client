@@ -66,7 +66,7 @@ export default function InvitationFrame({
     ),
   };
 
-  if (!friendList.hasOwnProperty(type)) return null;
+  if (!Object.prototype.hasOwnProperty.call(friendList, type)) return null;
 
   return (
     <div className={styles.InvitationFrameContainer}>

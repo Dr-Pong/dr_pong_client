@@ -17,11 +17,13 @@ import Pagination from 'components/global/Pagination';
 
 import styles from 'styles/channels/ChannelsFrame.module.scss';
 
+const defaultCount = 10;
+
 export default function ChannelsFrame() {
   const [{ channels, currentPage, totalPage }, setChannelList] =
     useState<ChannelList>(defaultChannelList);
   const login = useRecoilValue(loginState);
-  const [count, setCount] = useState(10);
+  const count = defaultCount;
   const [page, setPage] = useState(currentPage);
   const [order, setOrder] = useState<string>('recent');
   const [keyword, setKeyword] = useState<string>('');
@@ -68,6 +70,7 @@ export default function ChannelsFrame() {
           {channels.map((eachChannel: Channel) => {
             return (
               <ChannelBox
+                key={eachChannel.id}
                 channel={eachChannel}
                 isMyChannel={
                   eachChannel.id === myChannelGet.data?.myChannel?.id

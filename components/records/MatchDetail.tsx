@@ -6,10 +6,10 @@ import { Record, RecordDetail } from 'types/historyTypes';
 
 import useRecordsQuery from 'hooks/useRecordsQuery';
 
+import ErrorRefresher from 'components/global/ErrorRefresher';
+import LoadingSpinner from 'components/global/LoadingSpinner';
 import LadderPoint from 'components/records/LadderPoint';
 import RoundRecordsBox from 'components/records/RoundRecordsBox';
-import LoadingSpinner from 'components/global/LoadingSpinner';
-import ErrorRefresher from 'components/global/ErrorRefresher';
 
 import styles from 'styles/records/MatchDetail.module.scss';
 

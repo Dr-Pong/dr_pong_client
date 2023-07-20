@@ -4,8 +4,6 @@ import React, { useEffect, useState } from 'react';
 
 import { bgmState, soundEffectState } from 'recoils/sound';
 
-import { gameResult } from 'types/gameTypes';
-
 import { useBgm } from 'hooks/useBgm';
 import useGameSocket from 'hooks/useGameSocket';
 import { useSoundEffect } from 'hooks/useSoundEffect';
@@ -36,7 +34,7 @@ export default function PongFrame({
 
   useEffect(() => {
     bgms.get('game')?.(bgmOn);
-    socket.once('gameEnd', (data: gameResult) => {
+    socket.once('gameEnd', () => {
       setIsEnd(true);
     });
     socket.on('barTouch', touchSound);

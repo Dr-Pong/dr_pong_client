@@ -6,6 +6,7 @@ import React from 'react';
 import { FiUserPlus } from 'react-icons/fi';
 import { MdLogout } from 'react-icons/md';
 
+import { alertState } from 'recoils/alert';
 import { sideBarState } from 'recoils/sideBar';
 
 import { Participant, RoomType } from 'types/chatTypes';
@@ -25,6 +26,7 @@ export default function Participants() {
   const router = useRouter();
   const { roomType, roomId } = router.query;
   const setSideBar = useSetRecoilState(sideBarState);
+  const setAlert = useSetRecoilState(alertState);
   const { useChannelInvitationModal } = useModalProvider();
   const { mutationDelete } = useCustomQuery();
   const { chatUsersGet } = useChatQuery(roomType as RoomType, roomId as string);
@@ -36,7 +38,9 @@ export default function Participants() {
         setSideBar(null);
         router.push('/channels');
       },
-      onError: () => {},
+      onError: () => {
+        setAlert({ type: 'failure' });
+      },
     }
   );
 

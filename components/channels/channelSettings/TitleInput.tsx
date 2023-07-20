@@ -1,6 +1,6 @@
 import useTranslation from 'next-translate/useTranslation';
 
-import { ChangeEvent, useCallback } from 'react';
+import React, { ChangeEvent, useCallback } from 'react';
 
 import { SettingFieldProps } from 'components/channels/channelSettings/ChannelSettings';
 

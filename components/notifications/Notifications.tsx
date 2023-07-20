@@ -1,3 +1,5 @@
+import React from 'react';
+
 import FriendRequestsBox from 'components/notifications/FriendRequestsBox';
 import InvitationList from 'components/notifications/InvitationList';
 

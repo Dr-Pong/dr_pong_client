@@ -1,5 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 
+import React from 'react';
+
 import styles from 'styles/signUp/Warnings.module.scss';
 
 type WarningsProps = {

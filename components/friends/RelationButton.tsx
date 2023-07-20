@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 import { ButtonDesign } from 'types/buttonTypes';
 import { UserInteraction } from 'types/friendTypes';

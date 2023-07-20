@@ -1,5 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 
+import React from 'react';
+
 import UserImages from 'components/global/UserImages';
 
 import styles from 'styles/signUp/SignUp.module.scss';

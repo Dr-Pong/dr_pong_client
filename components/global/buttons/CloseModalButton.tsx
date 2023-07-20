@@ -1,5 +1,7 @@
 import { useSetRecoilState } from 'recoil';
 
+import React from 'react';
+
 import { openModalState } from 'recoils/modal';
 
 import { ButtonProps } from 'types/buttonTypes';

@@ -1,15 +1,16 @@
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+
+import React from 'react';
+import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-import { useEffect } from 'react';
-
-import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
 import { openUpperModalState, upperModalPartsState } from 'recoils/modal';
 
 import styles from 'styles/modals/Modal.module.scss';
 
 export default function UpperModal() {
-  const [openUpperModal, setOpenUpperModal]
-    = useRecoilState(openUpperModalState);
+  const [openUpperModal, setOpenUpperModal] =
+    useRecoilState(openUpperModalState);
   const { head, body, tail } = useRecoilValue(upperModalPartsState);
   const resetUpperModalParts = useResetRecoilState(upperModalPartsState);
 
@@ -20,8 +21,7 @@ export default function UpperModal() {
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
       event.preventDefault();
-      if (openUpperModal)
-        setOpenUpperModal(false);
+      if (openUpperModal) setOpenUpperModal(false);
     };
     window.addEventListener('popstate', handlePopState);
 

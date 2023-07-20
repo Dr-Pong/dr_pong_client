@@ -5,8 +5,8 @@ import React, { ReactElement, useEffect } from 'react';
 import { RoomType } from 'types/chatTypes';
 
 import ChattingsFrame from 'components/chats/ChattingsFrame';
-import AppLayout from 'components/layouts/AppLayout';
 import SocketManager from 'components/global/SocketManager';
+import AppLayout from 'components/layouts/AppLayout';
 
 import styles from 'styles/chats/Chats.module.scss';
 

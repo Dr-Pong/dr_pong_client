@@ -1,10 +1,10 @@
 import useTranslation from 'next-translate/useTranslation';
 import nipplejs from 'nipplejs';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import toast from 'react-hot-toast';
 
-import { RoomType, gameResult } from 'types/gameTypes';
+import { RoomType } from 'types/gameTypes';
 import { Achievement, Title } from 'types/userTypes';
 
 import useGameSocket from 'hooks/useGameSocket';
@@ -88,7 +88,7 @@ const PongGame = ({
   const titleListener = (title: Title) => {
     toast(
       <span>
-        <h3 style={{ display: 'inline' }}>{`『${'pisciner'}』 `}</h3>
+        <h3 style={{ display: 'inline' }}>{`『${title.title}』 `}</h3>
         <span>{`${t('title achieved')}!`}</span>
       </span>
     );

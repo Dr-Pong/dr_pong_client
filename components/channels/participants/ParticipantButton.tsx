@@ -48,7 +48,7 @@ export default function ParticipantButton({
     },
   };
 
-  if (!buttonTypes.hasOwnProperty(type)) return null;
+  if (!Object.prototype.hasOwnProperty.call(buttonTypes, type)) return null;
   return (
     <MutationButton
       style='fit'

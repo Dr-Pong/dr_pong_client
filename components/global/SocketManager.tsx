@@ -25,19 +25,19 @@ export default function SocketManager({
   const [gameSocket, disconnectGameSocket] = useGameSocket(namespace);
 
   if (login) {
-    if ((namespace === 'game' || namespace === 'matching')
-      && gameSocket.disconnected)
+    if (
+      (namespace === 'game' || namespace === 'matching') &&
+      gameSocket.disconnected
+    )
       gameSocket.connect();
-    else if (chatSocket.disconnected)
-      chatSocket.connect();
+    else if (chatSocket.disconnected) chatSocket.connect();
   }
 
   useEffect(() => {
     return () => {
       if (namespace === 'game' || namespace === 'matching')
         disconnectGameSocket();
-      else
-        disconnectChatSocket();
+      else disconnectChatSocket();
     };
   }, [login]);
 

@@ -57,8 +57,9 @@ export default function FriendRequestsBox() {
     <div className={styles.friendRequestBox} onClick={handleRouterToFriends}>
       <span>{t('Friend requests')}</span>
       <span
-        className={`${styles.requestCount} ${totalCount === 0 && styles.noRequestCount
-          }`}
+        className={`${styles.requestCount} ${
+          totalCount === 0 && styles.noRequestCount
+        }`}
       >
         {totalCount}
       </span>

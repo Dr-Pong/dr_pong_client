@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { useLayoutEffect } from 'react';
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 
 import useAuthHandler from 'hooks/useAuthHandler';
 import useCustomQuery from 'hooks/useCustomQuery';

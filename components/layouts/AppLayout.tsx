@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { LayoutProps } from 'pages/_app';
 
 import Alert from 'components/alerts/Alert';

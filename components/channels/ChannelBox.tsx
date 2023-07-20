@@ -41,7 +41,7 @@ export default function ChannelBox({
         onSuccess: () => {
           router.push(`/chats/channel/${id}`);
         },
-        onError: (e: any) => {
+        onError: () => {
           setAlert({ type: 'failure' });
         },
       }

@@ -40,7 +40,7 @@ export default function PasswordSubmit({ roomId }: { roomId: string }) {
           router.push(`/chats/channel/${roomId}`);
           setOpenModal(false);
         },
-        onError: (e: any) => {
+        onError: () => {
           setAlert({ type: 'failure' });
           // Alert에 e.response.data.message를 띄워주는 것이 좋을 것 같다
         },

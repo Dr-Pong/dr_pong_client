@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Image } from 'types/userTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
@@ -22,7 +24,7 @@ export default function UserImages({
     <div className={styles.userImagesContainer}>
       {data.images.map(({ id, url }: Image, i: number) => {
         return (
-          <label key={i} className={styles.userImage} htmlFor={`${id}`} >
+          <label key={i} className={styles.userImage} htmlFor={`${id}`}>
             <input
               type='radio'
               id={`${id}`}

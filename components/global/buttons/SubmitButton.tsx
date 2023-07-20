@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { ButtonProps } from 'types/buttonTypes';
 
 import styles from 'styles/global/Button.module.scss';
@@ -8,7 +10,10 @@ export default function SubmitButton({
   handleButtonClick,
   children,
 }: ButtonProps) {
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    return;
+  };
+
   return (
     <form onSubmit={handleButtonClick || handleSubmit}>
       <button

@@ -1,5 +1,3 @@
-import { useRouter } from 'next/router';
-
 import React, { useEffect, useRef, useState } from 'react';
 
 import {
@@ -23,10 +21,9 @@ type GameCanvasProps = {
 
 export default function GameCanvas({
   canvasHeight,
-  canvasWidth
+  canvasWidth,
 }: GameCanvasProps) {
   const [socket] = useGameSocket('game');
-  const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvas = canvasRef.current;
   const context = canvas?.getContext('2d');
@@ -88,13 +85,13 @@ export default function GameCanvas({
       x: data.playerXPos.me * canvasWidth,
       y: playerRatio.y * canvasHeight,
       width: playerRatio.width * canvasWidth,
-      height: playerRatio.height * canvasHeight
+      height: playerRatio.height * canvasHeight,
     }));
     setOpponent((prevOpponent) => ({
       ...prevOpponent,
       x: data.playerXPos.opponent * canvasWidth,
       width: playerRatio.width * canvasWidth,
-      height: playerRatio.height * canvasHeight
+      height: playerRatio.height * canvasHeight,
     }));
     setBall((prevBall) => {
       ballSize = ballWidthRatio * canvasHeight;
@@ -194,15 +191,15 @@ export default function GameCanvas({
     ctx.fillStyle = '#00ffff';
     countdown === 0
       ? ctx.fillText(
-        'Game Start!!',
-        canvasWidth / 2 - 80,
-        canvasHeight / 2 - 10
-      )
+          'Game Start!!',
+          canvasWidth / 2 - 80,
+          canvasHeight / 2 - 10
+        )
       : ctx.fillText(
-        `${countdown}`,
-        canvasWidth / 2 - 5,
-        canvasHeight / 2 - 10
-      );
+          `${countdown}`,
+          canvasWidth / 2 - 5,
+          canvasHeight / 2 - 10
+        );
     ctx.font = '2rem Arial';
     ctx.fillStyle = '#ffff00';
     server
@@ -234,7 +231,7 @@ export default function GameCanvas({
     round,
     myScore,
     opponentScore,
-    result
+    result,
   ]);
 
   return (

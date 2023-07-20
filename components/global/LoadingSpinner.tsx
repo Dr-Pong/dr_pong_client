@@ -8,4 +8,4 @@ export default function LoadingSpinner() {
       <div className={styles.loadingSpinner} />
     </div>
   );
-};
+}

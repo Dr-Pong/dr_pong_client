@@ -2,9 +2,10 @@ import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
 
+import { alertState } from 'recoils/alert';
 import { sideBarState } from 'recoils/sideBar';
 
 import { DMRoom } from 'types/notificationTypes';
@@ -23,6 +24,7 @@ export default function DirectMessageBox({
   isEditable,
 }: DirectMessageBoxProps) {
   const setSideBar = useSetRecoilState(sideBarState);
+  const setAlert = useSetRecoilState(alertState);
   const { nickname, imgUrl, newChats } = dmRoom;
   const router = useRouter();
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
@@ -33,7 +35,9 @@ export default function DirectMessageBox({
       onSuccess: () => {
         setIsDeleted(true);
       },
-      onError: () => {},
+      onError: () => {
+        setAlert({ type: 'failure' });
+      },
     }
   );
 

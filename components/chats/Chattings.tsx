@@ -149,7 +149,6 @@ export default function Chattings({
   }, [chats]);
 
   const {
-    data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,

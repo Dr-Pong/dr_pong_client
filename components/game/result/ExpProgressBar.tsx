@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue } from 'recoil';
 
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import { userState } from 'recoils/user';
 

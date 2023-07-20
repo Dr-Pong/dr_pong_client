@@ -11,7 +11,7 @@ type Rankers = {
 };
 
 export default (req: NextApiRequest, res: NextApiResponse<Rankers | Error>) => {
-  const { count, offset } = req.query;
+  const { offset } = req.query;
   const num = typeof offset === 'string' ? parseInt(offset) - 1 : 1;
 
   if (req.method === 'GET') {

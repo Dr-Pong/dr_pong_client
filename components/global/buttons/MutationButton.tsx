@@ -1,5 +1,7 @@
 import { useSetRecoilState } from 'recoil';
 
+import React from 'react';
+
 import { alertState } from 'recoils/alert';
 
 import { MutationButtonProps } from 'types/buttonTypes';
@@ -21,6 +23,8 @@ export default function MutationButton({
   const { queryClient } = useCustomQuery();
   const setAlert = useSetRecoilState(alertState);
   const handleMutation = () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     mutationRequest.mutate(body, {
       onSuccess: () => {
         setAlert({ type: 'success' });
