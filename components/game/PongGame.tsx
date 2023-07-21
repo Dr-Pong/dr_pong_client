@@ -5,7 +5,6 @@ import React, { useEffect } from 'react';
 import toast from 'react-hot-toast';
 
 import { RoomType } from 'types/gameTypes';
-import { Achievement, Title } from 'types/userTypes';
 
 import useGameSocket from 'hooks/useGameSocket';
 
@@ -73,7 +72,10 @@ const PongGame = ({
     };
   }, []);
 
-  const achievementListener = (achievement: Achievement) => {
+  const achievementListener = (achievement: {
+    imgUrl: string;
+    name: string;
+  }) => {
     toast(`${t(achievement.name)} ${t('achieved')}!`, {
       icon: (
         <img
@@ -85,7 +87,7 @@ const PongGame = ({
     });
   };
 
-  const titleListener = (title: Title) => {
+  const titleListener = (title: { title: string }) => {
     toast(
       <span>
         <h3 style={{ display: 'inline' }}>{`『${title.title}』 `}</h3>
