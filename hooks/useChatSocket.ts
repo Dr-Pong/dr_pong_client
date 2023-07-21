@@ -26,7 +26,6 @@ const useChatSocket = (namespace: SocketNamespace): [Socket, () => void] => {
       Authorization: `Bearer ${getAuthorization()}`,
     },
   });
-  console.log('on io', sockets[namespace], getAuthorization());
   return [sockets[namespace], disconnect];
 };
 
