@@ -2,8 +2,7 @@ import axios from 'axios';
 
 import getAuthorization from 'utils/cookieUtil';
 
-const baseURL = `http://localhost:3000/api`;
-// const baseURL = 'http://10.19.219.189:2998'; // 허남준
+const baseURL = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
 const instance = axios.create({ baseURL });
 
