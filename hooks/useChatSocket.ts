@@ -29,6 +29,6 @@ const useChatSocket = (namespace: SocketNamespace): [Socket, () => void] => {
   return [sockets[namespace], disconnect];
 };
 
-const chatSocketUrl = 'ws://10.19.223.86:2229';
-// const chatSocketUrl = 'ws://localhost:2999';
+const chatSocketUrl = process.env.NEXT_PUBLIC_CHAT_SOCKET;
+
 export default useChatSocket;
