@@ -6,7 +6,7 @@ import { bgmState } from 'recoils/sound';
 
 type AudioPlayer = (isBgmOn?: boolean) => void;
 const bgms: Map<string, AudioPlayer> = new Map();
-const data = {
+const data: { [key: string]: string } = {
   bgm: '/sound/bgm.mp3',
   game: '/sound/bgm2.mp3',
 };
@@ -34,7 +34,7 @@ export function useBgm(): {
         .then((audioBuffer) => {
           const sourceNodes: AudioBufferSourceNode[] = [];
 
-          bgms.set(key, (isBgmOn: boolean) => {
+          bgms.set(key, (isBgmOn?: boolean) => {
             bgms.forEach((value, key) => {
               if (key.endsWith('_stop')) {
                 value();

@@ -17,7 +17,7 @@ export default function SoundEffectField() {
   const enableSoundEffect = () => {
     localStorage.setItem('soundEffectOn', 'true');
     setSoundEffectOn(true);
-    if (loaded) effects.get('cork')(true);
+    if (loaded) effects.get('cork')?.(true);
   };
 
   const disableSoundEffect = () => {

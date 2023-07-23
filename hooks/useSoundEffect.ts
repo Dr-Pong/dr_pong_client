@@ -6,7 +6,7 @@ import { soundEffectState } from 'recoils/sound';
 
 type AudioPlayer = (isSoundOn?: boolean) => void;
 const effects: Map<string, AudioPlayer> = new Map();
-const data = {
+const data: { [key: string]: string } = {
   cork: '/sound/cork.mp3',
   pong: '/sound/pong.mp3',
   hit: '/sound/hit.mp3',
@@ -25,7 +25,7 @@ export function useSoundEffect(): {
     const AudioContext = window.AudioContext;
     const audioContext = new AudioContext();
 
-    effects.set('ping', (isSoundOn: boolean) => {
+    effects.set('ping', (isSoundOn?: boolean) => {
       if (!isSoundOn) return;
       const oscillator = audioContext.createOscillator();
       oscillator.type = 'triangle';
@@ -47,7 +47,7 @@ export function useSoundEffect(): {
         .then((audioBuffer) => {
           const sourceNodes: AudioBufferSourceNode[] = [];
 
-          effects.set(key, (isSoundOn: boolean) => {
+          effects.set(key, (isSoundOn?: boolean) => {
             if (!isSoundOn) return;
             const trackSource = audioContext.createBufferSource();
             trackSource.buffer = audioBuffer;
