@@ -85,7 +85,7 @@ export default function Game() {
   return (
     <div className={styles.gamePageContainer}>
       {normalClicked ? (
-        <GameLobby />
+        <GameLobby setNormalClicked={setNormalClicked} />
       ) : (
         <div className={styles.buttonList}>
           {buttons.map((button) => button)}

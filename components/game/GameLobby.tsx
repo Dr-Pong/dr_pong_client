@@ -4,6 +4,7 @@ import { useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
 
 import React, { ChangeEvent, useState } from 'react';
+import { BiUndo } from 'react-icons/bi';
 
 import { alertState } from 'recoils/alert';
 
@@ -16,7 +17,11 @@ import PageHeader from 'components/global/PageHeader';
 
 import styles from 'styles/game/GameLobby.module.scss';
 
-export default function GameLobby() {
+export default function GameLobby({
+  setNormalClicked,
+}: {
+  setNormalClicked: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const { t } = useTranslation('game');
   const setAlert = useSetRecoilState(alertState);
   const router = useRouter();
@@ -62,6 +67,10 @@ export default function GameLobby() {
     setGameMode(value);
   };
 
+  const handleGoBackClick = () => {
+    setNormalClicked(false);
+  };
+
   const joinGameListener = (data: { roomId: string }) => {
     closeUpperModal();
     router.push(`/game/normal/${data.roomId}`);
@@ -101,6 +110,13 @@ export default function GameLobby() {
             onClick={handleInviteClick}
           >
             {t('invite')}
+          </button>
+          <button
+            key={'guide'}
+            className={`${styles.button} ${styles.guide}`}
+            onClick={handleGoBackClick}
+          >
+            {<BiUndo />}
           </button>
         </div>
       </div>
