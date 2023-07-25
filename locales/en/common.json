@@ -49,5 +49,7 @@
   "guide": "Hitchhiker's Guide To Dr.Pong",
   "inGameNotify": "There is a game in progress.",
   "backToGame": "Go back to game",
-  "multiConnectWarning": "You are logged in from a new environment."
+  "multiConnectWarning": "You are logged in from a new environment.",
+  "inviteGame": "Invite game",
+  "gameMode": "Game Mode"
 }

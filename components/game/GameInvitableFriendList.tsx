@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { IoMdAdd } from 'react-icons/io';
 
 import { Friend, Statuses } from 'types/friendTypes';
 
@@ -7,7 +8,14 @@ import useChatSocket from 'hooks/useChatSocket';
 import GameInvitationButton from 'components/game/GameInvitationButton';
 import UserBox from 'components/global/UserBox';
 
+import { ButtonDesign } from 'types/buttonTypes';
+
 import styles from 'styles/modals/Modal.module.scss';
+
+const button: ButtonDesign = {
+  style: 'round',
+  color: 'pink',
+};
 
 type GameInvitableFriendListProps = {
   friends: Friend[];
@@ -45,7 +53,13 @@ export default function GameInvitableFriendList({
     <div className={styles.InvitableFriendList}>
       {filterOnlineFriends().map((friend) => (
         <UserBox key={friend.nickname} type='invitation' friend={friend}>
-          <GameInvitationButton nickname={friend.nickname} mode={mode} />
+          <GameInvitationButton
+            nickname={friend.nickname}
+            mode={mode}
+            buttonDesign={button}
+          >
+            <IoMdAdd />
+          </GameInvitationButton>
         </UserBox>
       ))}
     </div>

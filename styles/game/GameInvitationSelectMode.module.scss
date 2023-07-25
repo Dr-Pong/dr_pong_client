@@ -1,0 +1,23 @@
+@import 'styles/common';
+
+.contents {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 2rem;
+}
+
+.modeList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: stretch;
+  width: 10rem;
+  gap: 1rem;
+}
+
+.radio {
+  @include radioLabelWrap;
+  font-size: 1.2rem;
+}
