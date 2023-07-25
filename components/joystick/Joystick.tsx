@@ -9,14 +9,14 @@ const Joystick = ({
   onJoy?: (data: nipplejs.JoystickOutputData) => void;
   offJoy?: () => void;
 }) => {
-  const joystickRef = useRef<HTMLDivElement>(null);
+  const joystickRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     import('nipplejs').then((nipplejs) => {
       const joystick = nipplejs.create({
         // Customize the joystick appearance and behavior here
         // For example:
-        zone: document.getElementById('pongGame'),
+        zone: document.getElementById('pongGame') ?? undefined,
         mode: 'dynamic',
         color: 'rgba(154, 154, 154, 0.3)',
         size: 75,
@@ -32,7 +32,7 @@ const Joystick = ({
         offJoy?.();
       });
 
-      joystickRef.current = joystick as any;
+      joystickRef.current = joystick as unknown as HTMLDivElement;
     });
   }, []);
 

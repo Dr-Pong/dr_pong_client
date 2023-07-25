@@ -16,11 +16,11 @@ export default function BgmField() {
   const { bgms, loaded } = useBgm();
   const enableBgm = () => {
     setBgmOn(true);
-    bgms.get('bgm')(true);
+    bgms.get('bgm')?.(true);
   };
 
   const disableBgm = () => {
-    bgms.get('bgm_stop')();
+    bgms.get('bgm_stop')?.();
     setBgmOn(false);
   };
 

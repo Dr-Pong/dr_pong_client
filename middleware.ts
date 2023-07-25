@@ -12,9 +12,9 @@ export async function middleware(req: NextRequest) {
   }
   if (
     req.cookies.get('NEXT_LOCALE') &&
-    req.cookies.get('NEXT_LOCALE').value !== req.nextUrl.locale
+    req.cookies.get('NEXT_LOCALE')?.value !== req.nextUrl.locale
   ) {
-    const locale = req.cookies.get('NEXT_LOCALE').value;
+    const locale = req.cookies.get('NEXT_LOCALE')?.value;
     return NextResponse.redirect(
       new URL(`/${locale}${req.nextUrl.pathname}${req.nextUrl.search}`, req.url)
     );

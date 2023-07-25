@@ -31,7 +31,7 @@ export default function GameResultDetail({
 
   useEffect(() => {
     if (showFireworks) {
-      const container = document.getElementById('fireworks');
+      const container = document.getElementById('fireworks') ?? document.body;
       const fireworks = new Fireworks(container, options);
       fireworks.start();
     }
