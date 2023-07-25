@@ -18,9 +18,9 @@ import PageHeader from 'components/global/PageHeader';
 import styles from 'styles/game/GameLobby.module.scss';
 
 export default function GameLobby({
-  setNormalClicked,
+  handleGoBackClick,
 }: {
-  setNormalClicked: React.Dispatch<React.SetStateAction<boolean>>;
+  handleGoBackClick: () => void;
 }) {
   const { t } = useTranslation('game');
   const setAlert = useSetRecoilState(alertState);
@@ -65,10 +65,6 @@ export default function GameLobby({
   const handleModeChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setGameMode(value);
-  };
-
-  const handleGoBackClick = () => {
-    setNormalClicked(false);
   };
 
   const joinGameListener = (data: { roomId: string }) => {
