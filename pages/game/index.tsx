@@ -58,6 +58,10 @@ export default function Game() {
     setNormalClicked(true);
   };
 
+  const handleGoBackClick = () => {
+    setNormalClicked(false);
+  };
+
   const buttons = [
     <button
       key={'ladder'}
@@ -85,7 +89,7 @@ export default function Game() {
   return (
     <div className={styles.gamePageContainer}>
       {normalClicked ? (
-        <GameLobby />
+        <GameLobby handleGoBackClick={handleGoBackClick} />
       ) : (
         <div className={styles.buttonList}>
           {buttons.map((button) => button)}
