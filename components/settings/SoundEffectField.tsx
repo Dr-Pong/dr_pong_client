@@ -1,3 +1,4 @@
+import useTranslation from 'next-translate/useTranslation';
 import { useRecoilState } from 'recoil';
 
 import React from 'react';
@@ -12,6 +13,7 @@ import BasicButton from 'components/global/buttons/BasicButton';
 import styles from 'styles/settings/SettingField.module.scss';
 
 export default function SoundEffectField() {
+  const { t } = useTranslation('common');
   const [soundEffectOn, setSoundEffectOn] = useRecoilState(soundEffectState);
   const { effects, loaded } = useSoundEffect();
   const enableSoundEffect = () => {
@@ -25,6 +27,19 @@ export default function SoundEffectField() {
     setSoundEffectOn(false);
   };
 
+  const contents = {
+    enable: (
+      <div className={styles.buttonContent}>
+        <HiSpeakerWave /> {t('On')}
+      </div>
+    ),
+    disable: (
+      <div className={styles.buttonContent}>
+        <HiSpeakerXMark /> {t('Off')}
+      </div>
+    ),
+  };
+
   if (!loaded) return null;
 
   return (
@@ -36,7 +51,7 @@ export default function SoundEffectField() {
           soundEffectOn ? disableSoundEffect : enableSoundEffect
         }
       >
-        {soundEffectOn ? <HiSpeakerXMark /> : <HiSpeakerWave />}
+        {soundEffectOn ? contents.disable : contents.enable}
       </BasicButton>
     </div>
   );
