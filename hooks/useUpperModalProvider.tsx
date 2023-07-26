@@ -66,7 +66,7 @@ const useUpperModalProvider = () => {
               color='purple'
               handleButtonClick={handleConfirmModal}
             >
-              {t('Ok')}
+              {t('ok')}
             </BasicButton>,
           ]}
         />
