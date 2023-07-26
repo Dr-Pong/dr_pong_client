@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import { useRecoilValue } from 'recoil';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -29,6 +31,7 @@ export default function Chattings({
   roomType,
   roomId,
 }: ChattingsProps) {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const { nickname } = useRecoilValue(userState);
   const [chats, setChats] = useState<Chat[]>([]);
@@ -36,6 +39,7 @@ export default function Chattings({
   const [isTopRefVisible, setIsTopRefVisible] = useState(true);
   const [isBottomRefVisible, setIsBottomRefVisible] = useState(false);
   const [newestChat, setNewestChat] = useState<Chat | null>(null);
+  const [inputDisabled, setInputDisables] = useState(false);
   const { chatsGet } = useChatQuery(roomType, roomId);
   const { mutate } = useChatQuery(roomType, roomId).postChatMutation();
   const topRef = useRef<HTMLDivElement>(null);
@@ -50,15 +54,25 @@ export default function Chattings({
     const newSystemMessageListener = (data: Chat) => {
       setChats((prev) => [{ ...data, id: prev[0]?.id + 1 }, ...prev]);
     };
+    const kickBanListener = () => {
+      router.push('/channels');
+    }
+    const muteListener = () => {
+      setInputDisables(true);
+    }
 
     socket.on('message', newMessageListener);
     socket.on('system', newSystemMessageListener);
+    socket.on('out', kickBanListener);
+    socket.on('mute', muteListener);
     if (roomType === 'dm') {
       socket.emit('dear', { nickname: roomId });
     }
     return () => {
       socket.off('message', newMessageListener);
       socket.off('system', newSystemMessageListener);
+      socket.off('out', kickBanListener);
+      socket.off('mute', muteListener);
     };
   }, []);
 
@@ -201,6 +215,7 @@ export default function Chattings({
         message={message}
         setMessage={setMessage}
         handleChatPost={handleChatPost}
+        inputDisabled={inputDisabled}
       />
     </div>
   );
