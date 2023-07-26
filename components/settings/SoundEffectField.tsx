@@ -30,12 +30,12 @@ export default function SoundEffectField() {
   const contents = {
     enable: (
       <div className={styles.buttonContent}>
-        <HiSpeakerWave /> {t('On')}
+        {t('on')} <HiSpeakerWave />
       </div>
     ),
     disable: (
       <div className={styles.buttonContent}>
-        <HiSpeakerXMark /> {t('Off')}
+        {t('off')} <HiSpeakerXMark />
       </div>
     ),
   };

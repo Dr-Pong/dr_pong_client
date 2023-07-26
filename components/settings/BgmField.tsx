@@ -29,12 +29,12 @@ export default function BgmField() {
   const contents = {
     enable: (
       <div className={styles.buttonContent}>
-        <TbMusic /> {t('On')}
+        {t('on')} <TbMusic />
       </div>
     ),
     disable: (
       <div className={styles.buttonContent}>
-        <TbMusicOff /> {t('Off')}
+        {t('off')} <TbMusicOff />
       </div>
     ),
   };
