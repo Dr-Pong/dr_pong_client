@@ -13,7 +13,7 @@ import { Achievement } from 'types/userTypes';
 
 import NumberInputBox from 'components/authentication/NumberInputBox';
 import RegisterCode from 'components/authentication/RegisterCode';
-import Loading from 'components/global/LoadingSpinner';
+import QueueSpinner from 'components/global/QueueSpinner';
 import SocketManager from 'components/global/SocketManager';
 import BasicButton from 'components/global/buttons/BasicButton';
 import SubmitButton from 'components/global/buttons/SubmitButton';
@@ -22,8 +22,6 @@ import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
 import UpperModalTitle from 'components/modals/upperModalParts/UpperModalTitle';
 
 import selectableItemStyles from 'styles/myPage/SelectableItem.module.scss';
-
-import QueueSpinner from '../components/global/QueueSpinner';
 
 const useUpperModalProvider = () => {
   const { t } = useTranslation('common');
