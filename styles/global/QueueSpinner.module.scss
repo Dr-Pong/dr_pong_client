@@ -1,3 +1,5 @@
+@import 'styles/common';
+
 .queueSpinnerContainer {
   display: flex;
   align-items: center;
@@ -8,7 +10,7 @@
 .time {
   font-size: 1.5rem;
   font-weight: bold;
-  color: indigo;
+  color: $just-purple;
   background: transparent;
   position: absolute;
 }
