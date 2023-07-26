@@ -19,7 +19,15 @@ export function useBgm(): {
   useEffect(() => {
     const promises: Promise<void>[] = [];
 
-    const AudioContext = window.AudioContext;
+    let AudioContext;
+    if (window.AudioContext) {
+      AudioContext = window.AudioContext;
+    } else if ((window as any).webkitAudioContext) {
+      AudioContext = (window as any).webkitAudioContext;
+    } else {
+      return;
+    }
+
     const audioContext = new AudioContext();
 
     Object.keys(data).forEach((key) => {

@@ -22,7 +22,15 @@ export function useSoundEffect(): {
     setSoundEffectOn(localStorage.getItem('soundEffectOn') === 'true');
     const promises: Promise<void>[] = [];
 
-    const AudioContext = window.AudioContext;
+    let AudioContext;
+    if (window.AudioContext) {
+      AudioContext = window.AudioContext;
+    } else if ((window as any).webkitAudioContext) {
+      AudioContext = (window as any).webkitAudioContext;
+    } else {
+      return;
+    }
+
     const audioContext = new AudioContext();
 
     effects.set('ping', (isSoundOn?: boolean) => {
