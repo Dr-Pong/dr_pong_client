@@ -27,6 +27,6 @@ const useGameSocket = (namespace: string): [Socket, () => void] => {
   return [sockets[namespace], disconnect];
 };
 
-const gameSocketUrl = process.env.NEXT_PUBLIC_GAME_SOCKET;
+const gameSocketUrl = process.env.NEXT_PUBLIC_GAME_SOCKET ?? '';
 
 export default useGameSocket;

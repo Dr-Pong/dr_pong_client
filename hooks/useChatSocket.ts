@@ -29,6 +29,6 @@ const useChatSocket = (namespace: SocketNamespace): [Socket, () => void] => {
   return [sockets[namespace], disconnect];
 };
 
-const chatSocketUrl = process.env.NEXT_PUBLIC_CHAT_SOCKET;
+const chatSocketUrl = process.env.NEXT_PUBLIC_CHAT_SOCKET ?? '';
 
 export default useChatSocket;
