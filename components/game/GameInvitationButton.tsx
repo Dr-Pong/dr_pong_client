@@ -38,7 +38,7 @@ export default function GameInvitationButton({
   const gameInviteMutation = mutationPost('/invitations/games', {
     onSuccess: () => {
       closeModal();
-      useMatchWaitingUpperModal(invitationCancelMutation.mutate);
+      useMatchWaitingUpperModal(invitationCancelMutation.mutate, false);
       socket.once('joinGame', joinGameListener);
     },
     onError: () => {

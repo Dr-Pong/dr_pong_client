@@ -42,7 +42,7 @@ export default function GameLobby({
   });
   const enterQueue = mutationPost(`/games/queue/normal`, {
     onSuccess: () => {
-      useMatchWaitingUpperModal(exitQueue.mutate);
+      useMatchWaitingUpperModal(exitQueue.mutate, true);
       socket.once('joinGame', joinGameListener);
     },
     onError: () => {

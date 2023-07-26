@@ -23,6 +23,8 @@ import UpperModalTitle from 'components/modals/upperModalParts/UpperModalTitle';
 
 import selectableItemStyles from 'styles/myPage/SelectableItem.module.scss';
 
+import QueueSpinner from '../components/global/QueueSpinner';
+
 const useUpperModalProvider = () => {
   const { t } = useTranslation('common');
   const router = useRouter();
@@ -74,7 +76,10 @@ const useUpperModalProvider = () => {
     });
   };
 
-  const useMatchWaitingUpperModal = (handleGameCancel: () => void) => {
+  const useMatchWaitingUpperModal = (
+    handleGameCancel: () => void,
+    useTimer: boolean
+  ) => {
     useUpperModal({
       head: (
         <>
@@ -82,7 +87,9 @@ const useUpperModalProvider = () => {
           <UpperModalTitle title={t('Waiting For Match')} />
         </>
       ),
-      body: <Loading useTimer={true} />,
+      body: (
+        <QueueSpinner useTimer={useTimer} handleGameCancel={handleGameCancel} />
+      ),
       tail: (
         <BasicButton
           style='basic'
