@@ -37,7 +37,7 @@ export default function Game() {
   });
   const enterQueue = mutationPost(`/games/queue/ladder`, {
     onSuccess: () => {
-      useMatchWaitingUpperModal(exitQueue.mutate);
+      useMatchWaitingUpperModal(exitQueue.mutate, true);
       socket.once('joinGame', joinGameListener);
     },
     onError: () => {

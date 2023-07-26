@@ -1,0 +1,16 @@
+@import 'styles/common';
+
+.queueSpinnerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.time {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: $just-purple;
+  background: transparent;
+  position: absolute;
+}

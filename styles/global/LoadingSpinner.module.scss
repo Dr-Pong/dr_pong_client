@@ -1,3 +1,5 @@
+@import 'styles/common';
+
 .loadingContainer {
   display: flex;
   align-items: center;
@@ -10,7 +12,7 @@
   width: 5rem;
   height: 5rem;
   margin: 3rem;
-  border: 0.2rem solid indigo;
+  border: 0.2rem solid $just-purple;
   border-top-color: #0001;
   border-radius: 50%;
   animation: loadingspinner 1s linear infinite;
@@ -23,12 +25,4 @@
   100% {
     transform: rotate(360deg);
   }
-}
-
-.time {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: indigo;
-  background: transparent;
-  position: absolute;
 }

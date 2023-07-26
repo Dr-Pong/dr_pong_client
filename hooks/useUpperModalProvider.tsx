@@ -13,7 +13,7 @@ import { Achievement } from 'types/userTypes';
 
 import NumberInputBox from 'components/authentication/NumberInputBox';
 import RegisterCode from 'components/authentication/RegisterCode';
-import Loading from 'components/global/LoadingSpinner';
+import QueueSpinner from 'components/global/QueueSpinner';
 import SocketManager from 'components/global/SocketManager';
 import BasicButton from 'components/global/buttons/BasicButton';
 import SubmitButton from 'components/global/buttons/SubmitButton';
@@ -74,7 +74,10 @@ const useUpperModalProvider = () => {
     });
   };
 
-  const useMatchWaitingUpperModal = (handleGameCancel: () => void) => {
+  const useMatchWaitingUpperModal = (
+    handleGameCancel: () => void,
+    useTimer: boolean
+  ) => {
     useUpperModal({
       head: (
         <>
@@ -82,7 +85,9 @@ const useUpperModalProvider = () => {
           <UpperModalTitle title={t('Waiting For Match')} />
         </>
       ),
-      body: <Loading useTimer={true} />,
+      body: (
+        <QueueSpinner useTimer={useTimer} handleGameCancel={handleGameCancel} />
+      ),
       tail: (
         <BasicButton
           style='basic'
