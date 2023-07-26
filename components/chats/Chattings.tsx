@@ -60,11 +60,15 @@ export default function Chattings({
     const muteListener = () => {
       setInputDisables(true);
     }
+    const unmuteListener = () => {
+      setInputDisables(false);
+    }
 
     socket.on('message', newMessageListener);
     socket.on('system', newSystemMessageListener);
     socket.on('out', kickBanListener);
     socket.on('mute', muteListener);
+    socket.on('unmute', unmuteListener);
     if (roomType === 'dm') {
       socket.emit('dear', { nickname: roomId });
     }
@@ -73,6 +77,7 @@ export default function Chattings({
       socket.off('system', newSystemMessageListener);
       socket.off('out', kickBanListener);
       socket.off('mute', muteListener);
+      socket.off('unmute', unmuteListener);
     };
   }, []);
 
