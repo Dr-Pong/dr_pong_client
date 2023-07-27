@@ -16,6 +16,7 @@ import GameInvitableSelectMode from 'components/game/GameInvitationSelectMode';
 import InvitationFrame from 'components/global/InvitationFrame';
 import UserImages from 'components/global/UserImages';
 import CloseModalButton from 'components/global/buttons/CloseModalButton';
+import GoHomeCloseModalButton from 'components/global/buttons/GoHomeCloseModalButton';
 import ModalButton from 'components/global/buttons/ModalButton';
 import ButtonRow from 'components/global/buttons/buttonContainers/ButtonRow';
 import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
@@ -66,10 +67,11 @@ const useModalProvider = () => {
       tail: (
         <ButtonRow
           buttonList={[
-            <CloseModalButton style='flex' color='purple'>
+            <CloseModalButton key='close' style='flex' color='purple'>
               {t('cancel')}
             </CloseModalButton>,
             <ModalButton
+              key='modal'
               style='flex'
               color='purple'
               handleButtonClick={callback}
@@ -138,9 +140,9 @@ const useModalProvider = () => {
       head: null,
       body: <ModalPhrase>{t('needLogin')}</ModalPhrase>,
       tail: (
-        <CloseModalButton style='long' color='purple'>
+        <GoHomeCloseModalButton style='long' color='purple'>
           {t('close')}
-        </CloseModalButton>
+        </GoHomeCloseModalButton>
       ),
     });
   };
