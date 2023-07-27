@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { alertState } from 'recoils/alert';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useQueryClient } from 'react-query';
@@ -34,6 +35,7 @@ export default function Chattings({
   const router = useRouter();
   const queryClient = useQueryClient();
   const { nickname } = useRecoilValue(userState);
+  const setAlert = useSetRecoilState(alertState);
   const [chats, setChats] = useState<Chat[]>([]);
   const [message, setMessage] = useState<string>('');
   const [isTopRefVisible, setIsTopRefVisible] = useState(true);
@@ -54,7 +56,13 @@ export default function Chattings({
     const newSystemMessageListener = (data: Chat) => {
       setChats((prev) => [{ ...data, id: prev[0]?.id + 1 }, ...prev]);
     };
-    const kickBanListener = () => {
+    const kickBanListener = (data: { type: 'kick' | 'ban' }) => {
+      setAlert({
+        type: 'failure',
+        message: data.type === 'kick'
+          ? 'You are kicked from the channel'
+          : 'You are Banned from the channel'
+      });
       router.push('/channels');
     }
     const muteListener = () => {
