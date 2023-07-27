@@ -16,7 +16,6 @@
 .leftWrap {
   display: grid;
   grid-template-rows: repeat(2, 1fr);
-  gap: 1rem;
   justify-self: stretch;
 }
 
@@ -29,7 +28,8 @@
 
 .top {
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: space-between;
   margin-bottom: 0.5rem;
 }
 
