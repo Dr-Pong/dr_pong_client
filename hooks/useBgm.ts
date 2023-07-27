@@ -22,8 +22,6 @@ export function useBgm(): {
     let AudioContext;
     if (window.AudioContext) {
       AudioContext = window.AudioContext;
-    } else if ((window as any).webkitAudioContext) {
-      AudioContext = (window as any).webkitAudioContext;
     } else {
       return;
     }

@@ -1,3 +1,4 @@
+import useTranslation from 'next-translate/useTranslation';
 import { useRecoilState } from 'recoil';
 
 import React from 'react';
@@ -12,6 +13,7 @@ import BasicButton from 'components/global/buttons/BasicButton';
 import styles from 'styles/settings/SettingField.module.scss';
 
 export default function BgmField() {
+  const { t } = useTranslation('common');
   const [bgmOn, setBgmOn] = useRecoilState(bgmState);
   const { bgms, loaded } = useBgm();
   const enableBgm = () => {
@@ -24,6 +26,19 @@ export default function BgmField() {
     setBgmOn(false);
   };
 
+  const contents = {
+    enable: (
+      <div className={styles.buttonContent}>
+        {t('on')} <TbMusic />
+      </div>
+    ),
+    disable: (
+      <div className={styles.buttonContent}>
+        {t('off')} <TbMusicOff />
+      </div>
+    ),
+  };
+
   if (!loaded) return null;
   return (
     <div className={styles.fieldContainer}>
@@ -32,7 +47,9 @@ export default function BgmField() {
         color='purple'
         handleButtonClick={bgmOn ? disableBgm : enableBgm}
       >
-        {bgmOn ? <TbMusicOff /> : <TbMusic />}
+        <div className={styles.buttonContent}>
+          {bgmOn ? contents.disable : contents.enable}
+        </div>
       </BasicButton>
     </div>
   );
