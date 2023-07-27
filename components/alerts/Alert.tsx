@@ -9,7 +9,7 @@ import { alertState } from 'recoils/alert';
 import styles from 'styles/alerts/Alert.module.scss';
 
 export type AlertType = {
-  type: 'success' | 'failure';
+  type: 'success' | 'failure' | 'warning';
   message?: string;
 } | null;
 
@@ -30,15 +30,23 @@ export default function Alert() {
     setAlert(null);
   };
 
-  if (alert)
+  const alertEmoji: { [key: string]: string } = {
+    success: '✅',
+    failure: '❌',
+    warning: '⚠️',
+  };
+
+  if (alert) {
+    const { type, message } = alert;
     return createPortal(
       <div className={styles.alertBackdrop} onClick={handleBackdropClick}>
-        <div className={`${styles.alertContainer} ${styles[alert.type]}`}>
-          <span>{alert.type === 'success' ? '✅' : '❌'}</span>
-          <span>{alert.message ?? t(alert.type)}</span>
+        <div className={`${styles.alertContainer} ${styles[type]}`}>
+          <span>{alertEmoji[type]}</span>
+          <span>{message ?? t(type)}</span>
         </div>
       </div>,
       document.getElementById('alertRoot') as HTMLElement
     );
+  }
   return null;
 }

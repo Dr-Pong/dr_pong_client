@@ -28,6 +28,7 @@
   "off": "끄기",
   "success": "요청이 성공했습니다.",
   "failure": "요청이 실패했습니다.",
+  "warning": "요청이 실패했습니다.",
   "Messages": "메시지",
   "Notifications": "알림",
   "Friend requests": "친구 요청",
