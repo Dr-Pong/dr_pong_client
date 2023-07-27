@@ -20,10 +20,10 @@ export default function Records() {
   const { t } = useTranslation('records');
   const router = useRouter();
   const user = useRecoilValue(userState);
-  if (router.query.nickname && (router.query.nickname.length ?? 0) > 1) {
-    router.push(`/records/${router.query.nickname[0]}`);
-  }
-  const defaultNickname = (router.query.nickname as string) || '';
+  const routerNickname = router.query.nickname || '';
+  const defaultNickname = Array.isArray(routerNickname)
+    ? routerNickname[0]
+    : routerNickname;
   const [nickname, setNickname] = useState(defaultNickname);
 
   const handleNicknameSearch = (event: FormEvent<HTMLFormElement>) => {
