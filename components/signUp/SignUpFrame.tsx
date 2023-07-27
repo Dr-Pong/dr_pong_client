@@ -26,7 +26,6 @@ export default function SignUpFrame() {
   const userSignUpMutation = mutationPost('/auth/signup', {
     onSuccess: onAuthSuccess,
     onError: (e: AxiosError) => {
-      console.log(e);
       if (e.response?.status === 409) {
         setAlert({ type: 'warning', message: t('Nickname already exists') });
       } else setAlert({ type: 'failure' });
