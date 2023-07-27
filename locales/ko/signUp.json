@@ -7,5 +7,6 @@
   "upload file": "파일 업로드",
   "wrong nickname": "닉네임은 2~10자의 영문 또는 숫자여야 합니다.",
   "wrong image": "프로필 사진을 선택해주세요.",
-  "Set profile": "프로필 설정"
+  "Set profile": "프로필 설정",
+  "Nickname already exists": "이미 존재하는 닉네임입니다."
 }

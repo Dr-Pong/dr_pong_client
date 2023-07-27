@@ -1,3 +1,5 @@
+import { AxiosError } from 'axios';
+import { NextApiResponse } from 'next';
 import useTranslation from 'next-translate/useTranslation';
 import { useSetRecoilState } from 'recoil';
 
@@ -23,8 +25,11 @@ export default function SignUpFrame() {
   const [wrongFields, setWrongFields] = useState<string[]>([]);
   const userSignUpMutation = mutationPost('/auth/signup', {
     onSuccess: onAuthSuccess,
-    onError: () => {
-      setAlert({ type: 'failure' });
+    onError: (e: AxiosError) => {
+      console.log(e);
+      if (e.response?.status === 409) {
+        setAlert({ type: 'warning', message: t('Nickname already exists') });
+      } else setAlert({ type: 'failure' });
     },
   });
 
