@@ -12,12 +12,14 @@ type ChatInputBoxProps = {
   message: string;
   setMessage: Dispatch<SetStateAction<string>>;
   handleChatPost: (message: string) => void;
+  inputDisabled: boolean;
 };
 
 export default function ChatInputBox({
   message,
   setMessage,
   handleChatPost,
+  inputDisabled,
 }: ChatInputBoxProps) {
   const handleMessageChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -43,6 +45,7 @@ export default function ChatInputBox({
         type='text'
         value={message}
         onChange={handleMessageChange}
+        disabled={inputDisabled}
       />
       <RiSendPlaneFill className={styles.sendIcon} onClick={handleChatSubmit} />
     </form>
