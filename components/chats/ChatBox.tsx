@@ -21,7 +21,7 @@ function ChatBox({ chat, imgUrl }: ChatBoxProps) {
   const type = chat.type as string;
   const { useProfileModal } = useModalProvider();
 
-  const imgClickHandler = () => {
+  const handlerProfileClick = () => {
     if (!nickname) return;
     useProfileModal(nickname);
   };
@@ -35,10 +35,9 @@ function ChatBox({ chat, imgUrl }: ChatBoxProps) {
     ),
     others: (
       <div className={styles.othersContainer}>
-        <div className={styles.user}>
+        <div onClick={handlerProfileClick} className={styles.user}>
           <img
             className={styles.userImage}
-            onClick={imgClickHandler}
             src={imgUrl ?? defaultImgUrl}
             alt='img'
           />

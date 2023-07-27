@@ -36,9 +36,8 @@ export default function TopLeaders({ topLeaderCount }: TopLeadersProps) {
     },
   ];
 
-  const handleNicknameClick = (e: React.MouseEvent<HTMLElement>) => {
-    const nickname = (e.target as HTMLElement).innerHTML;
-    if (nickname) useProfileModal(nickname);
+  const handleProfileClick = (nickname: string): (() => void) => {
+    return () => useProfileModal(nickname);
   };
 
   if (isLoading) return <LoadingSpinner />;
@@ -56,10 +55,14 @@ export default function TopLeaders({ topLeaderCount }: TopLeadersProps) {
               <div className={`${styles[style]}`}>{rank}</div>
             </div>
             <div className={styles.leaderProfile}>
-              <img src={imgUrl} alt='profile' />
+              <img
+                onClick={handleProfileClick(nickname)}
+                src={imgUrl}
+                alt='profile'
+              />
               <div
                 className={styles.leaderNickname}
-                onClick={handleNicknameClick}
+                onClick={handleProfileClick(nickname)}
               >
                 {nickname}
               </div>
