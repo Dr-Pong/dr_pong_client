@@ -26,6 +26,7 @@
   "Sound Effect": "Sound Effect",
   "success": "Your request is done successfully.",
   "failure": "Your request has been failed.",
+  "warning": "Your request has been failed.",
   "Messages": "Messages",
   "Notifications": "Notifications",
   "Friend requests": "Friend requests",
