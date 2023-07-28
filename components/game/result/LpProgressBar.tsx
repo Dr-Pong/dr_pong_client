@@ -79,7 +79,7 @@ export default function LpProgressBar({
   );
 }
 
-const DOCTOR_CUT = 3000;
-const MASTER_CUT = 2500;
-const BACHELOR_CUT = 2000;
-const STUDENT_CUT = 1500;
+const DOCTOR_CUT = 100;
+const MASTER_CUT = 50;
+const BACHELOR_CUT = 10;
+const STUDENT_CUT = 1;
