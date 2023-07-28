@@ -46,6 +46,7 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
   const [chatSocket] = useChatSocket('friends');
 
   useEffect(() => {
+    if (chatSocket.disconnected) chatSocket.connect();
     const friendStatusListener = (newStatuses: Statuses) => {
       setStatuses((prev) => {
         return {
