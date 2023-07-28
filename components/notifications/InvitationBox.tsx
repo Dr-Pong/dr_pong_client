@@ -69,7 +69,7 @@ export default function InvitationBox({
         queryClient.invalidateQueries(['notificationDot']);
         if (type === 'channel') router.push(`/chats/channel/${channelId}`);
         else if (type === 'game')
-          router.push(`/game/normal/${response.gameId}`);
+          router.push(`/game/${response.gameId}`);
       },
       onError: () => {
         setAlert({ type: 'failure' });

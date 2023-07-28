@@ -57,7 +57,7 @@ export default function GameInvitationButton({
 
   const joinGameListener = (data: { roomId: string }) => {
     closeUpperModal();
-    router.push(`/game/normal/${data.roomId}`);
+    router.push(`/game/${data.roomId}`);
   };
 
   const handleButtonClick = async () => {

@@ -25,5 +25,6 @@
   "win": "Win",
   "lose": "Lose",
   "tie": "Tie",
-  "guide": "Hitchhiker's Guide To Dr.Pong"
+  "guide": "Hitchhiker's Guide To Dr.Pong",
+  "invalidRoom": "Invalid game room."
 }

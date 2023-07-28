@@ -17,6 +17,11 @@
   border-radius: 100;
   padding-inline: 0.5rem;
 }
+.input:disabled {
+  background: $dark-grey;
+  cursor: not-allowed;
+}
+
 
 .sendIcon {
   width: 2.3rem;

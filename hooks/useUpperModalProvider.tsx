@@ -157,7 +157,7 @@ const useUpperModalProvider = () => {
   const useIsInGameModal = (roomData: isInGame) => {
     const handelBackToGame = () => {
       closeUpperModal();
-      router.push(`/game/${roomData.roomType}/${roomData.roomId}`);
+      router.push(`/game/${roomData.roomId}`);
     };
 
     useUpperModal({

@@ -47,7 +47,7 @@ export default function Game() {
 
   const joinGameListener = (data: { roomId: string }) => {
     closeUpperModal();
-    router.push(`/game/ladder/${data.roomId}`);
+    router.push(`/game/${data.roomId}`);
   };
 
   const handleLadderClick = () => {

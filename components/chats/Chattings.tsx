@@ -27,12 +27,14 @@ type ChattingsProps = {
   userImageMap: UserImageMap;
   roomType: RoomType;
   roomId: string;
+  isMuted: boolean;
 };
 
 export default function Chattings({
   userImageMap,
   roomType,
   roomId,
+  isMuted,
 }: ChattingsProps) {
   const { t } = useTranslation('channels');
   const router = useRouter();
@@ -44,7 +46,7 @@ export default function Chattings({
   const [isTopRefVisible, setIsTopRefVisible] = useState(true);
   const [isBottomRefVisible, setIsBottomRefVisible] = useState(false);
   const [newestChat, setNewestChat] = useState<Chat | null>(null);
-  const [inputDisabled, setInputDisables] = useState(false);
+  const [inputDisabled, setInputDisables] = useState(isMuted);
   const { chatsGet } = useChatQuery(roomType, roomId);
   const { mutate } = useChatQuery(roomType, roomId).postChatMutation();
   const topRef = useRef<HTMLDivElement>(null);

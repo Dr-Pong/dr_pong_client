@@ -4,8 +4,6 @@ import nipplejs from 'nipplejs';
 import React, { useEffect } from 'react';
 import toast from 'react-hot-toast';
 
-import { RoomType } from 'types/gameTypes';
-
 import useGameSocket from 'hooks/useGameSocket';
 
 import GameCanvas from 'components/game/GameCanvas';
@@ -18,14 +16,12 @@ export const isTouchScreen =
   window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 
 type PongGameProps = {
-  roomType: RoomType;
   roomId: string;
   canvasWidth: number;
   canvasHeight: number;
 };
 
 const PongGame = ({
-  roomType,
   roomId,
   canvasWidth,
   canvasHeight,

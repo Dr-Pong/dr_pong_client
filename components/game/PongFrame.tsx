@@ -1,6 +1,11 @@
-import { useRecoilValue } from 'recoil';
+import useTranslation from 'next-translate/useTranslation';
+import { useRouter } from 'next/router';
 
-import React, { useEffect, useState } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+
+import { alertState } from 'recoils/alert';
+
+import React, { useEffect, useState, ReactNode } from 'react';
 
 import { bgmState, soundEffectState } from 'recoils/sound';
 
@@ -14,11 +19,15 @@ import GameResult from 'components/game/result/GameResult';
 
 export default function PongFrame({
   canvasWidth,
+  roomId,
   children,
 }: {
   canvasWidth: number;
-  children: React.ReactNode;
+  roomId: string;
+  children: ReactNode;
 }) {
+  const { t } = useTranslation('game');
+  const router = useRouter();
   const [myEmojiUrl, setMyEmojiUrl] = useState<string | null>(null);
   const [opponentEmojiUrl, setOpponentEmojiUrl] = useState<string | null>(null);
   const [isEnd, setIsEnd] = useState(false);
@@ -27,12 +36,22 @@ export default function PongFrame({
   const bgmOn = useRecoilValue(bgmState);
   const { effects } = useSoundEffect();
   const isSoundEffectOn = useRecoilValue(soundEffectState);
+  const setAlert = useSetRecoilState(alertState);
 
   const touchSound = () => {
     effects.get('hit')?.(isSoundEffectOn);
   };
 
+  const roomIdValidator = (data: { isValid: boolean }) => {
+    if (!data.isValid) {
+      setAlert({ type: 'warning', message: t('invalidRoom') });
+      router.replace('/');
+    }
+  };
+
   useEffect(() => {
+    socket.emit('handshake', { roomId: roomId });
+    socket.once('handshake', roomIdValidator);
     bgms.get('game')?.(bgmOn);
     socket.once('gameEnd', () => {
       setIsEnd(true);
@@ -49,6 +68,7 @@ export default function PongFrame({
   if (isEnd) {
     return <GameResult />;
   }
+
   return (
     <div>
       <MatchProfile
