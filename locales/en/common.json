@@ -54,5 +54,7 @@
   "backToGame": "Go back to game",
   "multiConnectWarning": "You are logged in from a new environment.",
   "inviteGame": "Invite game",
-  "gameMode": "Game Mode"
+  "gameMode": "Game Mode",
+  "classic": "Classic",
+  "randomBounce": "Random Bounce"
 }

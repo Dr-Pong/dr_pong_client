@@ -13,5 +13,13 @@
   "4~8 alphanumeric characters": "4~8 alphanumeric characters",
   "create": "create",
   "save": "save",
-  "submit": "submit"
+  "submit": "submit",
+  "Password is wrong" : "Password is wrong.",
+  "Channel name already exists" : "Channel name already exists.",
+  "full bang": "The channel is already full.",
+  "wrong password": "Password is wrong.",
+  "private,": "Private channels can only be entered by invitation.",
+  "no bang": "The channel no longer exists.",
+  "kick": "You are kicked from the channel.",
+  "ban": "You are banned from the channel."
 }
