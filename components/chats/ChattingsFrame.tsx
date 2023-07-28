@@ -82,6 +82,7 @@ export default function ChattingsFrame({
         userImageMap={userImageMap}
         roomType={roomType as RoomType}
         roomId={roomId as string}
+        isMuted={me.isMuted}
       />
     </>
   );
