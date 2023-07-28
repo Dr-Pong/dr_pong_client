@@ -14,7 +14,7 @@ const button: ButtonDesign = {
 
 export default function GameInvitableSelectMode(
   { target }: { target: string }) {
-  const { t } = useTranslation('game');
+  const { t } = useTranslation('common');
   const modeList = ['classic', 'randomBounce'];
   const [gameMode, setGameMode] = useState<string>('classic');
 
