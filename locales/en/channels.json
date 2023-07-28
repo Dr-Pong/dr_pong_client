@@ -14,11 +14,10 @@
   "create": "create",
   "save": "save",
   "submit": "submit",
-  "Password is wrong" : "Password is wrong.",
+  "Password is wrong" : "Your password is incorrect. Please try again.",
   "Channel name already exists" : "Channel name already exists.",
   "full bang": "The channel is already full.",
-  "wrong password": "Password is wrong.",
-  "private,": "Private channels can only be entered by invitation.",
+  "wrong password": "Your password is incorrect. Please try again.",
   "no bang": "The channel no longer exists.",
   "kick": "You are kicked from the channel.",
   "ban": "You are banned from the channel."
