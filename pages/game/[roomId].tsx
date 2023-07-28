@@ -2,8 +2,6 @@ import { useRouter } from 'next/router';
 
 import React, { ReactElement, useEffect, useState } from 'react';
 
-import { RoomType } from 'types/gameTypes';
-
 import PongFrame from 'components/game/PongFrame';
 import PongGame from 'components/game/PongGame';
 import SocketManager from 'components/global/SocketManager';
@@ -13,7 +11,7 @@ import styles from 'styles/game/Game.module.scss';
 
 export default function Game() {
   const router = useRouter();
-  const { roomType, roomId } = router.query;
+  const { roomId } = router.query;
   const [canvasHeight, setCanvasHeight] = useState(window.innerHeight * 0.7);
   const [canvasWidth, setCanvasWidth] = useState(
     window.innerHeight * 0.7 * 0.625
@@ -25,7 +23,7 @@ export default function Game() {
   };
 
   useEffect(() => {
-    if (roomType !== 'ladder' && roomType !== 'normal') router.replace('404');
+    // if (roomType !== 'ladder' && roomType !== 'normal') router.replace('404');
     if (typeof roomId !== 'string') router.replace('/');
     window.addEventListener('resize', handleResize);
 
@@ -37,9 +35,8 @@ export default function Game() {
   return (
     <div className={styles.gamePageContainer}>
       <SocketManager namespace={'game'} />
-      <PongFrame canvasWidth={canvasWidth}>
+      <PongFrame canvasWidth={canvasWidth} roomId={roomId as string}>
         <PongGame
-          roomType={roomType as RoomType}
           roomId={roomId as string}
           canvasHeight={canvasHeight}
           canvasWidth={canvasWidth}
