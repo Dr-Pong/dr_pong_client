@@ -51,7 +51,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           <Toaster />
           <div id='alertRoot'></div>
         </RecoilRoot>
-        <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
       </QueryClientProvider>
     </CookiesProvider>
   );
