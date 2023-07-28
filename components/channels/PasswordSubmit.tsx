@@ -3,6 +3,8 @@ import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
+import { AxiosError } from 'axios';
+
 import React, { FormEvent, useState } from 'react';
 
 import { alertState } from 'recoils/alert';
@@ -17,6 +19,10 @@ import PasswordInput from 'components/channels/channelSettings/PasswordInput';
 import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/channels/ChannelSettings.module.scss';
+
+type Error = {
+  message: string;
+};
 
 export default function PasswordSubmit({ roomId }: { roomId: string }) {
   const { t } = useTranslation('channels');
@@ -40,11 +46,10 @@ export default function PasswordSubmit({ roomId }: { roomId: string }) {
           router.push(`/chats/channel/${roomId}`);
           setOpenModal(false);
         },
-        onError: () => {
-          setAlert({ type: 'failure' });
-          // Alert에 e.response.data.message를 띄워주는 것이 좋을 것 같다
+        onError: (error: AxiosError<Error>) => {
+          setAlert({ type: 'failure', message: t(`${error.response?.data.message}`) });
         },
-      }
+      } as object
     );
   };
 

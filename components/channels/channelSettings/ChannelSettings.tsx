@@ -3,6 +3,8 @@ import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
+import { AxiosError } from 'axios';
+
 import React, {
   Dispatch,
   FormEvent,
@@ -43,6 +45,14 @@ type ChannelSettingsProps = {
   type: 'create' | 'edit';
 };
 
+type Error = {
+  message: string;
+};
+
+type Response = {
+  id: string;
+};
+
 export default function ChannelSettings({
   haveMyChannel,
   roomId,
@@ -71,16 +81,15 @@ export default function ChannelSettings({
     channelCreateMutation.mutate(
       { ...channelInfo, title: trimmedTitle },
       {
-        onSuccess: (response: any) => {
+        onSuccess: (response: Response) => {
           setOpenUpperModal(false);
           setOpenModal(false);
           router.push(`/chats/channel/${response.id}`);
         },
-        onError: () => {
-          setAlert({ type: 'failure' });
-          // Alert에 e.response.data.message를 띄워주는 것이 좋을 것 같다
+        onError: (error: AxiosError<Error>) => {
+          setAlert({ type: 'failure', message: t(`${error.response?.data.message}`) });
         },
-      }
+      } as object
     );
   };
 
