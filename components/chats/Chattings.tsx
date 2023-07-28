@@ -1,3 +1,5 @@
+import useTranslation from 'next-translate/useTranslation';
+
 import { useRouter } from 'next/router';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -32,6 +34,7 @@ export default function Chattings({
   roomType,
   roomId,
 }: ChattingsProps) {
+  const { t } = useTranslation('channels');
   const router = useRouter();
   const queryClient = useQueryClient();
   const { nickname } = useRecoilValue(userState);
@@ -58,10 +61,8 @@ export default function Chattings({
     };
     const kickBanListener = (data: { type: 'kick' | 'ban' }) => {
       setAlert({
-        type: 'failure',
-        message: data.type === 'kick'
-          ? 'You are kicked from the channel'
-          : 'You are Banned from the channel'
+        type: 'warning',
+        message: data.type === 'kick' ? t('kick') : t('ban'),
       });
       router.push('/channels');
     }

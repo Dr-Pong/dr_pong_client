@@ -54,5 +54,7 @@
   "backToGame": "게임으로 돌아가기",
   "multiConnectWarning": "새로운 환경에서 로그인 되었습니다.",
   "inviteGame": "게임 초대하기",
-  "gameMode": "게임 모드"
+  "gameMode": "게임 모드",
+  "classic": "클래식",
+  "randomBounce": "랜덤 바운스"
 }

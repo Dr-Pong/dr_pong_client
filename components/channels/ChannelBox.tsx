@@ -1,6 +1,9 @@
+import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
+
+import { AxiosError } from 'axios';
 
 import React, { useCallback } from 'react';
 import { IoIosLock } from 'react-icons/io';
@@ -16,6 +19,10 @@ import useUpperModalProvider from 'hooks/useUpperModalProvider';
 
 import styles from 'styles/channels/ChannelBox.module.scss';
 
+type Error = {
+  message: string;
+};
+
 export default function ChannelBox({
   channel,
   isMyChannel,
@@ -25,6 +32,7 @@ export default function ChannelBox({
   isMyChannel: boolean;
   haveMyChannel: boolean;
 }) {
+  const { t } = useTranslation('channels');
   const { id, title, access, headCount, maxCount } = channel;
   const router = useRouter();
   const login = useRecoilValue(loginState);
@@ -41,10 +49,10 @@ export default function ChannelBox({
         onSuccess: () => {
           router.push(`/chats/channel/${id}`);
         },
-        onError: () => {
-          setAlert({ type: 'failure' });
+        onError: (error: AxiosError<Error>) => {
+          setAlert({ type: 'failure', message: t(`${error.response?.data.message}`) });
         },
-      }
+      } as object
     );
   };
 
