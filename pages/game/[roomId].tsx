@@ -23,7 +23,6 @@ export default function Game() {
   };
 
   useEffect(() => {
-    // if (roomType !== 'ladder' && roomType !== 'normal') router.replace('404');
     if (typeof roomId !== 'string') router.replace('/');
     window.addEventListener('resize', handleResize);
 
