@@ -37,6 +37,8 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  width: fit-content;
+  cursor: pointer;
   .userImage {
     width: 2rem;
     border: solid 1px $light-grey;
