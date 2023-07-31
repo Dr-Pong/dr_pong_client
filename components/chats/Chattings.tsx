@@ -54,14 +54,11 @@ export default function Chattings({
 
   useEffect(() => {
     const newMessageListener = (data: Chat) => {
-      const newestId = (chats[0]?.id ?? 0) + 1;
-      setChats((prev) => {
-        return [{ ...data, id: newestId }, ...prev];
-      });
-      setNewestChat({ ...data, id: newestId });
+      setChats((prev) => [{ ...data, id: prev[0]?.id + 1 }, ...prev]);
+      setNewestChat({ ...data, id: chats[0]?.id });
     };
     const newSystemMessageListener = (data: Chat) => {
-      setChats((prev) => [{ ...data, id: (prev[0]?.id ?? 0) + 1 }, ...prev]);
+      setChats((prev) => [{ ...data, id: prev[0]?.id + 1 }, ...prev]);
     };
     const kickBanListener = (data: { type: 'kick' | 'ban' }) => {
       setAlert({
@@ -134,7 +131,7 @@ export default function Chattings({
   const handleChatPostSuccess = (message: string) => {
     setChats((prev) => [
       {
-        id: (prev[0]?.id ?? 0) + 1,
+        id: prev[0]?.id + 1,
         message,
         nickname,
         time: new Date(),
@@ -147,7 +144,7 @@ export default function Chattings({
   const handleChatPostFail = (message: string) => {
     setChats((prev) => [
       {
-        id: (prev[0]?.id ?? 0) + 1,
+        id: prev[0]?.id + 1,
         message,
         nickname: '',
         time: new Date(),
