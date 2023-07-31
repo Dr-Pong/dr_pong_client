@@ -1,12 +1,11 @@
 import useTranslation from 'next-translate/useTranslation';
-import { useRouter } from 'next/router';
-
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
+import { useRouter } from 'next/router';
+
+import React, { ReactNode, useEffect, useState } from 'react';
+
 import { alertState } from 'recoils/alert';
-
-import React, { useEffect, useState, ReactNode } from 'react';
-
 import { bgmState, soundEffectState } from 'recoils/sound';
 
 import { useBgm } from 'hooks/useBgm';

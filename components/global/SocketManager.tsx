@@ -34,7 +34,8 @@ export default function SocketManager({
   }
 
   useEffect(() => {
-    if (namespace === 'friends' && chatSocket.disconnected) chatSocket.connect();
+    if (namespace === 'friends' && chatSocket.disconnected)
+      chatSocket.connect();
     return () => {
       if (namespace === 'game' || namespace === 'matching')
         disconnectGameSocket();

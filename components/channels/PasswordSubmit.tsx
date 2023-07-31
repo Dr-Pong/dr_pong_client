@@ -1,9 +1,8 @@
+import { AxiosError } from 'axios';
 import useTranslation from 'next-translate/useTranslation';
 import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
-
-import { AxiosError } from 'axios';
 
 import React, { FormEvent, useState } from 'react';
 
@@ -39,18 +38,18 @@ export default function PasswordSubmit({ roomId }: { roomId: string }) {
   const handlePasswordSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!password) return;
-    mutate(
-      { password },
-      {
-        onSuccess: () => {
-          router.push(`/chats/channel/${roomId}`);
-          setOpenModal(false);
-        },
-        onError: (error: AxiosError<Error>) => {
-          setAlert({ type: 'failure', message: t(`${error.response?.data.message}`) });
-        },
-      } as object
-    );
+    mutate({ password }, {
+      onSuccess: () => {
+        router.push(`/chats/channel/${roomId}`);
+        setOpenModal(false);
+      },
+      onError: (error: AxiosError<Error>) => {
+        setAlert({
+          type: 'failure',
+          message: t(`${error.response?.data.message}`),
+        });
+      },
+    } as object);
   };
 
   return (

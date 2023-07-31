@@ -1,9 +1,8 @@
+import { AxiosError } from 'axios';
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
-
-import { AxiosError } from 'axios';
 
 import React, { useCallback } from 'react';
 import { IoIosLock } from 'react-icons/io';
@@ -43,17 +42,17 @@ export default function ChannelBox({
   const { mutate } = mutationPost(`channels/${id}/participants`);
 
   const handleRouterToChat = () => {
-    mutate(
-      { password: null },
-      {
-        onSuccess: () => {
-          router.push(`/chats/channel/${id}`);
-        },
-        onError: (error: AxiosError<Error>) => {
-          setAlert({ type: 'failure', message: t(`${error.response?.data.message}`) });
-        },
-      } as object
-    );
+    mutate({ password: null }, {
+      onSuccess: () => {
+        router.push(`/chats/channel/${id}`);
+      },
+      onError: (error: AxiosError<Error>) => {
+        setAlert({
+          type: 'failure',
+          message: t(`${error.response?.data.message}`),
+        });
+      },
+    } as object);
   };
 
   const handleJoinConfirm = useCallback(() => {

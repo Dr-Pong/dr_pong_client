@@ -1,9 +1,10 @@
 import useTranslation from 'next-translate/useTranslation';
+
 import React, { ChangeEvent, useState } from 'react';
 
-import GameInvitationButton from 'components/game/GameInvitationButton';
-
 import { ButtonDesign } from 'types/buttonTypes';
+
+import GameInvitationButton from 'components/game/GameInvitationButton';
 
 import styles from 'styles/game/GameInvitationSelectMode.module.scss';
 
@@ -12,8 +13,11 @@ const button: ButtonDesign = {
   color: 'pink',
 };
 
-export default function GameInvitableSelectMode(
-  { target }: { target: string }) {
+export default function GameInvitableSelectMode({
+  target,
+}: {
+  target: string;
+}) {
   const { t } = useTranslation('common');
   const modeList = ['classic', 'randomBounce'];
   const [gameMode, setGameMode] = useState<string>('classic');

@@ -3,13 +3,13 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
-import React, { ReactNode, useState, useEffect } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 
-import { userState } from 'recoils/user';
 import { sideBarState } from 'recoils/sideBar';
+import { userState } from 'recoils/user';
 
-import { Statuses } from 'types/friendTypes';
 import { ButtonDesign } from 'types/buttonTypes';
+import { Statuses } from 'types/friendTypes';
 
 import useChatSocket from 'hooks/useChatSocket';
 import useCustomQuery from 'hooks/useCustomQuery';
@@ -89,7 +89,7 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
         {t('message')}
       </BasicButton>
     ),
-    inviteGame: (
+    inviteGame:
       statuses[target] === 'online' ? (
         <BasicButton
           style='flex'
@@ -102,8 +102,7 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
         >
           {t('inviteGame')}
         </BasicButton>
-      ) : null
-    ),
+      ) : null,
     blockUser: (
       <RelationButton button={button} type='block' target={target}>
         {t('block')}

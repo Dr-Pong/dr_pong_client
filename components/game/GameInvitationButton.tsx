@@ -1,19 +1,19 @@
 import { useSetRecoilState } from 'recoil';
 
+import { useRouter } from 'next/router';
+
 import React, { ReactNode } from 'react';
 
 import { alertState } from 'recoils/alert';
 
-import { useRouter } from 'next/router';
+import { ButtonDesign } from 'types/buttonTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
+import useGameSocket from 'hooks/useGameSocket';
 import useModalProvider from 'hooks/useModalProvider';
 import useUpperModalProvider from 'hooks/useUpperModalProvider';
-import useGameSocket from 'hooks/useGameSocket';
 
 import BasicButton from 'components/global/buttons/BasicButton';
-
-import { ButtonDesign } from 'types/buttonTypes';
 
 type GameInvitationButton = {
   nickname: string;
