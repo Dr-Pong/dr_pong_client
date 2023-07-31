@@ -37,6 +37,7 @@ export default function TopLeaders({ topLeaderCount }: TopLeadersProps) {
   ];
 
   const handleProfileClick = (nickname: string): (() => void) => {
+    if (!nickname) return () => null;
     return () => useProfileModal(nickname);
   };
 
