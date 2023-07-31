@@ -1,9 +1,8 @@
+import { AxiosError } from 'axios';
 import useTranslation from 'next-translate/useTranslation';
 import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
-
-import { AxiosError } from 'axios';
 
 import React, {
   Dispatch,
@@ -78,19 +77,19 @@ export default function ChannelSettings({
       ...prev,
       title: trimmedTitle,
     }));
-    channelCreateMutation.mutate(
-      { ...channelInfo, title: trimmedTitle },
-      {
-        onSuccess: (response: Response) => {
-          setOpenUpperModal(false);
-          setOpenModal(false);
-          router.push(`/chats/channel/${response.id}`);
-        },
-        onError: (error: AxiosError<Error>) => {
-          setAlert({ type: 'failure', message: t(`${error.response?.data.message}`) });
-        },
-      } as object
-    );
+    channelCreateMutation.mutate({ ...channelInfo, title: trimmedTitle }, {
+      onSuccess: (response: Response) => {
+        setOpenUpperModal(false);
+        setOpenModal(false);
+        router.push(`/chats/channel/${response.id}`);
+      },
+      onError: (error: AxiosError<Error>) => {
+        setAlert({
+          type: 'failure',
+          message: t(`${error.response?.data.message}`),
+        });
+      },
+    } as object);
   };
 
   const handleChannelCreateCheck = (event: FormEvent<HTMLFormElement>) => {

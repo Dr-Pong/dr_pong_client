@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { IoMdAdd } from 'react-icons/io';
 
+import { ButtonDesign } from 'types/buttonTypes';
 import { Friend, Statuses } from 'types/friendTypes';
 
 import useChatSocket from 'hooks/useChatSocket';
 
 import GameInvitationButton from 'components/game/GameInvitationButton';
 import UserBox from 'components/global/UserBox';
-
-import { ButtonDesign } from 'types/buttonTypes';
 
 import styles from 'styles/modals/Modal.module.scss';
 

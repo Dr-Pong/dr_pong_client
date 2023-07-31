@@ -21,11 +21,7 @@ type PongGameProps = {
   canvasHeight: number;
 };
 
-const PongGame = ({
-  roomId,
-  canvasWidth,
-  canvasHeight,
-}: PongGameProps) => {
+const PongGame = ({ roomId, canvasWidth, canvasHeight }: PongGameProps) => {
   const { t } = useTranslation('achievement');
   const [socket] = useGameSocket('game');
 
