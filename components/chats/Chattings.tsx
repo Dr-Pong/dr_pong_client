@@ -1,13 +1,12 @@
 import useTranslation from 'next-translate/useTranslation';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
-
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { alertState } from 'recoils/alert';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useQueryClient } from 'react-query';
 
+import { alertState } from 'recoils/alert';
 import { userState } from 'recoils/user';
 
 import { Chat, RoomType, UserImageMap } from 'types/chatTypes';
@@ -55,11 +54,14 @@ export default function Chattings({
 
   useEffect(() => {
     const newMessageListener = (data: Chat) => {
-      setChats((prev) => [{ ...data, id: prev[0]?.id + 1 }, ...prev]);
-      setNewestChat({ ...data, id: chats[0]?.id });
+      const newestId = (chats[0]?.id ?? 0) + 1;
+      setChats((prev) => {
+        return [{ ...data, id: newestId }, ...prev];
+      });
+      setNewestChat({ ...data, id: newestId });
     };
     const newSystemMessageListener = (data: Chat) => {
-      setChats((prev) => [{ ...data, id: prev[0]?.id + 1 }, ...prev]);
+      setChats((prev) => [{ ...data, id: (prev[0]?.id ?? 0) + 1 }, ...prev]);
     };
     const kickBanListener = (data: { type: 'kick' | 'ban' }) => {
       setAlert({
@@ -67,13 +69,13 @@ export default function Chattings({
         message: data.type === 'kick' ? t('kick') : t('ban'),
       });
       router.push('/channels');
-    }
+    };
     const muteListener = () => {
       setInputDisables(true);
-    }
+    };
     const unmuteListener = () => {
       setInputDisables(false);
-    }
+    };
 
     socket.on('message', newMessageListener);
     socket.on('system', newSystemMessageListener);
@@ -132,7 +134,7 @@ export default function Chattings({
   const handleChatPostSuccess = (message: string) => {
     setChats((prev) => [
       {
-        id: prev[0]?.id + 1,
+        id: (prev[0]?.id ?? 0) + 1,
         message,
         nickname,
         time: new Date(),
@@ -145,7 +147,7 @@ export default function Chattings({
   const handleChatPostFail = (message: string) => {
     setChats((prev) => [
       {
-        id: prev[0]?.id + 1,
+        id: (prev[0]?.id ?? 0) + 1,
         message,
         nickname: '',
         time: new Date(),
