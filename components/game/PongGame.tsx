@@ -113,7 +113,7 @@ const PongGame = ({ roomId, canvasWidth, canvasHeight }: PongGameProps) => {
   };
 
   return (
-    <div id='pongGame' className={styles.pongGame}>
+    <div id='pongGame' className={styles.pongGameContainer}>
       <GameCanvas canvasHeight={canvasHeight} canvasWidth={canvasWidth} />
       {isTouchScreen && <Joystick onJoy={onJoy} offJoy={offJoy} />}
     </div>

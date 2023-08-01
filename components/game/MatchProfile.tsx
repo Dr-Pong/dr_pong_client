@@ -49,7 +49,10 @@ export default function MatchProfile({
   if (me.isError) return <ErrorRefresher />;
 
   return (
-    <div className={styles.matchProfile} style={{ width: `${canvasWidth}px` }}>
+    <div
+      className={styles.matchProfileContainer}
+      style={{ width: `${canvasWidth}px` }}
+    >
       <div className={styles.profile}>
         {opponentEmojiUrl ? (
           <img className={styles.emojiPopup} src={opponentEmojiUrl} />
@@ -61,14 +64,17 @@ export default function MatchProfile({
           />
         )}
         <div className={styles.profileInfo}>
-          <span className={styles.nickname}>{opponent?.nickname}</span>
-          <span className={styles.title}>{opponent?.title?.title}</span>
+          <span>{opponent?.nickname}</span>
+          <span>{opponent?.title?.title}</span>
         </div>
       </div>
       <span className={styles.vs}>vs</span>
-      <div className={styles.profile}>
+      <div className={`${styles.profile} ${styles.reverse}`}>
         {myEmojiUrl ? (
-          <img className={styles.emojiPopup} src={myEmojiUrl} />
+          <img
+            className={`${styles.profileImg} ${styles.popup}`}
+            src={myEmojiUrl}
+          />
         ) : (
           <img
             className={styles.profileImg}
@@ -76,9 +82,9 @@ export default function MatchProfile({
             alt={nickname}
           />
         )}
-        <div className={styles.profileInfo}>
-          <span className={styles.nickname}>{nickname}</span>
-          <span className={styles.title}>{me.data.title?.title}</span>
+        <div className={`${styles.profileInfo} ${styles.reverse}`}>
+          <span>{nickname}</span>
+          <span>{me.data.title?.title}</span>
         </div>
       </div>
     </div>
