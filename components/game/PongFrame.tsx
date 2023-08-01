@@ -16,15 +16,19 @@ import Emojis from 'components/game/Emojis';
 import MatchProfile from 'components/game/MatchProfile';
 import GameResult from 'components/game/result/GameResult';
 
+import styles from 'styles/game/Game.module.scss';
+
+type PongFrameProps = {
+  canvasWidth: number;
+  roomId: string;
+  children: ReactNode;
+};
+
 export default function PongFrame({
   canvasWidth,
   roomId,
   children,
-}: {
-  canvasWidth: number;
-  roomId: string;
-  children: ReactNode;
-}) {
+}: PongFrameProps) {
   const { t } = useTranslation('game');
   const router = useRouter();
   const [myEmojiUrl, setMyEmojiUrl] = useState<string | null>(null);
@@ -69,7 +73,7 @@ export default function PongFrame({
   }
 
   return (
-    <div>
+    <div className={styles.pongFrameContainer}>
       <MatchProfile
         myEmojiUrl={myEmojiUrl}
         opponentEmojiUrl={opponentEmojiUrl}

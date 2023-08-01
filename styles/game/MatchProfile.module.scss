@@ -1,49 +1,51 @@
 @import 'styles/common';
 
-.matchProfile {
-  display: flex;
+.matchProfileContainer {
+  display: grid;
+  grid-template-columns: 1fr 4dvh 1fr;
+  gap: 1dvh;
   width: 100%;
-  align-items: center;
-  justify-content: space-around;
+  padding-inline: 0.5dvh;
 }
 
 .profile {
   display: flex;
+  gap: 1.5dvh;
   align-items: center;
+  &.reverse {
+    flex-direction: row-reverse;
+  }
 }
 
 .profileImg {
   width: 6dvh;
   height: 6dvh;
-  margin-right: 1dvh;
+  border: solid 1px $dark-grey;
   border-radius: 50%;
-}
-
-.emojiPopup {
-  width: 6dvh;
-  height: 6dvh;
-  margin-right: 1dvh;
-  border-radius: 50%;
-  animation: shake 0.5s infinite;
+  &.popup {
+    border: solid 1px white;
+    animation: shake 0.5s infinite;
+  }
 }
 
 .profileInfo {
   display: flex;
   flex-direction: column;
-}
-
-.nickname {
-  font-weight: 800;
-}
-
-.title {
-  color: gray;
+  align-items: flex-start;
   font-size: 2dvh;
+  span:last-child {
+    color: $dark-grey;
+    font-size: 1.5dvh;
+  }
+  &.reverse {
+    align-items: flex-end;
+  }
 }
 
 .vs {
   font-weight: 800;
-  font-size: 4dvh;
+  font-size: 3dvh;
+  place-self: center;
 }
 
 @keyframes shake {

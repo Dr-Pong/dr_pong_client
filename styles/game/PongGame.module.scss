@@ -1,7 +1,11 @@
-.pongGame {
-  display: flex;
+.pongGameContainer {
   position: relative;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.gameCanvas {
+  background: transparentize(white, 0.8);
 }

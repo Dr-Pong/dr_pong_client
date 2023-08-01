@@ -4,7 +4,6 @@ import {
   Ball,
   Player,
   countdownData,
-  gameResult,
   initData,
   posData,
   roundData,
@@ -12,7 +11,7 @@ import {
 
 import useGameSocket from 'hooks/useGameSocket';
 
-import styles from 'styles/game/GameCanvas.module.scss';
+import styles from 'styles/game/PongGame.module.scss';
 
 type GameCanvasProps = {
   canvasHeight: number;
@@ -27,9 +26,9 @@ export default function GameCanvas({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvas = canvasRef.current;
   const context = canvas?.getContext('2d');
-  const netWidth = canvasWidth / 20;
+  const netWidth = canvasWidth / 35;
   const netHeight = netWidth / 5;
-  const netGap = netWidth + 10;
+  const netGap = netWidth + 8;
   const netY = canvasHeight / 2 - netHeight / 2;
   const [round, setRound] = useState(0);
   const [myScore, setMyScore] = useState(0);
@@ -40,7 +39,6 @@ export default function GameCanvas({
   const [ballPath, setBallPath] = useState<Ball[]>([]);
   const [server, setServer] = useState(false);
   const [countdown, setCountdown] = useState(-1);
-  const [result, setResult] = useState('');
   const [playerRatio, setPlayerRatio] = useState<Player>(initialData);
   const [ballWidthRatio, setWidthBallRatio] = useState(0);
   const [remainingTime, setRemainingTime] = useState(0);
@@ -129,13 +127,8 @@ export default function GameCanvas({
     setBallPath([]);
   };
 
-  const gameEndListener = (data: gameResult) => {
-    setResult(data.result);
-  };
-
   useEffect(() => {
     socket.once('initData', initListener);
-    socket.once('gameEnd', gameEndListener);
     socket.on('time', countdownListener);
     socket.on('roundUpdate', roundListener);
     return () => {
@@ -153,9 +146,9 @@ export default function GameCanvas({
 
   const drawNet = (ctx: CanvasRenderingContext2D) => {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = '#656887';
     for (let i = 0; i <= canvasWidth; i += netGap) {
-      ctx.fillRect(i, netY, netWidth, netHeight);
+      ctx.fillRect(i, netY, netWidth, 1);
     }
   };
 
@@ -180,73 +173,64 @@ export default function GameCanvas({
   };
 
   const drawRound = (ctx: CanvasRenderingContext2D) => {
-    ctx.font = '1.3rem Arial';
-    ctx.fillText(`Round: ${round}`, 10, netY + netHeight + 26);
-    ctx.font = '1.5rem Arial';
-    ctx.fillStyle = '#f868e1';
-    ctx.fillText(`${myScore}`, canvasWidth - 30, netY + netHeight + 26);
-    ctx.fillStyle = '#6804c6';
-    ctx.fillText(`${opponentScore}`, canvasWidth - 30, netY - 10);
+    ctx.font = '2rem TTLakesNeueTrialRegular';
+    ctx.fillStyle = '#49f60d';
+    ctx.fillText(`Round ${round}`, canvasWidth / 2 - 70, canvasHeight / 2 - 10);
   };
 
-  const drawGametime = (ctx: CanvasRenderingContext2D) => {
-    ctx.font = '1.5rem Arial';
-    ctx.fillStyle = '#6804c6';
-    const time = remainingTime / 1000;
-    if (time >= 10)
-      ctx.fillText(`${time.toFixed(0)}`, 10, canvasHeight / 2 - 10);
-    else if (time <= 0) ctx.fillText(`0.0`, 10, canvasHeight / 2 - 10);
-    else ctx.fillText(`${time.toFixed(1)}`, 10, canvasHeight / 2 - 10);
+  const drawArrow = (ctx: CanvasRenderingContext2D) => {
+    ctx.font = '2rem TTLakesNeueTrialRegular';
+    ctx.fillStyle = '#49f60d';
+    ctx.fillText(
+      `${server ? '⬇️' : '⬆️'}`,
+      canvasWidth / 2 + 70,
+      canvasHeight / 2 - 10
+    );
   };
 
   const drawCountdown = (ctx: CanvasRenderingContext2D) => {
-    ctx.font = '2rem Arial';
-    ctx.fillStyle = '#00ffff';
-    countdown === 0
-      ? ctx.fillText(
-          'Game Start!!',
-          canvasWidth / 2 - 80,
-          canvasHeight / 2 - 10
-        )
-      : ctx.fillText(
-          `${countdown}`,
-          canvasWidth / 2 - 5,
-          canvasHeight / 2 - 10
-        );
-    ctx.font = '2rem Arial';
-    ctx.fillStyle = '#ffff00';
-    server
-      ? ctx.fillText('↓', canvasWidth / 2 - 5, canvasHeight / 2 + 40)
-      : ctx.fillText('↑', canvasWidth / 2 - 5, canvasHeight / 2 - 60);
+    if (countdown) {
+      ctx.font = '3rem TTLakesNeueTrialRegular';
+      ctx.fillStyle = '#fdde2e';
+      ctx.fillText(`${countdown}`, canvasWidth / 2 - 15, canvasHeight / 2 + 55);
+    } else {
+      ctx.font = '2rem TTLakesNeueTrialRegular';
+      ctx.fillStyle = '#f71a6a';
+      ctx.fillText('Game Start!!', canvasWidth / 2 - 95, canvasHeight / 2 + 45);
+    }
   };
 
-  const drawGameResult = (ctx: CanvasRenderingContext2D) => {
-    ctx.font = '5rem Arial';
-    ctx.fillStyle = '#00ffff';
-    ctx.fillText(result, canvasWidth / 2, canvasHeight / 2);
+  const drawScore = (ctx: CanvasRenderingContext2D) => {
+    ctx.font = '4rem TTLakesNeueTrialRegular';
+    ctx.fillStyle = '#656887';
+    ctx.fillText(`${myScore}`, 10, canvasHeight / 2 - canvasHeight / 4);
+    ctx.fillText(`${opponentScore}`, 10, canvasHeight / 2 + canvasHeight / 4);
+  };
+
+  const drawGametime = (ctx: CanvasRenderingContext2D) => {
+    const time = remainingTime / 1000;
+
+    ctx.font = '1.2rem TTLakesNeueTrialRegular';
+    ctx.fillStyle = '#ffffff';
+    if (time <= 0) ctx.fillText(`0.0`, 20, canvasHeight / 2 - 10);
+    else if (time < 10)
+      ctx.fillText(`${time.toFixed(1)}`, 10, canvasHeight / 2 - 10);
   };
 
   useEffect(() => {
     if (context) {
       context.clearRect(0, 0, canvasWidth, canvasHeight);
       drawNet(context);
-      drawRound(context);
       drawBarBall(context);
       drawGametime(context);
-      if (countdown !== -1) drawCountdown(context);
-      if (result) drawGameResult(context);
+      drawScore(context);
+      if (countdown !== -1) {
+        drawRound(context);
+        drawCountdown(context);
+        drawArrow(context);
+      }
     }
-  }, [
-    me,
-    opponent,
-    ball,
-    countdown,
-    server,
-    round,
-    myScore,
-    opponentScore,
-    result,
-  ]);
+  }, [me, opponent, ball, countdown, server, round, myScore, opponentScore]);
 
   return (
     <canvas
