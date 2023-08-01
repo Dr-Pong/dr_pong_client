@@ -1,0 +1,55 @@
+# github repository actions 페이지에 나타날 이름
+name: Dr. Pong Client CI/CD
+
+# event trigger
+# main이나 develop 브랜치에 push가 되었을 때 실행
+on:
+  push:
+    branches:
+      - deploy
+  # pull_request:
+  #   branches: ['feat/**', 'fix/**']
+
+# permissions:
+#   contents: read
+
+jobs:
+  CI-CD:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          java-version: '18'
+          cache: 'npm'
+
+      # clean install
+      - run: npm install
+
+      # build
+      - run: npm run build --if-present
+
+      # test
+      - run: npm test
+
+      - name: Docker build & push to registry
+        if: contains(github.ref, 'main') || contains(github.ref, 'develop')
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -t ${{ secrets.DOCKER_REPO }}/dr-pong .
+          docker push ${{ secrets.DOCKER_REPO }}/dr-pong
+
+      ## deploy to aws ec2 with ssh *HOST *USER_NAME *PRIVATE_KEY
+      - name: Deploy to AWS EC2
+        uses: appleboy/ssh-action@master
+        if: contains(github.ref, 'main') || contains(github.ref, 'develop')
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER_NAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          script: |
+            docker-compose down
+            docker rm -f $(docker ps -qa)
+            docker rmi -f ${{ secrets.DOCKER_REPO }}/dr-pong
+            docker-compose up -d
