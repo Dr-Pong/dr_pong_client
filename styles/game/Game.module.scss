@@ -4,9 +4,9 @@
   @include pageContainer;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   gap: 1dvh;
+  align-items: center;
+  justify-content: center;
 }
 
 .buttonList {
@@ -57,4 +57,11 @@
 
 .guide:hover {
   font-size: 1rem;
+}
+
+.pongFrameContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
 }
