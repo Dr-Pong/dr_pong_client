@@ -38,7 +38,7 @@ export default function GameCanvas({
   const [ball, setBall] = useState<Ball>(initialData);
   const [ballPath, setBallPath] = useState<Ball[]>([]);
   const [server, setServer] = useState(false);
-  const [countdown, setCountdown] = useState(1);
+  const [countdown, setCountdown] = useState(-1);
   const [playerRatio, setPlayerRatio] = useState<Player>(initialData);
   const [ballWidthRatio, setWidthBallRatio] = useState(0);
   const [remainingTime, setRemainingTime] = useState(0);
@@ -175,9 +175,15 @@ export default function GameCanvas({
   const drawRound = (ctx: CanvasRenderingContext2D) => {
     ctx.font = '2rem TTLakesNeueTrialRegular';
     ctx.fillStyle = '#49f60d';
+    ctx.fillText(`Round ${round}`, canvasWidth / 2 - 70, canvasHeight / 2 - 10);
+  };
+
+  const drawArrow = (ctx: CanvasRenderingContext2D) => {
+    ctx.font = '2rem TTLakesNeueTrialRegular';
+    ctx.fillStyle = '#49f60d';
     ctx.fillText(
-      `Round ${round} ${server ? '↓' : '↑'}`,
-      canvasWidth / 2 - 70,
+      `${server ? '⬇️' : '⬆️'}`,
+      canvasWidth / 2 + 70,
       canvasHeight / 2 - 10
     );
   };
@@ -221,6 +227,7 @@ export default function GameCanvas({
       if (countdown !== -1) {
         drawRound(context);
         drawCountdown(context);
+        drawArrow(context);
       }
     }
   }, [me, opponent, ball, countdown, server, round, myScore, opponentScore]);
