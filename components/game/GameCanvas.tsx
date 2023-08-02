@@ -4,7 +4,7 @@ import {
   Ball,
   Player,
   countdownData,
-  initData,
+  gameInit,
   posData,
   roundData,
 } from 'types/gameTypes';
@@ -43,7 +43,7 @@ export default function GameCanvas({
   const [ballWidthRatio, setWidthBallRatio] = useState(0);
   const [remainingTime, setRemainingTime] = useState(0);
 
-  const initListener = (data: initData) => {
+  const gameInitListener = (data: gameInit) => {
     setServer(data.server);
     setRound(data.round);
     setMe({
@@ -58,6 +58,8 @@ export default function GameCanvas({
       width: data.opponent.width * canvasWidth,
       height: data.opponent.height * canvasHeight,
     });
+    setMyScore(data.me.score);
+    setOpponentScore(data.opponent.score);
     setBall({
       x: data.ball.x * canvasWidth,
       y: data.ball.y * canvasHeight,
@@ -128,7 +130,7 @@ export default function GameCanvas({
   };
 
   useEffect(() => {
-    socket.once('initData', initListener);
+    socket.once('gameInit', gameInitListener);
     socket.on('time', countdownListener);
     socket.on('roundUpdate', roundListener);
     return () => {
