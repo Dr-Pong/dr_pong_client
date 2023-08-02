@@ -10,7 +10,7 @@ type User = {
   imgUrl: string;
 }
 
-type gameUsers = {
+type GameUsers = {
   me: User;
   opponent: User;
 };
@@ -30,7 +30,7 @@ export default function MatchProfile({
   const [me, setMe] = useState<User | null>(null);
   const [opponent, setOpponent] = useState<User | null>(null);
 
-  const userInitListener = async (data: gameUsers) => {
+  const userInitListener = async (data: GameUsers) => {
     setMe(data.me);
     setOpponent(data.opponent);
   };
@@ -46,7 +46,10 @@ export default function MatchProfile({
     >
       <div className={styles.profile}>
         {opponentEmojiUrl ? (
-          <img className={styles.emojiPopup} src={opponentEmojiUrl} />
+          <img
+            className={`${styles.profileImg} ${styles.popup}`}
+            src={opponentEmojiUrl}
+          />
         ) : (
           <img
             className={styles.profileImg}
