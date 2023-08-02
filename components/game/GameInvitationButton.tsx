@@ -39,7 +39,7 @@ export default function GameInvitationButton({
     onSuccess: () => {
       closeModal();
       useMatchWaitingUpperModal(invitationCancelMutation.mutate, false);
-      socket.once('joinGame', joinGameListener);
+      socket.once('matched', matchedListener);
     },
     onError: () => {
       setAlert({ type: 'failure' });
@@ -55,7 +55,7 @@ export default function GameInvitationButton({
     },
   });
 
-  const joinGameListener = (data: { roomId: string }) => {
+  const matchedListener = (data: { roomId: string }) => {
     closeUpperModal();
     router.push(`/game/${data.roomId}`);
   };
