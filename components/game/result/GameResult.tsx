@@ -26,7 +26,7 @@ export default function GameResult() {
   const { data, isLoading, isError, error } = gameResultGet();
   const router = useRouter();
   const handleConfirmClick = () => {
-    router.push('/game');
+    router.replace('/game');
   };
 
   if (isLoading) return <LoadingSpinner />;
