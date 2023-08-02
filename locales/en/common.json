@@ -52,6 +52,7 @@
   "guide": "Hitchhiker's Guide To Dr.Pong",
   "inGameNotify": "There is a game in progress.",
   "backToGame": "Go back to game",
+  "GoToHome": "Go to home",
   "multiConnectWarning": "Duplicate access to the game.",
   "inviteGame": "Invite game",
   "gameMode": "Game Mode",

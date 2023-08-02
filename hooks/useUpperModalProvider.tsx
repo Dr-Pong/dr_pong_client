@@ -186,11 +186,11 @@ const useUpperModalProvider = () => {
       body: <ModalPhrase>{t('multiConnectWarning')}</ModalPhrase>,
       tail: (
         <BasicButton
-          style='basic'
+          style='long'
           color='purple'
           handleButtonClick={handleRouteToHome}
         >
-          {t('backToGame')}
+          {t('GoToHome')}
         </BasicButton>
       ),
     });
