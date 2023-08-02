@@ -53,7 +53,7 @@ export default function PongFrame({
   };
 
   useEffect(() => {
-    socket.emit('handshake', { roomId: roomId });
+    socket.emit('joinGame', { roomId: roomId });
     socket.once('handshake', roomIdValidator);
     bgms.get('game')?.(bgmOn);
     socket.once('gameEnd', () => {
