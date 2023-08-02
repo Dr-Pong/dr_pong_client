@@ -205,8 +205,8 @@ export default function GameCanvas({
   const drawScore = (ctx: CanvasRenderingContext2D) => {
     ctx.font = '4rem TTLakesNeueTrialRegular';
     ctx.fillStyle = '#656887';
-    ctx.fillText(`${myScore}`, 10, canvasHeight / 2 - canvasHeight / 4);
-    ctx.fillText(`${opponentScore}`, 10, canvasHeight / 2 + canvasHeight / 4);
+    ctx.fillText(`${myScore}`, 20, canvasHeight / 2 - canvasHeight / 4);
+    ctx.fillText(`${opponentScore}`, 20, canvasHeight / 2 + canvasHeight / 4);
   };
 
   const drawGametime = (ctx: CanvasRenderingContext2D) => {
@@ -216,7 +216,7 @@ export default function GameCanvas({
     ctx.fillStyle = '#ffffff';
     if (time <= 0) ctx.fillText(`0.0`, 20, canvasHeight / 2 - 10);
     else if (time < 10)
-      ctx.fillText(`${time.toFixed(1)}`, 10, canvasHeight / 2 - 10);
+      ctx.fillText(`${time.toFixed(1)}`, 20, canvasHeight / 2 - 10);
   };
 
   useEffect(() => {
