@@ -1,20 +1,19 @@
-import { useRecoilValue } from 'recoil';
-
 import React, { useEffect, useState } from 'react';
 
-import { userState } from 'recoils/user';
-
-import { UserDetail } from 'types/userTypes';
-
-import useCustomQuery from 'hooks/useCustomQuery';
 import useGameSocket from 'hooks/useGameSocket';
 
-import instance from 'utils/axios';
-
-import ErrorRefresher from 'components/global/ErrorRefresher';
-import LoadingSpinner from 'components/global/LoadingSpinner';
-
 import styles from 'styles/game/MatchProfile.module.scss';
+
+type User = {
+  nickname: string;
+  title: string;
+  imgUrl: string;
+}
+
+type gameUsers = {
+  me: User;
+  opponent: User;
+};
 
 type MatchProfileProps = {
   myEmojiUrl: string | null;
@@ -27,26 +26,18 @@ export default function MatchProfile({
   opponentEmojiUrl,
   canvasWidth,
 }: MatchProfileProps) {
-  const { nickname } = useRecoilValue(userState);
   const [socket] = useGameSocket('game');
-  const { get } = useCustomQuery();
-  const me = get('me', `/users/${nickname}/detail`);
-  const [opponent, setOpponent] = useState<UserDetail | null>(null);
+  const [me, setMe] = useState<User | null>(null);
+  const [opponent, setOpponent] = useState<User | null>(null);
 
-  const matchInfo = async (data: { nickname: string }) => {
-    try {
-      setOpponent((await instance.get(`/users/${data.nickname}/detail`)).data);
-    } catch (e) {
-      return <ErrorRefresher />;
-    }
+  const userInitListener = async (data: gameUsers) => {
+    setMe(data.me);
+    setOpponent(data.opponent);
   };
 
   useEffect(() => {
-    socket.once('matchInfo', matchInfo);
+    socket.once('userInit', userInitListener);
   }, []);
-
-  if (me.isLoading) return <LoadingSpinner />;
-  if (me.isError) return <ErrorRefresher />;
 
   return (
     <div
@@ -59,13 +50,13 @@ export default function MatchProfile({
         ) : (
           <img
             className={styles.profileImg}
-            src={opponent?.image?.url}
+            src={opponent?.imgUrl}
             alt={opponent?.nickname}
           />
         )}
         <div className={styles.profileInfo}>
           <span>{opponent?.nickname}</span>
-          <span>{opponent?.title?.title}</span>
+          <span>{opponent?.title}</span>
         </div>
       </div>
       <span className={styles.vs}>vs</span>
@@ -78,13 +69,13 @@ export default function MatchProfile({
         ) : (
           <img
             className={styles.profileImg}
-            src={me.data.image.url}
-            alt={nickname}
+            src={me?.imgUrl}
+            alt={me?.nickname}
           />
         )}
         <div className={`${styles.profileInfo} ${styles.reverse}`}>
-          <span>{nickname}</span>
-          <span>{me.data.title?.title}</span>
+          <span>{me?.nickname}</span>
+          <span>{me?.title}</span>
         </div>
       </div>
     </div>
