@@ -45,16 +45,18 @@ export default function PongFrame({
     effects.get('hit')?.(isSoundEffectOn);
   };
 
-  const roomIdValidator = (data: { isValid: boolean }) => {
-    if (!data.isValid) {
-      setAlert({ type: 'warning', message: t('invalidRoom') });
-      router.replace('/');
-    }
+  const invalidGameIdListener = () => {
+    setAlert({ type: 'warning', message: t('invalidRoom') });
+    router.replace('/');
+  };
+
+  const multiConnectListener = () => {
+    multiConnectWarningModal();
   };
 
   useEffect(() => {
     socket.emit('joinGame', { roomId: roomId });
-    socket.once('handshake', roomIdValidator);
+    socket.once('invalidGameId', invalidGameIdListener);
     bgms.get('game')?.(bgmOn);
     socket.once('gameEnd', () => {
       setIsEnd(true);
