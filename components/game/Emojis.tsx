@@ -9,6 +9,8 @@ import { Emoji } from 'types/userTypes';
 import useCustomQuery from 'hooks/useCustomQuery';
 import useGameSocket from 'hooks/useGameSocket';
 
+import { throttler } from 'utils/throttler';
+
 import ErrorRefresher from 'components/global/ErrorRefresher';
 import LoadingSpinner from 'components/global/LoadingSpinner';
 
@@ -32,30 +34,38 @@ export default function Emojis({
     'emoji',
     `/users/${nickname}/emojis?selected=true`
   );
+  let emojiThrottleTimer: NodeJS.Timeout | null = null;
 
-  const emojiListener = (url: string) => {
+  const opponentEmojiListener = (url: string) => {
     setOpponentEmojiUrl(url);
-
     setTimeout(() => {
       setOpponentEmojiUrl(null);
     }, 1500);
   };
 
-  useEffect(() => {
-    socket.on('opponentEmoji', emojiListener);
-    return () => {
-      socket.off('opponentEmoji', emojiListener);
-    };
-  }, []);
-
-  const handleEmojiClick = (url: string) => {
+  const myEmojiListener = (url: string) => {
     setMyEmojiUrl(url);
-    socket.emit('myEmoji', url);
-
     setTimeout(() => {
       setMyEmojiUrl(null);
     }, 1500);
   };
+
+  useEffect(() => {
+    socket.on('myEmoji', myEmojiListener);
+    socket.on('opponentEmoji', opponentEmojiListener);
+    return () => {
+      socket.off('myEmoji', myEmojiListener);
+      socket.off('opponentEmoji', opponentEmojiListener);
+    };
+  }, []);
+
+  const handleEmojiClick = throttler(
+    (e: React.MouseEvent<HTMLImageElement>) => {
+      socket.emit('myEmoji', (e.target as HTMLImageElement).id);
+    },
+    1500,
+    emojiThrottleTimer
+  );
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher />;
@@ -65,14 +75,19 @@ export default function Emojis({
       className={styles.emojisContainer}
       style={{ width: `${canvasWidth}px` }}
     >
-      {data?.emojis?.map((emoji: Emoji) => (
-        <img
-          key={emoji?.id}
-          className={styles.emoji}
-          src={emoji?.imgUrl}
-          onClick={() => handleEmojiClick(emoji?.imgUrl)}
-        />
-      ))}
+      {data.emojis.map((emoji: Emoji, i: number) =>
+        emoji ? (
+          <img
+            key={i}
+            className={styles.emoji}
+            src={emoji.imgUrl}
+            id={emoji.imgUrl}
+            onClick={handleEmojiClick}
+          />
+        ) : (
+          <div key={i} className={`${styles.emoji} ${styles.none}`}></div>
+        )
+      )}
     </div>
   );
 }
