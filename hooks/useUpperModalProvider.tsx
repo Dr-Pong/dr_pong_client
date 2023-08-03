@@ -175,10 +175,10 @@ const useUpperModalProvider = () => {
     });
   };
 
-  const multiConnectWarningModal = (onLogout: () => void) => {
-    const handleLogout = () => {
+  const multiConnectWarningModal = () => {
+    const handleRouteToHome = () => {
       closeUpperModal();
-      onLogout();
+      router.replace('/');
     };
 
     useUpperModal({
@@ -186,11 +186,11 @@ const useUpperModalProvider = () => {
       body: <ModalPhrase>{t('multiConnectWarning')}</ModalPhrase>,
       tail: (
         <BasicButton
-          style='basic'
+          style='long'
           color='purple'
-          handleButtonClick={handleLogout}
+          handleButtonClick={handleRouteToHome}
         >
-          {t('logout')}
+          {t('GoToHome')}
         </BasicButton>
       ),
     });

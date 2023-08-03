@@ -27,9 +27,17 @@ export interface roundData {
   server: boolean;
 }
 
-export interface initData {
-  me: { x: number; y: number; width: number; height: number };
-  opponent: { x: number; y: number; width: number; height: number };
+interface userInitialData {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  score: number;
+}
+
+export interface gameInit {
+  me: userInitialData;
+  opponent: userInitialData;
   ball: { x: number; y: number; size: number };
   server: boolean;
   round: number;
