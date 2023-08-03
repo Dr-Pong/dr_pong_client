@@ -60,7 +60,12 @@ export default function RecordBox({ record }: { record: Record }) {
         </div>
         <div className={styles.playerScoreWrap}>
           <Player nickname={me.nickname} imgUrl={me.imgUrl} />
-          <div className={styles.score}>{`${me.score} : ${you.score}`}</div>
+          <div className={styles.resultWrap}>
+            <div className={styles.score}>{`${me.score} : ${you.score}`}</div>
+            <div className={`${styles.resultText} ${styles[result]}`}>
+              {t(result)}
+            </div>
+          </div>
           <Player nickname={you.nickname} imgUrl={you.imgUrl} />
         </div>
       </div>

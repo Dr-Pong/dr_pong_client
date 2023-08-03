@@ -33,6 +33,9 @@
 
 .basicContent {
   @include boxColumnGrid;
+  & img {
+    border-radius: $basic-radius;
+  }
 }
 
 .leftBox {
@@ -79,9 +82,30 @@
   cursor: pointer;
 }
 
-.score {
+.resultWrap {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+}
+
+.resultText {
+  margin-top: 0.2rem;
+  width: 2.5rem;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: $basic-radius;
+  &.win {
+    border: solid 1px $light-blue;
+    color: $light-blue;
+  }
+  &.lose {
+    border: solid 1px $just-pink;
+    color: $just-pink;
+  }
+  &.tie {
+    border: solid 1px $dark-grey;
+    color: $dark-grey;
+  }
 }

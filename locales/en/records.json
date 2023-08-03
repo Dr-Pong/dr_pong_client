@@ -15,5 +15,8 @@
   "show more": "show more",
   "no match": "No match history yet.",
   "How about logging in?": "Log in, enjoy the game and make your own records!",
-  "login": "Login"
+  "login": "Login",
+  "win": "Win",
+  "lose": "Lose",
+  "tie": "Tie"
 }
