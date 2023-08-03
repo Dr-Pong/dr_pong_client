@@ -11,6 +11,7 @@ import { bgmState, soundEffectState } from 'recoils/sound';
 import { useBgm } from 'hooks/useBgm';
 import useGameSocket from 'hooks/useGameSocket';
 import { useSoundEffect } from 'hooks/useSoundEffect';
+import useUpperModalProvider from 'hooks/useUpperModalProvider';
 
 import Emojis from 'components/game/Emojis';
 import MatchProfile from 'components/game/MatchProfile';
@@ -40,29 +41,34 @@ export default function PongFrame({
   const { effects } = useSoundEffect();
   const isSoundEffectOn = useRecoilValue(soundEffectState);
   const setAlert = useSetRecoilState(alertState);
+  const { multiConnectWarningModal } = useUpperModalProvider();
 
   const touchSound = () => {
     effects.get('hit')?.(isSoundEffectOn);
   };
 
-  const roomIdValidator = (data: { isValid: boolean }) => {
-    if (!data.isValid) {
-      setAlert({ type: 'warning', message: t('invalidRoom') });
-      router.replace('/');
-    }
+  const invalidGameIdListener = () => {
+    setAlert({ type: 'warning', message: t('invalidRoom') });
+    router.replace('/');
+  };
+
+  const multiConnectListener = () => {
+    multiConnectWarningModal();
   };
 
   useEffect(() => {
-    socket.emit('handshake', { roomId: roomId });
-    socket.once('handshake', roomIdValidator);
+    socket.emit('joinGame', { roomId: roomId });
+    socket.once('invalidGameId', invalidGameIdListener);
     bgms.get('game')?.(bgmOn);
     socket.once('gameEnd', () => {
       setIsEnd(true);
     });
+    socket.on('multiConnect', multiConnectListener);
     socket.on('barTouch', touchSound);
     socket.on('wallTouch', touchSound);
     return () => {
       bgms.get('bgm')?.(bgmOn);
+      socket.off('multiConnect', multiConnectListener);
       socket.off('barTouch', touchSound);
       socket.off('wallTouch', touchSound);
     };

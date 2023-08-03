@@ -5,7 +5,6 @@ import { useCookies } from 'react-cookie';
 
 import { isInGame } from 'types/gameTypes';
 
-import useAuthHandler from 'hooks/useAuthHandler';
 import { useBgm } from 'hooks/useBgm';
 import useChatSocket from 'hooks/useChatSocket';
 import { useSoundEffect } from 'hooks/useSoundEffect';
@@ -15,9 +14,7 @@ export default function PageConfig() {
   const [cookie, setCookie] = useCookies(['NEXT_LOCALE']);
   const router = useRouter();
   const [socket] = useChatSocket('global');
-  const { onLogout } = useAuthHandler();
-  const { useIsInGameModal, multiConnectWarningModal } =
-    useUpperModalProvider();
+  const { useIsInGameModal } = useUpperModalProvider();
 
   useBgm();
   useSoundEffect();
@@ -36,14 +33,9 @@ export default function PageConfig() {
     const isInGameListener = (data: isInGame) => {
       if (data?.roomId) useIsInGameModal(data);
     };
-    const multiConnectListener = () => {
-      multiConnectWarningModal(onLogout);
-    };
     socket.on('isInGame', isInGameListener);
-    socket.on('multiConnect', multiConnectListener);
     return () => {
       socket.off('isInGame', isInGameListener);
-      socket.off('multiConnect', multiConnectListener);
     };
   });
 

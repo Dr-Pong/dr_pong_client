@@ -4,7 +4,7 @@ import {
   Ball,
   Player,
   countdownData,
-  initData,
+  gameInit,
   posData,
   roundData,
 } from 'types/gameTypes';
@@ -43,7 +43,7 @@ export default function GameCanvas({
   const [ballWidthRatio, setWidthBallRatio] = useState(0);
   const [remainingTime, setRemainingTime] = useState(0);
 
-  const initListener = (data: initData) => {
+  const gameInitListener = (data: gameInit) => {
     setServer(data.server);
     setRound(data.round);
     setMe({
@@ -58,6 +58,8 @@ export default function GameCanvas({
       width: data.opponent.width * canvasWidth,
       height: data.opponent.height * canvasHeight,
     });
+    setMyScore(data.me.score);
+    setOpponentScore(data.opponent.score);
     setBall({
       x: data.ball.x * canvasWidth,
       y: data.ball.y * canvasHeight,
@@ -128,7 +130,7 @@ export default function GameCanvas({
   };
 
   useEffect(() => {
-    socket.once('initData', initListener);
+    socket.once('gameInit', gameInitListener);
     socket.on('time', countdownListener);
     socket.on('roundUpdate', roundListener);
     return () => {
@@ -203,8 +205,8 @@ export default function GameCanvas({
   const drawScore = (ctx: CanvasRenderingContext2D) => {
     ctx.font = '4rem TTLakesNeueTrialRegular';
     ctx.fillStyle = '#656887';
-    ctx.fillText(`${myScore}`, 10, canvasHeight / 2 - canvasHeight / 4);
-    ctx.fillText(`${opponentScore}`, 10, canvasHeight / 2 + canvasHeight / 4);
+    ctx.fillText(`${myScore}`, 20, canvasHeight / 2 - canvasHeight / 4);
+    ctx.fillText(`${opponentScore}`, 20, canvasHeight / 2 + canvasHeight / 4);
   };
 
   const drawGametime = (ctx: CanvasRenderingContext2D) => {
@@ -214,7 +216,7 @@ export default function GameCanvas({
     ctx.fillStyle = '#ffffff';
     if (time <= 0) ctx.fillText(`0.0`, 20, canvasHeight / 2 - 10);
     else if (time < 10)
-      ctx.fillText(`${time.toFixed(1)}`, 10, canvasHeight / 2 - 10);
+      ctx.fillText(`${time.toFixed(1)}`, 20, canvasHeight / 2 - 10);
   };
 
   useEffect(() => {

@@ -34,7 +34,7 @@ export default function GameLobby({
   const exitQueue = mutationDelete(`/games/queue`, {
     onSuccess: () => {
       closeUpperModal();
-      socket.once('joinGame', joinGameListener);
+      socket.once('matched', matchedListener);
     },
     onError: () => {
       setAlert({ type: 'failure' });
@@ -43,7 +43,7 @@ export default function GameLobby({
   const enterQueue = mutationPost(`/games/queue/normal`, {
     onSuccess: () => {
       useMatchWaitingUpperModal(exitQueue.mutate, true);
-      socket.once('joinGame', joinGameListener);
+      socket.once('matched', matchedListener);
     },
     onError: () => {
       setAlert({ type: 'failure' });
@@ -67,7 +67,7 @@ export default function GameLobby({
     setGameMode(value);
   };
 
-  const joinGameListener = (data: { roomId: string }) => {
+  const matchedListener = (data: { roomId: string }) => {
     closeUpperModal();
     router.push(`/game/${data.roomId}`);
   };
