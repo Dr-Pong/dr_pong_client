@@ -20,8 +20,7 @@ import SubmitButton from 'components/global/buttons/SubmitButton';
 import ButtonRow from 'components/global/buttons/buttonContainers/ButtonRow';
 import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
 import UpperModalTitle from 'components/modals/upperModalParts/UpperModalTitle';
-
-import selectableItemStyles from 'styles/myPage/SelectableItem.module.scss';
+import AchievementModalPart from 'components/myPage/AchievementModalPart';
 
 const useUpperModalProvider = () => {
   const { t } = useTranslation('common');
@@ -125,23 +124,9 @@ const useUpperModalProvider = () => {
   };
 
   const useAchievementDetailModal = (achievement: Achievement) => {
-    const { name, imgUrl, content } = achievement;
     useUpperModal({
-      head: <UpperModalTitle title={name} />,
-      body: (
-        <ModalPhrase>
-          {
-            <div>
-              <img
-                className={selectableItemStyles.itemImage}
-                src={imgUrl}
-                alt={name}
-              />
-              <div>{content}</div>
-            </div>
-          }
-        </ModalPhrase>
-      ),
+      head: null,
+      body: <AchievementModalPart achievement={achievement} />,
       tail: (
         <BasicButton
           style='basic'
