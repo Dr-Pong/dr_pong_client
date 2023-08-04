@@ -5,7 +5,7 @@
   "pages": {
     "*": ["common", "myPage"],
     "/": ["home"],
-    "/channels": ["channels"],
+    "/channels": ["chats", "channels"],
     "/friends": ["friends"],
     "/game": ["game", "guide"],
     "/game/[roomType]/[roomId]": ["game", "achievement"],
@@ -15,6 +15,6 @@
     "/login": ["login"],
     "/signUp": ["signUp"],
     "/authentication": ["authentication"],
-    "/chats/[roomType]/[roomId]": ["chats"]
+    "/chats/[roomType]/[roomId]": ["chats", "channels"]
   }
 }
