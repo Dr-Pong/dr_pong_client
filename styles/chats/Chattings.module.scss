@@ -1,6 +1,6 @@
 @import 'styles/common';
 
-.chattings {
+.chattingsContainer {
   position: relative;
   display: grid;
   grid-template-rows: 1fr 2.5rem;
@@ -14,12 +14,16 @@
   place-items: stretch;
 }
 
+.chatRefWrap {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding-inline: 0.3rem;
+}
+
 .chatBoxes {
   display: flex;
   flex-direction: column-reverse;
-  gap: 1rem;
-  overflow-y: auto;
-  padding-inline: 0.3rem;
 }
 
 .chatBox {

@@ -1,5 +1,5 @@
 import useTranslation from 'next-translate/useTranslation';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
@@ -53,7 +53,7 @@ export default function Chattings({
 
   const newMessageListener = (data: Chat) => {
     setChats((prev) => [data, ...prev]);
-    if (!isTopRefVisible && data.type === 'others') setShowPreview(true);
+    if (!isBottomRefVisible && data.type === 'others') setShowPreview(true);
   };
 
   const newSystemMessageListener = (data: Chat) => {
@@ -100,7 +100,6 @@ export default function Chattings({
         entries.forEach((entry) => {
           if (entry.target === topRef.current) {
             setIsTopRefVisible(entry.isIntersecting);
-            setShowPreview(false);
           } else if (entry.target === bottomRef.current) {
             setIsBottomRefVisible(entry.isIntersecting);
           }
@@ -127,9 +126,9 @@ export default function Chattings({
   };
 
   const handlePreviewClick = useCallback(() => {
-    topRef.current?.scrollIntoView({ behavior: 'auto' });
+    bottomRef.current?.scrollIntoView({ behavior: 'auto' });
     setShowPreview(false);
-  }, [topRef.current]);
+  }, [bottomRef.current]);
 
   const handleChatPostFail = (message: string) => {
     setChats((prev) => [
@@ -157,7 +156,7 @@ export default function Chattings({
         }
       );
       setMessage('');
-      topRef.current?.scrollIntoView({ behavior: 'auto' });
+      bottomRef.current?.scrollIntoView({ behavior: 'auto' });
     },
     [message]
   );
@@ -172,38 +171,39 @@ export default function Chattings({
   } = chatsGet(handleChatJoin, 20);
 
   useEffect(() => {
-    if (hasNextPage && !isFetchingNextPage && isBottomRefVisible)
-      fetchNextPage();
-  }, [hasNextPage, fetchNextPage, isBottomRefVisible]);
+    if (hasNextPage && !isFetchingNextPage && isTopRefVisible) fetchNextPage();
+  }, [hasNextPage, fetchNextPage, isTopRefVisible]);
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher error={error} />;
 
   return (
-    <div className={styles.chattings}>
-      <div className={styles.chatBoxes}>
+    <div className={styles.chattingsContainer}>
+      <div className={styles.chatRefWrap}>
         <div ref={topRef} className={styles.ref}>
           ㅤ
         </div>
-        {chats.map((chat) => {
-          const { id, message, nickname } = chat;
-          return (
-            <div key={chat.id} className={styles.chatBox}>
-              {chat.type === 'fail' && (
-                <ChatFailButtons
-                  id={id}
-                  message={message}
-                  setChats={setChats}
-                  handleChatPost={handleChatPost}
+        <div className={styles.chatBoxes}>
+          {chats.map((chat) => {
+            const { id, message, nickname } = chat;
+            return (
+              <div key={chat.id} className={styles.chatBox}>
+                {chat.type === 'fail' && (
+                  <ChatFailButtons
+                    id={id}
+                    message={message}
+                    setChats={setChats}
+                    handleChatPost={handleChatPost}
+                  />
+                )}
+                <ChatBox
+                  chat={chat}
+                  imgUrl={nickname ? userImageMap[nickname] : ''}
                 />
-              )}
-              <ChatBox
-                chat={chat}
-                imgUrl={nickname ? userImageMap[nickname] : ''}
-              />
-            </div>
-          );
-        })}
+              </div>
+            );
+          })}
+        </div>
         <div ref={bottomRef} className={styles.ref}>
           ㅤ
         </div>
