@@ -7,7 +7,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useQueryClient } from 'react-query';
 
 import { alertState } from 'recoils/alert';
-import { userState } from 'recoils/user';
 
 import { Chat, RoomType, UserImageMap } from 'types/chatTypes';
 
@@ -38,42 +37,46 @@ export default function Chattings({
   const { t } = useTranslation('channels');
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { nickname } = useRecoilValue(userState);
   const setAlert = useSetRecoilState(alertState);
   const [chats, setChats] = useState<Chat[]>([]);
   const [message, setMessage] = useState<string>('');
   const [isTopRefVisible, setIsTopRefVisible] = useState(true);
   const [isBottomRefVisible, setIsBottomRefVisible] = useState(false);
-  const [newestChat, setNewestChat] = useState<Chat | null>(null);
+  const [showPreview, setShowPreview] = useState<boolean>(false);
   const [inputDisabled, setInputDisables] = useState(isMuted);
+  const [failedChatCount, setFailedChatCount] = useState<number>(0);
   const { chatsGet } = useChatQuery(roomType, roomId);
   const { mutate } = useChatQuery(roomType, roomId).postChatMutation();
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const [socket] = useChatSocket(roomType);
 
-  useEffect(() => {
-    const newMessageListener = (data: Chat) => {
-      setChats((prev) => [{ ...data, id: prev[0]?.id + 1 }, ...prev]);
-      setNewestChat({ ...data, id: chats[0]?.id });
-    };
-    const newSystemMessageListener = (data: Chat) => {
-      setChats((prev) => [{ ...data, id: prev[0]?.id + 1 }, ...prev]);
-    };
-    const kickBanListener = (data: { type: 'kick' | 'ban' }) => {
-      setAlert({
-        type: 'warning',
-        message: data.type === 'kick' ? t('kick') : t('ban'),
-      });
-      router.push('/channels');
-    };
-    const muteListener = () => {
-      setInputDisables(true);
-    };
-    const unmuteListener = () => {
-      setInputDisables(false);
-    };
+  const newMessageListener = (data: Chat) => {
+    setChats((prev) => [data, ...prev]);
+    if (!isTopRefVisible && data.type === 'others') setShowPreview(true);
+  };
 
+  const newSystemMessageListener = (data: Chat) => {
+    setChats((prev) => [data, ...prev]);
+  };
+
+  const kickBanListener = (data: { type: 'kick' | 'ban' }) => {
+    setAlert({
+      type: 'warning',
+      message: data.type === 'kick' ? t('kick') : t('ban'),
+    });
+    router.push('/channels');
+  };
+
+  const muteListener = () => {
+    setInputDisables(true);
+  };
+
+  const unmuteListener = () => {
+    setInputDisables(false);
+  };
+
+  useEffect(() => {
     socket.on('message', newMessageListener);
     socket.on('system', newSystemMessageListener);
     socket.on('out', kickBanListener);
@@ -97,7 +100,7 @@ export default function Chattings({
         entries.forEach((entry) => {
           if (entry.target === topRef.current) {
             setIsTopRefVisible(entry.isIntersecting);
-            setNewestChat(null);
+            setShowPreview(false);
           } else if (entry.target === bottomRef.current) {
             setIsBottomRefVisible(entry.isIntersecting);
           }
@@ -123,35 +126,21 @@ export default function Chattings({
     setChats((prev) => prev.concat(rawChats));
   };
 
-  const handlePreviewClick = useCallback(
-    () => topRef.current?.scrollIntoView({ behavior: 'auto' }),
-    [topRef.current]
-  );
-
-  const handleChatPostSuccess = (message: string) => {
-    setChats((prev) => [
-      {
-        id: prev[0]?.id + 1,
-        message,
-        nickname,
-        time: new Date(),
-        type: 'me',
-      },
-      ...prev,
-    ]);
-  };
+  const handlePreviewClick = useCallback(() => {
+    topRef.current?.scrollIntoView({ behavior: 'auto' });
+    setShowPreview(false);
+  }, [topRef.current]);
 
   const handleChatPostFail = (message: string) => {
     setChats((prev) => [
       {
-        id: prev[0]?.id + 1,
+        id: `fail_${failedChatCount}`,
         message,
-        nickname: '',
-        time: new Date(),
         type: 'fail',
       },
       ...prev,
     ]);
+    setFailedChatCount((prev) => prev + 1);
   };
 
   const handleChatPost = useCallback(
@@ -160,7 +149,7 @@ export default function Chattings({
       mutate(
         { message },
         {
-          onSuccess: () => handleChatPostSuccess(message),
+          onSuccess: () => {},
           onError: (error: any) => {
             if (error.response.status == 400) return;
             handleChatPostFail(message);
@@ -172,10 +161,6 @@ export default function Chattings({
     },
     [message]
   );
-
-  useEffect(() => {
-    if (chats[0] !== newestChat) setNewestChat({ ...chats[0] });
-  }, [chats]);
 
   const {
     fetchNextPage,
@@ -212,7 +197,10 @@ export default function Chattings({
                   handleChatPost={handleChatPost}
                 />
               )}
-              <ChatBox chat={chat} imgUrl={userImageMap[nickname]} />
+              <ChatBox
+                chat={chat}
+                imgUrl={nickname ? userImageMap[nickname] : ''}
+              />
             </div>
           );
         })}
@@ -220,10 +208,10 @@ export default function Chattings({
           ㅤ
         </div>
       </div>
-      {!isTopRefVisible && newestChat && chats[0].type === 'others' && (
+      {showPreview && (
         <div className={styles.preview} onClick={handlePreviewClick}>
-          <div>{newestChat.nickname}</div>
-          <div>{messageCutter(newestChat.message)}</div>
+          <div>{chats[0].nickname}</div>
+          <div>{messageCutter(chats[0].message)}</div>
         </div>
       )}
       <ChatInputBox
