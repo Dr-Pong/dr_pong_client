@@ -15,7 +15,7 @@
   "save": "save",
   "submit": "submit",
   "Password is wrong" : "Your password is incorrect. Please try again.",
-  "Channel name already exists" : "Channel name already exists.",
+  "title taken" : "Channel name already exists.",
   "full bang": "The channel is already full.",
   "wrong password": "Your password is incorrect. Please try again.",
   "no bang": "The channel no longer exists.",
