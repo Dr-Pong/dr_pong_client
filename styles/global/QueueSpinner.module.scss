@@ -4,13 +4,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  height: 8rem;
 }
 
 .time {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: $just-purple;
-  background: transparent;
   position: absolute;
+  color: $just-purple;
+  font-weight: bold;
+  font-size: 1.5rem;
+  background: transparent;
 }
