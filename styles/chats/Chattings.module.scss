@@ -16,15 +16,26 @@
 
 .chatRefWrap {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
+  gap: 1rem;
+  justify-content: flex-start;
+  height: 100%;
   overflow-y: auto;
   padding-inline: 0.3rem;
 }
 
-.chatBoxes {
-  display: flex;
-  flex-direction: column-reverse;
-  gap: 1rem;
+.chatRefWrap::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+}
+
+.chatRefWrap::-webkit-scrollbar-track {
+  background: black;
+}
+
+.chatRefWrap::-webkit-scrollbar-thumb {
+  background: $light-grey;
+  border-radius: 8px;
 }
 
 .chatBox {

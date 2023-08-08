@@ -1,10 +1,10 @@
+import { AxiosError } from 'axios';
 import useTranslation from 'next-translate/useTranslation';
 import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useQueryClient } from 'react-query';
 
 import { alertState } from 'recoils/alert';
 
@@ -12,6 +12,7 @@ import { Chat, RoomType, UserImageMap } from 'types/chatTypes';
 
 import useChatQuery from 'hooks/useChatQuery';
 import useChatSocket from 'hooks/useChatSocket';
+import useCustomQuery from 'hooks/useCustomQuery';
 
 import ChatBox from 'components/chats/ChatBox';
 import ChatFailButtons from 'components/chats/ChatFailButtons';
@@ -36,20 +37,38 @@ export default function Chattings({
 }: ChattingsProps) {
   const { t } = useTranslation('channels');
   const router = useRouter();
-  const queryClient = useQueryClient();
   const setAlert = useSetRecoilState(alertState);
   const [chats, setChats] = useState<Chat[]>([]);
   const [message, setMessage] = useState<string>('');
-  const [isTopRefVisible, setIsTopRefVisible] = useState(true);
-  const [isBottomRefVisible, setIsBottomRefVisible] = useState(false);
+  const [isTopRefVisible, setIsTopRefVisible] = useState(false);
+  const [isBottomRefVisible, setIsBottomRefVisible] = useState(true);
   const [showPreview, setShowPreview] = useState<boolean>(false);
-  const [inputDisabled, setInputDisables] = useState(isMuted);
+  const [inputDisabled, setInputDisabled] = useState(isMuted);
   const [failedChatCount, setFailedChatCount] = useState<number>(0);
-  const { chatsGet } = useChatQuery(roomType, roomId);
-  const { mutate } = useChatQuery(roomType, roomId).postChatMutation();
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const [socket] = useChatSocket(roomType);
+  const { queryClient, mutationPost } = useCustomQuery();
+  const { chatsGet } = useChatQuery(roomType, roomId);
+  const sendChatMutaion = mutationPost(
+    roomType === 'dm'
+      ? `/users/friends/${roomId}/chats`
+      : `/channels/${roomId}/chats`,
+    {
+      onError: (e: AxiosError) => {
+        if (e.status == 400) return;
+        setChats((prev) => [
+          {
+            id: `fail_${failedChatCount}`,
+            message,
+            type: 'fail',
+          },
+          ...prev,
+        ]);
+        setFailedChatCount((prev) => prev + 1);
+      },
+    }
+  );
 
   const newMessageListener = (data: Chat) => {
     setChats((prev) => [data, ...prev]);
@@ -69,11 +88,11 @@ export default function Chattings({
   };
 
   const muteListener = () => {
-    setInputDisables(true);
+    setInputDisabled(true);
   };
 
   const unmuteListener = () => {
-    setInputDisables(false);
+    setInputDisabled(false);
   };
 
   useEffect(() => {
@@ -98,10 +117,11 @@ export default function Chattings({
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.target === topRef.current) {
-            setIsTopRefVisible(entry.isIntersecting);
-          } else if (entry.target === bottomRef.current) {
+          if (entry.target === bottomRef.current) {
             setIsBottomRefVisible(entry.isIntersecting);
+            setShowPreview(false);
+          } else if (entry.target === topRef.current) {
+            setIsTopRefVisible(entry.isIntersecting);
           }
         });
       },
@@ -130,31 +150,10 @@ export default function Chattings({
     setShowPreview(false);
   }, [bottomRef.current]);
 
-  const handleChatPostFail = (message: string) => {
-    setChats((prev) => [
-      {
-        id: `fail_${failedChatCount}`,
-        message,
-        type: 'fail',
-      },
-      ...prev,
-    ]);
-    setFailedChatCount((prev) => prev + 1);
-  };
-
   const handleChatPost = useCallback(
     (message: string) => {
       if (!isMessageValid(message)) return;
-      mutate(
-        { message },
-        {
-          onSuccess: () => {},
-          onError: (error: any) => {
-            if (error.response.status == 400) return;
-            handleChatPostFail(message);
-          },
-        }
-      );
+      sendChatMutaion.mutate({ message });
       setMessage('');
       bottomRef.current?.scrollIntoView({ behavior: 'auto' });
     },
@@ -180,31 +179,29 @@ export default function Chattings({
   return (
     <div className={styles.chattingsContainer}>
       <div className={styles.chatRefWrap}>
-        <div ref={topRef} className={styles.ref}>
+        <div ref={bottomRef} className={styles.ref}>
           ㅤ
         </div>
-        <div className={styles.chatBoxes}>
-          {chats.map((chat) => {
-            const { id, message, nickname } = chat;
-            return (
-              <div key={chat.id} className={styles.chatBox}>
-                {chat.type === 'fail' && (
-                  <ChatFailButtons
-                    id={id}
-                    message={message}
-                    setChats={setChats}
-                    handleChatPost={handleChatPost}
-                  />
-                )}
-                <ChatBox
-                  chat={chat}
-                  imgUrl={nickname ? userImageMap[nickname] : ''}
+        {chats.map((chat) => {
+          const { id, message, nickname } = chat;
+          return (
+            <div key={chat.id} className={styles.chatBox}>
+              {chat.type === 'fail' && (
+                <ChatFailButtons
+                  id={id}
+                  message={message}
+                  setChats={setChats}
+                  handleChatPost={handleChatPost}
                 />
-              </div>
-            );
-          })}
-        </div>
-        <div ref={bottomRef} className={styles.ref}>
+              )}
+              <ChatBox
+                chat={chat}
+                imgUrl={nickname ? userImageMap[nickname] : ''}
+              />
+            </div>
+          );
+        })}
+        <div ref={topRef} className={styles.ref}>
           ㅤ
         </div>
       </div>
