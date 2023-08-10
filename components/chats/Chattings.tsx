@@ -45,7 +45,6 @@ export default function Chattings({
   const [failedChatCount, setFailedChatCount] = useState<number>(0);
   const [newestChat, setNewestChat] = useState<Chat | null>(null);
   const [socket] = useChatSocket(roomType);
-  const [isMounted, setIsMounted] = useState<boolean>(false);
   const { queryClient, mutationPost } = useCustomQuery();
   const { chatsGet } = useChatQuery(roomType, roomId);
   const chattingsRef = useRef<HTMLDivElement | null>(null);
@@ -134,7 +133,7 @@ export default function Chattings({
   }, []);
 
   useEffect(() => {
-    if (isMounted && chattingsRef.current) {
+    if (chattingsRef.current) {
       chattingsRef.current.addEventListener('scroll', handleScroll);
     }
     return () => {
@@ -142,7 +141,7 @@ export default function Chattings({
         chattingsRef.current.removeEventListener('scroll', handleScroll);
       }
     };
-  }, [isMounted, hasNextPage, isFetchingNextPage]);
+  }, [hasNextPage, isFetchingNextPage]);
 
   const handlePreviewClick = useCallback(() => {
     setShowPreview(false);
@@ -181,13 +180,7 @@ export default function Chattings({
 
   return (
     <div className={styles.chattingsContainer}>
-      <div
-        className={styles.chattings}
-        ref={(el) => {
-          chattingsRef.current = el;
-          setIsMounted(true);
-        }}
-      >
+      <div className={styles.chattings} ref={chattingsRef}>
         {chats.map((chat) => {
           const { id, message, nickname } = chat;
           return (
