@@ -134,7 +134,6 @@ export default function Chattings({
   }, []);
 
   useEffect(() => {
-    console.log('currentRef: ', chattingsRef.current);
     if (isMounted && chattingsRef.current) {
       chattingsRef.current.addEventListener('scroll', handleScroll);
     }
@@ -143,7 +142,7 @@ export default function Chattings({
         chattingsRef.current.removeEventListener('scroll', handleScroll);
       }
     };
-  }, [isMounted]);
+  }, [isMounted, hasNextPage, isFetchingNextPage]);
 
   const handlePreviewClick = useCallback(() => {
     setShowPreview(false);
