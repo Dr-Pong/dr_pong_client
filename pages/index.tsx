@@ -34,9 +34,6 @@ export default function Home() {
   if (!login)
     pages.push({ value: t('Login'), route: '/login', style: 'basic' });
   
-  console.log('hi');
-  console.log('hi', process.env.NEXT_PUBLIC_API_ENDPOINT);
-
   return (
     <div className={styles.homePageContainer}>
       <div className={styles.logo}>Dr.Pong</div>
