@@ -156,7 +156,7 @@ export default function Chattings({
     setMessage('');
   }, []);
 
-  const handleScroll = useCallback(() => {
+  const handleScroll = () => {
     const ref = chattingsRef.current!;
 
     // 스크롤이 맨 위에 있는 경우
@@ -175,7 +175,7 @@ export default function Chattings({
       setShowPreview(false);
       setNewestChat(null);
     }
-  }, [hasNextPage, isFetchingNextPage]);
+  };
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher error={error} />;
