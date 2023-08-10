@@ -37,6 +37,15 @@ jobs:
 
 
       - name: Docker build & push to registry
+        env:
+          NEXT_PUBLIC_API_ENDPOINT=${{ secrets.NEXT_PUBLIC_API_ENDPOINT }}
+          NEXT_PUBLIC_GAME_SOCKET=${{ secrets.NEXT_PUBLIC_GAME_SOCKET }}
+          NEXT_PUBLIC_CHAT_SOCKET=${{ secrets.NEXT_PUBLIC_CHAT_SOCKET }}
+          NEXT_PUBLIC_FT_CLIENT_ID=${{ secrets.NEXT_PUBLIC_FT_CLIENT_ID }}
+          NEXT_PUBLIC_FT_REDIRECT_URI=${{ secrets.NEXT_PUBLIC_FT_REDIRECT_URI }}
+          NEXT_PUBLIC_GG_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GG_CLIENT_ID }}
+          NEXT_PUBLIC_GG_REDIRECT_URI=${{ secrets.NEXT_PUBLIC_GG_REDIRECT_URI }}
+          NEXT_PUBLIC_GA_ID=${{ secrets.NEXT_PUBLIC_GA_ID }}
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }} .
