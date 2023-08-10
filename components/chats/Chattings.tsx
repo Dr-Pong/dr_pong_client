@@ -40,18 +40,16 @@ export default function Chattings({
   const setAlert = useSetRecoilState(alertState);
   const [chats, setChats] = useState<Chat[]>([]);
   const [message, setMessage] = useState<string>('');
-  // const [isTopRefVisible, setIsTopRefVisible] = useState(false);
-  // const [isBottomRefVisible, setIsBottomRefVisible] = useState(true);
   const [showPreview, setShowPreview] = useState<boolean>(false);
   const [inputDisabled, setInputDisabled] = useState(isMuted);
   const [failedChatCount, setFailedChatCount] = useState<number>(0);
   const [newestChat, setNewestChat] = useState<Chat | null>(null);
-  // const topRef = useRef<HTMLDivElement>(null);
-  const bottomRef = useRef<HTMLDivElement>(null);
   const [socket] = useChatSocket(roomType);
+  const [isMounted, setIsMounted] = useState<boolean>(false);
   const { queryClient, mutationPost } = useCustomQuery();
   const { chatsGet } = useChatQuery(roomType, roomId);
-  const sendChatMutaion = mutationPost(
+  const chattingsRef = useRef<HTMLDivElement | null>(null);
+  const sendChatMutation = mutationPost(
     roomType === 'dm'
       ? `/users/friends/${roomId}/chats`
       : `/channels/${roomId}/chats`,
@@ -67,116 +65,14 @@ export default function Chattings({
           ...prev,
         ]);
         setFailedChatCount((prev) => prev + 1);
+        pageDown();
       },
     }
   );
-  const messageRef = useRef<HTMLDivElement>(null);
 
-  const newMessageListener = (data: Chat) => {
-    // const ref = messageRef.current!;
-
-    setChats((prev) => [data, ...prev]);
-    if (data.type === 'others') setNewestChat(data);
-    // if (!isBottomRefVisible && data.type === 'others') setShowPreview(true);
-    // ref.scrollTop = ref.scrollHeight;
-  };
-
-  const newSystemMessageListener = (data: Chat) => {
-    setChats((prev) => [data, ...prev]);
-  };
-
-  const kickBanListener = (data: { type: 'kick' | 'ban' }) => {
-    setAlert({
-      type: 'warning',
-      message: data.type === 'kick' ? t('kick') : t('ban'),
-    });
-    router.push('/channels');
-  };
-
-  const muteListener = () => {
-    setInputDisabled(true);
-  };
-
-  const unmuteListener = () => {
-    setInputDisabled(false);
-  };
-
-  useEffect(() => {
-    if (messageRef.current)
-      messageRef.current!.addEventListener('scroll', handleScroll);
-    socket.on('message', newMessageListener);
-    socket.on('system', newSystemMessageListener);
-    socket.on('out', kickBanListener);
-    socket.on('mute', muteListener);
-    socket.on('unmute', unmuteListener);
-    if (roomType === 'dm') {
-      socket.emit('dear', { nickname: roomId });
-    }
-    return () => {
-      messageRef.current!.removeEventListener('scroll', handleScroll);
-      socket.off('message', newMessageListener);
-      socket.off('system', newSystemMessageListener);
-      socket.off('out', kickBanListener);
-      socket.off('mute', muteListener);
-      socket.off('unmute', unmuteListener);
-    };
-  }, []);
-
-  // useEffect(() => {
-  //   const observer = new IntersectionObserver(
-  //     (entries) => {
-  //       entries.forEach((entry) => {
-  //         if (entry.target === bottomRef.current) {
-  //           setIsBottomRefVisible(entry.isIntersecting);
-  //           setShowPreview(false);
-  //         } else if (entry.target === topRef.current) {
-  //           setIsTopRefVisible(entry.isIntersecting);
-  //         }
-  //       });
-  //     },
-  //     { threshold: 0.5 }
-  //   );
-
-  //   const timeout = setTimeout(() => {
-  //     if (topRef.current) observer.observe(topRef.current);
-  //     if (bottomRef.current) observer.observe(bottomRef.current);
-  //   }, 300);
-
-  //   return () => {
-  //     clearTimeout(timeout);
-  //     if (topRef.current) observer.unobserve(topRef.current);
-  //     if (bottomRef.current) observer.unobserve(bottomRef.current);
-  //     queryClient.removeQueries(['chats', roomId]);
-  //   };
-  // }, []);
-
-  const handleChatJoin = (rawChats: Chat[]): void => {
+  const handleChatJoin = useCallback((rawChats: Chat[]): void => {
     setChats((prev) => prev.concat(rawChats));
-  };
-
-  // const handlePreviewClick = useCallback(() => {
-  //   bottomRef.current?.scrollIntoView({ behavior: 'auto' });
-  //   setShowPreview(false);
-  // }, [bottomRef.current]);
-
-  const handlePreviewClick = useCallback(() => {
-    const ref = messageRef.current!;
-
-    setShowPreview(false);
-    ref.scrollTop = ref.scrollHeight;
-  }, [showPreview]);
-
-  const handleChatPost = useCallback(
-    (message: string) => {
-      if (!isMessageValid(message)) return;
-      const ref = messageRef.current!;
-
-      sendChatMutaion.mutate({ message });
-      setMessage('');
-      ref.scrollTop = ref.scrollHeight;
-    },
-    [message]
-  );
+  }, []);
 
   const {
     fetchNextPage,
@@ -187,33 +83,113 @@ export default function Chattings({
     error,
   } = chatsGet(handleChatJoin, 20);
 
-  let prevScrollHeight = 0;
+  const pageDown = useCallback(() => {
+    const ref = chattingsRef.current!;
+    ref.scrollTop = 0;
+  }, [chattingsRef.current]);
+
+  const newMessageListener = useCallback((data: Chat) => {
+    setChats((prev) => [data, ...prev]);
+    if (data.type === 'others' && chattingsRef.current!.scrollTop > -10)
+      setNewestChat(data);
+    if (data.type === 'me') pageDown();
+  }, []);
+
+  const newSystemMessageListener = useCallback((data: Chat) => {
+    setChats((prev) => [data, ...prev]);
+  }, []);
+
+  const kickBanListener = useCallback((data: { type: 'kick' | 'ban' }) => {
+    setAlert({
+      type: 'warning',
+      message: data.type === 'kick' ? t('kick') : t('ban'),
+    });
+    router.push('/channels');
+  }, []);
+
+  const muteListener = useCallback(() => {
+    setInputDisabled(true);
+  }, []);
+
+  const unmuteListener = useCallback(() => {
+    setInputDisabled(false);
+  }, []);
+
+  useEffect(() => {
+    socket.on('message', newMessageListener);
+    socket.on('system', newSystemMessageListener);
+    socket.on('out', kickBanListener);
+    socket.on('mute', muteListener);
+    socket.on('unmute', unmuteListener);
+    if (roomType === 'dm') {
+      socket.emit('dear', { nickname: roomId });
+    }
+    return () => {
+      socket.off('message', newMessageListener);
+      socket.off('system', newSystemMessageListener);
+      socket.off('out', kickBanListener);
+      socket.off('mute', muteListener);
+      socket.off('unmute', unmuteListener);
+      queryClient.removeQueries(['chats', roomId]);
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log('currentRef: ', chattingsRef.current);
+    if (isMounted && chattingsRef.current) {
+      chattingsRef.current.addEventListener('scroll', handleScroll);
+    }
+    return () => {
+      if (chattingsRef.current) {
+        chattingsRef.current.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, [isMounted]);
+
+  const handlePreviewClick = useCallback(() => {
+    setShowPreview(false);
+    pageDown();
+  }, []);
+
+  const handleChatPost = useCallback((message: string) => {
+    if (!isMessageValid(message)) return;
+    sendChatMutation.mutate({ message });
+    setMessage('');
+  }, []);
 
   const handleScroll = () => {
-    const ref = messageRef.current!;
-    const scrollTop = ref.scrollTop;
+    const ref = chattingsRef.current!;
 
-    if (hasNextPage && !isFetchingNextPage && scrollTop === 0) {
+    // 스크롤이 맨 위에 있는 경우
+    if (
+      hasNextPage &&
+      !isFetchingNextPage &&
+      Math.abs(ref.scrollTop) > ref.scrollHeight - ref.clientHeight - 100
+    )
       fetchNextPage();
-      prevScrollHeight = ref.scrollHeight;
-    }
-    if (prevScrollHeight - scrollTop > ref.clientHeight + 1000)
-      setShowPreview(true);
-  };
 
-  // useEffect(() => {
-  //   if (hasNextPage && !isFetchingNextPage && isTopRefVisible) fetchNextPage();
-  // }, [hasNextPage, fetchNextPage, isTopRefVisible]);
+    // 스크롤이 맨 아래가 아닌 경우
+    if (ref.scrollTop < -50) setShowPreview(true);
+
+    // 스크롤미 맨 아래에 있는 경우
+    if (ref.scrollTop > -10) {
+      setShowPreview(false);
+      setNewestChat(null);
+    }
+  };
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher error={error} />;
 
   return (
     <div className={styles.chattingsContainer}>
-      <div className={styles.chatRefWrap} ref={messageRef}>
-        {/* <div ref={bottomRef} className={styles.ref}>
-          ㅤ
-        </div> */}
+      <div
+        className={styles.chattings}
+        ref={(el) => {
+          chattingsRef.current = el;
+          setIsMounted(true);
+        }}
+      >
         {chats.map((chat) => {
           const { id, message, nickname } = chat;
           return (
@@ -233,9 +209,6 @@ export default function Chattings({
             </div>
           );
         })}
-        {/* <div ref={topRef} className={styles.ref}>
-          ㅤ
-        </div> */}
       </div>
       {showPreview && newestChat && (
         <div className={styles.preview} onClick={handlePreviewClick}>

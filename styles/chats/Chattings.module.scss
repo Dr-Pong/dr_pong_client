@@ -14,26 +14,25 @@
   place-items: stretch;
 }
 
-.chatRefWrap {
+.chattings {
   display: flex;
   flex-direction: column-reverse;
   gap: 1rem;
-  justify-content: flex-start;
   height: 100%;
-  overflow-y: auto;
+  overflow-y: scroll;
   padding-inline: 0.3rem;
 }
 
-.chatRefWrap::-webkit-scrollbar {
+.chattings::-webkit-scrollbar {
   width: 5px;
   height: 8px;
 }
 
-.chatRefWrap::-webkit-scrollbar-track {
+.chattings::-webkit-scrollbar-track {
   background: black;
 }
 
-.chatRefWrap::-webkit-scrollbar-thumb {
+.chattings::-webkit-scrollbar-thumb {
   background: $light-grey;
   border-radius: 8px;
 }

@@ -13,7 +13,9 @@ import useCustomQuery from 'hooks/useCustomQuery';
 import instance from 'utils/axios';
 
 const useChatQuery = (roomType: RoomType, roomId: string) => {
-  const { get, mutationPost, queryClient } = useCustomQuery();
+  const { get, queryClient } = useCustomQuery();
+
+  const myChannelGet = get('myChannel', '/channels/me');
 
   const chatUsersGet = (setChatUsers?: (u: UserImageMap) => void) => {
     const friendDetailToChatUser = (data: DetailDto) => {
@@ -33,10 +35,10 @@ const useChatQuery = (roomType: RoomType, roomId: string) => {
     return roomType === 'dm'
       ? get('DMFriend', `/users/${roomId}/detail`, friendDetailToChatUser)
       : get(
-        'channelParticipants',
-        `/channels/${roomId}/participants`,
-        participantsToChatUsers
-      );
+          'channelParticipants',
+          `/channels/${roomId}/participants`,
+          participantsToChatUsers
+        );
   };
 
   const chatsGet = (handleChatJoin: (chats: Chat[]) => void, count: number) => {
@@ -82,16 +84,7 @@ const useChatQuery = (roomType: RoomType, roomId: string) => {
     );
   };
 
-  const postChatMutation = () => {
-    const path =
-      roomType === 'dm'
-        ? `/users/friends/${roomId}/chats`
-        : `/channels/${roomId}/chats`;
-
-    return mutationPost(path, {});
-  };
-
-  return { chatUsersGet, chatsGet, postChatMutation };
+  return { myChannelGet, chatUsersGet, chatsGet };
 };
 
 export default useChatQuery;
