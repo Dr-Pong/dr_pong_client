@@ -90,8 +90,7 @@ export default function Chattings({
 
   const newMessageListener = useCallback((data: Chat) => {
     setChats((prev) => [data, ...prev]);
-    if (data.type === 'others' && chattingsRef.current!.scrollTop > -10)
-      setNewestChat(data);
+    if (data.type === 'others') setNewestChat(data);
     if (data.type === 'me') pageDown();
   }, []);
 
@@ -157,7 +156,7 @@ export default function Chattings({
     setMessage('');
   }, []);
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     const ref = chattingsRef.current!;
 
     // 스크롤이 맨 위에 있는 경우
@@ -176,7 +175,7 @@ export default function Chattings({
       setShowPreview(false);
       setNewestChat(null);
     }
-  };
+  }, [hasNextPage, isFetchingNextPage]);
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher error={error} />;
