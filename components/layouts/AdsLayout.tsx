@@ -34,14 +34,14 @@ export default function AdsLayout({ children }: LayoutProps) {
         <GoogleAd
           client='ca-pub-5861134754944224'
           slot='4781852804'
-          format='auto'
+          format='vertical'
           responsive='true'
         />
         {children}
         <GoogleAd
           client='ca-pub-5861134754944224'
           slot='4781852804'
-          format='auto'
+          format='vertical'
           responsive='true'
         />
       </div>
@@ -53,7 +53,7 @@ export default function AdsLayout({ children }: LayoutProps) {
       <GoogleAd
         client='ca-pub-5861134754944224'
         slot='9772393400'
-        format='auto'
+        format='horizontal'
         responsive='true'
       />
     </div>
