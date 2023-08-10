@@ -59,7 +59,7 @@ jobs:
             cd docker
             docker-compose down
             docker rm -f $(docker ps -qa)
-            docker rmi -f ${{ secrets.DOCKER_REPO }}/dr_pong
+            docker rmi -f ${{ secrets.DOCKER_TO_REMOVE }}
             docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             docker-compose up -d
      
