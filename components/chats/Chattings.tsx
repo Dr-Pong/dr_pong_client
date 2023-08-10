@@ -210,8 +210,8 @@ export default function Chattings({
       </div>
       {showPreview && newestChat && (
         <div className={styles.preview} onClick={handlePreviewClick}>
-          <div>{chats[0].nickname}</div>
-          <div>{messageCutter(chats[0].message)}</div>
+          <div>{newestChat.nickname}</div>
+          <div>{messageCutter(newestChat.message)}</div>
         </div>
       )}
       <ChatInputBox
