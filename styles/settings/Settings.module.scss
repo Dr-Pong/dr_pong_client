@@ -14,12 +14,12 @@
     display: grid;
     grid-template-columns: 6.5rem 1fr;
     gap: 0.5rem;
-    align-items: center;
-    justify-items: stretch;
     height: 2.5rem;
-  }
-  form {
-    justify-self: center;
+    place-items: center stretch;
+    form {
+      margin-right: 0.5rem;
+      margin-left: auto;
+    }
   }
 }
 
@@ -27,9 +27,9 @@
   font-family: $bold-font;
 }
 
-.buttons {
-  align-self: center;
-  button:first-child {
-    margin-bottom: 1rem;
-  }
+.buttonContent {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  justify-content: center;
 }

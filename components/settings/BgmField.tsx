@@ -10,7 +10,7 @@ import { useBgm } from 'hooks/useBgm';
 
 import BasicButton from 'components/global/buttons/BasicButton';
 
-import styles from 'styles/settings/SettingField.module.scss';
+import styles from 'styles/settings/Settings.module.scss';
 
 export default function BgmField() {
   const { t } = useTranslation('common');
@@ -40,17 +40,14 @@ export default function BgmField() {
   };
 
   if (!loaded) return null;
+
   return (
-    <div className={styles.fieldContainer}>
-      <BasicButton
-        style='basic'
-        color='purple'
-        handleButtonClick={bgmOn ? disableBgm : enableBgm}
-      >
-        <div className={styles.buttonContent}>
-          {bgmOn ? contents.disable : contents.enable}
-        </div>
-      </BasicButton>
-    </div>
+    <BasicButton
+      style='basic'
+      color='purple'
+      handleButtonClick={bgmOn ? disableBgm : enableBgm}
+    >
+      {bgmOn ? contents.disable : contents.enable}
+    </BasicButton>
   );
 }
