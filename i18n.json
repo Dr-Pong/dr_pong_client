@@ -3,7 +3,7 @@
   "defaultLocale": "en",
   "localeDetection": true,
   "pages": {
-    "*": ["common", "myPage"],
+    "*": ["common", "myPage", "achievement"],
     "/": ["home"],
     "/channels": ["chats", "channels"],
     "/friends": ["friends"],
