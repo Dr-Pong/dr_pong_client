@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 
+import styles from 'styles/global/GoogleAd.module.scss';
+
 export default function GoogleAd({
-  className = 'adsbygoogle',
   client = '',
   slot = '',
   format = '',
   responsive = '',
   layoutKey = '',
 }: {
-  className?: string;
   client?: string;
   slot?: string;
   format?: string;
@@ -16,7 +16,7 @@ export default function GoogleAd({
   layoutKey?: string;
 }) {
   useEffect(() => {
-    // if (process.env.NODE_ENV !== 'production') return;
+    if (process.env.NODE_ENV !== 'production') return;
     window.onload = () => {
       ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push(
         {}
@@ -24,40 +24,29 @@ export default function GoogleAd({
     };
   }, []);
 
-  // if (process.env.NODE_ENV !== 'production')
-  //   return (
-  //     <div
-  //       style={{
-  //         background: '#e9e9e9',
-  //         color: 'black',
-  //         fontSize: '18px',
-  //         fontWeight: 'bold',
-  //         textAlign: 'center',
-  //         padding: '16px',
-  //         margin: '0',
-  //       }}
-  //     >
-  //       광고 표시 영역
-  //     </div>
-  //   );
-
-  return (
-    <div>
-      <ins
-        className={className}
+  if (process.env.NODE_ENV !== 'production')
+    return (
+      <div
         style={{
-          overflowX: 'auto',
-          overflowY: 'hidden',
-          display: 'block',
+          background: '#e9e9e9',
+          color: 'black',
+          fontSize: '18px',
+          fontWeight: 'bold',
           textAlign: 'center',
+          padding: '16px',
           margin: '0',
         }}
-        data-ad-client={client}
-        data-ad-slot={slot}
-        data-ad-format={format}
-        data-full-width-responsive={responsive}
-        data-ad-layout-key={layoutKey}
-      />
-    </div>
+      >
+        광고 표시 영역
+      </div>
+    );
+
+  return (
+    <ins
+      className={styles[format]}
+      data-ad-client={client}
+      data-ad-slot={slot}
+      data-ad-format={format}
+    />
   );
 }
