@@ -60,7 +60,7 @@ export default function ChannelBox({
     else if (haveMyChannel && !isMyChannel)
       useChannelJoinConfirmUpperModal(handleChannelJoin);
     else handleChannelJoin();
-  }, []);
+  }, [haveMyChannel]);
 
   const handleChannelJoin = useCallback(() => {
     if (access === 'protected' && !isMyChannel) {
