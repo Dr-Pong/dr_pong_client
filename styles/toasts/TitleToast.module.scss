@@ -1,0 +1,20 @@
+@import 'styles/common';
+
+.titleToastContainer {
+  @include clickBox;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  cursor: unset;
+  padding: 1rem;
+}
+
+.titleName {
+  font-size: 1.3rem;
+}
+
+.titleToastMessage {
+  padding-left: 0.5rem;
+}
