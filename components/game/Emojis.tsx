@@ -1,6 +1,12 @@
 import { useRecoilValue } from 'recoil';
 
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 
 import { userState } from 'recoils/user';
 
@@ -30,11 +36,13 @@ export default function Emojis({
   const { nickname } = useRecoilValue(userState);
   const [socket] = useGameSocket('game');
   const { get } = useCustomQuery();
+  const [emojis, setEmojis] = useState<Emoji[]>([]);
   const { data, isLoading, isError } = get(
     'emoji',
-    `/users/${nickname}/emojis?selected=true`
+    `/users/${nickname}/emojis?selected=true`,
+    (data: { emojis: Emoji[] }) => setEmojis(data.emojis)
   );
-  let emojiThrottleTimer: NodeJS.Timeout | null = null;
+  const emojiThrottleTimer: NodeJS.Timeout | null = null;
 
   const opponentEmojiListener = (url: string) => {
     setOpponentEmojiUrl(url);
@@ -50,6 +58,20 @@ export default function Emojis({
     }, 1500);
   };
 
+  const handleKeyPress = useCallback(
+    (e: KeyboardEvent) => {
+      if (emojis.length === 0) return;
+      const key = e.key;
+      if (key === '1' || key === '2' || key === '3' || key === '4') {
+        const emoji = emojis[Number(key) - 1];
+        if (emoji) {
+          socket.emit('myEmoji', emoji.imgUrl);
+        }
+      }
+    },
+    [emojis]
+  );
+
   useEffect(() => {
     socket.on('myEmoji', myEmojiListener);
     socket.on('opponentEmoji', opponentEmojiListener);
@@ -58,6 +80,13 @@ export default function Emojis({
       socket.off('opponentEmoji', opponentEmojiListener);
     };
   }, []);
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress);
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [emojis]);
 
   const handleEmojiClick = throttler(
     (e: React.MouseEvent<HTMLImageElement>) => {
@@ -77,13 +106,15 @@ export default function Emojis({
     >
       {data.emojis.map((emoji: Emoji, i: number) =>
         emoji ? (
-          <img
-            key={i}
-            className={styles.emoji}
-            src={emoji.imgUrl}
-            id={emoji.imgUrl}
-            onClick={handleEmojiClick}
-          />
+          <div key={i} className={styles.emojiWrap}>
+            <img
+              className={styles.emoji}
+              src={emoji.imgUrl}
+              id={emoji.imgUrl}
+              onClick={handleEmojiClick}
+            />
+            <div className={styles.emojiOverlay}>{i + 1}</div>
+          </div>
         ) : (
           <div key={i} className={`${styles.emoji} ${styles.none}`}></div>
         )
