@@ -22,6 +22,10 @@ import LoadingSpinner from 'components/global/LoadingSpinner';
 
 import styles from 'styles/game/Emojis.module.scss';
 
+export const isTouchScreen =
+  typeof window !== 'undefined' &&
+  window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
 type EmojisProps = {
   setMyEmojiUrl: Dispatch<SetStateAction<string | null>>;
   setOpponentEmojiUrl: Dispatch<SetStateAction<string | null>>;
@@ -82,6 +86,7 @@ export default function Emojis({
   }, []);
 
   useEffect(() => {
+    if (isTouchScreen) return;
     document.addEventListener('keydown', handleKeyPress);
     return () => {
       document.removeEventListener('keydown', handleKeyPress);
@@ -113,7 +118,9 @@ export default function Emojis({
               id={emoji.imgUrl}
               onClick={handleEmojiClick}
             />
-            <div className={styles.emojiOverlay}>{i + 1}</div>
+            {!isTouchScreen && (
+              <div className={styles.emojiOverlay}>{i + 1}</div>
+            )}
           </div>
         ) : (
           <div key={i} className={`${styles.emoji} ${styles.none}`}></div>
