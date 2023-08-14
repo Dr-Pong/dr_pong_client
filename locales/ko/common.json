@@ -57,5 +57,7 @@
   "inviteGame": "게임 초대하기",
   "gameMode": "게임 모드",
   "classic": "클래식",
-  "randomBounce": "랜덤 바운스"
+  "randomBounce": "랜덤 바운스",
+  "achieved": "달성",
+  "title achieved": "칭호 획득"
 }

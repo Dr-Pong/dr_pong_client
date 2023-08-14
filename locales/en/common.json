@@ -57,5 +57,7 @@
   "inviteGame": "Invite game",
   "gameMode": "Game Mode",
   "classic": "Classic",
-  "randomBounce": "Random Bounce"
+  "randomBounce": "Random Bounce",
+  "achieved": "achieved",
+  "title achieved": "title achieved"
 }
