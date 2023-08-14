@@ -24,22 +24,22 @@ export default (
 const friendsResponse: FriendsResponse = {
   users: [
     {
-      nickname: 'hakim1',
+      nickname: 'naeImDa',
       imgUrl:
         'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
     },
     {
-      nickname: 'hakim2',
+      nickname: 'junyopar',
       imgUrl:
         'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
     },
     {
-      nickname: 'hakim3',
+      nickname: 'keokim',
       imgUrl:
         'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
     },
     {
-      nickname: 'hakim4',
+      nickname: 'nheo',
       imgUrl:
         'https://42gg-public-image.s3.ap-northeast-2.amazonaws.com/images/hakim.jpeg?imwidth=100',
     },
