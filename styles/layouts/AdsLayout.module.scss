@@ -1,7 +1,7 @@
 .adsLayoutRow {
   width: 100%;
   height: 100%;
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: scroll;
   display: flex;
   flex-direction: row;
@@ -11,7 +11,7 @@
 .adsLayoutColumn {
   width: 100%;
   height: 100%;
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
