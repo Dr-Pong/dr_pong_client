@@ -7,6 +7,10 @@
   justify-content: stretch;
 }
 
+.emojiWrap {
+  position: relative;
+}
+
 .emoji {
   width: 100%;
   padding: 0.5rem;
@@ -18,6 +22,12 @@
   &.none {
     background: transparentize(white, 0.8);
   }
+}
+
+.emojiOverlay {
+  position: absolute;
+  right: 0.5rem;
+  top: 0;
 }
 
 .emoji:hover {
