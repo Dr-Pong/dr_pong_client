@@ -93,13 +93,8 @@ export default function Emojis({
     };
   }, [emojis]);
 
-  const handleEmojiClick = throttler(
-    (e: React.MouseEvent<HTMLImageElement>) => {
-      socket.emit('myEmoji', (e.target as HTMLImageElement).id);
-    },
-    1500,
-    emojiThrottleTimer
-  );
+  const handleEmojiClick = (imgUrl: string) =>
+    throttler(() => socket.emit('myEmoji', imgUrl), 1500, emojiThrottleTimer);
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher />;
@@ -111,12 +106,16 @@ export default function Emojis({
     >
       {data.emojis.map((emoji: Emoji, i: number) =>
         emoji ? (
-          <div key={i} className={styles.emojiWrap}>
+          <div
+            key={i}
+            className={styles.emojiWrap}
+            onClick={handleEmojiClick(emoji.imgUrl)}
+          >
             <img
               className={styles.emoji}
               src={emoji.imgUrl}
               id={emoji.imgUrl}
-              onClick={handleEmojiClick}
+              alt={emoji.name}
             />
             {!isTouchScreen && (
               <div className={styles.emojiOverlay}>{i + 1}</div>
