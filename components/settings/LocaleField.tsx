@@ -17,7 +17,7 @@ export default function LocaleField() {
   ];
 
   const handleLocaleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    router.push({ pathname, query }, pathname, {
+    router.push({ pathname, query }, undefined, {
       locale: e.target.id || defaultLocale,
     });
     setCookie('NEXT_LOCALE', e.target.id || defaultLocale, {
