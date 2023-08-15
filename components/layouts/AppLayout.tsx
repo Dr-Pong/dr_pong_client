@@ -3,6 +3,7 @@ import React from 'react';
 import { LayoutProps } from 'pages/_app';
 
 import Alert from 'components/alerts/Alert';
+import AdsLayout from 'components/layouts/AdsLayout';
 import NavigationBar from 'components/layouts/NavigationBar';
 import Header from 'components/layouts/header/Header';
 import Modal from 'components/modals/Modal';
@@ -18,7 +19,9 @@ export default function AppLayout({ children }: LayoutProps) {
       <Alert />
       <div className={styles.appLayoutContainer}>
         <Header />
-        <div className={styles.pageContainer}>{children}</div>
+        <AdsLayout>
+          <div className={styles.pageContainer}>{children}</div>
+        </AdsLayout>
         <NavigationBar />
       </div>
     </div>
