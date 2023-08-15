@@ -33,7 +33,7 @@ export default function Home() {
   ];
   if (!login)
     pages.push({ value: t('Login'), route: '/login', style: 'basic' });
-  
+
   return (
     <div className={styles.homePageContainer}>
       <div className={styles.logo}>Dr.Pong</div>
