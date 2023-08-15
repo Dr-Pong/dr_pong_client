@@ -8,15 +8,15 @@ export type UserInteraction =
   | 'block'
   | 'unblock';
 
-export type Friend = {
+export interface Friend {
   nickname: string;
   imgUrl: string;
-};
+}
 
-export type UserListResponse = {
+export interface UserListResponse {
   users: Friend[];
-};
+}
 
-export type Statuses = {
+export interface Statuses {
   [nickname: string]: Activity;
-};
+}
