@@ -1,4 +1,3 @@
-import useTranslation from 'next-translate/useTranslation';
 import nipplejs from 'nipplejs';
 
 import React, { useEffect } from 'react';
@@ -8,6 +7,8 @@ import useGameSocket from 'hooks/useGameSocket';
 
 import GameCanvas from 'components/game/GameCanvas';
 import Joystick from 'components/joystick/Joystick';
+import AchievementToast from 'components/toasts/AchievementToast';
+import TitleToast from 'components/toasts/TitleToast';
 
 import styles from 'styles/game/PongGame.module.scss';
 
@@ -22,7 +23,6 @@ type PongGameProps = {
 };
 
 const PongGame = ({ roomId, canvasWidth, canvasHeight }: PongGameProps) => {
-  const { t } = useTranslation('achievement');
   const [socket] = useGameSocket('game');
 
   let leftPressed = false;
@@ -68,24 +68,11 @@ const PongGame = ({ roomId, canvasWidth, canvasHeight }: PongGameProps) => {
     imgUrl: string;
     name: string;
   }) => {
-    toast(`${t(achievement.name)} ${t('achieved')}!`, {
-      icon: (
-        <img
-          src={achievement.imgUrl}
-          style={{ width: '7rem' }}
-          alt={achievement.name}
-        />
-      ),
-    });
+    toast.custom(() => <AchievementToast achievement={achievement} />);
   };
 
   const titleListener = (title: { title: string }) => {
-    toast(
-      <span>
-        <h3 style={{ display: 'inline' }}>{`『${title.title}』 `}</h3>
-        <span>{`${t('title achieved')}!`}</span>
-      </span>
-    );
+    toast.custom(() => <TitleToast title={title} />);
   };
 
   useEffect(() => {

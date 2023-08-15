@@ -1,0 +1,19 @@
+@import 'styles/common';
+
+.achievementToastContainer {
+  @include clickBox;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  cursor: unset;
+}
+
+.achievementToastMessage {
+  padding: 0.5rem;
+}
+
+.achievementToastImg {
+  width: 7rem;
+}
