@@ -18,21 +18,20 @@ import ErrorRefresher from 'components/global/ErrorRefresher';
 import LoadingSpinner from 'components/global/LoadingSpinner';
 import PageHeader from 'components/global/PageHeader';
 
-type ChattingsFrameProps = {
+type ChatsFrameProps = {
   roomType: RoomType;
   roomId: string;
 };
 
-export default function ChattingsFrame({
-  roomType,
-  roomId,
-}: ChattingsFrameProps) {
+export default function ChatsFrame({ roomType, roomId }: ChatsFrameProps) {
   const setSideBar = useSetRecoilState(sideBarState);
   const [userImageMap, setUserImageMap] = useState<UserImageMap>({});
   const { useChannelEditModal } = useModalProvider();
-  const { get, queryClient } = useCustomQuery();
-  const myChannelGet = get('myChannel', '/channels/me');
-  const { chatUsersGet } = useChatQuery(roomType as RoomType, roomId as string);
+  const { queryClient } = useCustomQuery();
+  const { chatUsersGet, myChannelGet } = useChatQuery(
+    roomType as RoomType,
+    roomId as string
+  );
   const chatUsers = chatUsersGet(setUserImageMap);
   const [socket] = useChatSocket(roomType);
 

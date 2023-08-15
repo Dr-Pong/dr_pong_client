@@ -8,7 +8,7 @@ import BasicButton from 'components/global/buttons/BasicButton';
 import styles from 'styles/chats/ChatFailButtons.module.scss';
 
 type ChatFailButtonsProps = {
-  id: number;
+  id: string;
   message: string;
   setChats: Dispatch<SetStateAction<Chat[]>>;
   handleChatPost: (message: string) => void;

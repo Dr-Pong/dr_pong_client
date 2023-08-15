@@ -1,18 +1,18 @@
+import { AxiosError } from 'axios';
 import useTranslation from 'next-translate/useTranslation';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useQueryClient } from 'react-query';
 
 import { alertState } from 'recoils/alert';
-import { userState } from 'recoils/user';
 
 import { Chat, RoomType, UserImageMap } from 'types/chatTypes';
 
 import useChatQuery from 'hooks/useChatQuery';
 import useChatSocket from 'hooks/useChatSocket';
+import useCustomQuery from 'hooks/useCustomQuery';
 
 import ChatBox from 'components/chats/ChatBox';
 import ChatFailButtons from 'components/chats/ChatFailButtons';
@@ -37,43 +37,83 @@ export default function Chattings({
 }: ChattingsProps) {
   const { t } = useTranslation('channels');
   const router = useRouter();
-  const queryClient = useQueryClient();
-  const { nickname } = useRecoilValue(userState);
   const setAlert = useSetRecoilState(alertState);
   const [chats, setChats] = useState<Chat[]>([]);
   const [message, setMessage] = useState<string>('');
-  const [isTopRefVisible, setIsTopRefVisible] = useState(true);
-  const [isBottomRefVisible, setIsBottomRefVisible] = useState(false);
+  const [showPreview, setShowPreview] = useState<boolean>(false);
+  const [inputDisabled, setInputDisabled] = useState(isMuted);
+  const [failedChatCount, setFailedChatCount] = useState<number>(0);
   const [newestChat, setNewestChat] = useState<Chat | null>(null);
-  const [inputDisabled, setInputDisables] = useState(isMuted);
-  const { chatsGet } = useChatQuery(roomType, roomId);
-  const { mutate } = useChatQuery(roomType, roomId).postChatMutation();
-  const topRef = useRef<HTMLDivElement>(null);
-  const bottomRef = useRef<HTMLDivElement>(null);
   const [socket] = useChatSocket(roomType);
+  const { queryClient, mutationPost } = useCustomQuery();
+  const { chatsGet } = useChatQuery(roomType, roomId);
+  const chattingsRef = useRef<HTMLDivElement | null>(null);
+  const sendChatMutation = mutationPost(
+    roomType === 'dm'
+      ? `/users/friends/${roomId}/chats`
+      : `/channels/${roomId}/chats`,
+    {
+      onError: (e: AxiosError) => {
+        if (e.status == 400) return;
+        setChats((prev) => [
+          {
+            id: `fail_${failedChatCount}`,
+            message,
+            type: 'fail',
+          },
+          ...prev,
+        ]);
+        setFailedChatCount((prev) => prev + 1);
+        pageDown();
+      },
+    }
+  );
+
+  const handleChatJoin = useCallback((rawChats: Chat[]): void => {
+    setChats((prev) => prev.concat(rawChats));
+  }, []);
+
+  const {
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isError,
+    error,
+  } = chatsGet(handleChatJoin, 20);
+
+  const pageDown = useCallback(() => {
+    const ref = chattingsRef.current!;
+    ref.scrollTop = 0;
+  }, [chattingsRef.current]);
+
+  const newMessageListener = useCallback((data: Chat) => {
+    setChats((prev) => [data, ...prev]);
+    if (data.type === 'others') setNewestChat(data);
+    if (data.type === 'me') pageDown();
+  }, []);
+
+  const newSystemMessageListener = useCallback((data: Chat) => {
+    setChats((prev) => [data, ...prev]);
+  }, []);
+
+  const kickBanListener = useCallback((data: { type: 'kick' | 'ban' }) => {
+    setAlert({
+      type: 'warning',
+      message: data.type === 'kick' ? t('kick') : t('ban'),
+    });
+    router.push('/channels');
+  }, []);
+
+  const muteListener = useCallback(() => {
+    setInputDisabled(true);
+  }, []);
+
+  const unmuteListener = useCallback(() => {
+    setInputDisabled(false);
+  }, []);
 
   useEffect(() => {
-    const newMessageListener = (data: Chat) => {
-      setChats((prev) => [{ ...data, id: prev[0]?.id + 1 }, ...prev]);
-      setNewestChat({ ...data, id: chats[0]?.id });
-    };
-    const newSystemMessageListener = (data: Chat) => {
-      setChats((prev) => [{ ...data, id: prev[0]?.id + 1 }, ...prev]);
-    };
-    const kickBanListener = (data: { type: 'kick' | 'ban' }) => {
-      setAlert({
-        type: 'warning',
-        message: data.type === 'kick' ? t('kick') : t('ban'),
-      });
-      router.push('/channels');
-    };
-    const muteListener = () => {
-      setInputDisables(true);
-    };
-    const unmuteListener = () => {
-      setInputDisables(false);
-    };
-
     socket.on('message', newMessageListener);
     socket.on('system', newSystemMessageListener);
     socket.on('out', kickBanListener);
@@ -88,118 +128,59 @@ export default function Chattings({
       socket.off('out', kickBanListener);
       socket.off('mute', muteListener);
       socket.off('unmute', unmuteListener);
-    };
-  }, []);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.target === topRef.current) {
-            setIsTopRefVisible(entry.isIntersecting);
-            setNewestChat(null);
-          } else if (entry.target === bottomRef.current) {
-            setIsBottomRefVisible(entry.isIntersecting);
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    const timeout = setTimeout(() => {
-      if (topRef.current) observer.observe(topRef.current);
-      if (bottomRef.current) observer.observe(bottomRef.current);
-    }, 300);
-
-    return () => {
-      clearTimeout(timeout);
-      if (topRef.current) observer.unobserve(topRef.current);
-      if (bottomRef.current) observer.unobserve(bottomRef.current);
       queryClient.removeQueries(['chats', roomId]);
     };
   }, []);
 
-  const handleChatJoin = (rawChats: Chat[]): void => {
-    setChats((prev) => prev.concat(rawChats));
-  };
-
-  const handlePreviewClick = useCallback(
-    () => topRef.current?.scrollIntoView({ behavior: 'auto' }),
-    [topRef.current]
-  );
-
-  const handleChatPostSuccess = (message: string) => {
-    setChats((prev) => [
-      {
-        id: prev[0]?.id + 1,
-        message,
-        nickname,
-        time: new Date(),
-        type: 'me',
-      },
-      ...prev,
-    ]);
-  };
-
-  const handleChatPostFail = (message: string) => {
-    setChats((prev) => [
-      {
-        id: prev[0]?.id + 1,
-        message,
-        nickname: '',
-        time: new Date(),
-        type: 'fail',
-      },
-      ...prev,
-    ]);
-  };
-
-  const handleChatPost = useCallback(
-    (message: string) => {
-      if (!isMessageValid(message)) return;
-      mutate(
-        { message },
-        {
-          onSuccess: () => handleChatPostSuccess(message),
-          onError: (error: any) => {
-            if (error.response.status == 400) return;
-            handleChatPostFail(message);
-          },
-        }
-      );
-      setMessage('');
-      topRef.current?.scrollIntoView({ behavior: 'auto' });
-    },
-    [message]
-  );
-
   useEffect(() => {
-    if (chats[0] !== newestChat) setNewestChat({ ...chats[0] });
-  }, [chats]);
+    if (chattingsRef.current) {
+      chattingsRef.current.addEventListener('scroll', handleScroll);
+    }
+    return () => {
+      if (chattingsRef.current) {
+        chattingsRef.current.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, [hasNextPage, isFetchingNextPage]);
 
-  const {
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isError,
-    error,
-  } = chatsGet(handleChatJoin, 20);
+  const handlePreviewClick = useCallback(() => {
+    setShowPreview(false);
+    pageDown();
+  }, []);
 
-  useEffect(() => {
-    if (hasNextPage && !isFetchingNextPage && isBottomRefVisible)
+  const handleChatPost = useCallback((message: string) => {
+    if (!isMessageValid(message)) return;
+    sendChatMutation.mutate({ message });
+    setMessage('');
+  }, []);
+
+  const handleScroll = () => {
+    const ref = chattingsRef.current!;
+
+    // 스크롤이 맨 위에 있는 경우
+    if (
+      hasNextPage &&
+      !isFetchingNextPage &&
+      Math.abs(ref.scrollTop) > ref.scrollHeight - ref.clientHeight - 100
+    )
       fetchNextPage();
-  }, [hasNextPage, fetchNextPage, isBottomRefVisible]);
+
+    // 스크롤이 맨 아래가 아닌 경우
+    if (ref.scrollTop < -50) setShowPreview(true);
+
+    // 스크롤미 맨 아래에 있는 경우
+    if (ref.scrollTop > -10) {
+      setShowPreview(false);
+      setNewestChat(null);
+    }
+  };
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher error={error} />;
 
   return (
-    <div className={styles.chattings}>
-      <div className={styles.chatBoxes}>
-        <div ref={topRef} className={styles.ref}>
-          ㅤ
-        </div>
+    <div className={styles.chattingsContainer}>
+      <div className={styles.chattings} ref={chattingsRef}>
         {chats.map((chat) => {
           const { id, message, nickname } = chat;
           return (
@@ -212,15 +193,15 @@ export default function Chattings({
                   handleChatPost={handleChatPost}
                 />
               )}
-              <ChatBox chat={chat} imgUrl={userImageMap[nickname]} />
+              <ChatBox
+                chat={chat}
+                imgUrl={nickname ? userImageMap[nickname] : ''}
+              />
             </div>
           );
         })}
-        <div ref={bottomRef} className={styles.ref}>
-          ㅤ
-        </div>
       </div>
-      {!isTopRefVisible && newestChat && chats[0].type === 'others' && (
+      {showPreview && newestChat && (
         <div className={styles.preview} onClick={handlePreviewClick}>
           <div>{newestChat.nickname}</div>
           <div>{messageCutter(newestChat.message)}</div>

@@ -4,7 +4,7 @@ import React, { ReactElement, useEffect } from 'react';
 
 import { RoomType } from 'types/chatTypes';
 
-import ChattingsFrame from 'components/chats/ChattingsFrame';
+import ChatsFrame from 'components/chats/ChatsFrame';
 import SocketManager from 'components/global/SocketManager';
 import AppLayout from 'components/layouts/AppLayout';
 
@@ -23,7 +23,7 @@ export default function Chats() {
     <div className={styles.chatsPageContainer}>
       <SocketManager namespace={'friends'} />
       <SocketManager key={roomId as string} namespace={roomType as RoomType} />
-      <ChattingsFrame
+      <ChatsFrame
         key={'room' + (roomId as string)}
         roomType={roomType as RoomType}
         roomId={roomId as string}

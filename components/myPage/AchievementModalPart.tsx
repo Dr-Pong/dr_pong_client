@@ -16,7 +16,7 @@ export default function AchievementModalPart({
   const { t } = useTranslation('achievement');
   return (
     <div>
-      <UpperModalTitle title={t(name)} />,
+      <UpperModalTitle title={t(name)} />
       <ModalPhrase>
         {
           <div>

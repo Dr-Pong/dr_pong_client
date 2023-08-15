@@ -11,10 +11,10 @@ export interface UserImageMap {
 }
 
 export interface Chat {
-  id: number;
+  id: string;
   message: string;
-  nickname: string;
-  time: Date;
+  nickname?: string;
+  time?: Date;
   type: ChatType;
 }
 
