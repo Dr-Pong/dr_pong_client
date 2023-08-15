@@ -29,11 +29,12 @@
 }
 
 .chattings::-webkit-scrollbar-track {
-  background: black;
+  background: $dark-purple;
+  border-radius: 8px;
 }
 
 .chattings::-webkit-scrollbar-thumb {
-  background: $light-grey;
+  background: $light-purple;
   border-radius: 8px;
 }
 
