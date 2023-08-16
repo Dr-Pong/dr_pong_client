@@ -1,62 +1,11 @@
 @import 'styles/common';
 
 .gamePageContainer {
+  @include pageWithHeaderContainer;
+}
+
+.gameContainer {
   @include pageContainer;
-  display: flex;
-  flex-direction: column;
-  gap: 1dvh;
-  align-items: center;
-  justify-content: center;
-}
-
-.buttonList {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  margin-inline: 1rem;
-}
-
-.button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 15rem;
-  margin-bottom: 1rem;
-  color: white;
-  border: none;
-  border-radius: $basic-radius;
-}
-
-.ladder {
-  height: 2.7rem;
-  font-size: 1.3rem;
-  background: $just-pink;
-}
-
-.ladder:hover {
-  font-size: 1.5rem;
-}
-
-.normal {
-  height: 2.7rem;
-  font-size: 1.3rem;
-  background: $just-purple;
-}
-
-.normal:hover {
-  font-size: 1.5rem;
-}
-
-.guide {
-  height: 2.7rem;
-  font-size: 0.9rem;
-  background: $dark-blue;
-  border: solid 1px white;
-}
-
-.guide:hover {
-  font-size: 1rem;
 }
 
 .pongFrameContainer {
@@ -64,4 +13,45 @@
   flex-direction: column;
   gap: 1rem;
   align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.gameLobbyContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  width: 15rem;
+  height: 100%;
+  margin-inline: auto;
+}
+
+.gameTypeBackButtonWrap {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  .gameType {
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+  }
+}
+
+.modeList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-self: flex-start;
+  padding-inline: 0.3rem;
+  li {
+    font-size: 1.1rem;
+    list-style: none;
+    label {
+      @include radioLabelWrap;
+    }
+  }
 }
