@@ -17,6 +17,7 @@ export default function QueueSpinner({
   const [socket] = useChatSocket('global');
 
   useEffect(() => {
+    (document.activeElement as HTMLElement)?.blur();
     socket.on('deleteInvite', handleGameCancel);
 
     if (!useTimer) return () => socket.off('deleteInvite', handleGameCancel);
