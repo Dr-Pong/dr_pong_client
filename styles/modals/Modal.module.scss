@@ -7,15 +7,19 @@
 .modalContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 0.8rem;
   width: 80vw;
   max-width: 20rem;
-  max-height: 80dvh;
-  padding: 2rem 1.5rem;
+  max-height: 85dvh;
+  padding: 1.5rem;
   color: black;
   font-size: $basic-font-size;
   background: white;
   border-radius: $basic-radius;
+}
+
+.modalHead {
+  width: 100%;
 }
 
 .modalBody {
@@ -23,8 +27,25 @@
   overflow-y: auto;
 }
 
-.blank {
-  height: 1.5rem;
+.modalTail {
+  display: flex;
+  justify-content: center;
+}
+
+.modalBody::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+}
+
+.modalBody::-webkit-scrollbar-track {
+  background: $just-grey;
+  border-radius: 8px;
+}
+
+.modalBody::-webkit-scrollbar-thumb {
+  margin-left: 3px;
+  background: $light-grey;
+  border-radius: 8px;
 }
 
 .modalTitle {
