@@ -31,7 +31,8 @@ export default function PageConfig() {
       });
     }
     const isInGameListener = (data: isInGame) => {
-      if (data?.roomId) useIsInGameModal(data);
+      if (!router.asPath.startsWith('/game/') && data?.roomId)
+        useIsInGameModal(data);
     };
     socket.on('isInGame', isInGameListener);
     return () => {
