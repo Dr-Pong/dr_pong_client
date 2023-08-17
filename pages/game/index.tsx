@@ -1,3 +1,5 @@
+import { AxiosError } from 'axios';
+
 import useTranslation from 'next-translate/useTranslation';
 import { useSetRecoilState } from 'recoil';
 
@@ -40,10 +42,13 @@ export default function Game() {
       useMatchWaitingUpperModal(exitQueue.mutate, true);
       socket.once('matched', matchedListener);
     },
-    onError: () => {
-      setAlert({ type: 'failure' });
+    onError: (error: AxiosError<Error>) => {
+      setAlert({
+        type: 'failure',
+        message: t(`${error.response?.data.message}`)
+      });
     },
-  });
+  } as object);
 
   const matchedListener = (data: { roomId: string }) => {
     closeUpperModal();
