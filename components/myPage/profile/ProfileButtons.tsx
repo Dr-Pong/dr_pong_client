@@ -46,7 +46,6 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
   const [chatSocket] = useChatSocket('friends');
 
   useEffect(() => {
-    if (chatSocket.disconnected) chatSocket.connect();
     const friendStatusListener = (newStatuses: Statuses) => {
       setStatuses((prev) => {
         return {
@@ -89,20 +88,6 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
         {t('message')}
       </BasicButton>
     ),
-    inviteGame:
-      statuses[target] === 'online' ? (
-        <BasicButton
-          style='flex'
-          color='purple'
-          handleButtonClick={() => {
-            closeModal();
-            setSideBar(null);
-            useSelectGameModeModal(target);
-          }}
-        >
-          {t('inviteGame')}
-        </BasicButton>
-      ) : null,
     blockUser: (
       <RelationButton button={button} type='block' target={target}>
         {t('block')}
@@ -127,7 +112,7 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
 
   const relationStatuses: { [key: string]: string[] } = {
     none: ['friendAdd', 'blockUser'],
-    friend: ['inviteGame', 'directMessage', 'friendDelete', 'blockUser'],
+    friend: ['directMessage', 'friendDelete', 'blockUser'],
     blocked: ['unblockUser'],
     me: ['myPage'],
   };

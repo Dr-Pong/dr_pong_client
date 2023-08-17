@@ -21,7 +21,6 @@ export default function Chats() {
 
   return (
     <div className={styles.chatsPageContainer}>
-      <SocketManager namespace={'friends'} />
       <SocketManager key={roomId as string} namespace={roomType as RoomType} />
       <ChatsFrame
         key={'room' + (roomId as string)}
