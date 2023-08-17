@@ -30,14 +30,15 @@
 
 .gameTypeBackButtonWrap {
   display: flex;
-  gap: 1rem;
   align-items: center;
-  justify-content: center;
   width: 100%;
   margin-bottom: 1.5rem;
+  padding-inline: 0.1rem;
   .gameType {
-    margin-right: 0.5rem;
+    width: 100%;
+    padding-right: 1.5rem;
     font-size: 1.5rem;
+    text-align: center;
   }
 }
 

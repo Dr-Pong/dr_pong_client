@@ -90,7 +90,6 @@ export default function GameLobby({ handleGoBackClick }: GameLobbyProps) {
           <IoMdArrowRoundBack />
         </BasicButton>
         <span className={styles.gameType}>{t('normal')}</span>
-        <span></span>
       </div>
       <ul className={styles.modeList}>
         {modeList.map((mode, i) => {
