@@ -1,6 +1,12 @@
 import { useRecoilValue } from 'recoil';
 
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 
 import { userState } from 'recoils/user';
 
@@ -16,6 +22,10 @@ import LoadingSpinner from 'components/global/LoadingSpinner';
 
 import styles from 'styles/game/Emojis.module.scss';
 
+export const isTouchScreen =
+  typeof window !== 'undefined' &&
+  window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
 type EmojisProps = {
   setMyEmojiUrl: Dispatch<SetStateAction<string | null>>;
   setOpponentEmojiUrl: Dispatch<SetStateAction<string | null>>;
@@ -30,11 +40,13 @@ export default function Emojis({
   const { nickname } = useRecoilValue(userState);
   const [socket] = useGameSocket('game');
   const { get } = useCustomQuery();
+  const [emojis, setEmojis] = useState<Emoji[]>([]);
   const { data, isLoading, isError } = get(
     'emoji',
-    `/users/${nickname}/emojis?selected=true`
+    `/users/${nickname}/emojis?selected=true`,
+    (data: { emojis: Emoji[] }) => setEmojis(data.emojis)
   );
-  let emojiThrottleTimer: NodeJS.Timeout | null = null;
+  const emojiThrottleTimer: NodeJS.Timeout | null = null;
 
   const opponentEmojiListener = (url: string) => {
     setOpponentEmojiUrl(url);
@@ -50,6 +62,20 @@ export default function Emojis({
     }, 1500);
   };
 
+  const handleKeyPress = useCallback(
+    (e: KeyboardEvent) => {
+      if (emojis.length === 0) return;
+      const key = e.key;
+      if (key === '1' || key === '2' || key === '3' || key === '4') {
+        const emoji = emojis[Number(key) - 1];
+        if (emoji) {
+          socket.emit('myEmoji', emoji.imgUrl);
+        }
+      }
+    },
+    [emojis]
+  );
+
   useEffect(() => {
     socket.on('myEmoji', myEmojiListener);
     socket.on('opponentEmoji', opponentEmojiListener);
@@ -59,13 +85,16 @@ export default function Emojis({
     };
   }, []);
 
-  const handleEmojiClick = throttler(
-    (e: React.MouseEvent<HTMLImageElement>) => {
-      socket.emit('myEmoji', (e.target as HTMLImageElement).id);
-    },
-    1500,
-    emojiThrottleTimer
-  );
+  useEffect(() => {
+    if (isTouchScreen) return;
+    document.addEventListener('keydown', handleKeyPress);
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [emojis]);
+
+  const handleEmojiClick = (imgUrl: string) =>
+    throttler(() => socket.emit('myEmoji', imgUrl), 1500, emojiThrottleTimer);
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher />;
@@ -77,13 +106,21 @@ export default function Emojis({
     >
       {data.emojis.map((emoji: Emoji, i: number) =>
         emoji ? (
-          <img
+          <div
             key={i}
-            className={styles.emoji}
-            src={emoji.imgUrl}
-            id={emoji.imgUrl}
-            onClick={handleEmojiClick}
-          />
+            className={styles.emojiWrap}
+            onClick={handleEmojiClick(emoji.imgUrl)}
+          >
+            <img
+              className={styles.emoji}
+              src={emoji.imgUrl}
+              id={emoji.imgUrl}
+              alt={emoji.name}
+            />
+            {!isTouchScreen && (
+              <div className={styles.emojiOverlay}>{i + 1}</div>
+            )}
+          </div>
         ) : (
           <div key={i} className={`${styles.emoji} ${styles.none}`}></div>
         )

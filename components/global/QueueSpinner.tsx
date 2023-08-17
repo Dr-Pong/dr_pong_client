@@ -33,6 +33,7 @@ export default function QueueSpinner({
       handleGameCancel();
     }
     socket.on('deleteInvite', handleGameRejection);
+    (document.activeElement as HTMLElement)?.blur();
 
     const intervalId = setInterval(() => {
       setSeconds((prevSeconds) => prevSeconds + 1);
