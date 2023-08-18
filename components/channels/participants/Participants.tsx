@@ -54,10 +54,7 @@ export default function Participants() {
   const { me, participants } = data;
 
   const handleFriendInvite = () => {
-    useChannelInvitationModal(
-      roomId as string,
-      data.participants.map((el: Participant) => el.nickname)
-    );
+    useChannelInvitationModal(roomId as string);
   };
 
   const handleChannelLeave = () => {
