@@ -29,7 +29,10 @@ export default function Participants() {
   const setAlert = useSetRecoilState(alertState);
   const { useChannelInvitationModal } = useModalProvider();
   const { mutationDelete } = useCustomQuery();
-  const { chatUsersGet } = useChatQuery(roomType as RoomType, roomId as string);
+  const { participantsGet } = useChatQuery(
+    roomType as RoomType,
+    roomId as string
+  );
 
   const channelLeaveMutation = mutationDelete(
     `/channels/${roomId}/participants`,
@@ -44,7 +47,7 @@ export default function Participants() {
     }
   );
 
-  const { data, isLoading, isError, error } = chatUsersGet();
+  const { data, isLoading, isError, error } = participantsGet();
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher error={error} />;
 
