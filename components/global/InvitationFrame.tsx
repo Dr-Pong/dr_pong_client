@@ -73,7 +73,7 @@ function ChannelInvitationFrame({
 }) {
   const { participantsGet } = useChatQuery('channel', channelId);
 
-  const { data, isLoading, isError, error } = participantsGet()();
+  const { data, isLoading, isError, error } = participantsGet();
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher error={error} />;
 
