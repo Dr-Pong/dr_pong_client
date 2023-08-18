@@ -31,6 +31,7 @@ export default function QueueSpinner({
       });
       handleGameCancel();
     };
+        
     socket.on('deleteInvite', handleGameDeclined);
     (document.activeElement as HTMLElement)?.blur();
 
