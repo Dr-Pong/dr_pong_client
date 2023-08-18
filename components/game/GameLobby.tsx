@@ -1,5 +1,4 @@
 import { AxiosError } from 'axios';
-
 import useTranslation from 'next-translate/useTranslation';
 import { useSetRecoilState } from 'recoil';
 
@@ -15,11 +14,10 @@ import useGameSocket from 'hooks/useGameSocket';
 import useModalProvider from 'hooks/useModalProvider';
 import useUpperModalProvider from 'hooks/useUpperModalProvider';
 
+import { GameButtons } from 'components/game/GameButtons';
 import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/game/Game.module.scss';
-
-import { GameButtons } from './GameButtons';
 
 type GameLobbyProps = {
   handleGoBackClick: () => void;
@@ -52,7 +50,7 @@ export default function GameLobby({ handleGoBackClick }: GameLobbyProps) {
     onError: (error: AxiosError<Error>) => {
       setAlert({
         type: 'failure',
-        message: t(`${error.response?.data.message}`)
+        message: t(`${error.response?.data.message}`),
       });
     },
   } as object);
