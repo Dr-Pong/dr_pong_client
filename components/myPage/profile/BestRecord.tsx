@@ -5,10 +5,9 @@ import React from 'react';
 import { ProfileStyle, UserRank } from 'types/userTypes';
 
 import RankTag from 'components/myPage/profile/RankTag';
+import TierLp from 'components/myPage/profile/TierLp';
 
 import styles from 'styles/myPage/BestRecord.module.scss';
-
-import TierLp from './TierLp';
 
 type BestRecordProps = {
   totalRank: UserRank;
