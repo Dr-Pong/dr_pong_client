@@ -20,7 +20,7 @@
   "tie": "Tie",
   "guide": "Hitchhiker's Guide To Dr.Pong",
   "invalidRoom": "Invalid game room.",
-  "rejection": "Game rejected.",
+  "declined": "Invitation has been declined.",
   "Already in queue": "Already in match",
   "Already in game": "Already in game"
 }

@@ -24,21 +24,21 @@ export default function QueueSpinner({
   const [socket] = useChatSocket('global');
 
   useEffect(() => {
-    const handleGameRejection = () => {
+    const handleGameDeclined = () => {
       setAlert({
         type: 'warning',
-        message: t('rejection'),
+        message: t('declined'),
       });
       handleGameCancel();
     };
-    socket.on('deleteInvite', handleGameRejection);
+    socket.on('deleteInvite', handleGameDeclined);
     (document.activeElement as HTMLElement)?.blur();
 
     const intervalId = setInterval(() => {
       setSeconds((prevSeconds) => prevSeconds + 1);
     }, 1000);
     return () => {
-      socket.off('deleteInvite', handleGameRejection);
+      socket.off('deleteInvite', handleGameDeclined);
       clearInterval(intervalId);
     };
   }, []);
