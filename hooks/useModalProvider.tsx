@@ -147,19 +147,10 @@ const useModalProvider = () => {
     });
   };
 
-  const useChannelInvitationModal = (
-    channelId: string,
-    participantNames: string[]
-  ) => {
+  const useChannelInvitationModal = (channelId: string) => {
     useModal({
       head: <ModalTitle title={t('Invite friend')} closeButton />,
-      body: (
-        <InvitationFrame
-          type='channel'
-          channelId={channelId}
-          participantNames={participantNames}
-        />
-      ),
+      body: <InvitationFrame type='channel' channelId={channelId} />,
       tail: null,
     });
   };
