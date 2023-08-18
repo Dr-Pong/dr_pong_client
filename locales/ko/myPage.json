@@ -16,11 +16,12 @@
   "achieve": "업적",
   "emoji": "이모지",
   "select": "이미지 선택",
-  "Best Record": "역대 최고 기록",
+  "Best Record": "최고 점수",
   "LP": "LP",
   "Title": "칭호",
   "Level": "레벨",
   "Name": "닉네임",
   "save": "저장",
-  "edit": "수정"
+  "edit": "수정",
+  "status message": "상태메시지"
 }

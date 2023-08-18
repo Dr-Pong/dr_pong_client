@@ -2,43 +2,27 @@ import useTranslation from 'next-translate/useTranslation';
 
 import React from 'react';
 
-import { ProfileStyle, UserRank } from 'types/userTypes';
-
 import styles from 'styles/myPage/RankTag.module.scss';
 
 type RankTagProps = {
-  rankProps: UserRank;
-  isBest: boolean;
-  style: ProfileStyle;
+  rank: number | null;
 };
 
-export default function RankTag({ rankProps, isBest, style }: RankTagProps) {
+export default function RankTag({ rank }: RankTagProps) {
   const { t } = useTranslation('myPage');
-  const { bestLp, rank, tier } = rankProps;
 
   return (
-    <div
-      className={`${styles.rankTagContainer} ${
-        isBest ? styles.column : styles.row
-      } ${styles[style]}`}
-    >
-      {isBest && <span className={styles.bestRecord}>{t('Best Record')}</span>}
-      <span className={styles.tier}>{tier}</span>
-      {tier === 'doctor' && (
-        <>
-          {bestLp && <span className={styles.record}>{`${bestLp} LP`}</span>}
-          {rank && (
-            <span className={styles.rank}>{`${rank}${t(
-              rankSignSelector(rank)
-            )}`}</span>
-          )}
-        </>
+    <div className={styles.rankTagContainer}>
+      {rank && (
+        <span className={styles.purpleBox}>{`${rank}${t(
+          rankSignSelector(rank)
+        )}`}</span>
       )}
     </div>
   );
 }
 
-const rankSignSelector = (rank: number | null): string => {
+export const rankSignSelector = (rank: number | null): string => {
   if (rank === null) return '';
   const firstDigit = rank.toString().slice(-1);
   switch (firstDigit) {

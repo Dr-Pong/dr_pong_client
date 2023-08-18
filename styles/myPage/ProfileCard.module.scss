@@ -4,7 +4,7 @@
   display: grid;
   grid-column: 2 / 3;
   grid-template-rows: repeat(3, 1fr);
-  height: 7.7rem;
+  height: 6rem;
   padding: 0.5rem;
   font-size: $basic-font-size;
   background: $dark-blue;
@@ -34,6 +34,11 @@
   justify-content: space-between;
   justify-self: start;
   width: 100%;
+  &.Title {
+    border: solid 0.5px $light-grey;
+    border-radius: $basic-radius;
+    padding-inline: 0.5rem;
+  }
 }
 
 .titleDropdownContainer {
@@ -52,9 +57,9 @@
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 1;
   display: flex;
   width: 100vw;
   height: 100dvh;
-  z-index: 1;
   background: rgba(0, 0, 0, 0.2);
 }

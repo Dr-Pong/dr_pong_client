@@ -1,3 +1,4 @@
+import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue } from 'recoil';
 
 import React, { ChangeEvent, Dispatch, SetStateAction } from 'react';
@@ -19,6 +20,7 @@ export default function StatusMessage({
   setDetailDto,
   style,
 }: StatusMessageProps) {
+  const { t } = useTranslation('myPage');
   const editable = useRecoilValue(editableState);
 
   const statusMessageHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,15 +31,22 @@ export default function StatusMessage({
 
   return (
     <div className={`${styles.statusMessageContainer} ${styles[style]}`}>
+      <div className={styles.title}>{t('status message')}</div>
       {editable ? (
-        <input
-          className={styles.messageInput}
-          type='text'
-          value={detailDto.statusMessage}
-          onChange={statusMessageHandler}
-        />
+        <div className={styles.messageInput}>
+          <input
+            type='text'
+            value={detailDto.statusMessage}
+            onChange={statusMessageHandler}
+          />
+          <span
+            className={styles.inputCount}
+          >{`${detailDto.statusMessage.length}/60`}</span>
+        </div>
       ) : (
-        <div className={styles.message}>{detailDto.statusMessage}</div>
+        <div className={`${styles.message} ${styles[style]}`}>
+          {detailDto.statusMessage}
+        </div>
       )}
     </div>
   );

@@ -1,23 +1,58 @@
 @import 'styles/common';
 
 .statusMessageContainer {
+  display: flex;
+  flex-direction: column;
   grid-column: 1/3;
+  gap: 0.2rem;
   height: 6rem;
-  padding: 1rem;
-  font-size: 1rem;
-  background: $dark-blue;
+  color: white;
   &.modal {
-    @include profileModal;
     height: fit-content;
+    color: black;
   }
 }
 
+.title {
+  width: 100%;
+  color: $light-purple;
+  padding-inline: 0.1rem;
+}
+
 .messageInput {
+  position: relative;
   width: 100%;
   height: 100%;
   padding: 0.5rem;
-  font-size: 1rem;
-  background: white;
+  color: white;
+  background: $dark-blue;
   border-radius: $basic-radius;
-  opacity: 50%;
+  input {
+    width: 100%;
+    height: 100%;
+    padding: 0.5rem;
+    color: white;
+    text-align: start;
+    background: none;
+    border: solid 0.5px $light-grey;
+    border-radius: $basic-radius;
+  }
+  .inputCount {
+    position: absolute;
+    right: 0.8rem;
+    bottom: 0.8rem;
+    font-size: 0.8rem;
+  }
+}
+
+.message {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  font-size: 0.9rem;
+  overflow-wrap: break-word;
+  background: $dark-blue;
+  &.modal {
+    @include profileModal;
+  }
 }

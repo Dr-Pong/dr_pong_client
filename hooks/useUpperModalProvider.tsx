@@ -128,7 +128,7 @@ const useUpperModalProvider = () => {
 
   const useAchievementDetailModal = (achievement: Achievement) => {
     useUpperModal({
-      head: <UpperModalTitle title={tAchievement(achievement.name)} />,
+      head: <UpperModalTitle title={`< ${tAchievement(achievement.name)} >`} />,
       body: <AchievementModalPart achievement={achievement} />,
       tail: (
         <BasicButton
