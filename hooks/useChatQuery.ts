@@ -35,10 +35,14 @@ const useChatQuery = (roomType: RoomType, roomId: string) => {
     return roomType === 'dm'
       ? get('DMFriend', `/users/${roomId}/detail`, friendDetailToChatUser)
       : get(
-          'channelParticipants',
+          ['channelParticipants'],
           `/channels/${roomId}/participants`,
           participantsToChatUsers
         );
+  };
+
+  const participantsGet = () => {
+    return get(['participants'], `/channels/${roomId}/participants`);
   };
 
   const chatsGet = (handleChatJoin: (chats: Chat[]) => void, count: number) => {
@@ -84,7 +88,7 @@ const useChatQuery = (roomType: RoomType, roomId: string) => {
     );
   };
 
-  return { myChannelGet, chatUsersGet, chatsGet };
+  return { myChannelGet, chatUsersGet, chatsGet, participantsGet };
 };
 
 export default useChatQuery;

@@ -32,12 +32,12 @@ export default function ChatsFrame({ roomType, roomId }: ChatsFrameProps) {
     roomType as RoomType,
     roomId as string
   );
-  const chatUsers = chatUsersGet(setUserImageMap);
   const [socket] = useChatSocket(roomType);
 
   useEffect(() => {
     const participantsListener = () => {
-      queryClient.invalidateQueries('channelParticipants');
+      queryClient.invalidateQueries(['channelParticipants']);
+      queryClient.invalidateQueries(['participants']);
     };
     socket.on('participants', participantsListener);
     return () => {
@@ -49,6 +49,8 @@ export default function ChatsFrame({ roomType, roomId }: ChatsFrameProps) {
     channel: `${myChannelGet.data?.myChannel?.title}`,
     dm: `${roomId}`,
   };
+
+  const chatUsers = chatUsersGet(setUserImageMap);
 
   if (chatUsers.isLoading || myChannelGet.isLoading) return <LoadingSpinner />;
   if (chatUsers.isError) return <ErrorRefresher error={chatUsers.error} />;
