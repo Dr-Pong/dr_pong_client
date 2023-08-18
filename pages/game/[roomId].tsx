@@ -32,7 +32,7 @@ export default function Game() {
   }, []);
 
   return (
-    <div className={styles.gamePageContainer}>
+    <div className={styles.gameContainer}>
       <SocketManager namespace={'game'} />
       <PongFrame canvasWidth={canvasWidth} roomId={roomId as string}>
         <PongGame

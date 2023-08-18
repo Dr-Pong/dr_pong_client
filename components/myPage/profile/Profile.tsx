@@ -72,16 +72,18 @@ export default function Profile({ nickname, style }: ProfileProps) {
         style={style}
       />
       <StatCard nickname={nickname} style={style} />
-      <div className={`${styles.achievementsBox} ${styles[style]}`}>
-        {achievements.achievements.map((item: Achievement | null) => (
-          <SelectableItem
-            key={item?.id}
-            itemType={'achieve'}
-            item={item}
-            clickHandler={null}
-          />
-        ))}
-      </div>
+      {achievements.achievements.filter((el) => el).length !== 0 && (
+        <div className={`${styles.achievementsBox} ${styles[style]}`}>
+          {achievements.achievements.map((item: Achievement | null) => (
+            <SelectableItem
+              key={item?.id}
+              itemType={'achieve'}
+              item={item}
+              clickHandler={null}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

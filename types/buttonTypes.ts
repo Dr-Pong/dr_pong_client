@@ -12,7 +12,8 @@ type ButtonStyle =
   | 'dropdown'
   | 'fit'
   | 'long'
-  | 'ball';
+  | 'ball'
+  | 'cookie';
 
 type ButtonColor =
   | 'black'

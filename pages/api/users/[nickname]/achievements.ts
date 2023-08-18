@@ -23,7 +23,7 @@ export default (
 const achievements: Achievement[] = [
   {
     id: 1,
-    name: 'Seahorse',
+    name: 'seahorse',
     imgUrl:
       'https://drpong.s3.ap-northeast-2.amazonaws.com/achievements/Seahorse.svg',
     content: '1승',
@@ -31,7 +31,7 @@ const achievements: Achievement[] = [
   },
   {
     id: 2,
-    name: 'Octopus',
+    name: 'octopus',
     imgUrl:
       'https://drpong.s3.ap-northeast-2.amazonaws.com/achievements/Octopus.svg',
     content: '8승',
@@ -39,7 +39,7 @@ const achievements: Achievement[] = [
   },
   {
     id: 3,
-    name: 'Squid',
+    name: 'squid',
     imgUrl:
       'https://drpong.s3.ap-northeast-2.amazonaws.com/achievements/Squid.svg',
     content: '10승',
@@ -47,7 +47,7 @@ const achievements: Achievement[] = [
   },
   {
     id: 4,
-    name: 'Hatched',
+    name: 'hatched',
     imgUrl:
       'https://drpong.s3.ap-northeast-2.amazonaws.com/achievements/Hatched.svg',
     content: '달걀퐁 탈출',
@@ -55,7 +55,7 @@ const achievements: Achievement[] = [
   },
   {
     id: 5,
-    name: 'Summa Pong Laude',
+    name: 'summa cum laude',
     imgUrl:
       'https://drpong.s3.ap-northeast-2.amazonaws.com/achievements/Summa+Pong+Laude.svg',
     content: '학사퐁이 되다',
@@ -63,7 +63,7 @@ const achievements: Achievement[] = [
   },
   {
     id: 6,
-    name: 'Transcendence',
+    name: 'transcendence',
     imgUrl:
       'https://drpong.s3.ap-northeast-2.amazonaws.com/achievements/Transcendence.svg',
     content: '석사퐁이 되다',
@@ -71,7 +71,7 @@ const achievements: Achievement[] = [
   },
   {
     id: 7,
-    name: 'Dr.Pong',
+    name: 'dr.pong',
     imgUrl:
       'https://drpong.s3.ap-northeast-2.amazonaws.com/achievements/Dr.Pong.svg',
     content: '박사퐁 박사퐁',

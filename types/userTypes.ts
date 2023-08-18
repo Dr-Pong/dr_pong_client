@@ -1,5 +1,6 @@
 export type ProfileStyle = 'modal' | 'page';
 export type ProfileTab = 'profile' | 'achieve' | 'emoji';
+export type Tier = 'doctor' | 'master' | 'bachelor' | 'student' | 'egg';
 
 export interface User {
   nickname: string;
@@ -29,9 +30,15 @@ export interface UserStat {
 export interface UserRank {
   bestLp: number | null;
   rank: number | null;
-  tier: 'doctor' | 'master' | 'bachelor' | 'student' | 'egg';
+  tier: Tier;
 }
 
+export interface StatRankResponse {
+  totalStat: UserStat;
+  seasonStat: UserStat;
+  totalRank: UserRank;
+  seasonRank: UserRank;
+}
 export interface DetailDto {
   image: Image;
   title: Title;

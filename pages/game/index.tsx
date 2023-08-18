@@ -6,6 +6,7 @@ import { useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
 
 import React, { ReactElement, useState } from 'react';
+import { BsQuestionSquare } from 'react-icons/bs';
 
 import { alertState } from 'recoils/alert';
 
@@ -14,7 +15,9 @@ import useGameSocket from 'hooks/useGameSocket';
 import useModalProvider from 'hooks/useModalProvider';
 import useUpperModalProvider from 'hooks/useUpperModalProvider';
 
+import { GameButtons } from 'components/game/GameButtons';
 import GameLobby from 'components/game/GameLobby';
+import PageHeader from 'components/global/PageHeader';
 import AppLayout from 'components/layouts/AppLayout';
 
 import styles from 'styles/game/Game.module.scss';
@@ -68,37 +71,24 @@ export default function Game() {
   };
 
   const buttons = [
-    <button
-      key={'ladder'}
-      className={`${styles.button} ${styles.ladder}`}
-      onClick={handleLadderClick}
-    >
-      {t('ladder')}
-    </button>,
-    <button
-      key={'normal'}
-      className={`${styles.button} ${styles.normal}`}
-      onClick={handleNormalClick}
-    >
-      {t('normal')}
-    </button>,
-    <button
-      key={'guide'}
-      className={`${styles.button} ${styles.guide}`}
-      onClick={useGameInstructionModal}
-    >
-      {t('guide')}
-    </button>,
+    { value: 'ladder', color: 'pink', handleButtonClick: handleLadderClick },
+    { value: 'normal', color: 'purple', handleButtonClick: handleNormalClick },
+  ];
+
+  const headerButtons = [
+    {
+      value: <BsQuestionSquare />,
+      handleButtonClick: useGameInstructionModal,
+    },
   ];
 
   return (
     <div className={styles.gamePageContainer}>
+      <PageHeader title={t('prepare')} buttons={headerButtons} />
       {normalClicked ? (
         <GameLobby handleGoBackClick={handleGoBackClick} />
       ) : (
-        <div className={styles.buttonList}>
-          {buttons.map((button) => button)}
-        </div>
+        <GameButtons buttons={buttons} />
       )}
     </div>
   );

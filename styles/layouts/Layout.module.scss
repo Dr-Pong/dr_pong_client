@@ -32,10 +32,11 @@
 }
 
 .pageContainer::-webkit-scrollbar-track {
-  background: black;
+  background: $dark-purple;
+  border-radius: 8px;
 }
 
 .pageContainer::-webkit-scrollbar-thumb {
-  background: $light-grey;
+  background: $just-purple;
   border-radius: 8px;
 }

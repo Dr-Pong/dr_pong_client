@@ -1,6 +1,9 @@
 import useTranslation from 'next-translate/useTranslation';
+import { useRecoilValue } from 'recoil';
 
 import React, { Dispatch, SetStateAction } from 'react';
+
+import { editableState } from 'recoils/user';
 
 import { DetailDto, ProfileStyle } from 'types/userTypes';
 
@@ -33,6 +36,7 @@ export default function ProfileCard({
 }: ProfildCardProps) {
   const { t } = useTranslation('myPage');
   const { profileGet } = useMyPageQuery(nickname);
+  const editable = useRecoilValue(editableState);
   const { isLoading, isError, data } = profileGet(setDetailDto);
 
   if (isLoading) return <LoadingSpinner />;
@@ -41,15 +45,15 @@ export default function ProfileCard({
   const { level } = data;
   const cardContents: CardContentsType[] = [
     {
-      label: t('Name'),
+      label: 'Name',
       content: nickname,
     },
     {
-      label: t('Level'),
+      label: 'Level',
       content: level.toString(),
     },
     {
-      label: t('Title'),
+      label: 'Title',
       content: detailDto.title?.title ?? '',
       child: (
         <TitleDropdown
@@ -67,8 +71,12 @@ export default function ProfileCard({
         ({ label, content, child }: CardContentsType, i: number) => {
           return (
             <div key={i} className={styles.profileField}>
-              <div className={styles.fieldLabel}>{label}</div>
-              <div className={styles.fieldContent}>
+              <div className={styles.fieldLabel}>{t(label)}</div>
+              <div
+                className={`${styles.fieldContent} ${
+                  editable && styles[label]
+                }`}
+              >
                 {content}
                 {child}
               </div>

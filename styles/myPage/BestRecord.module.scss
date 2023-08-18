@@ -1,0 +1,26 @@
+@import 'styles/common';
+
+.bestRecordContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem;
+  font-size: 0.8rem;
+  border: solid 1px $light-purple;
+  border-radius: $basic-radius;
+  &.modal {
+    padding: 0.5rem;
+    font-size: 0.6rem;
+  }
+}
+
+.title {
+  margin-bottom: 0.5rem;
+  color: $light-purple;
+  font-size: 1rem;
+  font-family: $bold-font;
+  text-align: center;
+}

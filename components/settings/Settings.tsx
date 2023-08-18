@@ -85,7 +85,7 @@ export default function Settings() {
       <ul>
         {settingFields.map(({ topic, field }, i) => {
           return (
-            <li key={i}>
+            <li key={i} className={styles.settingField}>
               <div className={styles.listTopic}>{topic}</div>
               {field}
             </li>

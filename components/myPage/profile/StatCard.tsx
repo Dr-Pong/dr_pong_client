@@ -8,14 +8,16 @@ import { IoIosArrowForward } from 'react-icons/io';
 
 import { sideBarState } from 'recoils/sideBar';
 
-import { ProfileStyle } from 'types/userTypes';
+import { ProfileStyle, StatRankResponse } from 'types/userTypes';
 
 import useModalProvider from 'hooks/useModalProvider';
 import useMyPageQuery from 'hooks/useMyPageQuery';
 
 import ErrorRefresher from 'components/global/ErrorRefresher';
 import LoadingSpinner from 'components/global/LoadingSpinner';
+import BestRecord from 'components/myPage/profile/BestRecord';
 import RankTag from 'components/myPage/profile/RankTag';
+import TierLp from 'components/myPage/profile/TierLp';
 import WinRateStat from 'components/myPage/profile/WinRateStat';
 
 import styles from 'styles/myPage/StatCard.module.scss';
@@ -41,9 +43,22 @@ export default function StatCard({ nickname, style }: StatCardProps) {
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher />;
-  const { totalStat, seasonStat, totalRank, seasonRank } = data;
+  const { totalStat, seasonStat, totalRank, seasonRank } =
+    data as StatRankResponse;
 
   const stats: StatBox[] = [
+    {
+      top: (
+        <div className={styles.top}>
+          <div className={styles.statNameRankWrap}>
+            <div className={styles.statName}>{t('Rank')}</div>
+            <RankTag rank={seasonRank.rank} />
+          </div>
+          <TierLp tier={seasonRank.tier} lp={seasonRank.bestLp} align='start' />
+        </div>
+      ),
+      bottom: <WinRateStat winRateInfo={seasonStat} />,
+    },
     {
       top: (
         <div className={styles.top}>
@@ -52,15 +67,6 @@ export default function StatCard({ nickname, style }: StatCardProps) {
       ),
       bottom: <WinRateStat winRateInfo={totalStat} />,
     },
-    {
-      top: (
-        <div className={styles.top}>
-          <div className={styles.statName}>{t('Rank')}</div>
-          <RankTag rankProps={seasonRank} isBest={false} style={style} />
-        </div>
-      ),
-      bottom: <WinRateStat winRateInfo={seasonStat} />,
-    },
   ];
 
   return (
@@ -68,7 +74,7 @@ export default function StatCard({ nickname, style }: StatCardProps) {
       <div className={styles.leftWrap}>
         {stats.map(({ top, bottom }: StatBox, i: number) => {
           return (
-            <div key={i}>
+            <div key={i} className={styles.leftContent}>
               {top}
               {bottom}
             </div>
@@ -84,7 +90,7 @@ export default function StatCard({ nickname, style }: StatCardProps) {
           <div>{t('History')}</div>
           <IoIosArrowForward />
         </Link>
-        <RankTag rankProps={totalRank} isBest={true} style={style} />
+        <BestRecord totalRank={totalRank} style={style} />
       </div>
     </div>
   );

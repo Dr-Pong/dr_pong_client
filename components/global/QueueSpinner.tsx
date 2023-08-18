@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-
 import useTranslation from 'next-translate/useTranslation';
-
 import { useSetRecoilState } from 'recoil';
+
+import React, { useEffect, useState } from 'react';
 
 import { alertState } from 'recoils/alert';
 
@@ -31,7 +30,8 @@ export default function QueueSpinner({
         message: t('declined'),
       });
       handleGameCancel();
-    }
+    };
+        
     socket.on('deleteInvite', handleGameDeclined);
     (document.activeElement as HTMLElement)?.blur();
 

@@ -20,7 +20,7 @@
   gap: 1rem;
   height: 100%;
   overflow-y: auto;
-  padding-inline: 0.3rem;
+  padding-inline: 0.7rem;
 }
 
 .chattings::-webkit-scrollbar {
@@ -29,11 +29,12 @@
 }
 
 .chattings::-webkit-scrollbar-track {
-  background: black;
+  background: $dark-purple;
+  border-radius: 8px;
 }
 
 .chattings::-webkit-scrollbar-thumb {
-  background: $light-grey;
+  background: $light-purple;
   border-radius: 8px;
 }
 

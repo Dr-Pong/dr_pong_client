@@ -10,7 +10,7 @@ import { useSoundEffect } from 'hooks/useSoundEffect';
 
 import BasicButton from 'components/global/buttons/BasicButton';
 
-import styles from 'styles/settings/SettingField.module.scss';
+import styles from 'styles/settings/Settings.module.scss';
 
 export default function SoundEffectField() {
   const { t } = useTranslation('common');
@@ -43,16 +43,12 @@ export default function SoundEffectField() {
   if (!loaded) return null;
 
   return (
-    <div className={styles.fieldContainer}>
-      <BasicButton
-        style='basic'
-        color='purple'
-        handleButtonClick={
-          soundEffectOn ? disableSoundEffect : enableSoundEffect
-        }
-      >
-        {soundEffectOn ? contents.disable : contents.enable}
-      </BasicButton>
-    </div>
+    <BasicButton
+      style='basic'
+      color='purple'
+      handleButtonClick={soundEffectOn ? disableSoundEffect : enableSoundEffect}
+    >
+      {soundEffectOn ? contents.disable : contents.enable}
+    </BasicButton>
   );
 }

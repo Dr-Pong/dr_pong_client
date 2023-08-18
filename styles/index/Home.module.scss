@@ -32,22 +32,18 @@
   border-radius: $basic-radius;
 }
 
+.pageLink:hover {
+  transform: scale(0.95);
+}
+
 .special {
   height: 3.5rem;
   font-size: 1.8rem;
   background: $just-pink;
 }
 
-.special:hover {
-  font-size: 2rem;
-}
-
 .basic {
   height: 2.7rem;
   font-size: 1.3rem;
   background: $just-purple;
-}
-
-.basic:hover {
-  font-size: 1.5rem;
 }

@@ -39,11 +39,9 @@ export default function UpperModal() {
             e.stopPropagation();
           }}
         >
-          {head}
-          {head && body && <div className={styles.blank}></div>}
-          <div className={styles.modalBody}>{body}</div>
-          {(head || body) && tail && <div className={styles.blank}></div>}
-          {tail}
+          {head && <div className={styles.modalHead}>{head}</div>}
+          {body && <div className={styles.modalBody}>{body}</div>}
+          {tail && <div className={styles.modalTail}>{tail}</div>}
         </div>
       </div>,
       document.getElementById('upperModalRoot') as HTMLElement

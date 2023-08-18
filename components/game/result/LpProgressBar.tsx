@@ -2,24 +2,30 @@ import useTranslation from 'next-translate/useTranslation';
 
 import React, { Dispatch, SetStateAction } from 'react';
 
+import { Tier } from 'types/userTypes';
+
 import LadderPoint from 'components/records/LadderPoint';
 
 import styles from 'styles/game/result/LpProgressBar.module.scss';
 
+type LpProgressBarProps = {
+  lpData: { lp: number; lpChange: number };
+  setShowFireworks: Dispatch<SetStateAction<boolean>>;
+};
+
 export default function LpProgressBar({
   lpData,
   setShowFireworks,
-}: {
-  lpData: { lp: number; lpChange: number };
-  setShowFireworks: Dispatch<SetStateAction<boolean>>;
-}) {
-  const { t } = useTranslation('game');
-  const getTierName = (lp: number): string[] => {
-    if (lp >= DOCTOR_CUT) return ['Doctor', 'Professor'];
-    if (lp >= MASTER_CUT) return ['Master', 'Doctor'];
-    if (lp >= BACHELOR_CUT) return ['Bachelor', 'Master'];
-    if (lp >= STUDENT_CUT) return ['Student', 'Bachelor'];
-    return ['Egg', 'Student'];
+}: LpProgressBarProps) {
+  const { t: tGame } = useTranslation('game');
+  const { t: tTier } = useTranslation('tier');
+
+  const getTierName = (lp: number): Tier[] => {
+    if (lp >= DOCTOR_CUT) return ['doctor', 'doctor'];
+    if (lp >= MASTER_CUT) return ['master', 'doctor'];
+    if (lp >= BACHELOR_CUT) return ['bachelor', 'master'];
+    if (lp >= STUDENT_CUT) return ['student', 'bachelor'];
+    return ['egg', 'student'];
   };
 
   const getRankSection = (lp: number): number[] => {
@@ -57,7 +63,7 @@ export default function LpProgressBar({
   return (
     <div className={styles.lpProgressBarContainer}>
       <div className={styles.lpProgressBarTitle}>
-        <div className={styles.title}>{t('LP')}</div>
+        <div className={styles.title}>{tGame('LP')}</div>
         <div className={styles.lpChange}>
           <LadderPoint lp={lp} lpChange={lpChange} />
         </div>
@@ -65,8 +71,8 @@ export default function LpProgressBar({
       <div className={styles.lpProgressBar}>
         <div className={styles.lpProgressBarScaleMarks}>{scaleMarks()}</div>
         <div className={styles.lpProgressBarScale}>
-          <div className={styles.startPoint}>{t(startTier)}</div>
-          <div className={styles.endPoint}>{t(endTier)}</div>
+          <div className={styles.startPoint}>{tTier(startTier)}</div>
+          <div className={styles.endPoint}>{tTier(endTier)}</div>
         </div>
         <div
           className={styles.arrow}

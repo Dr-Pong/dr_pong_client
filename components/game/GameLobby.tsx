@@ -1,12 +1,11 @@
 import { AxiosError } from 'axios';
-
 import useTranslation from 'next-translate/useTranslation';
 import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
 import React, { ChangeEvent, useState } from 'react';
-import { BiUndo } from 'react-icons/bi';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 
 import { alertState } from 'recoils/alert';
 
@@ -15,15 +14,16 @@ import useGameSocket from 'hooks/useGameSocket';
 import useModalProvider from 'hooks/useModalProvider';
 import useUpperModalProvider from 'hooks/useUpperModalProvider';
 
-import PageHeader from 'components/global/PageHeader';
+import { GameButtons } from 'components/game/GameButtons';
+import BasicButton from 'components/global/buttons/BasicButton';
 
-import styles from 'styles/game/GameLobby.module.scss';
+import styles from 'styles/game/Game.module.scss';
 
-export default function GameLobby({
-  handleGoBackClick,
-}: {
+type GameLobbyProps = {
   handleGoBackClick: () => void;
-}) {
+};
+
+export default function GameLobby({ handleGoBackClick }: GameLobbyProps) {
   const { t } = useTranslation('game');
   const setAlert = useSetRecoilState(alertState);
   const router = useRouter();
@@ -50,7 +50,7 @@ export default function GameLobby({
     onError: (error: AxiosError<Error>) => {
       setAlert({
         type: 'failure',
-        message: t(`${error.response?.data.message}`)
+        message: t(`${error.response?.data.message}`),
       });
     },
   } as object);
@@ -77,14 +77,27 @@ export default function GameLobby({
     router.push(`/game/${data.roomId}`);
   };
 
+  const buttons = [
+    { value: 'queue', color: 'pink', handleButtonClick: handleQueueClick },
+    { value: 'invite', color: 'purple', handleButtonClick: handleInviteClick },
+  ];
+
   return (
-    <div className={styles.prepareRoomContainer}>
-      <PageHeader title={t('prepare')} />
-      <div className={styles.contents}>
-        <div className={styles.modeList}>
-          <div className={styles.mode}>{t('mode')}</div>
-          {modeList.map((mode, i) => {
-            return (
+    <div className={styles.gameLobbyContainer}>
+      <div className={styles.gameTypeBackButtonWrap}>
+        <BasicButton
+          style='cookie'
+          color='white'
+          handleButtonClick={handleGoBackClick}
+        >
+          <IoMdArrowRoundBack />
+        </BasicButton>
+        <span className={styles.gameType}>{t('normal')}</span>
+      </div>
+      <ul className={styles.modeList}>
+        {modeList.map((mode, i) => {
+          return (
+            <li>
               <label key={i} className={styles.radio} htmlFor={mode}>
                 <input
                   type='radio'
@@ -96,31 +109,11 @@ export default function GameLobby({
                 />
                 {t(mode)}
               </label>
-            );
-          })}
-        </div>
-        <div className={styles.buttonList}>
-          <button
-            className={`${styles.button} ${styles.queue}`}
-            onClick={handleQueueClick}
-          >
-            {t('queue')}
-          </button>
-          <button
-            className={`${styles.button} ${styles.invite}`}
-            onClick={handleInviteClick}
-          >
-            {t('invite')}
-          </button>
-          <button
-            key={'guide'}
-            className={`${styles.button} ${styles.guide}`}
-            onClick={handleGoBackClick}
-          >
-            {<BiUndo />}
-          </button>
-        </div>
-      </div>
+            </li>
+          );
+        })}
+      </ul>
+      <GameButtons buttons={buttons} />
     </div>
   );
 }

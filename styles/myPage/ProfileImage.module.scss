@@ -1,11 +1,15 @@
 @import 'styles/common';
 
 .profileImageContainer {
+  position: relative;
   width: 6rem;
-  height: 7.5rem;
   height: 6rem;
   form {
-    margin-top: -0.2rem;
+    position: absolute;
+    bottom: 0;
+    button {
+      border: solid 0.5px $light-grey;
+    }
   }
 }
 
@@ -13,5 +17,6 @@
   width: 6rem;
   height: 6rem;
   object-fit: fill;
-  border: solid 1px $dark-blue;
+  border: solid 0.5px $light-purple;
+  border-radius: $basic-radius;
 }

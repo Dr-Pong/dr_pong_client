@@ -5,20 +5,24 @@
   align-items: center;
   justify-content: space-between;
   height: 2rem;
-  font-size: 1rem;
   border-bottom: solid 1px $just-pink;
+  padding-inline: 0.5rem;
   .title {
-    padding-left: 0.3rem;
+    font-size: 1rem;
     font-family: $bold-font;
   }
 }
 
 .buttons {
   display: flex;
+  gap: 0.7rem;
   align-items: center;
 }
 
 .button {
-  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
   cursor: pointer;
 }
