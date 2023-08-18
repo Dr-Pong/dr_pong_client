@@ -26,5 +26,8 @@
   "lose": "Lose",
   "tie": "Tie",
   "guide": "Hitchhiker's Guide To Dr.Pong",
-  "invalidRoom": "Invalid game room."
+  "invalidRoom": "Invalid game room.",
+  "declined": "Invitation has been declined.",
+  "Already in queue": "Already in match",
+  "Already in game": "Already in game"
 }

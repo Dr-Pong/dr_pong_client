@@ -26,5 +26,8 @@
   "lose": "패배",
   "tie": "무승부",
   "guide": "조작법",
-  "invalidRoom": "유효하지 않은 게임입니다."
+  "invalidRoom": "유효하지 않은 게임입니다.",
+  "declined": "상대방이 초대를 거절했습니다.",
+  "Already in queue": "이미 매칭이 진행 중입니다.",
+  "Already in game": "이미 진행 중인 게임이 있습니다."
 }

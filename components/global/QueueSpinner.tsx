@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
+import useTranslation from 'next-translate/useTranslation';
+
+import { useSetRecoilState } from 'recoil';
+
+import { alertState } from 'recoils/alert';
+
 import useChatSocket from 'hooks/useChatSocket';
 
 import LoadingSpinner from 'components/global/LoadingSpinner';
@@ -13,20 +19,27 @@ export default function QueueSpinner({
   useTimer: boolean;
   handleGameCancel: () => void;
 }) {
+  const { t } = useTranslation('game');
+  const setAlert = useSetRecoilState(alertState);
   const [seconds, setSeconds] = useState(0);
   const [socket] = useChatSocket('global');
 
   useEffect(() => {
+    const handleGameDeclined = () => {
+      setAlert({
+        type: 'warning',
+        message: t('declined'),
+      });
+      handleGameCancel();
+    }
+    socket.on('deleteInvite', handleGameDeclined);
     (document.activeElement as HTMLElement)?.blur();
-    socket.on('deleteInvite', handleGameCancel);
-
-    if (!useTimer) return () => socket.off('deleteInvite', handleGameCancel);
 
     const intervalId = setInterval(() => {
       setSeconds((prevSeconds) => prevSeconds + 1);
     }, 1000);
     return () => {
-      socket.off('deleteInvite', handleGameCancel);
+      socket.off('deleteInvite', handleGameDeclined);
       clearInterval(intervalId);
     };
   }, []);
