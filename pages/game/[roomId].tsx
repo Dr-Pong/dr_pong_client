@@ -33,7 +33,6 @@ export default function Game() {
 
   return (
     <div className={styles.gameContainer}>
-      <SocketManager namespace={'game'} />
       <PongFrame canvasWidth={canvasWidth} roomId={roomId as string}>
         <PongGame
           roomId={roomId as string}
@@ -46,5 +45,10 @@ export default function Game() {
 }
 
 Game.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
+  return (
+    <>
+      <SocketManager namespace={'game'} />
+      <Layout>{page}</Layout>
+    </>
+  );
 };
