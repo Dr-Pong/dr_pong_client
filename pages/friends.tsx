@@ -36,7 +36,6 @@ export default function Friends() {
 
   return (
     <div className={styles.friendsPageContainer}>
-      <SocketManager namespace={'friends'} />
       <PageHeader title={t('Friends')} />
       <TabProvider
         namespace={'friends'}
@@ -51,5 +50,9 @@ export default function Friends() {
 }
 
 Friends.getLayout = function getLayout(page: ReactElement) {
-  return <AppLayout>{page}</AppLayout>;
+  return (
+    <>
+      <SocketManager namespace={'friends'} />
+      <AppLayout>{page}</AppLayout>
+    </>);
 };

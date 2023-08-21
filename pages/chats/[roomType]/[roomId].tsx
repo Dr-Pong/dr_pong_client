@@ -21,7 +21,6 @@ export default function Chats() {
 
   return (
     <div className={styles.chatsPageContainer}>
-      <SocketManager key={roomId as string} namespace={roomType as RoomType} />
       <ChatsFrame
         key={'room' + (roomId as string)}
         roomType={roomType as RoomType}
@@ -32,5 +31,14 @@ export default function Chats() {
 }
 
 Chats.getLayout = function getLayout(page: ReactElement) {
-  return <AppLayout>{page}</AppLayout>;
+  const router = useRouter();
+  const { roomType, roomId } = router.query;
+  return (
+    <>
+      <SocketManager key={roomId as string} namespace={roomType as RoomType} />
+      <AppLayout>
+        {page}
+      </AppLayout>
+    </>
+  );
 };
