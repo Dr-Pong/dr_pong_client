@@ -8,7 +8,6 @@ import React, { ReactElement, ReactNode } from 'react';
 import { CookiesProvider } from 'react-cookie';
 import { Toaster } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 
 import SocketManager from 'components/global/SocketManager';
 import PageConfig from 'components/layouts/PageConfig';
