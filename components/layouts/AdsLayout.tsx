@@ -9,7 +9,7 @@ import GoogleAd from 'components/global/GoogleAd';
 import styles from 'styles/layouts/AdsLayout.module.scss';
 
 export default function AdsLayout({ children }: LayoutProps) {
-  const [direction, setDirection] = useState<'row' | 'column' | null>(null);
+  const [direction, setDirection] = useState<'row' | 'column'>(window.innerHeight / window.innerWidth < 1.3 ? 'row' : 'column');
   const router = useRouter();
   const handleResize = () => {
     setDirection(
@@ -18,17 +18,14 @@ export default function AdsLayout({ children }: LayoutProps) {
   };
 
   useEffect(() => {
-    setDirection(
-      window.innerHeight / window.innerWidth < 1.3 ? 'row' : 'column'
-    );
+
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
-  if (!direction || router.query.roomId) return <>{children}</>;
-  if (direction === 'row') {
+  if (direction === 'row' || router.query.roomId) {
     return (
       <div className={styles.adsLayoutRow}>
         <GoogleAd
