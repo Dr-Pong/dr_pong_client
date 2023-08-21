@@ -13,8 +13,7 @@
   gap: 0.5rem;
   width: 100%;
   div:first-child:last-child,
-  div:first-child:nth-last-child(4),
-  div:nth-child(2):nth-last-child(3) {
+  div:first-child:nth-last-child(3) {
     grid-column: 1 / span 2;
   }
 }
