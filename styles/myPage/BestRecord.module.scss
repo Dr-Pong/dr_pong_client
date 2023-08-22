@@ -7,13 +7,14 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  max-width: 11rem;
   padding: 1rem;
-  font-size: 0.8rem;
-  border: solid 1px $light-purple;
+  background: transparentize($light-purple, 0.9);
+  border: solid 1px transparentize($light-purple, 0.5);
   border-radius: $basic-radius;
   &.modal {
     padding: 0.5rem;
-    font-size: 0.6rem;
+    border: solid 1px transparentize($light-purple, 0.5);
   }
 }
 

@@ -4,6 +4,9 @@
   position: relative;
   width: 6rem;
   height: 6rem;
+  background: $just-purple;
+  border: solid 0.5px $light-purple;
+  border-radius: $basic-radius;
   form {
     position: absolute;
     bottom: 0;
@@ -14,9 +17,8 @@
 }
 
 .profileImage {
-  width: 6rem;
-  height: 6rem;
+  width: 100%;
   object-fit: fill;
-  border: solid 0.5px $light-purple;
   border-radius: $basic-radius;
+  aspect-ratio: 1/1;
 }

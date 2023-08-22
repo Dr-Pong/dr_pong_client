@@ -5,13 +5,13 @@ import { DetailDto } from 'types/userTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
-import { empty } from 'components/myPage/profile/TitleDropdown';
-
 const useMyPageQuery = (nickname: string, type?: string) => {
   const { get, mutationPatch, queryClient } = useCustomQuery();
+
   const profileGet = (setter: (detailDto: DetailDto) => void) => {
     return get('userDetail', `/users/${nickname}/detail`, setter);
   };
+
   const profileMutationPatch = () => {
     const options = (queryKey: QueryKey) => {
       return {
@@ -35,9 +35,11 @@ const useMyPageQuery = (nickname: string, type?: string) => {
       ),
     };
   };
+
   const allItemsGet = (setter?: AchievementsSetter | EmojisSetter) => {
     return get([`all${type}`], `/users/${nickname}/${type}`, setter);
   };
+
   const selectedGet = (setter?: AchievementsSetter | EmojisSetter) => {
     return get(
       [`selected${type}`],
@@ -45,6 +47,7 @@ const useMyPageQuery = (nickname: string, type?: string) => {
       setter
     );
   };
+
   const selectablesMutationPatch = () => {
     const options = (queryKey: QueryKey) => {
       return {
@@ -58,6 +61,7 @@ const useMyPageQuery = (nickname: string, type?: string) => {
       options([[`all${type}`], [`selected${type}`]])
     );
   };
+
   const statGet = () => {
     const {
       data: totalStat,
@@ -90,15 +94,20 @@ const useMyPageQuery = (nickname: string, type?: string) => {
       isError: tsError || ssError || trError || srError,
     };
   };
+
   const titlesGet = () => {
     return get(
       `userTitles`,
       `/users/${nickname}/titles`,
       (titles: Titles): void => {
-        titles.titles.unshift(empty);
+        titles.titles.unshift({
+          id: null,
+          title: '-----',
+        });
       }
     );
   };
+
   return {
     profileGet,
     profileMutationPatch,

@@ -12,7 +12,8 @@ export const dropdownUserState = atom<string>({
   key: `dropdownUserState/${v1()}`,
   default: '',
 });
-export const dropdownVisibilitySelector = selector({
+
+export const showDropdownSelector = selector({
   key: `dropdownVisibility/${v1()}`,
   get: ({ get }) => {
     const selectedUser = get(dropdownUserState);

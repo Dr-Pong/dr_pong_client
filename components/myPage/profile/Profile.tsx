@@ -4,16 +4,10 @@ import React, { useEffect, useState } from 'react';
 
 import { editableState, profileTabState } from 'recoils/user';
 
-import {
-  Achievement,
-  Achievements,
-  DetailDto,
-  ProfileStyle,
-} from 'types/userTypes';
+import { Achievement, DetailDto, ProfileStyle } from 'types/userTypes';
 
 import useMyPageQuery from 'hooks/useMyPageQuery';
 
-import ErrorRefresher from 'components/global/ErrorRefresher';
 import LoadingSpinner from 'components/global/LoadingSpinner';
 import SelectableItem from 'components/myPage/SelectableItem';
 import ProfileCard from 'components/myPage/profile/ProfileCard';
@@ -31,11 +25,8 @@ type ProfileProps = {
 export default function Profile({ nickname, style }: ProfileProps) {
   const editable = useRecoilValue(editableState);
   const profileTab = useRecoilValue(profileTabState);
-  const { selectedGet } = useMyPageQuery(nickname, 'achievements');
-  const { data, isLoading, isError } = selectedGet();
   const { profileMutationPatch } = useMyPageQuery(nickname);
   const { patchImage, patchTitle, patchMessage } = profileMutationPatch();
-  const achievements = data as Achievements;
   const [detailDto, setDetailDto] = useState<DetailDto>(defaultDetailDto);
 
   useEffect(() => {
@@ -54,9 +45,6 @@ export default function Profile({ nickname, style }: ProfileProps) {
     }
   }, [editable]);
 
-  if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher />;
-
   return (
     <div className={`${styles.profileContainer} ${styles[style]}`}>
       <ProfileImage detailDto={detailDto} setDetailDto={setDetailDto} />
@@ -72,18 +60,41 @@ export default function Profile({ nickname, style }: ProfileProps) {
         style={style}
       />
       <StatCard nickname={nickname} style={style} />
-      {achievements.achievements.filter((el) => el).length !== 0 && (
-        <div className={`${styles.achievementsBox} ${styles[style]}`}>
-          {achievements.achievements.map((item: Achievement | null) => (
-            <SelectableItem
-              key={item?.id}
-              itemType={'achieve'}
-              item={item}
-              clickHandler={null}
-            />
-          ))}
-        </div>
-      )}
+      <SelectedAchievements nickname={nickname} style={style} />
+    </div>
+  );
+}
+
+function SelectedAchievements({
+  nickname,
+  style,
+}: {
+  nickname: string;
+  style: ProfileStyle;
+}) {
+  const { selectedGet } = useMyPageQuery(nickname, 'achievements');
+  const { data, isLoading, isError } = selectedGet();
+
+  if (isLoading || isError)
+    return (
+      <div className={`${styles.achievementsBox} ${styles[style]}`}>
+        <LoadingSpinner />
+      </div>
+    );
+
+  if (data.achievements.filter((el: Achievement | null) => el).length == 0)
+    return null;
+
+  return (
+    <div className={`${styles.achievementsBox} ${styles[style]}`}>
+      {data.achievements.map((item: Achievement | null) => (
+        <SelectableItem
+          key={item?.id}
+          itemType={'achieve'}
+          item={item}
+          clickHandler={null}
+        />
+      ))}
     </div>
   );
 }

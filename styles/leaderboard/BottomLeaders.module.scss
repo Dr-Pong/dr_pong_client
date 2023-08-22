@@ -1,15 +1,18 @@
+@import 'styles/common';
+
 .bottomLeadersContainer {
   display: flex;
   flex-direction: column;
+  gap: 1.8rem;
   align-items: stretch;
-  padding-block: 1.5rem;
-  padding-inline: 1rem;
+  width: 90%;
+  max-width: 30rem;
 }
 
 .leaderBox {
   display: grid;
-  grid-template-columns: 1fr 1.5fr 1.5fr;
-  margin-bottom: 1.5rem;
+  grid-template-columns: 1fr 2.5fr 2fr;
+  color: white;
   font-size: 1.2rem;
 }
 
@@ -18,10 +21,11 @@
 }
 
 .leaderNickname {
-  justify-self: center;
+  justify-self: start;
   cursor: pointer;
 }
 
 .leaderLp {
   justify-self: end;
+  font-family: $bold-font;
 }

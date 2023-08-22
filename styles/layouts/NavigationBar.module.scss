@@ -14,9 +14,13 @@
 
 .buttonBackground {
   height: 4rem;
-  border: solid 2px transparent;
-  border-radius: 50%;
-  border-image: linear-gradient(to right bottom, $just-purple, $just-pink) 1;
+  background-image: linear-gradient($dark-blue, $dark-blue),
+    linear-gradient(to right bottom, $just-purple, $just-pink);
+  background-clip: content-box, border-box;
+  background-origin: border-box;
+  border: 2px solid transparent;
+  border-radius: $basic-radius;
+  cursor: pointer;
 }
 
 .button {
@@ -30,5 +34,4 @@
 
 .button:hover {
   font-size: 3rem;
-  cursor: pointer;
 }

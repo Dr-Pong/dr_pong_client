@@ -5,7 +5,7 @@
   grid-column: 2 / 3;
   grid-template-rows: repeat(3, 1fr);
   height: 6rem;
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
   font-size: $basic-font-size;
   background: $dark-blue;
   &.modal {
@@ -16,14 +16,14 @@
 
 .profileField {
   display: grid;
-  grid-template-columns: 3rem 1fr;
+  grid-template-columns: 3.5rem 1fr;
   gap: 0.5rem;
-  align-content: center;
-  align-items: center;
-  justify-items: center;
+  place-items: center center;
 }
 
 .fieldLabel {
+  justify-self: flex-start;
+  width: 100%;
   font-family: $bold-font;
 }
 
@@ -34,32 +34,25 @@
   justify-content: space-between;
   justify-self: start;
   width: 100%;
-  &.Title {
-    border: solid 0.5px $light-grey;
-    border-radius: $basic-radius;
-    padding-inline: 0.5rem;
-  }
 }
 
 .titleDropdownContainer {
+  width: 100%;
+}
+
+.dropdownButton {
   display: flex;
   align-items: center;
-}
-
-.dropdownArrow {
-  height: 1.2rem;
-  color: $just-pink;
-  font-size: 1.5rem;
+  justify-content: space-between;
+  width: 100%;
+  color: inherit;
+  background: none;
+  border: solid 0.5px $light-grey;
+  border-radius: $basic-radius;
   cursor: pointer;
-}
-
-.dropdownBackdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  display: flex;
-  width: 100vw;
-  height: 100dvh;
-  background: rgba(0, 0, 0, 0.2);
+  padding-inline: 0.5rem;
+  .arrow {
+    color: $just-pink;
+    font-size: 1.4rem;
+  }
 }

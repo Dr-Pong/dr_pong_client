@@ -52,23 +52,18 @@ export default function TopLeaders({ topLeaderCount }: TopLeadersProps) {
           : mockData[index];
         return (
           <div key={index} className={styles.leaderBox}>
-            <div className={styles.leaderRank}>
-              <div className={`${styles[style]}`}>{rank}</div>
+            <div className={`${styles.banner} ${styles[style]}`}>
+              <div className={`${styles.rank} ${styles[style]}`}>{rank}</div>
+              <span className={styles.triangle}></span>
             </div>
-            <div className={styles.leaderProfile}>
-              <img
-                onClick={handleProfileClick(nickname)}
-                src={imgUrl}
-                alt='profile'
-              />
-              <div
-                className={styles.leaderNickname}
-                onClick={handleProfileClick(nickname)}
-              >
-                {nickname}
-              </div>
-              <div>{nickname ? lp : ''}</div>
+            <div
+              className={styles.leaderProfile}
+              onClick={handleProfileClick(nickname)}
+            >
+              <img src={imgUrl} alt='profile' />
+              <div className={styles.leaderNickname}>{nickname}</div>
             </div>
+            <div className={styles.lp}>{nickname ? lp : ''}</div>
           </div>
         );
       })}

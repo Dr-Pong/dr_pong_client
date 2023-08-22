@@ -4,64 +4,88 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   justify-items: center;
-  padding-bottom: 1.5rem;
-  column-gap: 0.8rem;
-  border-bottom: solid 2px white;
+  gap: 0.8rem;
+	width: 100%;
+	max-width: 30rem;
 }
 
 .leaderBox {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  align-items: end;
-  justify-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  align-items: center;
+  justify-content: flex-end;
   width: 100%;
-  img {
-    width: 3rem;
-  }
+  height: 100%;
 }
 
-.leaderRank {
+.banner {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 3rem;
-  margin-bottom: 1rem;
-  padding-top: 0.2rem;
-  font-family: $bold-font;
-  background: $just-purple;
+	gap: 0.5rem;
+  width: 4rem;
+  padding-top: 0.5rem;
+  padding-bottom: 2rem;
+	margin-bottom: 0.3rem;
+  background: linear-gradient(to bottom, $just-yellow, $just-orange);
+  border-radius: 0.2rem 0.2rem 0 0;
+  .rank {
+    height: fit-content;
+    color: $dark-purple;
+    font-family: $bold-font;
+  }
+  .triangle {
+    position: absolute;
+    bottom: -0.2rem;
+    border-right: 2.4rem solid transparent;
+    border-bottom: calc(0.8rem * 1.732) solid $dark-blue;
+    border-left: 2.4rem solid transparent;
+  }
 }
 
 .leaderProfile {
   display: flex;
   flex-direction: column;
+  gap: 0.3rem;
   align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+	cursor: pointer;
+	.leaderNickname {
+		color: $just-grey;
+		font-family: $bold-font;
+	}
   img {
     width: 3rem;
     height: 3rem;
+    border: solid 1px $dark-purple;
+    border-radius: $basic-radius;
   }
-  div {
-    margin-top: 0.7rem;
-    font-size: 1.2rem;
-  }
-}
-
-.leaderNickname {
-  justify-self: center;
-  cursor: pointer;
 }
 
 .first {
-  font-size: 3rem;
-  margin-block: 0.7rem;
+	height: 8rem;
+  font-size: 2.8rem;
+  // margin-block: 0.7rem;
 }
 
 .second {
+	height: 6rem;
   font-size: 2.2rem;
-  margin-block: 0.5rem;
+  // margin-block: 0.5rem;
 }
 
 .third {
+	height: 5rem;
   font-size: 1.8rem;
-  margin-block: 0.3rem;
+  // margin-block: 0.3rem;
+}
+
+.lp {
+  font-size: 1.4rem;
+	font-family: $bold-font;
+	color: white;
 }

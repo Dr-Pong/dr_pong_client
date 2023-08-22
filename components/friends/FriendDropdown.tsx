@@ -4,7 +4,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import React, { useEffect, useRef } from 'react';
 import { IoMdMore } from 'react-icons/io';
 
-import { dropdownUserState, dropdownVisibilitySelector } from 'recoils/friends';
+import { dropdownUserState, showDropdownSelector } from 'recoils/friends';
 
 import { ButtonDesign } from 'types/buttonTypes';
 
@@ -24,7 +24,7 @@ const button: ButtonDesign = {
 
 export default function FriendDropdown({ nickname }: { nickname: string }) {
   const { t } = useTranslation('friends');
-  const isDropdownVisibleFor = useRecoilValue(dropdownVisibilitySelector);
+  const showDropdownFor = useRecoilValue(showDropdownSelector);
   const setDropdownUser = useSetRecoilState(dropdownUserState);
   const { useProfileModal } = useModalProvider();
   const dropdownRef = useRef<HTMLUListElement>(null);
@@ -41,7 +41,7 @@ export default function FriendDropdown({ nickname }: { nickname: string }) {
   };
 
   useEffect(() => {
-    if (isDropdownVisibleFor(nickname)) {
+    if (showDropdownFor(nickname)) {
       document.addEventListener('click', handleOuterClick);
     } else {
       document.removeEventListener('click', handleOuterClick);
@@ -49,10 +49,10 @@ export default function FriendDropdown({ nickname }: { nickname: string }) {
     return () => {
       document.removeEventListener('click', handleOuterClick);
     };
-  }, [isDropdownVisibleFor(nickname)]);
+  }, [showDropdownFor(nickname)]);
 
   const kebabClickHandler = () => {
-    if (isDropdownVisibleFor(nickname)) {
+    if (showDropdownFor(nickname)) {
       setDropdownUser('');
     } else {
       setDropdownUser(nickname);
@@ -68,41 +68,43 @@ export default function FriendDropdown({ nickname }: { nickname: string }) {
       >
         <IoMdMore />
       </button>
-      <Dropdown style={'friend'} visibility={isDropdownVisibleFor(nickname)}>
-        <ul
-          ref={dropdownRef}
-          onClick={() => {
-            setDropdownUser('');
-          }}
-        >
-          <li>
-            <BasicButton
-              style={'dropdown'}
-              color={'white'}
-              handleButtonClick={() => {
-                useProfileModal(nickname);
-                setDropdownUser('');
-              }}
-            >
-              {t('profile')}
-            </BasicButton>
-          </li>
-          <li>
-            <RelationButton
-              button={button}
-              type='friendDelete'
-              target={nickname}
-            >
-              {t('delete')}
-            </RelationButton>
-          </li>
-          <li>
-            <RelationButton button={button} type='block' target={nickname}>
-              {t('block')}
-            </RelationButton>
-          </li>
-        </ul>
-      </Dropdown>
+      {showDropdownFor(nickname) && (
+        <Dropdown style={'friend'}>
+          <ul
+            ref={dropdownRef}
+            onClick={() => {
+              setDropdownUser('');
+            }}
+          >
+            <li>
+              <BasicButton
+                style={'dropdown'}
+                color={'white'}
+                handleButtonClick={() => {
+                  useProfileModal(nickname);
+                  setDropdownUser('');
+                }}
+              >
+                {t('profile')}
+              </BasicButton>
+            </li>
+            <li>
+              <RelationButton
+                button={button}
+                type='friendDelete'
+                target={nickname}
+              >
+                {t('delete')}
+              </RelationButton>
+            </li>
+            <li>
+              <RelationButton button={button} type='block' target={nickname}>
+                {t('block')}
+              </RelationButton>
+            </li>
+          </ul>
+        </Dropdown>
+      )}
     </div>
   );
 }
