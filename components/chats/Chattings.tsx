@@ -7,6 +7,8 @@ import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { alertState } from 'recoils/alert';
+import { sideBarState } from 'recoils/sideBar';
+import { openModalState } from 'recoils/modal';
 
 import { Chat, RoomType, UserImageMap } from 'types/chatTypes';
 
@@ -38,6 +40,8 @@ export default function Chattings({
   const { t } = useTranslation('channels');
   const router = useRouter();
   const setAlert = useSetRecoilState(alertState);
+  const setModal = useSetRecoilState(openModalState);
+  const setSideBar = useSetRecoilState(sideBarState);
   const [chats, setChats] = useState<Chat[]>([]);
   const [message, setMessage] = useState<string>('');
   const [showPreview, setShowPreview] = useState<boolean>(false);
@@ -102,6 +106,8 @@ export default function Chattings({
       type: 'warning',
       message: data.type === 'kick' ? t('kick') : t('ban'),
     });
+    setModal(false);
+    setSideBar(null);
     router.push('/channels');
   }, []);
 
