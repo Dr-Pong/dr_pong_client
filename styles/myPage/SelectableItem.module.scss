@@ -1,9 +1,14 @@
 @import 'styles/common';
 
 @mixin imageBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  // height: 100%;
   aspect-ratio: 1/1;
+  img {
+    width: 100%;
+  }
 }
 
 .selected {
@@ -13,18 +18,14 @@
 
 .unachieved {
   @include imageBox;
+  border: solid 2px $dark-blue;
   opacity: 0.5;
   filter: grayscale(100%);
 }
 
 .empty {
   @include imageBox;
-  // display: none;
-  // object-fit: fill;
-	// border: solid 2px $just-pink;s
-	img {
-		display: none;
-	}
+  border: solid 2px $dark-blue;
 }
 
 .itemImage {

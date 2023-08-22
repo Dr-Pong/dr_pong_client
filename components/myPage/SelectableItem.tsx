@@ -56,12 +56,12 @@ export default function SelectableItem({
       return styles.selected;
     } else if (status === 'unachieved') {
       return styles.unachieved;
-    }
+    } else if (item === null) return styles.empty;
   };
 
   const imgSelector = () => {
     if (item === null) {
-      return <div className={styles.empty}></div>;
+      return <></>;
     } else {
       return (
         <img
