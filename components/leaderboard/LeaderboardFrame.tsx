@@ -11,6 +11,7 @@ export default function LeaderboardFrame() {
   return (
     <div className={styles.leaderboardFrame}>
       <TopLeaders topLeaderCount={topLeaderCount} />
+      <hr />
       <BottomLeaders
         topLeaderCount={topLeaderCount}
         bottomLeaderCount={bottomLeaderCount}

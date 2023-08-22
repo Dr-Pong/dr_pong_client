@@ -7,5 +7,12 @@
 .leaderboardFrame {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  gap: 2.5rem;
+  align-items: center;
+  padding-block: 2rem;
+  hr {
+    width: 100%;
+    max-width: 38rem;
+    border: 0.5px solid white;
+  }
 }
