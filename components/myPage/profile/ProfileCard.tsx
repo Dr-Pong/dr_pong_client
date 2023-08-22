@@ -1,7 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue } from 'recoil';
 
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, ReactNode, SetStateAction } from 'react';
 
 import { editableState } from 'recoils/user';
 
@@ -17,8 +17,7 @@ import styles from 'styles/myPage/ProfileCard.module.scss';
 
 type CardContentsType = {
   label: string;
-  content: string;
-  child?: React.ReactNode;
+  content: string | ReactNode;
 };
 
 type ProfildCardProps = {
@@ -54,36 +53,28 @@ export default function ProfileCard({
     },
     {
       label: 'Title',
-      content: detailDto.title?.title ?? '',
-      child: (
+      content: editable ? (
         <TitleDropdown
           nickname={nickname}
           detailDto={detailDto}
           setDetailDto={setDetailDto}
         />
+      ) : (
+        data.title?.title || '-----'
       ),
     },
   ];
 
   return (
     <div className={`${styles.profileCardContainer} ${styles[style]}`}>
-      {cardContents.map(
-        ({ label, content, child }: CardContentsType, i: number) => {
-          return (
-            <div key={i} className={styles.profileField}>
-              <div className={styles.fieldLabel}>{t(label)}</div>
-              <div
-                className={`${styles.fieldContent} ${
-                  editable && styles[label]
-                }`}
-              >
-                {content}
-                {child}
-              </div>
-            </div>
-          );
-        }
-      )}
+      {cardContents.map(({ label, content }: CardContentsType, i: number) => {
+        return (
+          <div key={i} className={styles.profileField}>
+            <div className={styles.fieldLabel}>{t(label)}</div>
+            <div className={styles.fieldContent}>{content}</div>
+          </div>
+        );
+      })}
     </div>
   );
 }

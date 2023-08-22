@@ -1,6 +1,12 @@
 import { useRecoilValue } from 'recoil';
 
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
 
 import { editableState } from 'recoils/user';
@@ -12,7 +18,7 @@ import useMyPageQuery from 'hooks/useMyPageQuery';
 
 import Dropdown from 'components/global/Dropdown';
 import ErrorRefresher from 'components/global/ErrorRefresher';
-import LoadingSpinner from 'components/global/LoadingSpinner';
+import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/myPage/ProfileCard.module.scss';
 
@@ -28,56 +34,82 @@ export default function TitleDropdown({
   setDetailDto,
 }: TitleDropdownProps) {
   const editable = useRecoilValue(editableState);
-  const [dropdownVisibility, setDropdownVisibility] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLUListElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const { titlesGet } = useMyPageQuery(nickname);
   const { isLoading, isError, data } = titlesGet();
 
-  if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher />;
-  const titles = data.titles as Title[];
-
   const handleDropdownClick = () => {
-    setDropdownVisibility(!dropdownVisibility);
+    setShowDropdown(!showDropdown);
   };
 
-  const handleBackdropClick = () => {
-    setDropdownVisibility(false);
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current?.contains(event.target as Node) &&
+      !buttonRef.current?.contains(event.target as Node)
+    ) {
+      setShowDropdown(false);
+    }
   };
+
+  useEffect(() => {
+    if (showDropdown) {
+      document.addEventListener('click', handleClickOutside);
+    } else {
+      document.removeEventListener('click', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [showDropdown]);
+
+  if (isLoading)
+    return (
+      <div className={styles.titleDropdownContainer}>
+        <button
+          ref={buttonRef}
+          className={styles.dropdownButton}
+          onClick={handleDropdownClick}
+        >
+          {detailDto.title?.title || '-----'}
+          <IoMdArrowDropdown className={styles.arrow} />
+        </button>
+      </div>
+    );
+  if (isError) return <ErrorRefresher />;
 
   return (
     <div className={styles.titleDropdownContainer}>
-      {editable && (
-        <IoMdArrowDropdown
-          className={styles.dropdownArrow}
-          onClick={handleDropdownClick}
-        />
+      <button
+        ref={buttonRef}
+        className={styles.dropdownButton}
+        onClick={handleDropdownClick}
+      >
+        {detailDto.title?.title || '-----'}
+        <IoMdArrowDropdown className={styles.arrow} />
+      </button>
+      {showDropdown && (
+        <Dropdown style={'title'}>
+          <ul ref={dropdownRef}>
+            {data.titles.map(({ id, title }: Title) => (
+              <li key={id}>
+                <BasicButton
+                  style='dropdown'
+                  color='white'
+                  handleButtonClick={() => {
+                    setDetailDto({ ...detailDto, title: { id, title } });
+                    setShowDropdown(false);
+                  }}
+                >
+                  {title}
+                </BasicButton>
+              </li>
+            ))}
+          </ul>
+        </Dropdown>
       )}
-      {dropdownVisibility && (
-        <div
-          className={styles.dropdownBackdrop}
-          onClick={handleBackdropClick}
-        />
-      )}
-      <Dropdown style={'title'} visibility={editable && dropdownVisibility}>
-        <ul>
-          {titles.map(({ id, title }) => (
-            <li
-              key={id}
-              onClick={() => {
-                setDetailDto({ ...detailDto, title: { id, title } });
-                setDropdownVisibility(false);
-              }}
-            >
-              {title}
-            </li>
-          ))}
-        </ul>
-      </Dropdown>
     </div>
   );
 }
-
-export const empty: Title = {
-  id: 0,
-  title: '-----',
-};

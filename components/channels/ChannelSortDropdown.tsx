@@ -80,21 +80,23 @@ export default function ChannelSortDropdown({
         {t(order)}
         <IoMdArrowDropdown />
       </button>
-      <Dropdown style={'channel'} visibility={showDropdown}>
-        <ul ref={dropdownRef}>
-          {buttons.map(({ content, handleButtonClick }) => (
-            <li key={content}>
-              <BasicButton
-                style={'dropdown'}
-                color={'white'}
-                handleButtonClick={handleButtonClick}
-              >
-                {content}
-              </BasicButton>
-            </li>
-          ))}
-        </ul>
-      </Dropdown>
+      {showDropdown && (
+        <Dropdown style={'channel'}>
+          <ul ref={dropdownRef}>
+            {buttons.map(({ content, handleButtonClick }) => (
+              <li key={content}>
+                <BasicButton
+                  style='dropdown'
+                  color='white'
+                  handleButtonClick={handleButtonClick}
+                >
+                  {content}
+                </BasicButton>
+              </li>
+            ))}
+          </ul>
+        </Dropdown>
+      )}
     </div>
   );
 }

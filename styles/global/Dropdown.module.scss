@@ -1,78 +1,49 @@
 @import 'styles/common';
 
-/* fade in */
-
 @keyframes fadeInAnimation {
   0% {
     transform: translateY(-100%);
   }
-
   100% {
     transform: translateY(0);
   }
 }
 
-.fadeIn > ul {
+.dropdown {
+  position: absolute;
+  z-index: 3;
+  max-height: 6rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.dropdown > ul {
   list-style: none;
   animation: fadeInAnimation 0.4s ease;
 }
 
-/* fade out */
-
-@keyframes fadeOutAnimation {
-  0% {
-    transform: translateY(0);
-  }
-
-  100% {
-    transform: translateY(-100%);
-  }
-}
-
-.fadeOut > ul {
-  list-style: none;
-  animation: fadeOutAnimation 0.15s ease;
-  animation-fill-mode: forwards;
-}
-
 .title {
-  position: absolute;
   top: 100%;
   left: 0%;
-  z-index: 99;
   width: 100%;
-  max-height: 6rem;
-  overflow-y: auto;
-  background: $light-grey;
-  li {
-    display: flex;
-    align-items: center;
-    height: 1.5rem;
-    color: black;
-    border-bottom: solid 1px $dark-grey;
-    padding-inline: 0.5rem;
+  button {
+    justify-content: flex-start;
+    width: 100%;
+    padding-inline: 0.6rem;
   }
 }
 
 .friend {
-  position: absolute;
   top: 50%;
   right: 50%;
-  z-index: 99;
-  max-height: 6rem;
-  overflow: hidden;
-  overflow-y: auto;
-  transform: translate(0%, 0%);
 }
 
 .channel {
-  position: absolute;
-  margin-top: -0.2rem;
   top: 100%;
   right: 0;
-  z-index: 99;
-  max-height: 6rem;
-  overflow: hidden;
-  overflow-y: auto;
-  transform: translate(0%, 0%);
+  margin-top: -0.2rem;
+  button {
+    justify-content: flex-start;
+    padding-inline: 0.6rem;
+  }
 }
