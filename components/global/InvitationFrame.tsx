@@ -38,7 +38,7 @@ export default function InvitationFrame({
   if (isError) return <ErrorRefresher error={error} />;
 
   return (
-    <div className={styles.InvitationFrameContainer}>
+    <div className={styles.invitationFrameContainer}>
       <SearchBar
         inputId='searchFriendInput'
         searchKey={searchKey}
