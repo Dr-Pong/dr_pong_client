@@ -59,20 +59,16 @@ export default function SelectableItem({
     } else if (item === null) return styles.empty;
   };
 
-  const imgSelector = () => {
-    if (item === null) {
-      return <></>;
-    } else {
-      return (
+  return (
+    <div className={itemStyle()}>
+      {item && (
         <img
           className={styles.itemImage}
           src={imgUrl}
           alt={name}
           onClick={editable ? handleEditClick : handleItemClick}
         />
-      );
-    }
-  };
-
-  return <div className={itemStyle()}>{imgSelector()}</div>;
+      )}
+    </div>
+  );
 }
