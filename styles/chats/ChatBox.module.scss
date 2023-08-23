@@ -33,17 +33,21 @@
   align-items: center;
   justify-content: flex-end;
 }
+
 .user {
   display: flex;
   gap: 0.5rem;
-  align-items: center;
+  align-items: flex-start;
   width: fit-content;
   cursor: pointer;
   .userImage {
     width: 2rem;
-    border: solid 1px $light-grey;
+    border: solid 0.5px $light-purple;
     border-radius: 50%;
     aspect-ratio: 1/1;
+    img {
+      width: 100%;
+    }
   }
 }
 

@@ -5,7 +5,7 @@
   grid-column: 2 / 3;
   grid-template-rows: repeat(3, 1fr);
   height: 6rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0 0.5rem 1rem;
   font-size: $basic-font-size;
   background: $dark-blue;
   &.modal {
@@ -16,7 +16,7 @@
 
 .profileField {
   display: grid;
-  grid-template-columns: 3.5rem 1fr;
+  grid-template-columns: 3rem 1fr;
   gap: 0.5rem;
   place-items: center center;
 }
@@ -24,6 +24,7 @@
 .fieldLabel {
   justify-self: flex-start;
   width: 100%;
+  font-size: 0.8rem;
   font-family: $bold-font;
 }
 
@@ -34,10 +35,13 @@
   justify-content: space-between;
   justify-self: start;
   width: 100%;
+  font-size: 0.8rem;
 }
 
 .titleDropdownContainer {
-  width: 100%;
+  position: relative;
+  width: 90%;
+  max-width: 12rem;
 }
 
 .dropdownButton {
