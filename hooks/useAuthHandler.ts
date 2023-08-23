@@ -81,7 +81,7 @@ const useAuthHandler = () => {
     closeUpperModal();
     setSideBar(null);
     queryClient.invalidateQueries(['userMe']);
-    router.push('/');
+    window.location.href = '/';
   };
 
   const onUnauthorizedAttempt = () => {
