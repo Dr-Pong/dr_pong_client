@@ -43,7 +43,7 @@ export default function Header() {
     return () => {
       socket.off('invite', newInvitationListener);
     };
-  }, []);
+  }, [sideBar]);
 
   return (
     <div>
