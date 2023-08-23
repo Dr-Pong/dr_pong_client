@@ -6,7 +6,7 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 
 import { sideBarState } from 'recoils/sideBar';
 
-import { ParticipantsResponse, RoomType, UserImageMap } from 'types/chatTypes';
+import { Participant, RoomType, UserImageMap } from 'types/chatTypes';
 
 import useChatQuery from 'hooks/useChatQuery';
 import useChatSocket from 'hooks/useChatSocket';
@@ -14,8 +14,6 @@ import useCustomQuery from 'hooks/useCustomQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
 import Chattings from 'components/chats/Chattings';
-import ErrorRefresher from 'components/global/ErrorRefresher';
-import LoadingSpinner from 'components/global/LoadingSpinner';
 import PageHeader from 'components/global/PageHeader';
 
 type ChatsFrameProps = {
@@ -26,12 +24,10 @@ type ChatsFrameProps = {
 export default function ChatsFrame({ roomType, roomId }: ChatsFrameProps) {
   const setSideBar = useSetRecoilState(sideBarState);
   const [userImageMap, setUserImageMap] = useState<UserImageMap>({});
+  const [me, setMe] = useState<Participant>();
   const { useChannelEditModal } = useModalProvider();
   const { queryClient } = useCustomQuery();
-  const { chatUsersGet, myChannelGet } = useChatQuery(
-    roomType as RoomType,
-    roomId as string
-  );
+  const { chatUsersGet, myChannelGet } = useChatQuery(roomType, roomId);
   const [socket] = useChatSocket(roomType);
 
   useEffect(() => {
@@ -50,18 +46,18 @@ export default function ChatsFrame({ roomType, roomId }: ChatsFrameProps) {
     dm: `${roomId}`,
   };
 
-  const chatUsers = chatUsersGet(setUserImageMap);
+  const { data } = chatUsersGet(setUserImageMap);
 
-  if (chatUsers.isLoading || myChannelGet.isLoading) return <LoadingSpinner />;
-  if (chatUsers.isError) return <ErrorRefresher error={chatUsers.error} />;
-  if (myChannelGet.isError)
-    return <ErrorRefresher error={myChannelGet.error} />;
+  useEffect(() => {
+    if (data) {
+      setMe(data.me);
+    }
+  }, [data]);
 
   const buttons = [];
-  const { me } = chatUsers.data as ParticipantsResponse;
 
   if (roomType === 'channel') {
-    if (me.roleType === 'owner')
+    if (me?.roleType === 'owner')
       buttons.push({
         value: <RiLockPasswordFill />,
         handleButtonClick: () => {
