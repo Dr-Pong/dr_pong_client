@@ -1,5 +1,6 @@
+import useTranslation from 'next-translate/useTranslation';
+
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 import styles from 'styles/game/GameButtons.module.scss';
 
