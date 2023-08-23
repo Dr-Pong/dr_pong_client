@@ -3,6 +3,7 @@
 .chatInputBoxContainer {
   display: grid;
   grid-template-columns: 1fr 2.3rem;
+  gap: 0.3rem;
   width: 100%;
   height: 100%;
   place-items: center center;
@@ -14,20 +15,27 @@
   color: black;
   background: white;
   border: none;
-  border-radius: 100;
+  border-radius: $basic-radius;
   padding-inline: 0.5rem;
 }
-.input:disabled {
-  background: $dark-grey;
-  cursor: not-allowed;
-}
 
+.input:disabled {
+  background: $just-grey;
+  cursor: not-allowed;
+  opacity: 0.9;
+}
 
 .sendIcon {
   width: 2.3rem;
   height: 2.3rem;
   padding: 0.3rem;
   background: $just-pink;
-  border-radius: 100;
+  border-radius: $basic-radius;
   cursor: pointer;
+}
+
+.input:disabled + .sendIcon {
+  color: $just-grey;
+  opacity: 0.9;
+  filter: grayscale(20%);
 }
