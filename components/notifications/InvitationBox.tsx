@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import useTranslation from 'next-translate/useTranslation';
 import { useSetRecoilState } from 'recoil';
 
@@ -10,6 +11,7 @@ import { IoMdCheckmark, IoMdClose } from 'react-icons/io';
 
 import { alertState } from 'recoils/alert';
 import { sideBarState } from 'recoils/sideBar';
+import { openModalState } from 'recoils/modal';
 
 import { Invitation } from 'types/notificationTypes';
 
@@ -42,6 +44,7 @@ export default function InvitationBox({
   const router = useRouter();
   const setSideBar = useSetRecoilState(sideBarState);
   const setAlert = useSetRecoilState(alertState);
+  const setModal = useSetRecoilState(openModalState);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
   const { mutationPatch, mutationDelete, queryClient } = useCustomQuery();
   const { id, from, createdAt, channelId, channelName } = invitation;
@@ -78,11 +81,16 @@ export default function InvitationBox({
           router.push(`/game/${response.gameId}`);
         }
       },
-      onError: () => {
-        setAlert({ type: 'failure' });
+      onError: (error: AxiosError<Error>) => {
+        toastId ? toast.remove(toastId) : setSideBar(null);
+        queryClient.invalidateQueries([`notifications${toQueryKey(type)}`]);
+        queryClient.invalidateQueries(['notificationDot']);
+        setAlert({
+          type: 'failure',
+          message: t(`${error.response?.data.message}`),
+        });
       },
-    }
-  );
+    } as object);
 
   const invitationDeleteMutation = mutationDelete(
     invitationProperties[type].deletePath,
