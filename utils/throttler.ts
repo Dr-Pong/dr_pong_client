@@ -1,7 +1,7 @@
+let timer: NodeJS.Timeout | null = null;
 export const throttler = <F extends (...args: any[]) => any>(
   func: F,
   waitFor: number,
-  timer: NodeJS.Timeout | null
 ) => {
   const throttled = (...args: Parameters<F>) => {
     if (!timer) {
