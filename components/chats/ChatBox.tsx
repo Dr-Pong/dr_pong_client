@@ -26,14 +26,17 @@ function ChatBox({ chat, imgUrl }: ChatBoxProps) {
     useProfileModal(nickname);
   };
 
-  const chatBoxes: { [key: string]: JSX.Element } = {
-    me: (
+  const meBox = () => {
+    return (
       <div className={`${styles.meContainer} ${styles.messageTimeWrap}`}>
         <div className={styles.time}>{timeConverter(time)}</div>
         <div className={styles.message}>{message}</div>
       </div>
-    ),
-    others: (
+    );
+  };
+
+  const othersBox = () => {
+    return (
       <div className={styles.othersContainer}>
         <div onClick={handlerProfileClick} className={styles.user}>
           <img
@@ -48,20 +51,33 @@ function ChatBox({ chat, imgUrl }: ChatBoxProps) {
           <div className={styles.time}>{timeConverter(time)}</div>
         </div>
       </div>
-    ),
-    fail: (
+    );
+  };
+
+  const failBox = () => {
+    return (
       <div className={styles.failContainer}>
         <div className={styles.message}>{message}</div>
       </div>
-    ),
-    system: (
-      <div className={styles.systemContainer}>
-        {`"${nickname}" ${t(message)}`}
-      </div>
-    ),
+    );
   };
 
-  return chatBoxes[type];
+  const systemBox = () => {
+    return (
+      <div className={styles.systemContainer}>{`"${nickname}" ${t(
+        message
+      )}`}</div>
+    );
+  };
+
+  const chatBoxes: { [key: string]: Function } = {
+    me: meBox,
+    others: othersBox,
+    fail: failBox,
+    system: systemBox,
+  };
+
+  return chatBoxes[type]();
 }
 
 export default React.memo(ChatBox);
