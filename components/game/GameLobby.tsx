@@ -97,7 +97,7 @@ export default function GameLobby({ handleGoBackClick }: GameLobbyProps) {
       <ul className={styles.modeList}>
         {modeList.map((mode, i) => {
           return (
-            <li>
+            <li key={'li' + i}>
               <label key={i} className={styles.radio} htmlFor={mode}>
                 <input
                   type='radio'
