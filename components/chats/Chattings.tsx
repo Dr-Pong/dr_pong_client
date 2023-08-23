@@ -7,8 +7,8 @@ import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { alertState } from 'recoils/alert';
-import { sideBarState } from 'recoils/sideBar';
 import { openModalState } from 'recoils/modal';
+import { sideBarState } from 'recoils/sideBar';
 
 import { Chat, RoomType, UserImageMap } from 'types/chatTypes';
 
@@ -139,6 +139,10 @@ export default function Chattings({
   }, []);
 
   useEffect(() => {
+    setInputDisabled(isMuted);
+  }, [isMuted]);
+
+  useEffect(() => {
     if (chattingsRef.current) {
       chattingsRef.current.addEventListener('scroll', handleScroll);
     }
@@ -181,32 +185,35 @@ export default function Chattings({
     }
   };
 
-  if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher error={error} />;
-
   return (
     <div className={styles.chattingsContainer}>
-      <div className={styles.chattings} ref={chattingsRef}>
-        {chats.map((chat) => {
-          const { id, message, nickname } = chat;
-          return (
-            <div key={chat.id} className={styles.chatBox}>
-              {chat.type === 'fail' && (
-                <ChatFailButtons
-                  id={id}
-                  message={message}
-                  setChats={setChats}
-                  handleChatPost={handleChatPost}
+      {isError ? (
+        <ErrorRefresher error={error} />
+      ) : isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <div className={styles.chattings} ref={chattingsRef}>
+          {chats.map((chat) => {
+            const { id, message, nickname } = chat;
+            return (
+              <div key={chat.id} className={styles.chatBox}>
+                {chat.type === 'fail' && (
+                  <ChatFailButtons
+                    id={id}
+                    message={message}
+                    setChats={setChats}
+                    handleChatPost={handleChatPost}
+                  />
+                )}
+                <ChatBox
+                  chat={chat}
+                  imgUrl={nickname ? userImageMap[nickname] : ''}
                 />
-              )}
-              <ChatBox
-                chat={chat}
-                imgUrl={nickname ? userImageMap[nickname] : ''}
-              />
-            </div>
-          );
-        })}
-      </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
       {showPreview && newestChat && (
         <div className={styles.preview} onClick={handlePreviewClick}>
           <div>{newestChat.nickname}</div>
