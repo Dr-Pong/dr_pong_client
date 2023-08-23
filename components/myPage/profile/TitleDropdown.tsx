@@ -1,5 +1,3 @@
-import { useRecoilValue } from 'recoil';
-
 import React, {
   Dispatch,
   SetStateAction,
@@ -8,8 +6,6 @@ import React, {
   useState,
 } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
-
-import { editableState } from 'recoils/user';
 
 import { Title } from 'types/userTypes';
 import { DetailDto } from 'types/userTypes';
@@ -33,7 +29,6 @@ export default function TitleDropdown({
   detailDto,
   setDetailDto,
 }: TitleDropdownProps) {
-  const editable = useRecoilValue(editableState);
   const dropdownRef = useRef<HTMLUListElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [showDropdown, setShowDropdown] = useState<boolean>(false);

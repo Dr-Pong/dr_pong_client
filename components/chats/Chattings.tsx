@@ -4,11 +4,18 @@ import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import { alertState } from 'recoils/alert';
-import { sideBarState } from 'recoils/sideBar';
 import { openModalState } from 'recoils/modal';
+import { sideBarState } from 'recoils/sideBar';
 
 import { Chat, RoomType, UserImageMap } from 'types/chatTypes';
 
@@ -29,6 +36,7 @@ type ChattingsProps = {
   roomType: RoomType;
   roomId: string;
   isMuted: boolean;
+  setIsMuted: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function Chattings({
@@ -36,6 +44,7 @@ export default function Chattings({
   roomType,
   roomId,
   isMuted,
+  setIsMuted,
 }: ChattingsProps) {
   const { t } = useTranslation('channels');
   const router = useRouter();
@@ -45,7 +54,6 @@ export default function Chattings({
   const [chats, setChats] = useState<Chat[]>([]);
   const [message, setMessage] = useState<string>('');
   const [showPreview, setShowPreview] = useState<boolean>(false);
-  const [inputDisabled, setInputDisabled] = useState(isMuted);
   const [failedChatCount, setFailedChatCount] = useState<number>(0);
   const [newestChat, setNewestChat] = useState<Chat | null>(null);
   const [socket] = useChatSocket(roomType);
@@ -112,11 +120,11 @@ export default function Chattings({
   }, []);
 
   const muteListener = useCallback(() => {
-    setInputDisabled(true);
+    setIsMuted(true);
   }, []);
 
   const unmuteListener = useCallback(() => {
-    setInputDisabled(false);
+    setIsMuted(false);
   }, []);
 
   useEffect(() => {
@@ -181,32 +189,35 @@ export default function Chattings({
     }
   };
 
-  if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher error={error} />;
-
   return (
     <div className={styles.chattingsContainer}>
-      <div className={styles.chattings} ref={chattingsRef}>
-        {chats.map((chat) => {
-          const { id, message, nickname } = chat;
-          return (
-            <div key={chat.id} className={styles.chatBox}>
-              {chat.type === 'fail' && (
-                <ChatFailButtons
-                  id={id}
-                  message={message}
-                  setChats={setChats}
-                  handleChatPost={handleChatPost}
+      {isError ? (
+        <ErrorRefresher error={error} />
+      ) : isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <div className={styles.chattings} ref={chattingsRef}>
+          {chats.map((chat) => {
+            const { id, message, nickname } = chat;
+            return (
+              <div key={chat.id} className={styles.chatBox}>
+                {chat.type === 'fail' && (
+                  <ChatFailButtons
+                    id={id}
+                    message={message}
+                    setChats={setChats}
+                    handleChatPost={handleChatPost}
+                  />
+                )}
+                <ChatBox
+                  chat={chat}
+                  imgUrl={nickname ? userImageMap[nickname] : ''}
                 />
-              )}
-              <ChatBox
-                chat={chat}
-                imgUrl={nickname ? userImageMap[nickname] : ''}
-              />
-            </div>
-          );
-        })}
-      </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
       {showPreview && newestChat && (
         <div className={styles.preview} onClick={handlePreviewClick}>
           <div>{newestChat.nickname}</div>
@@ -217,7 +228,7 @@ export default function Chattings({
         message={message}
         setMessage={setMessage}
         handleChatPost={handleChatPost}
-        inputDisabled={inputDisabled}
+        inputDisabled={isMuted}
       />
     </div>
   );

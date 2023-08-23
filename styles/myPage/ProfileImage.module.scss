@@ -5,12 +5,13 @@
   width: 6rem;
   height: 6rem;
   background: $just-purple;
-  border: solid 0.5px $light-purple;
+  border: solid 0.5px $dark-purple;
   border-radius: $basic-radius;
   form {
     position: absolute;
     bottom: 0;
     button {
+      width: calc(6rem - 1px);
       border: solid 0.5px $light-grey;
     }
   }
