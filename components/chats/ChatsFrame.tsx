@@ -6,7 +6,7 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 
 import { sideBarState } from 'recoils/sideBar';
 
-import { Participant, RoomType, UserImageMap } from 'types/chatTypes';
+import { RoomType, UserImageMap } from 'types/chatTypes';
 
 import useChatQuery from 'hooks/useChatQuery';
 import useChatSocket from 'hooks/useChatSocket';
@@ -24,7 +24,7 @@ type ChatsFrameProps = {
 export default function ChatsFrame({ roomType, roomId }: ChatsFrameProps) {
   const setSideBar = useSetRecoilState(sideBarState);
   const [userImageMap, setUserImageMap] = useState<UserImageMap>({});
-  const [me, setMe] = useState<Participant>();
+  const [isMuted, setIsMuted] = useState<boolean>(false);
   const { useChannelEditModal } = useModalProvider();
   const { queryClient } = useCustomQuery();
   const { chatUsersGet, myChannelGet } = useChatQuery(roomType, roomId);
@@ -47,17 +47,14 @@ export default function ChatsFrame({ roomType, roomId }: ChatsFrameProps) {
   };
 
   const { data } = chatUsersGet(setUserImageMap);
-
-  useEffect(() => {
-    if (data) {
-      setMe(data.me);
-    }
-  }, [data]);
-
   const buttons = [];
 
+  useEffect(() => {
+    if (data) setIsMuted(data.me.isMuted);
+  }, [data]);
+
   if (roomType === 'channel') {
-    if (me?.roleType === 'owner')
+    if (data?.me?.roleType === 'owner')
       buttons.push({
         value: <RiLockPasswordFill />,
         handleButtonClick: () => {
@@ -79,7 +76,8 @@ export default function ChatsFrame({ roomType, roomId }: ChatsFrameProps) {
         userImageMap={userImageMap}
         roomType={roomType as RoomType}
         roomId={roomId as string}
-        isMuted={me?.isMuted ?? false}
+        isMuted={isMuted}
+        setIsMuted={setIsMuted}
       />
     </>
   );

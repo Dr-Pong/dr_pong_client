@@ -4,7 +4,14 @@ import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import { alertState } from 'recoils/alert';
 import { openModalState } from 'recoils/modal';
@@ -29,6 +36,7 @@ type ChattingsProps = {
   roomType: RoomType;
   roomId: string;
   isMuted: boolean;
+  setIsMuted: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function Chattings({
@@ -36,6 +44,7 @@ export default function Chattings({
   roomType,
   roomId,
   isMuted,
+  setIsMuted,
 }: ChattingsProps) {
   const { t } = useTranslation('channels');
   const router = useRouter();
@@ -45,7 +54,6 @@ export default function Chattings({
   const [chats, setChats] = useState<Chat[]>([]);
   const [message, setMessage] = useState<string>('');
   const [showPreview, setShowPreview] = useState<boolean>(false);
-  const [inputDisabled, setInputDisabled] = useState(isMuted);
   const [failedChatCount, setFailedChatCount] = useState<number>(0);
   const [newestChat, setNewestChat] = useState<Chat | null>(null);
   const [socket] = useChatSocket(roomType);
@@ -112,11 +120,11 @@ export default function Chattings({
   }, []);
 
   const muteListener = useCallback(() => {
-    setInputDisabled(true);
+    setIsMuted(true);
   }, []);
 
   const unmuteListener = useCallback(() => {
-    setInputDisabled(false);
+    setIsMuted(false);
   }, []);
 
   useEffect(() => {
@@ -137,10 +145,6 @@ export default function Chattings({
       queryClient.removeQueries(['chats', roomId]);
     };
   }, []);
-
-  useEffect(() => {
-    setInputDisabled(isMuted);
-  }, [isMuted]);
 
   useEffect(() => {
     if (chattingsRef.current) {
@@ -224,7 +228,7 @@ export default function Chattings({
         message={message}
         setMessage={setMessage}
         handleChatPost={handleChatPost}
-        inputDisabled={inputDisabled}
+        inputDisabled={isMuted}
       />
     </div>
   );
