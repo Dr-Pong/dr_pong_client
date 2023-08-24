@@ -1,3 +1,12 @@
+@import 'styles/common';
+
 .footerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4rem;
+  padding-top: 0.5rem;
+  color: $light-grey;
+  font-size: 0.7rem;
   text-align: center;
 }

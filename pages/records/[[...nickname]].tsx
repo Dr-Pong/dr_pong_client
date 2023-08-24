@@ -12,6 +12,7 @@ import PageHeader from 'components/global/PageHeader';
 import SearchBar from 'components/global/SearchBar';
 import SubmitButton from 'components/global/buttons/SubmitButton';
 import AppLayout from 'components/layouts/AppLayout';
+import Footer from 'components/layouts/Footer';
 import RecordList from 'components/records/RecordList';
 
 import styles from 'styles/records/Records.module.scss';
@@ -66,6 +67,7 @@ export default function Records() {
           <RecordList key={defaultNickname} nickname={defaultNickname} />
         )}
       </div>
+      <Footer />
     </div>
   );
 }

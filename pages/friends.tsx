@@ -12,6 +12,7 @@ import PageHeader from 'components/global/PageHeader';
 import SocketManager from 'components/global/SocketManager';
 import TabProvider from 'components/global/TabProvider';
 import AppLayout from 'components/layouts/AppLayout';
+import Footer from 'components/layouts/Footer';
 
 import styles from 'styles/friends/Friends.module.scss';
 
@@ -45,6 +46,7 @@ export default function Friends() {
       >
         <FriendTabContents key={tab} />
       </TabProvider>
+      <Footer />
     </div>
   );
 }
@@ -54,5 +56,6 @@ Friends.getLayout = function getLayout(page: ReactElement) {
     <>
       <SocketManager namespace={'friends'} />
       <AppLayout>{page}</AppLayout>
-    </>);
+    </>
+  );
 };
