@@ -50,7 +50,7 @@ export default function ChatsFrame({ roomType, roomId }: ChatsFrameProps) {
   const buttons = [];
 
   useEffect(() => {
-    if (data) setIsMuted(data.me.isMuted);
+    if (data) setIsMuted(data.me?.isMuted);
   }, [data]);
 
   if (roomType === 'channel') {
