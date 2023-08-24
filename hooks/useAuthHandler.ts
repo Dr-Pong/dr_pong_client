@@ -35,7 +35,6 @@ const useAuthHandler = () => {
     setCookie('Authorization', `${accessToken}`, {
       path: '/',
       expires,
-      // httpOnly: true,
     });
     setLogin(true);
     queryClient.invalidateQueries(['userMe']);
