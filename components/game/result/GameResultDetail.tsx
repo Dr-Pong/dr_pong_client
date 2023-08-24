@@ -30,11 +30,14 @@ export default function GameResultDetail({
   const [showFireworks, setShowFireworks] = useState(false);
 
   useEffect(() => {
-    if (showFireworks) {
-      const container = document.getElementById('fireworks') ?? document.body;
-      const fireworks = new Fireworks(container, options);
-      fireworks.start();
-    }
+    if (!showFireworks) return;
+    const container = document.getElementById('fireworks') ?? document.body;
+    const fireworks = new Fireworks(container, options);
+    fireworks.start();
+    return () => {
+      fireworks.stop();
+      setShowFireworks(false);
+    };
   }, [showFireworks]);
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher error={error} />;
