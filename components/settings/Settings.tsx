@@ -2,6 +2,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRecoilValue } from 'recoil';
 
 import React from 'react';
+import { BsGithub } from 'react-icons/bs';
 
 import { userState } from 'recoils/user';
 
@@ -82,7 +83,7 @@ export default function Settings() {
 
   return (
     <div className={styles.settingsContainer}>
-      <ul>
+      <ul className={styles.settingFields}>
         {settingFields.map(({ topic, field }, i) => {
           return (
             <li key={i} className={styles.settingField}>
@@ -92,6 +93,16 @@ export default function Settings() {
           );
         })}
       </ul>
+      <div className={styles.info}>
+        <span>studionocheong@gmail.com</span>
+        <span>
+          ⓒ 2023 Dr.Pong
+          <hr />
+          <a href='https://github.com/Dr-Pong' target='_blank'>
+            <BsGithub className={styles.githubIcon} />
+          </a>
+        </span>
+      </div>
     </div>
   );
 }

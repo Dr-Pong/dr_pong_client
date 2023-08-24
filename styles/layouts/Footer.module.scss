@@ -2,6 +2,7 @@
 
 .footerContainer {
   display: flex;
+  gap: 0.5rem;
   align-items: center;
   justify-content: center;
   height: 4rem;
@@ -9,4 +10,14 @@
   color: $light-grey;
   font-size: 0.7rem;
   text-align: center;
+  hr {
+    width: 2px;
+    height: 0.8rem;
+  }
+  .githubIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+  }
 }
