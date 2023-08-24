@@ -37,12 +37,11 @@ export default function LpProgressBar({
   };
 
   const { lp, lpChange } = lpData;
-  const startLp = lp - lpChange;
-  const [start, end] = getRankSection(startLp);
-  const [startTier, endTier] = getTierName(startLp);
+  const [start, end] = getRankSection(lp);
+  const [startTier, endTier] = getTierName(lp);
   const position = ((lp - start) / (end - start)) * 100;
 
-  if (lp >= end) {
+  if (lp - lpChange < start && lp >= start) {
     setShowFireworks(true);
   }
 
