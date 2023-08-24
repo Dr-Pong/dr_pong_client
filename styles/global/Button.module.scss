@@ -11,7 +11,9 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.5rem;
+  align-content: end;
   width: 100%;
+  min-height: 1.8rem;
   div:first-child:last-child,
   div:first-child:nth-last-child(3) {
     grid-column: 1 / span 2;
