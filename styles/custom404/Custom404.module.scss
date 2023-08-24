@@ -1,0 +1,59 @@
+@import 'styles/common';
+
+.custom404Container {
+  @include pageWithHeaderContainer;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  text-align: center;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.message {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.face {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.icon404 {
+  padding-right: 1rem;
+  width: 6rem;
+  height: 6rem;
+}
+
+.iconFace {
+  width: 7rem;
+  height: 7rem;
+  cursor: pointer;
+}
+
+.tooltip {
+  position: relative;
+  background-color: $just-purple;
+  border-radius: 0.5rem;
+  white-space: nowrap;
+  padding: 0.5rem;
+}
+
+.tooltip::before {
+  content: "";
+  position: absolute;
+  border-style: solid;
+  border-width: 0.5rem;
+  border-color: $just-purple transparent transparent transparent;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}

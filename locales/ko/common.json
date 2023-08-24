@@ -57,10 +57,13 @@
   "inGameNotify": "진행중인 게임이 있습니다.",
   "backToGame": "게임으로 돌아가기",
   "GoToHome": "홈으로 가기",
+  "GoToHome?": "홈으로 가실?",
   "multiConnectWarning": "다른 환경에서 게임에 접속되었습니다.",
   "gameMode": "게임 모드",
   "classic": "클래식",
   "randomBounce": "랜덤 바운스",
   "achieved": "달성",
-  "title achieved": "칭호 획득"
+  "title achieved": "칭호 획득",
+  "Yes": "좋아!",
+  "404 message": "웁씌~! 찾으시는 페이지가 없어요!"
 }

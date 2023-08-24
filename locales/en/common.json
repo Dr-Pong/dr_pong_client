@@ -57,10 +57,13 @@
   "inGameNotify": "There is a game in progress.",
   "backToGame": "Go back to game",
   "GoToHome": "Go to home",
+  "GoToHome?": "Go to home?",
   "multiConnectWarning": "Duplicate access to the game.",
   "gameMode": "Game Mode",
   "classic": "Classic",
   "randomBounce": "Random Bounce",
   "achieved": "achieved",
-  "title achieved": "title achieved"
+  "title achieved": "title achieved",
+  "Yes": "Yes!",
+  "404 message": "Oopsy~! The page does not exists!"
 }
