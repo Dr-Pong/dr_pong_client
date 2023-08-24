@@ -23,7 +23,6 @@
 
 .ladderPoints {
   @include resultColumnGrid;
-  margin-top: 0.5rem;
 }
 
 .ladderPointContainer {
@@ -34,11 +33,15 @@
   text-align: center;
 }
 
+.lp {
+  font-size: 0.9rem;
+}
+
 .lpChange {
   display: flex;
   align-items: center;
-  padding-left: 0.5rem;
-  font-size: 0.9rem;
+  padding-left: 0.3rem;
+  font-size: 0.7rem;
 }
 
 .increase {

@@ -11,7 +11,7 @@ type LadderPointProps = {
 export default function LadderPoint({ lp, lpChange }: LadderPointProps) {
   return (
     <div className={styles.ladderPointContainer}>
-      <span>{`${lp}`}</span>
+      <span className={styles.lp}>{`${lp}`}</span>
       {lpChange === 0 || (
         <span className={styles.lpChange}>
           {lpChange > 0 ? (

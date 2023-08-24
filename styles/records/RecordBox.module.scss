@@ -2,22 +2,23 @@
 
 @mixin boxColumnGrid {
   display: grid;
-  grid-template-columns: 1fr 4fr;
-  gap: 0.5rem;
+  grid-template-columns: 1fr 4.5fr;
+  gap: 1rem;
   width: 100%;
 }
 
 @mixin resultColumnGrid {
   display: grid;
-  grid-template-columns: 2fr 1fr 2fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.3rem;
 }
 
 .recordBoxContainer {
   display: flex;
   flex-direction: column;
+  gap: 0.1rem;
   align-items: center;
   width: 100%;
-  margin-bottom: 0.5rem;
   padding: 1rem;
   border-radius: $basic-radius;
   &.win {
@@ -85,27 +86,31 @@
 .resultWrap {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
   align-items: center;
   justify-content: center;
+  width: 100%;
+}
+
+.score {
   font-size: 1.1rem;
 }
 
 .resultText {
-  margin-top: 0.2rem;
-  width: 2.5rem;
-  font-size: 1rem;
+  width: 3rem;
+  font-size: 0.8rem;
   text-align: center;
   border-radius: $basic-radius;
   &.win {
-    border: solid 1px $light-blue;
     color: $light-blue;
+    border: solid 1px $light-blue;
   }
   &.lose {
-    border: solid 1px $just-pink;
     color: $just-pink;
+    border: solid 1px $just-pink;
   }
   &.tie {
-    border: solid 1px $dark-grey;
     color: $dark-grey;
+    border: solid 1px $dark-grey;
   }
 }

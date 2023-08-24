@@ -3,11 +3,21 @@
 .playerContainer {
   display: grid;
   gap: 0.5rem;
+  align-items: center;
   justify-items: center;
   img {
-    width: 5rem;
+    width: 100%;
+    max-width: 6rem;
     object-fit: contain;
-    aspect-ratio: 1/1;
     border-radius: $basic-radius;
+    aspect-ratio: 1/1;
+  }
+  div {
+    width: fit-content;
+    color: $light-grey;
+    font-size: 0.8rem;
+    font-family: $bold-font;
+    text-align: center;
+    word-break: break-all;
   }
 }
