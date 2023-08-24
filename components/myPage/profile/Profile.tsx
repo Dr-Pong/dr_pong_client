@@ -4,10 +4,17 @@ import React, { useEffect, useState } from 'react';
 
 import { editableState, profileTabState } from 'recoils/user';
 
-import { Achievement, DetailDto, ProfileStyle } from 'types/userTypes';
+import {
+  Achievement,
+  Image,
+  ProfileStyle,
+  Title,
+  UserDetail,
+} from 'types/userTypes';
 
 import useMyPageQuery from 'hooks/useMyPageQuery';
 
+import ErrorRefresher from 'components/global/ErrorRefresher';
 import LoadingSpinner from 'components/global/LoadingSpinner';
 import SelectableItem from 'components/myPage/SelectableItem';
 import ProfileCard from 'components/myPage/profile/ProfileCard';
@@ -25,38 +32,54 @@ type ProfileProps = {
 export default function Profile({ nickname, style }: ProfileProps) {
   const editable = useRecoilValue(editableState);
   const profileTab = useRecoilValue(profileTabState);
-  const { profileMutationPatch } = useMyPageQuery(nickname);
+  const [user, setUser] = useState<UserDetail>(defaultUser);
+  const { profileGet, profileMutationPatch } = useMyPageQuery(nickname);
   const { patchImage, patchTitle, patchMessage } = profileMutationPatch();
-  const [detailDto, setDetailDto] = useState<DetailDto>(defaultDetailDto);
+  const { isLoading, isError } = profileGet(setUser);
+  const [image, setImage] = useState<Image>(defaultUser.image);
+  const [title, setTitle] = useState<Title | null>(null);
+  const [statusMessage, setStatusMessage] = useState<string>('');
 
   useEffect(() => {
-    if (detailDto === defaultDetailDto) return;
     if (!editable && profileTab === 'profile') {
-      const { image, title, statusMessage } = detailDto;
-      patchImage.mutate({
-        id: image.id,
-      });
-      patchTitle.mutate({
-        id: title?.id || null,
-      });
-      patchMessage.mutate({
-        message: statusMessage,
-      });
+      if (image.id && image !== user.image)
+        patchImage.mutate({
+          id: image.id,
+        });
+      if (title !== user.title)
+        patchTitle.mutate({
+          id: title?.id || null,
+        });
+      if (statusMessage !== user.statusMessage)
+        patchMessage.mutate({
+          message: statusMessage,
+        });
     }
   }, [editable]);
 
-  return (
+  useEffect(() => {
+    setImage(user.image);
+    setTitle(user.title);
+    setStatusMessage(user.statusMessage);
+  }, [user]);
+
+  return isError ? (
+    <ErrorRefresher />
+  ) : isLoading ? (
+    <LoadingSpinner />
+  ) : (
     <div className={`${styles.profileContainer} ${styles[style]}`}>
-      <ProfileImage detailDto={detailDto} setDetailDto={setDetailDto} />
+      <ProfileImage image={image} setImage={setImage} />
       <ProfileCard
-        detailDto={detailDto}
-        setDetailDto={setDetailDto}
         nickname={nickname}
+        level={user.level}
+        title={title}
+        setTitle={setTitle}
         style={style}
       />
       <StatusMessage
-        detailDto={detailDto}
-        setDetailDto={setDetailDto}
+        statusMessage={statusMessage}
+        setStatusMessage={setStatusMessage}
         style={style}
       />
       <StatCard nickname={nickname} style={style} />
@@ -99,11 +122,13 @@ function SelectedAchievements({
   );
 }
 
-const defaultDetailDto: DetailDto = {
+const defaultUser: UserDetail = {
+  nickname: '',
   image: {
     id: 0,
     url: '',
   },
-  title: { id: 0, title: '' },
+  level: 0,
+  title: { id: 0, title: '-----' },
   statusMessage: '',
 };

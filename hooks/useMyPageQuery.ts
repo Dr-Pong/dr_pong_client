@@ -1,14 +1,14 @@
 import { QueryKey } from 'react-query';
 
 import { Achievements, Emojis, Titles } from 'types/userTypes';
-import { DetailDto } from 'types/userTypes';
+import { UserDetail } from 'types/userTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
 const useMyPageQuery = (nickname: string, type?: string) => {
   const { get, mutationPatch, queryClient } = useCustomQuery();
 
-  const profileGet = (setter: (detailDto: DetailDto) => void) => {
+  const profileGet = (setter: (UserDetail: UserDetail) => void) => {
     return get('userDetail', `/users/${nickname}/detail`, setter);
   };
 
@@ -16,6 +16,9 @@ const useMyPageQuery = (nickname: string, type?: string) => {
     const options = (queryKey: QueryKey) => {
       return {
         onSuccess: () => {
+          queryClient.invalidateQueries(queryKey);
+        },
+        onError: () => {
           queryClient.invalidateQueries(queryKey);
         },
       };
