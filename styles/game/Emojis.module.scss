@@ -9,6 +9,14 @@
 
 .emojiWrap {
   position: relative;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none
+}
+
+.emojiWrap:hover {
+  transform: scale(0.95);
 }
 
 .emoji {
@@ -28,8 +36,4 @@
   position: absolute;
   right: 0.5rem;
   top: 0;
-}
-
-.emoji:hover {
-  transform: scale(0.95);
 }

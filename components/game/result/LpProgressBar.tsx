@@ -21,7 +21,7 @@ export default function LpProgressBar({
   const { t: tTier } = useTranslation('tier');
 
   const getTierName = (lp: number): Tier[] => {
-    if (lp >= DOCTOR_CUT) return ['doctor', 'doctor'];
+    if (lp >= DOCTOR_CUT) return ['doctor', ''];
     if (lp >= MASTER_CUT) return ['master', 'doctor'];
     if (lp >= BACHELOR_CUT) return ['bachelor', 'master'];
     if (lp >= STUDENT_CUT) return ['student', 'bachelor'];
@@ -85,7 +85,7 @@ export default function LpProgressBar({
   );
 }
 
-const DOCTOR_CUT = 100;
-const MASTER_CUT = 50;
-const BACHELOR_CUT = 10;
-const STUDENT_CUT = 1;
+const DOCTOR_CUT = 1500;
+const MASTER_CUT = 1200;
+const BACHELOR_CUT = 1000;
+const STUDENT_CUT = 800;

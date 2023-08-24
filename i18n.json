@@ -8,7 +8,7 @@
     "/channels": ["chats", "channels"],
     "/friends": ["friends"],
     "/game": ["game", "guide"],
-    "/game/[roomType]/[roomId]": ["game", "achievement"],
+    "/game/[roomId]": ["game", "achievement"],
     "/leaderboard": ["leaderboard"],
     "/records/[[...nickname]]": ["records"],
     "/myPage": ["myPage", "common", "achievement"],

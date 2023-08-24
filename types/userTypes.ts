@@ -1,6 +1,6 @@
 export type ProfileStyle = 'modal' | 'page';
 export type ProfileTab = 'profile' | 'achieve' | 'emoji';
-export type Tier = 'doctor' | 'master' | 'bachelor' | 'student' | 'egg';
+export type Tier = 'doctor' | 'master' | 'bachelor' | 'student' | 'egg' | '';
 
 export interface User {
   nickname: string;
