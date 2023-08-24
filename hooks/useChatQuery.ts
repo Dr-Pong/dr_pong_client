@@ -6,7 +6,7 @@ import {
   RoomType,
   UserImageMap,
 } from 'types/chatTypes';
-import { DetailDto } from 'types/userTypes';
+import { UserDetail } from 'types/userTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 
@@ -18,7 +18,7 @@ const useChatQuery = (roomType: RoomType, roomId: string) => {
   const myChannelGet = get('myChannel', '/channels/me');
 
   const chatUsersGet = (setChatUsers?: (u: UserImageMap) => void) => {
-    const friendDetailToChatUser = (data: DetailDto) => {
+    const friendDetailToChatUser = (data: UserDetail) => {
       setChatUsers?.({ [roomId]: data.image.url });
     };
 
