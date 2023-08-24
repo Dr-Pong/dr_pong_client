@@ -7,6 +7,7 @@
   align-content: stretch;
   width: 100%;
   &.modal {
+    grid-auto-columns: 5rem 1fr;
     gap: 0.5rem;
   }
 }

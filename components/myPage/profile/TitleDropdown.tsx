@@ -8,7 +8,6 @@ import React, {
 import { IoMdArrowDropdown } from 'react-icons/io';
 
 import { Title } from 'types/userTypes';
-import { DetailDto } from 'types/userTypes';
 
 import useMyPageQuery from 'hooks/useMyPageQuery';
 
@@ -20,14 +19,14 @@ import styles from 'styles/myPage/ProfileCard.module.scss';
 
 type TitleDropdownProps = {
   nickname: string;
-  detailDto: DetailDto;
-  setDetailDto: Dispatch<SetStateAction<DetailDto>>;
+  title: Title | null;
+  setTitle: Dispatch<SetStateAction<Title | null>>;
 };
 
 export default function TitleDropdown({
   nickname,
-  detailDto,
-  setDetailDto,
+  title,
+  setTitle,
 }: TitleDropdownProps) {
   const dropdownRef = useRef<HTMLUListElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -68,7 +67,7 @@ export default function TitleDropdown({
           className={styles.dropdownButton}
           onClick={handleDropdownClick}
         >
-          {detailDto.title?.title || '-----'}
+          {title?.title || '-----'}
           <IoMdArrowDropdown className={styles.arrow} />
         </button>
       </div>
@@ -82,7 +81,7 @@ export default function TitleDropdown({
         className={styles.dropdownButton}
         onClick={handleDropdownClick}
       >
-        {detailDto.title?.title || '-----'}
+        {title?.title || '-----'}
         <IoMdArrowDropdown className={styles.arrow} />
       </button>
       {showDropdown && (
@@ -94,7 +93,7 @@ export default function TitleDropdown({
                   style='dropdown'
                   color='white'
                   handleButtonClick={() => {
-                    setDetailDto({ ...detailDto, title: { id, title } });
+                    setTitle({ id, title });
                     setShowDropdown(false);
                   }}
                 >

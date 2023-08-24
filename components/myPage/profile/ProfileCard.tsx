@@ -5,12 +5,8 @@ import React, { Dispatch, ReactNode, SetStateAction } from 'react';
 
 import { editableState } from 'recoils/user';
 
-import { DetailDto, ProfileStyle } from 'types/userTypes';
+import { ProfileStyle, Title } from 'types/userTypes';
 
-import useMyPageQuery from 'hooks/useMyPageQuery';
-
-import ErrorRefresher from 'components/global/ErrorRefresher';
-import LoadingSpinner from 'components/global/LoadingSpinner';
 import TitleDropdown from 'components/myPage/profile/TitleDropdown';
 
 import styles from 'styles/myPage/ProfileCard.module.scss';
@@ -22,26 +18,21 @@ type CardContentsType = {
 
 type ProfildCardProps = {
   nickname: string;
-  detailDto: DetailDto;
-  setDetailDto: Dispatch<SetStateAction<DetailDto>>;
+  level: number;
+  title: Title | null;
+  setTitle: Dispatch<SetStateAction<Title | null>>;
   style: ProfileStyle;
 };
 
 export default function ProfileCard({
   nickname,
-  detailDto,
-  setDetailDto,
+  level,
+  title,
+  setTitle,
   style,
-}: ProfildCardProps) {
+}: ProfildCardProps): JSX.Element {
   const { t } = useTranslation('myPage');
-  const { profileGet } = useMyPageQuery(nickname);
   const editable = useRecoilValue(editableState);
-  const { isLoading, isError, data } = profileGet(setDetailDto);
-
-  if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher />;
-
-  const { level } = data;
   const cardContents: CardContentsType[] = [
     {
       label: 'Name',
@@ -49,18 +40,14 @@ export default function ProfileCard({
     },
     {
       label: 'Level',
-      content: level.toString(),
+      content: level,
     },
     {
       label: 'Title',
       content: editable ? (
-        <TitleDropdown
-          nickname={nickname}
-          detailDto={detailDto}
-          setDetailDto={setDetailDto}
-        />
+        <TitleDropdown nickname={nickname} title={title} setTitle={setTitle} />
       ) : (
-        data.title?.title || '-----'
+        title?.title || '-----'
       ),
     },
   ];

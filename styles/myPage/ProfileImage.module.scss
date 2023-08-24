@@ -2,11 +2,12 @@
 
 .profileImageContainer {
   position: relative;
-  width: 6rem;
-  height: 6rem;
+  width: 100%;
+  height: 5rem;
   background: $just-purple;
   border: solid 0.5px $dark-purple;
   border-radius: $basic-radius;
+  aspect-ratio: 1/1;
   form {
     position: absolute;
     bottom: 0;

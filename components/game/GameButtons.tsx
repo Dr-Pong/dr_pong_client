@@ -1,4 +1,6 @@
-import { useTranslation } from 'react-i18next';
+import useTranslation from 'next-translate/useTranslation';
+
+import React from 'react';
 
 import styles from 'styles/game/GameButtons.module.scss';
 
@@ -18,6 +20,7 @@ export function GameButtons({ buttons }: GameButtonsProps) {
       {buttons.map(({ value, color, handleButtonClick }) => {
         return (
           <button
+            key={value}
             className={`${styles.button} ${styles[color]}`}
             onClick={handleButtonClick}
           >

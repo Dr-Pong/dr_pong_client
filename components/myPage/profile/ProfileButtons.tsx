@@ -3,21 +3,19 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { sideBarState } from 'recoils/sideBar';
 import { userState } from 'recoils/user';
 
 import { ButtonDesign } from 'types/buttonTypes';
-import { Statuses } from 'types/friendTypes';
+import { Relation } from 'types/userTypes';
 
-import useChatSocket from 'hooks/useChatSocket';
 import useCustomQuery from 'hooks/useCustomQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
 import RelationButton from 'components/friends/RelationButton';
 import ErrorRefresher from 'components/global/ErrorRefresher';
-import LoadingSpinner from 'components/global/LoadingSpinner';
 import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/global/Button.module.scss';
@@ -35,34 +33,18 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
   const { t } = useTranslation('common');
   const { nickname } = useRecoilValue(userState);
   const setSideBar = useSetRecoilState(sideBarState);
-  const { get } = useCustomQuery();
-  const { closeModal, useSelectGameModeModal } = useModalProvider();
+  const [{ status }, setRelation] = useState<Relation>({ status: 'unset' });
   const router = useRouter();
-  const { data, isLoading, isError } = get(
+  const { closeModal } = useModalProvider();
+  const { get } = useCustomQuery();
+  const { isError } = get(
     '',
-    `/users/${nickname}/relations/${target}`
+    `/users/${nickname}/relations/${target}`,
+    setRelation
   );
-  const [statuses, setStatuses] = useState<Statuses>({});
-  const [chatSocket] = useChatSocket('friends');
 
-  useEffect(() => {
-    const friendStatusListener = (newStatuses: Statuses) => {
-      setStatuses((prev) => {
-        return {
-          ...prev,
-          ...newStatuses,
-        };
-      });
-    };
-    chatSocket.on('friends', friendStatusListener);
-    chatSocket.emit('status');
-    return () => {
-      chatSocket.off('friends', friendStatusListener);
-    };
-  }, []);
-
-  const buttons: { [key: string]: ReactNode } = {
-    myPage: (
+  const myPageButton = () => {
+    return (
       <BasicButton
         style='flex'
         color='purple'
@@ -74,8 +56,11 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
       >
         {t('move to my page')}
       </BasicButton>
-    ),
-    directMessage: (
+    );
+  };
+
+  const directMessageButton = () => {
+    return (
       <BasicButton
         style='flex'
         color='purple'
@@ -87,27 +72,48 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
       >
         {t('message')}
       </BasicButton>
-    ),
-    blockUser: (
+    );
+  };
+
+  const blockUserButton = () => {
+    return (
       <RelationButton button={button} type='block' target={target}>
         {t('block')}
       </RelationButton>
-    ),
-    unblockUser: (
+    );
+  };
+
+  const unblockUserButton = () => {
+    return (
       <RelationButton button={button} type='unblock' target={target}>
         {t('unblock')}
       </RelationButton>
-    ),
-    friendAdd: (
+    );
+  };
+
+  const friendAddButton = () => {
+    return (
       <RelationButton button={button} type='friendAdd' target={target}>
         {t('add friend')}
       </RelationButton>
-    ),
-    friendDelete: (
+    );
+  };
+
+  const friendDeleteButton = () => {
+    return (
       <RelationButton button={button} type='friendDelete' target={target}>
         {t('delete friend')}
       </RelationButton>
-    ),
+    );
+  };
+
+  const buttons: { [key: string]: Function } = {
+    myPage: myPageButton,
+    directMessage: directMessageButton,
+    blockUser: blockUserButton,
+    unblockUser: unblockUserButton,
+    friendAdd: friendAddButton,
+    friendDelete: friendDeleteButton,
   };
 
   const relationStatuses: { [key: string]: string[] } = {
@@ -115,16 +121,15 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
     friend: ['directMessage', 'friendDelete', 'blockUser'],
     blocked: ['unblockUser'],
     me: ['myPage'],
+    unset: [],
   };
 
-  if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher />;
-  if (!Object.prototype.hasOwnProperty.call(data, 'status')) return null;
-
-  return (
+  return isError ? (
+    <ErrorRefresher />
+  ) : (
     <div className={styles.profileButtonsContainer}>
-      {relationStatuses[data.status].map((buttonName, i) => {
-        return <div key={i}>{buttons[buttonName]}</div>;
+      {relationStatuses[status].map((buttonName, i) => {
+        return <div key={`${target}${i}`}>{buttons[buttonName]()}</div>;
       })}
     </div>
   );

@@ -5,7 +5,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 
 import { editableState } from 'recoils/user';
 
-import { DetailDto } from 'types/userTypes';
+import { Image } from 'types/userTypes';
 
 import useModalProvider from 'hooks/useModalProvider';
 
@@ -13,43 +13,35 @@ import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/myPage/ProfileImage.module.scss';
 
-export default function ProfileImage({
-  detailDto,
-  setDetailDto,
-}: {
-  detailDto: DetailDto;
-  setDetailDto: Dispatch<SetStateAction<DetailDto>>;
-}) {
+type ProfileImageProps = {
+  image: Image;
+  setImage: Dispatch<SetStateAction<Image>>;
+};
+
+export default function ProfileImage({ image, setImage }: ProfileImageProps) {
   const { t } = useTranslation('myPage');
   const editable = useRecoilValue(editableState);
-  const { id: originId, url: imgUrl } = detailDto.image;
   const { useImageChangeModal } = useModalProvider();
   const handleSelectModalOpen = () => {
-    useImageChangeModal(handleSubmitClick, originId);
+    useImageChangeModal(handleSubmitClick, image.id);
   };
 
   const handleSubmitClick = () => {
     const selectedRadio = document.querySelector(
       'input[type=radio][name=userImage]:checked'
     );
-    const imgId = selectedRadio?.id ? parseInt(selectedRadio.id) : originId;
-    const selectedImg = document.querySelector(`label[for="${imgId}"] img`);
+    const id = selectedRadio?.id ? parseInt(selectedRadio.id) : image.id;
+    const selectedImg = document.querySelector(`label[for="${id}"] img`);
     const url = selectedImg?.getAttribute('src') ?? '';
 
-    setDetailDto((prevDetailDto) => ({
-      ...prevDetailDto,
-      image: {
-        id: imgId,
-        url: url,
-      },
-    }));
+    setImage({ id, url });
   };
 
   return (
     <div className={styles.profileImageContainer}>
       <img
         className={styles.profileImage}
-        src={imgUrl ?? undefined}
+        src={image.url ?? undefined}
         alt='profileImg'
       />
       {editable && (

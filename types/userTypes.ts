@@ -13,10 +13,7 @@ export interface UserDetail {
   nickname: string;
   image: Image;
   level: number;
-  title: {
-    id: number;
-    title: string;
-  } | null;
+  title: Title | null;
   statusMessage: string;
 }
 
@@ -39,18 +36,13 @@ export interface StatRankResponse {
   totalRank: UserRank;
   seasonRank: UserRank;
 }
-export interface DetailDto {
-  image: Image;
-  title: Title;
-  statusMessage: string;
-}
 
 export interface Relation {
-  status: 'none' | 'blocked' | 'friend';
+  status: 'none' | 'blocked' | 'friend' | 'me' | 'unset';
 }
 
 export interface Title {
-  id: number;
+  id: number | null;
   title: string;
 }
 export interface Titles {
