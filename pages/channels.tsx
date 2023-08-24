@@ -5,6 +5,7 @@ import React, { ReactElement } from 'react';
 import ChannelsFrame from 'components/channels/ChannelsFrame';
 import PageHeader from 'components/global/PageHeader';
 import AppLayout from 'components/layouts/AppLayout';
+import Footer from 'components/layouts/Footer';
 
 import styles from 'styles/channels/Channels.module.scss';
 
@@ -15,6 +16,7 @@ export default function Channels() {
     <div className={styles.channelsPageContainer}>
       <PageHeader title={t('Channels')} />
       <ChannelsFrame />
+      <Footer />
     </div>
   );
 }
