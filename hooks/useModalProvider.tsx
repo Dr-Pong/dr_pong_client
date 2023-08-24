@@ -12,7 +12,6 @@ import PasswordSubmit from 'components/channels/PasswordSubmit';
 import ChannelSettings from 'components/channels/channelSettings/ChannelSettings';
 import SearchUser from 'components/friends/SearchUser';
 import GameGuide from 'components/game/GameGuide';
-import GameInvitableSelectMode from 'components/game/GameInvitationSelectMode';
 import InvitationFrame from 'components/global/InvitationFrame';
 import UserImages from 'components/global/UserImages';
 import CloseModalButton from 'components/global/buttons/CloseModalButton';
@@ -171,14 +170,6 @@ const useModalProvider = () => {
     });
   };
 
-  const useSelectGameModeModal = (nickname: string) => {
-    useModal({
-      head: <ModalTitle title={t('gameMode')} closeButton />,
-      body: <GameInvitableSelectMode target={nickname} />,
-      tail: null,
-    });
-  };
-
   return {
     closeModal,
     useSettingsModal,
@@ -193,7 +184,6 @@ const useModalProvider = () => {
     useChannelInvitationModal,
     useGameInvitationModal,
     useGameInstructionModal,
-    useSelectGameModeModal,
   };
 };
 
