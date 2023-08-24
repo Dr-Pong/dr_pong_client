@@ -46,7 +46,6 @@ export default function Emojis({
     `/users/${nickname}/emojis?selected=true`,
     (data: { emojis: Emoji[] }) => setEmojis(data.emojis)
   );
-  const emojiThrottleTimer: NodeJS.Timeout | null = null;
 
   const opponentEmojiListener = (url: string) => {
     setOpponentEmojiUrl(url);
@@ -62,18 +61,21 @@ export default function Emojis({
     }, 1500);
   };
 
-  const handleKeyPress = useCallback(
-    (e: KeyboardEvent) => {
-      if (emojis.length === 0) return;
-      const key = e.key;
-      if (key === '1' || key === '2' || key === '3' || key === '4') {
-        const emoji = emojis[Number(key) - 1];
-        if (emoji) {
-          socket.emit('myEmoji', emoji.imgUrl);
+  const handleKeyPress = throttler(
+    useCallback(
+      (e: KeyboardEvent) => {
+        if (emojis.length === 0) return;
+        const key = e.key;
+        if (key === '1' || key === '2' || key === '3' || key === '4') {
+          const emoji = emojis[Number(key) - 1];
+          if (emoji) {
+            socket.emit('myEmoji', emoji.imgUrl);
+          }
         }
-      }
-    },
-    [emojis]
+      },
+      [emojis]
+    ),
+    1500,
   );
 
   useEffect(() => {
@@ -94,7 +96,7 @@ export default function Emojis({
   }, [emojis]);
 
   const handleEmojiClick = (imgUrl: string) =>
-    throttler(() => socket.emit('myEmoji', imgUrl), 1500, emojiThrottleTimer);
+    throttler(() => socket.emit('myEmoji', imgUrl), 1500);
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher />;
