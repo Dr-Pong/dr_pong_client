@@ -18,6 +18,7 @@ export default function AdsLayout({ children }: LayoutProps) {
   );
   const router = useRouter();
   const handleResize = () => {
+    if (router.asPath.startsWith('/game') && router.query.roomId) return;
     setDirection(
       window.innerHeight / window.innerWidth < 1.3 ? 'row' : 'column'
     );
@@ -30,8 +31,13 @@ export default function AdsLayout({ children }: LayoutProps) {
     };
   }, []);
 
-  if (isTouchScreen && router.query.roomId) return <>{children}</>;
-  if ((isTouchScreen || direction === 'column') && router.query.roomId)
+  if (isTouchScreen && (router.asPath === '/' || router.query.roomId))
+    return <>{children}</>;
+  if (
+    direction === 'column' &&
+    router.asPath.startsWith('/game') &&
+    router.query.roomId
+  )
     return <>{children}</>;
   return (
     <div
