@@ -28,6 +28,7 @@ export default function Document() {
           `,
           }}
         />
+        <title>Dr. Pong</title>
       </Head>
       <body>
         <Main />
