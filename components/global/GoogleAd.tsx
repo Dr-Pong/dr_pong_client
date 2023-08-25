@@ -6,14 +6,10 @@ export default function GoogleAd({
   client = '',
   slot = '',
   format = '',
-  responsive = '',
-  layoutKey = '',
 }: {
   client?: string;
   slot?: string;
   format?: string;
-  responsive?: string;
-  layoutKey?: string;
 }) {
   useEffect(() => {
     if (process.env.NODE_ENV !== 'production') return;

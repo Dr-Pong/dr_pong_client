@@ -1,0 +1,23 @@
+.achievementDetail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.achievementImage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  aspect-ratio: 1/1;
+  img {
+    width: 100%;
+  }
+}
+
+.achievementText {
+  width: 90%;
+  margin-block: 1rem;
+}

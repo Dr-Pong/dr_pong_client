@@ -13,54 +13,57 @@ const isTouchScreen =
   window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 
 export default function AdsLayout({ children }: LayoutProps) {
-  const [direction, setDirection] = useState<'row' | 'column'>(window.innerHeight / window.innerWidth < 1.3 ? 'row' : 'column');
+  const [direction, setDirection] = useState<'row' | 'column'>(
+    window.innerHeight / window.innerWidth < 1.3 ? 'row' : 'column'
+  );
   const router = useRouter();
   const handleResize = () => {
+    if (router.asPath.startsWith('/game') && router.query.roomId) return;
     setDirection(
       window.innerHeight / window.innerWidth < 1.3 ? 'row' : 'column'
     );
   };
 
   useEffect(() => {
-
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
-  if (isTouchScreen && router.query.roomId) return <>{children}</>;
-
+  if (isTouchScreen && (router.asPath === '/' || router.query.roomId))
+    return <>{children}</>;
+  if (
+    direction === 'column' &&
+    router.asPath.startsWith('/game') &&
+    router.query.roomId
+  )
+    return <>{children}</>;
   return (
     <div
       className={
-        direction === 'row' || router.query.roomId
-          ? styles.adsLayoutRow
-          : styles.adsLayoutColumn
+        direction === 'row' ? styles.adsLayoutRow : styles.adsLayoutColumn
       }
     >
-      {(direction === 'row' || router.query.roomId) && (
+      {direction === 'row' && (
         <GoogleAd
           client='ca-pub-5861134754944224'
           slot='4781852804'
           format='vertical'
-          responsive='true'
         />
       )}
       {children}
-      {(direction === 'row' && !router.query.roomId) ? (
+      {direction === 'row' ? (
         <GoogleAd
           client='ca-pub-5861134754944224'
           slot='4781852804'
           format='vertical'
-          responsive='true'
         />
       ) : (
         <GoogleAd
           client='ca-pub-5861134754944224'
           slot='9772393400'
           format='horizontal'
-          responsive='true'
         />
       )}
     </div>
