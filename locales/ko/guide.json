@@ -1,7 +1,7 @@
 {
   "control": "조작법",
   "control_description_pc": "키보드 화살표 왼쪽, 오른쪽 키를 이용해 바를 움직입니다.",
-  "control_description_mobile": "화면을 터치한 상태로 왼쪽, 오른쪽으로 드래그를 하여 바를 움직입니다.",
+  "control_description_mobile": "화면의 왼쪽/오른쪽 절반을 터치하면 해당 방향으로 바가 움직입니다.",
   "spin": "회전",
   "spin_description": "바를 움직이는 중에 공이 닿으면 진행방향으로 공에 회전이 들어갑니다. 공은 회전 방향에 맞춰 휘어집니다.",
   "ladder": "래더 게임",
