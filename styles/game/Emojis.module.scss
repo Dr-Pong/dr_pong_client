@@ -27,6 +27,7 @@
   &.none {
     background: transparentize(white, 0.8);
   }
+  -webkit-touch-callout:none
 }
 
 .emojiOverlay {

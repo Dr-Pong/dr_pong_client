@@ -75,7 +75,7 @@ export default function Emojis({
       },
       [emojis]
     ),
-    1500,
+    1500
   );
 
   useEffect(() => {
@@ -118,6 +118,8 @@ export default function Emojis({
               src={emoji.imgUrl}
               id={emoji.imgUrl}
               alt={emoji.name}
+              onContextMenu={() => false}
+              onDragStart={() => false}
             />
             {!isTouchScreen && (
               <div className={styles.emojiOverlay}>{i + 1}</div>
