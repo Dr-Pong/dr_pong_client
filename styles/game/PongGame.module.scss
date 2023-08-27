@@ -9,3 +9,21 @@
 .gameCanvas {
   background: transparentize(white, 0.8);
 }
+
+.left {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 1;
+}
+
+.right {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 1;
+}
