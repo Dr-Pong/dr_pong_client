@@ -31,7 +31,10 @@ export default function AdsLayout({ children }: LayoutProps) {
     };
   }, []);
 
-  if (isTouchScreen && (router.asPath === '/' || router.query.roomId))
+  if (
+    isTouchScreen &&
+    (router.asPath === '/' || router.asPath === 'signUp' || router.query.roomId)
+  )
     return <>{children}</>;
   if (
     direction === 'column' &&
