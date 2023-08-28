@@ -72,11 +72,11 @@ export default function ChannelBox({
 
   return (
     <div className={styles.channelBoxContainer} onClick={handleJoinConfirm}>
-      <div>
+      <div className={styles.channelName}>
         {title}
         {access === 'protected' && <IoIosLock className={styles.lockEmoji} />}
       </div>
-      <div>
+      <div className={styles.headCount}>
         {headCount} / {maxCount}
       </div>
     </div>

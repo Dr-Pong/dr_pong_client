@@ -12,16 +12,17 @@
   display: flex;
   gap: 1.5dvh;
   align-items: center;
+  width: 100%;
   &.reverse {
     flex-direction: row-reverse;
   }
 }
 
 .profileImg {
-  width: 6dvh;
   height: 6dvh;
   border: solid 1px $dark-grey;
   border-radius: 50%;
+  aspect-ratio: 1/1;
   &.popup {
     border: solid 1px white;
     animation: shake 0.5s infinite;
@@ -33,6 +34,9 @@
   flex-direction: column;
   align-items: flex-start;
   font-size: 2dvh;
+  span {
+    word-break: break-all;
+  }
   span:last-child {
     color: $dark-grey;
     font-size: 1.5dvh;

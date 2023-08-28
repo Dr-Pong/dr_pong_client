@@ -23,7 +23,7 @@ export default function StatusMessage({
   const { t } = useTranslation('myPage');
   const editable = useRecoilValue(editableState);
 
-  const statusMessageHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const statusMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     if (value.length <= 60) setStatusMessage(value);
   };
@@ -33,10 +33,10 @@ export default function StatusMessage({
       <div className={styles.title}>{t('status message')}</div>
       {editable ? (
         <div className={styles.messageInput}>
-          <input
-            type='text'
+          <textarea
             value={statusMessage}
             onChange={statusMessageHandler}
+            maxLength={60}
           />
           <span
             className={styles.inputCount}
