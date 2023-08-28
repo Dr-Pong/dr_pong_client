@@ -23,6 +23,8 @@ import useChatQuery from 'hooks/useChatQuery';
 import useChatSocket from 'hooks/useChatSocket';
 import useCustomQuery from 'hooks/useCustomQuery';
 
+import { debouncer } from 'utils/debouncer';
+
 import ChatBox from 'components/chats/ChatBox';
 import ChatFailButtons from 'components/chats/ChatFailButtons';
 import ChatInputBox from 'components/chats/ChatInputBox';
@@ -168,7 +170,7 @@ export default function Chattings({
     setMessage('');
   }, []);
 
-  const handleScroll = () => {
+  const handleScroll = debouncer(() => {
     const ref = chattingsRef.current!;
 
     // 스크롤이 맨 위에 있는 경우
@@ -187,7 +189,7 @@ export default function Chattings({
       setShowPreview(false);
       setNewestChat(null);
     }
-  };
+  }, 200);
 
   return (
     <div className={styles.chattingsContainer}>
