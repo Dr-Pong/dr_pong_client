@@ -11,15 +11,6 @@ export default function GoogleAd({
   slot?: string;
   format?: string;
 }) {
-  useEffect(() => {
-    if (process.env.NODE_ENV !== 'production') return;
-    window.onload = () => {
-      ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push(
-        {}
-      );
-    };
-  }, []);
-
   if (process.env.NODE_ENV !== 'production')
     return (
       <div
