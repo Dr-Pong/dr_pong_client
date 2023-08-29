@@ -2,8 +2,10 @@
 
 .profileImageContainer {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  height: 5rem;
   background: $just-purple;
   border: solid 0.5px $dark-purple;
   border-radius: $basic-radius;
@@ -11,8 +13,9 @@
   form {
     position: absolute;
     bottom: 0;
+    width: 100%;
     button {
-      width: calc(6rem - 1px);
+      width: 100%;
       border: solid 0.5px $light-grey;
     }
   }
