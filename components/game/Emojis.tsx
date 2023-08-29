@@ -119,7 +119,6 @@ export default function Emojis({
               id={emoji.imgUrl}
               alt={emoji.name}
               onContextMenu={() => false}
-              onDragStart={() => false}
             />
             {!isTouchScreen && (
               <div className={styles.emojiOverlay}>{i + 1}</div>
