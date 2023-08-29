@@ -9,10 +9,7 @@
 
 .emojiWrap {
   position: relative;
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
-  user-select:none
+  z-index: 2;
 }
 
 .emojiWrap:hover {
@@ -30,6 +27,7 @@
   &.none {
     background: transparentize(white, 0.8);
   }
+  -webkit-touch-callout:none
 }
 
 .emojiOverlay {

@@ -9,3 +9,19 @@
 .gameCanvas {
   background: transparentize(white, 0.8);
 }
+
+.touchBox {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 1;
+}
+
+.left {
+  left: 0;
+}
+
+.right {
+  right: 0;
+}

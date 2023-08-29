@@ -1,7 +1,7 @@
 {
   "control": "How to Control",
   "control_description_pc": "Move the bar left and right using the arrow keys on the keyboard.",
-  "control_description_mobile": "Touch anywhere on the game screen and drag left or right to move the bar.",
+  "control_description_mobile": "Move the bar left and right touching left/right half of the screen.",
   "spin": "Spin",
   "spin_description": "When the ball touches the bar while it's moving, it gains rotation in the direction of movement. The ball will be curved according to the rotation direction.",
   "ladder": "Ladder Game",
