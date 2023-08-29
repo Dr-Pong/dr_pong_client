@@ -111,12 +111,12 @@ const PongGame = ({ roomId, canvasWidth, canvasHeight }: PongGameProps) => {
         <GameCanvas canvasHeight={canvasHeight} canvasWidth={canvasWidth} />
       </div>
       <div
-        className={styles.left}
+        className={`${styles.touchBox} ${styles.left}`}
         onTouchStart={handleTouchStart('left')}
         onTouchEnd={handleTouchEnd('left')}
       />
       <div
-        className={styles.right}
+        className={`${styles.touchBox} ${styles.right}`}
         onTouchStart={handleTouchStart('right')}
         onTouchEnd={handleTouchEnd('right')}
       />

@@ -10,20 +10,18 @@
   background: transparentize(white, 0.8);
 }
 
-.left {
+.touchBox {
   position: absolute;
-  left: 0;
   top: 0;
   width: 50%;
   height: 100%;
   z-index: 1;
 }
 
+.left {
+  left: 0;
+}
+
 .right {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  z-index: 1;
+  right: 0;
 }
