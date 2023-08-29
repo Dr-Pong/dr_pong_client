@@ -25,3 +25,10 @@
   font-family: $bold-font;
   text-align: center;
 }
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}

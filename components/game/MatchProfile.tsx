@@ -8,7 +8,7 @@ type User = {
   nickname: string;
   title: string;
   imgUrl: string;
-}
+};
 
 type GameUsers = {
   me: User;

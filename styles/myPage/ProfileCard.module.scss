@@ -4,13 +4,12 @@
   display: grid;
   grid-column: 2 / 3;
   grid-template-rows: repeat(3, 1fr);
-  height: 6rem;
-  padding: 0.5rem 0 0.5rem 1rem;
+  width: 100%;
+  padding: 0.5rem 1rem;
   font-size: $basic-font-size;
   background: $dark-blue;
   &.modal {
     @include profileModal;
-    height: 5rem;
   }
 }
 

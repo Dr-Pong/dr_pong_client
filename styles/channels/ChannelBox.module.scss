@@ -1,20 +1,28 @@
 @import 'styles/common';
 
 .channelBoxContainer {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 4rem;
+  gap: 1rem;
   align-items: center;
-  justify-content: space-between;
   width: 100%;
-  height: 2.5rem;
+  min-height: 2.5rem;
+  padding: 0.3rem 1rem;
+  overflow-x: auto;
   background: transparentize(white, 0.7);
   border-radius: $basic-radius;
   cursor: pointer;
   transition: background-color 0.3s;
-  padding-inline: 1rem;
-  div {
-    display: flex;
-    align-items: center;
-  }
+}
+
+.channelName {
+  display: flex;
+  align-items: center;
+  word-break: break-all;
+}
+
+.headCount {
+  justify-self: flex-end;
 }
 
 .channelBoxContainer:hover {
