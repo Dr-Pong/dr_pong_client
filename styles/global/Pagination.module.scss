@@ -20,8 +20,10 @@
   transition: background-color 0.3s;
 }
 
-.pagination:hover {
-  background: transparentize($light-grey, 0.5);
+@media(hover: hover) and (pointer: fine) {
+  .pagination:hover {
+    background: transparentize($light-grey, 0.5);
+  }
 }
 
 .pettiPagination {

@@ -13,7 +13,9 @@
   padding-inline: 1rem;
 }
 
-.myChannelContainer:hover {
-  transform: scale(0.98);
-  opacity: 0.9;
+@media(hover: hover) and (pointer: fine) {
+  .myChannelContainer:hover {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
 }

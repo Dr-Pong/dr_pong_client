@@ -32,6 +32,8 @@
   text-align: center;
 }
 
-.button:hover {
-  font-size: 3rem;
+@media(hover: hover) and (pointer: fine) {
+  .button:hover {
+    font-size: 3rem;
+  }
 }
