@@ -37,6 +37,7 @@
     background: none;
     border: solid 0.5px $light-grey;
     border-radius: $basic-radius;
+    resize: vertical;
   }
   .inputCount {
     position: absolute;
