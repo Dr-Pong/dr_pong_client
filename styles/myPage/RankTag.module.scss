@@ -3,6 +3,8 @@
 .rankTagContainer {
   display: flex;
   gap: 0.2rem;
+  // margin-bottom: 0.3rem;
+  // margin-left: 1rem;
   font-size: 0.8rem;
 }
 
@@ -13,7 +15,8 @@
   height: 1.3rem;
   color: white;
   font-size: 0.8rem;
-  background: $just-purple;
+  font-family: $bold-font;
+  background: linear-gradient(to right bottom, $light-pink, $just-purple);
   border: solid 1px $light-purple;
   border-radius: $basic-radius;
   padding-inline: 0.5rem;

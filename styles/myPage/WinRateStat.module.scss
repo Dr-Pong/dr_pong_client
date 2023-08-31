@@ -3,15 +3,14 @@
 .winRateStatContainer {
   display: flex;
   flex-direction: column;
+  gap: 0.2rem;
   width: 100%;
   font-size: $basic-font-size;
-  margin-block: 0.3rem;
 }
 
 .winRate {
   display: flex;
   align-items: flex-end;
-  margin-bottom: 0.2rem;
   div:first-child {
     margin-right: 0.2rem;
   }
@@ -20,20 +19,19 @@
   }
 }
 
-.winTieLose {
-  margin-bottom: 0.2rem;
-}
-
 .gaugeBar {
   display: flex;
   width: 100%;
   height: 0.5rem;
+  margin-block: 0.2rem;
 }
 
 .winGauge {
-  background: $light-blue;
+  background: linear-gradient(to bottom, $just-blue 60%, $dark-purple);
+  border-radius: 0.5rem 0 0 0.5rem;
 }
 
 .loseGauge {
-  background: $just-purple;
+  background: linear-gradient(to bottom, $just-pink 60%, $dark-purple);
+  border-radius: 0 0.5rem 0.5rem 0;
 }

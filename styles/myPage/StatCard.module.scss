@@ -1,11 +1,10 @@
 @import 'styles/common';
 
 .statCardContainer {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   grid-column: 1 / 3;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  justify-items: stretch;
+  gap: 0.5rem;
   padding: 1rem;
   background: $dark-blue;
   &.modal {
@@ -13,52 +12,74 @@
   }
 }
 
-.leftWrap {
+.historyLink {
   display: flex;
-  flex-direction: column;
+  gap: 0.2rem;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.statsWrap {
+  display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
-  max-width: 20rem;
-  .leftContent {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-  }
+  align-items: flex-end;
 }
 
-.rightWrap {
-  display: grid;
-  grid-template-rows: 2rem 1fr;
-  gap: 0.5rem;
-  justify-items: end;
-}
-
-.top {
+.statBox {
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 0.5rem;
-  justify-content: space-between;
+  min-width: 10rem;
+  padding: 1rem;
+  border: solid 0.5px $just-purple;
+  border-radius: $basic-radius;
 }
 
 .statNameRankWrap {
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
   align-items: center;
+  justify-content: space-between;
 }
 
 .statName {
   width: fit-content;
-  color: $light-purple;
+  color: transparent;
   font-size: 1rem;
   font-family: $bold-font;
+  background: linear-gradient(to right bottom, $light-pink, $light-purple);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.lpRankWrap {
+  display: flex;
+  gap: 0.3rem;
+  align-items: flex-end;
+}
+
+.lpWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.lpTag {
+  color: $light-pink;
+  font-size: 0.8rem;
+  word-break: keep-all;
 }
 
 .lp {
-  font-size: 1.2rem;
-  font-family: $bold-font;
-}
-
-.historyLink {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  .number {
+    margin-right: 0.2rem;
+    font-size: 1.2rem;
+    font-family: $bold-font;
+  }
+  .unit {
+    font-size: 0.8rem;
+    font-family: $bold-font;
+  }
 }
