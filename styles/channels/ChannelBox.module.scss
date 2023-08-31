@@ -25,9 +25,11 @@
   justify-self: flex-end;
 }
 
-.channelBoxContainer:hover {
-  transform: scale(0.98);
-  opacity: 0.9;
+@media(hover: hover) and (pointer: fine) {
+  .channelBoxContainer:hover {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
 }
 
 .lockEmoji {

@@ -129,8 +129,10 @@
   background: white;
 }
 
-.white:hover {
-  opacity: 0.8;
+@media(hover: hover) and (pointer: fine) {
+  .white:hover {
+    opacity: 0.8;
+  }
 }
 
 .opaque {
@@ -148,8 +150,10 @@
   background: $just-pink;
 }
 
-.pink:hover {
-  opacity: 0.9;
+@media(hover: hover) and (pointer: fine) {
+  .pink:hover {
+    opacity: 0.9;
+  }
 }
 
 .purple {
@@ -157,6 +161,8 @@
   background: $just-purple;
 }
 
-.purple:hover {
-  opacity: 0.9;
+@media(hover: hover) and (pointer: fine) {
+  .purple:hover {
+    opacity: 0.9;
+  }
 }

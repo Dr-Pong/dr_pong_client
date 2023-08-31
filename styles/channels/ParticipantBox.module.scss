@@ -9,9 +9,11 @@
   cursor: unset;
 }
 
-.userBoxContainer:hover {
-  transform: scale(0.98);
-  opacity: 0.9;
+@media(hover: hover) and (pointer: fine) {
+  .userBoxContainer:hover {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
 }
 
 .myBox {

@@ -32,8 +32,10 @@
   border-radius: $basic-radius;
 }
 
-.pageLink:hover {
-  transform: scale(0.95);
+@media(hover: hover) and (pointer: fine) {
+  .pageLink:hover {
+    transform: scale(0.95);
+  }
 }
 
 .special {

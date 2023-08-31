@@ -22,8 +22,10 @@
   cursor: pointer;
 }
 
-.button:hover {
-  transform: scale(0.95);
+@media(hover: hover) and (pointer: fine) {
+  .button:hover {
+    transform: scale(0.95);
+  }
 }
 
 .pink {
