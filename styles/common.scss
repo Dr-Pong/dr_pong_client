@@ -39,7 +39,7 @@ $bold-font: 'TTLakesNeueTrialBold', 'GeekbleMalang2WOFF2', sans-serif;
   width: 100%;
   height: 100%;
   padding-inline: 1.5rem;
-  overflow: auto;
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
     width: 5px;
