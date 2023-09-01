@@ -27,6 +27,7 @@
 }
 
 .statBox {
+  position: relative;
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -37,11 +38,10 @@
   border-radius: $basic-radius;
 }
 
-.statNameRankWrap {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  justify-content: space-between;
+.rankTag {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 }
 
 .statName {

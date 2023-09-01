@@ -2,24 +2,25 @@ import useTranslation from 'next-translate/useTranslation';
 
 import React from 'react';
 
+import { ProfileStyle } from 'types/userTypes';
+
 import styles from 'styles/myPage/RankTag.module.scss';
 
 type RankTagProps = {
   rank: number | null;
+  style: ProfileStyle;
 };
 
-export default function RankTag({ rank }: RankTagProps) {
+export default function RankTag({ rank, style }: RankTagProps) {
   const { t } = useTranslation('myPage');
 
-  return (
+  return rank ? (
     <div className={styles.rankTagContainer}>
-      {rank && (
-        <span className={styles.purpleBox}>{`${rank}${t(
-          rankSignSelector(rank)
-        )}`}</span>
-      )}
+      <span>Rank</span>
+      <span>{`${rank}${t(rankSignSelector(rank))}`}</span>
+      <span className={`${styles.triangle} ${styles[style]}`}></span>
     </div>
-  );
+  ) : null;
 }
 
 export const rankSignSelector = (rank: number | null): string => {

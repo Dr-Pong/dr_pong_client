@@ -2,22 +2,31 @@
 
 .rankTagContainer {
   display: flex;
-  gap: 0.2rem;
-  // margin-bottom: 0.3rem;
-  // margin-left: 1rem;
-  font-size: 0.8rem;
-}
-
-.purpleBox {
-  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 1.3rem;
+  width: 4rem;
+  height: 5rem;
+  padding-bottom: 1rem;
   color: white;
-  font-size: 0.8rem;
-  font-family: $bold-font;
   background: linear-gradient(to right bottom, $light-pink, $just-purple);
-  border: solid 1px $light-purple;
-  border-radius: $basic-radius;
-  padding-inline: 0.5rem;
+  border-radius: $basic-radius $basic-radius 0 0;
+  span {
+    font-size: 0.8rem;
+    font-family: $bold-font;
+  }
+  span:first-child {
+    font-size: 0.6rem;
+  }
+}
+
+.triangle {
+  position: absolute;
+  bottom: 0;
+  border-right: 2rem solid transparent;
+  border-bottom: calc(0.8rem * 1.732) solid $dark-blue;
+  border-left: 2rem solid transparent;
+  &.modal {
+    border-bottom: calc(0.5rem * 1.732) solid white;
+  }
 }

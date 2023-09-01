@@ -65,10 +65,12 @@ export default function StatCard({ nickname, style }: StatCardProps) {
           {statTypes.map(({ type, rank, stat, lpTag }) => {
             return (
               <div className={styles.statBox} key={type}>
-                <div className={styles.statNameRankWrap}>
-                  <div className={styles.statName}>{t(type)}</div>
-                  {type === 'season' && <RankTag rank={data.seasonRank.rank} />}
-                </div>
+                {type === 'season' && (
+                  <div className={styles.rankTag}>
+                    <RankTag rank={data.seasonRank.rank} style={style} />
+                  </div>
+                )}
+                <div className={styles.statName}>{t(type)}</div>
                 <div className={styles.lpRankWrap}>
                   <div className={styles.lpWrap}>
                     <span className={styles.lpTag}>{t(lpTag)}</span>
