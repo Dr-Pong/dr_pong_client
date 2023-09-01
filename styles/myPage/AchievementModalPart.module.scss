@@ -1,23 +1,38 @@
+@import 'styles/common';
+
 .achievementDetail {
   display: flex;
-  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 1rem;
   align-items: center;
-  justify-content: space-evenly;
   width: 100%;
 }
 
-.achievementImage {
+.image {
   display: flex;
+  flex: 1;
   align-items: center;
   justify-content: center;
-  width: 90%;
+  width: calc(50% - 0.5rem);
   aspect-ratio: 1/1;
   img {
     width: 100%;
   }
 }
 
-.achievementText {
-  width: 90%;
-  margin-block: 1rem;
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.3rem;
+  align-items: center;
+  justify-content: center;
+  padding-block: 0.5rem;
+  .achievementName {
+    color: $just-purple;
+    font-family: $bold-font;
+  }
+  .achievementText {
+    text-align: center;
+  }
 }

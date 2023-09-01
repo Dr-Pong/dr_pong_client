@@ -23,8 +23,7 @@ import UpperModalTitle from 'components/modals/upperModalParts/UpperModalTitle';
 import AchievementModalPart from 'components/myPage/AchievementModalPart';
 
 const useUpperModalProvider = () => {
-  const { t: tCommon } = useTranslation('common');
-  const { t: tAchievement } = useTranslation('achievement');
+  const { t } = useTranslation('common');
   const router = useRouter();
   const setOpenUpperModal = useSetRecoilState(openUpperModalState);
   const setUpperModalParts = useSetRecoilState(upperModalPartsState);
@@ -48,7 +47,7 @@ const useUpperModalProvider = () => {
 
     useUpperModal({
       head: null,
-      body: <ModalPhrase>{tCommon('channel confirm')}</ModalPhrase>,
+      body: <ModalPhrase>{t('channel confirm')}</ModalPhrase>,
       tail: (
         <ButtonRow
           buttonList={[
@@ -58,7 +57,7 @@ const useUpperModalProvider = () => {
               color='purple'
               handleButtonClick={closeUpperModal}
             >
-              {tCommon('cancel')}
+              {t('cancel')}
             </BasicButton>,
             <BasicButton
               key={'confirm'}
@@ -66,7 +65,7 @@ const useUpperModalProvider = () => {
               color='purple'
               handleButtonClick={handleConfirmModal}
             >
-              {tCommon('ok')}
+              {t('ok')}
             </BasicButton>,
           ]}
         />
@@ -82,7 +81,7 @@ const useUpperModalProvider = () => {
       head: (
         <>
           <SocketManager namespace='matching' />
-          <UpperModalTitle title={tCommon('Waiting For Match')} />
+          <UpperModalTitle title={t('Waiting For Match')} />
         </>
       ),
       body: (
@@ -94,7 +93,7 @@ const useUpperModalProvider = () => {
           color='pink'
           handleButtonClick={handleGameCancel}
         >
-          {tCommon('cancel')}
+          {t('cancel')}
         </BasicButton>
       ),
     });
@@ -105,9 +104,7 @@ const useUpperModalProvider = () => {
     handlePasswordSubmit: (e: FormEvent<HTMLFormElement>) => void
   ) => {
     useUpperModal({
-      head: (
-        <UpperModalTitle title={tCommon('Google OTP')} closeButton={true} />
-      ),
+      head: <UpperModalTitle title={t('Google OTP')} closeButton={true} />,
       body: (
         <div>
           <RegisterCode />
@@ -120,7 +117,7 @@ const useUpperModalProvider = () => {
           color='purple'
           handleButtonClick={handlePasswordSubmit}
         >
-          {tCommon('authenticate')}
+          {t('authenticate')}
         </SubmitButton>
       ),
     });
@@ -128,7 +125,7 @@ const useUpperModalProvider = () => {
 
   const useAchievementDetailModal = (achievement: Achievement) => {
     useUpperModal({
-      head: <UpperModalTitle title={`< ${tAchievement(achievement.name)} >`} />,
+      head: null,
       body: <AchievementModalPart achievement={achievement} />,
       tail: (
         <BasicButton
@@ -136,7 +133,7 @@ const useUpperModalProvider = () => {
           color='purple'
           handleButtonClick={closeUpperModal}
         >
-          {tCommon('close')}
+          {t('close')}
         </BasicButton>
       ),
     });
@@ -150,14 +147,14 @@ const useUpperModalProvider = () => {
 
     useUpperModal({
       head: null,
-      body: <ModalPhrase>{tCommon('inGameNotify')}</ModalPhrase>,
+      body: <ModalPhrase>{t('inGameNotify')}</ModalPhrase>,
       tail: (
         <BasicButton
           style='long'
           color='purple'
           handleButtonClick={handelBackToGame}
         >
-          {tCommon('backToGame')}
+          {t('backToGame')}
         </BasicButton>
       ),
     });
@@ -171,14 +168,14 @@ const useUpperModalProvider = () => {
 
     useUpperModal({
       head: null,
-      body: <ModalPhrase>{tCommon('multiConnectWarning')}</ModalPhrase>,
+      body: <ModalPhrase>{t('multiConnectWarning')}</ModalPhrase>,
       tail: (
         <BasicButton
           style='long'
           color='purple'
           handleButtonClick={handleRouteToHome}
         >
-          {tCommon('GoToHome')}
+          {t('GoToHome')}
         </BasicButton>
       ),
     });
