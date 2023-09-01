@@ -25,18 +25,3 @@
   overflow-x: hidden;
   overflow-y: auto;
 }
-
-.pageContainer::-webkit-scrollbar {
-  width: 5px;
-  height: 8px;
-}
-
-.pageContainer::-webkit-scrollbar-track {
-  background: $dark-purple;
-  border-radius: 8px;
-}
-
-.pageContainer::-webkit-scrollbar-thumb {
-  background: $just-purple;
-  border-radius: 8px;
-}
