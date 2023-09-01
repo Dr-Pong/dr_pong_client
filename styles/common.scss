@@ -39,6 +39,22 @@ $bold-font: 'TTLakesNeueTrialBold', 'GeekbleMalang2WOFF2', sans-serif;
   width: 100%;
   height: 100%;
   padding-inline: 1.5rem;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: $dark-purple;
+    border-radius: 8px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: $just-purple;
+    border-radius: 8px;
+  }
 }
 
 @mixin backdrop {
