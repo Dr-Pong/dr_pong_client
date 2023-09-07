@@ -4,6 +4,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
 
 import React, { ReactNode, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 import { alertState } from 'recoils/alert';
 import { bgmState, soundEffectState } from 'recoils/sound';
@@ -18,6 +19,9 @@ import MatchProfile from 'components/game/MatchProfile';
 import GameResult from 'components/game/result/GameResult';
 
 import styles from 'styles/game/Game.module.scss';
+
+import AchievementToast from '../toasts/AchievementToast';
+import TitleToast from '../toasts/TitleToast';
 
 type PongFrameProps = {
   canvasWidth: number;
@@ -36,6 +40,7 @@ export default function PongFrame({
   const [opponentEmojiUrl, setOpponentEmojiUrl] = useState<string | null>(null);
   const [isEnd, setIsEnd] = useState(false);
   const [socket] = useGameSocket('game');
+  const toasts: string[] = [];
   const { bgms } = useBgm();
   const bgmOn = useRecoilValue(bgmState);
   const { effects } = useSoundEffect();
@@ -56,6 +61,23 @@ export default function PongFrame({
     multiConnectWarningModal();
   };
 
+  const achievementListener = (achievement: {
+    imgUrl: string;
+    name: string;
+  }) => {
+    toast.custom((t) => {
+      toasts.push(t.id);
+      return <AchievementToast achievement={achievement} />;
+    });
+  };
+
+  const titleListener = (title: { title: string }) => {
+    toast.custom((t) => {
+      toasts.push(t.id);
+      return <TitleToast title={title} />;
+    });
+  };
+
   useEffect(() => {
     socket.emit('joinGame', { roomId: roomId });
     socket.once('invalidGameId', invalidGameIdListener);
@@ -66,11 +88,18 @@ export default function PongFrame({
     socket.on('multiConnect', multiConnectListener);
     socket.on('barTouch', touchSound);
     socket.on('wallTouch', touchSound);
+    socket.on('achievement', achievementListener);
+    socket.on('title', titleListener);
     return () => {
       bgms.get('bgm')?.(bgmOn);
       socket.off('multiConnect', multiConnectListener);
       socket.off('barTouch', touchSound);
       socket.off('wallTouch', touchSound);
+      socket.off('achievement', achievementListener);
+      socket.off('title', titleListener);
+      toasts.forEach((toastId) => {
+        toast.remove(toastId);
+      });
     };
   }, []);
 
