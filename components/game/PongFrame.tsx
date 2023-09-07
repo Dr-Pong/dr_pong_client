@@ -17,11 +17,10 @@ import useUpperModalProvider from 'hooks/useUpperModalProvider';
 import Emojis from 'components/game/Emojis';
 import MatchProfile from 'components/game/MatchProfile';
 import GameResult from 'components/game/result/GameResult';
+import AchievementToast from 'components/toasts/AchievementToast';
+import TitleToast from 'components/toasts/TitleToast';
 
 import styles from 'styles/game/Game.module.scss';
-
-import AchievementToast from '../toasts/AchievementToast';
-import TitleToast from '../toasts/TitleToast';
 
 type PongFrameProps = {
   canvasWidth: number;
