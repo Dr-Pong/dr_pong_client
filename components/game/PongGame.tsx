@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
-import toast from 'react-hot-toast';
 
 import useGameSocket from 'hooks/useGameSocket';
 
 import GameCanvas from 'components/game/GameCanvas';
-import AchievementToast from 'components/toasts/AchievementToast';
-import TitleToast from 'components/toasts/TitleToast';
 
 import styles from 'styles/game/PongGame.module.scss';
 
@@ -82,26 +79,6 @@ const PongGame = ({ roomId, canvasWidth, canvasHeight }: PongGameProps) => {
         document.removeEventListener('keydown', handleKeyPress);
         document.removeEventListener('keyup', handleKeyRelease);
       }
-    };
-  }, []);
-
-  const achievementListener = (achievement: {
-    imgUrl: string;
-    name: string;
-  }) => {
-    toast.custom(() => <AchievementToast achievement={achievement} />);
-  };
-
-  const titleListener = (title: { title: string }) => {
-    toast.custom(() => <TitleToast title={title} />);
-  };
-
-  useEffect(() => {
-    socket.on('achievement', achievementListener);
-    socket.on('title', titleListener);
-    return () => {
-      socket.off('achievement', achievementListener);
-      socket.off('title', titleListener);
     };
   }, []);
 
