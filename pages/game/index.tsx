@@ -1,5 +1,4 @@
 import { AxiosError } from 'axios';
-
 import useTranslation from 'next-translate/useTranslation';
 import { useSetRecoilState } from 'recoil';
 
@@ -26,7 +25,7 @@ export default function Game() {
   const { t } = useTranslation('game');
   const router = useRouter();
   const setAlert = useSetRecoilState(alertState);
-  const { useGameInstructionModal } = useModalProvider();
+  const { useGameGuideModal } = useModalProvider();
   const { closeUpperModal, useMatchWaitingUpperModal } =
     useUpperModalProvider();
   const [socket] = useGameSocket('matching');
@@ -48,7 +47,7 @@ export default function Game() {
     onError: (error: AxiosError<Error>) => {
       setAlert({
         type: 'failure',
-        message: t(`${error.response?.data.message}`)
+        message: t(`${error.response?.data.message}`),
       });
     },
   } as object);
@@ -78,7 +77,7 @@ export default function Game() {
   const headerButtons = [
     {
       value: <BsQuestionSquare />,
-      handleButtonClick: useGameInstructionModal,
+      handleButtonClick: useGameGuideModal,
     },
   ];
 
