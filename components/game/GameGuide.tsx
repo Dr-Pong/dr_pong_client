@@ -49,7 +49,7 @@ export default function GameGuide() {
   const current = manual[page - 1];
 
   return (
-    <div>
+    <div className={styles.gameGuideContainer}>
       <ModalTitle title={current.title} />
       <div className={styles.contents}>
         {current.image && (

@@ -15,7 +15,7 @@ export default function PetitPagination({
   setPage,
 }: PaginationProps) {
   return (
-    <nav className={styles.nav}>
+    <nav className={styles.pettiNav}>
       <button
         className={styles.pettiPagination}
         onClick={() => setPage(page - 1)}

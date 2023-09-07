@@ -1,13 +1,10 @@
+.gameGuideContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .contents {
-  margin-block: 0.5rem;
-  padding: 0.5rem;
   height: 20dvh;
-}
-
-.image {
-
-}
-
-.text {
-
+  overflow-y: auto;
 }
