@@ -162,7 +162,7 @@ const useModalProvider = () => {
     });
   };
 
-  const useGameInstructionModal = () => {
+  const useGameGuideModal = () => {
     useModal({
       head: null,
       body: <GameGuide />,
@@ -183,7 +183,7 @@ const useModalProvider = () => {
     useLoginRequiredModal,
     useChannelInvitationModal,
     useGameInvitationModal,
-    useGameInstructionModal,
+    useGameGuideModal,
   };
 };
 
