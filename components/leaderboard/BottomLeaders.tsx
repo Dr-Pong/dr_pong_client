@@ -5,9 +5,6 @@ import { Ranker } from 'types/rankTypes';
 import useCustomQuery from 'hooks/useCustomQuery';
 import useModalProvider from 'hooks/useModalProvider';
 
-import ErrorRefresher from 'components/global/ErrorRefresher';
-import LoadingSpinner from 'components/global/LoadingSpinner';
-
 import styles from 'styles/leaderboard/BottomLeaders.module.scss';
 
 type LeadersProps = {
@@ -31,25 +28,26 @@ export default function BottomLeaders({
     useProfileModal(nickname);
   };
 
-  if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher />;
-
   return (
     <div className={styles.bottomLeadersContainer}>
-      {data.bottom.map(({ rank, nickname, lp }: Ranker, i: number) => {
-        return (
-          <div key={i} className={styles.leaderBox}>
-            <span className={styles.leaderRank}>{rank}</span>
-            <span
-              className={styles.leaderNickname}
-              onClick={handleNicknameClick}
-            >
-              {nickname}
-            </span>
-            <span className={styles.leaderLp}>{lp}</span>
-          </div>
-        );
-      })}
+      {!data || isLoading || isError ? (
+        <></>
+      ) : (
+        data.bottom.map(({ rank, nickname, lp }: Ranker, i: number) => {
+          return (
+            <div key={i} className={styles.leaderBox}>
+              <span className={styles.leaderRank}>{rank}</span>
+              <span
+                className={styles.leaderNickname}
+                onClick={handleNicknameClick}
+              >
+                {nickname}
+              </span>
+              <span className={styles.leaderLp}>{lp}</span>
+            </div>
+          );
+        })
+      )}
     </div>
   );
 }
