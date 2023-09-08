@@ -10,9 +10,8 @@
 
 .loadingSpinner {
   display: inline-block;
-  height: 100%;
-  min-height: 2rem;
-  max-height: 5rem;
+  height: 2rem;
+  margin: 1rem;
   border: 2px solid $just-purple;
   border-top-color: #0001;
   border-radius: 50%;
