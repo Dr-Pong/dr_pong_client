@@ -28,7 +28,6 @@ function DirectMessageButton() {
   }, []);
 
   const { isLoading, isError } = directMessageNewDotGet(setNewDot);
-  if (isLoading || isError) return <RiSendPlaneFill />;
 
   return (
     <div className={styles.iconNewDotWrap}>
@@ -38,7 +37,7 @@ function DirectMessageButton() {
           setSideBar('directMessage');
         }}
       />
-      {newDot && <div className={styles.newDot} />}
+      {!isLoading && !isError && newDot && <div className={styles.newDot} />}
     </div>
   );
 }
