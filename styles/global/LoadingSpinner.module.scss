@@ -1,6 +1,6 @@
 @import 'styles/common';
 
-.loadingContainer {
+.loadingSpinnerContainer {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8,22 +8,34 @@
   height: 100%;
 }
 
-.loadingSpinner {
+.spinner {
   display: inline-block;
   height: 2rem;
   margin: 1rem;
   border: 2px solid $just-purple;
   border-top-color: #0001;
   border-radius: 50%;
-  animation: loadingspinner 1s linear infinite;
+  animation: spinner 1s linear infinite;
   aspect-ratio: 1 / 1;
+  &.queue {
+    height: 5rem;
+    margin: 2rem;
+  }
 }
 
-@keyframes loadingspinner {
+@keyframes spinner {
   0% {
     transform: rotate(0deg);
   }
   100% {
     transform: rotate(360deg);
   }
+}
+
+.time {
+  position: absolute;
+  color: $just-purple;
+  font-weight: bold;
+  font-size: 1.2rem;
+  background: transparent;
 }
