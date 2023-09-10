@@ -34,7 +34,6 @@ export default function InvitationFrame({
   const [friends, setFriends] = useState<Friend[]>([]);
   const { isLoading, isError, error } = allListGet(setFriends);
 
-  if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher error={error} />;
 
   return (
@@ -45,7 +44,9 @@ export default function InvitationFrame({
         setSearchKey={setSearchKey}
         placeHolder={t('search by nickname')}
       />
-      {type === 'channel' ? (
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : type === 'channel' ? (
         <ChannelInvitationFrame
           channelId={channelId}
           searchKey={searchKey}
@@ -72,21 +73,18 @@ function ChannelInvitationFrame({
   friends: Friend[];
 }) {
   const { participantsGet } = useChatQuery('channel', channelId);
-
-  const { data, isLoading, isError, error } = participantsGet();
-  if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher error={error} />;
-
-  const participants = data.participants.map((p: Participant) => p.nickname);
+  const { data, isLoading } = participantsGet();
 
   const filterChannelFriends = () => {
+    const participants = data.participants.map((p: Participant) => p.nickname);
+
     return friends.filter(
       ({ nickname }) =>
         nickname.includes(searchKey) && !participants?.includes(nickname)
     );
   };
 
-  return (
+  return !data || isLoading ? null : (
     <div className={styles.friendList}>
       <ChannelInvitableFriendList
         roomId={channelId}

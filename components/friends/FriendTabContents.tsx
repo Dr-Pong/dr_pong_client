@@ -82,9 +82,6 @@ export default function FriendTabContents() {
 
   const { isLoading, isError, error } = query[tab](setFriends);
 
-  if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher error={error} />;
-
   return (
     <div className={styles.friendTabContentsContainer}>
       <div className={styles.utilsWrap}>
@@ -105,18 +102,24 @@ export default function FriendTabContents() {
         )}
       </div>
       <div className={styles.friendList}>
-        {friends
-          .filter((friend) => friend.nickname.includes(searchKey))
-          .map((friend) => {
-            return (
-              <FriendBox
-                key={friend.nickname}
-                tab={tab}
-                friend={friend}
-                status={statuses[friend.nickname]}
-              />
-            );
-          })}
+        {isError ? (
+          <ErrorRefresher error={error} />
+        ) : isLoading ? (
+          <LoadingSpinner />
+        ) : (
+          friends
+            .filter((friend) => friend.nickname.includes(searchKey))
+            .map((friend) => {
+              return (
+                <FriendBox
+                  key={friend.nickname}
+                  tab={tab}
+                  friend={friend}
+                  status={statuses[friend.nickname]}
+                />
+              );
+            })
+        )}
       </div>
     </div>
   );

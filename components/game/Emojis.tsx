@@ -18,7 +18,6 @@ import useGameSocket from 'hooks/useGameSocket';
 import { throttler } from 'utils/throttler';
 
 import ErrorRefresher from 'components/global/ErrorRefresher';
-import LoadingSpinner from 'components/global/LoadingSpinner';
 
 import styles from 'styles/game/Emojis.module.scss';
 
@@ -98,7 +97,6 @@ export default function Emojis({
   const handleEmojiClick = (imgUrl: string) =>
     throttler(() => socket.emit('myEmoji', imgUrl), 1500);
 
-  if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher />;
 
   return (
@@ -106,28 +104,36 @@ export default function Emojis({
       className={styles.emojisContainer}
       style={{ width: `${canvasWidth}px` }}
     >
-      {data.emojis.map((emoji: Emoji, i: number) =>
-        emoji ? (
-          <div
-            key={i}
-            className={styles.emojiWrap}
-            onClick={handleEmojiClick(emoji.imgUrl)}
-          >
-            <img
-              className={styles.emoji}
-              src={emoji.imgUrl}
-              id={emoji.imgUrl}
-              alt={emoji.name}
-              onContextMenu={() => false}
-            />
-            {!isTouchScreen && (
-              <div className={styles.emojiOverlay}>{i + 1}</div>
-            )}
-          </div>
-        ) : (
-          <div key={i} className={`${styles.emoji} ${styles.none}`}></div>
-        )
-      )}
+      {isLoading
+        ? Array(4)
+            .fill(0)
+            .map((el, i) => <DefaultEmoji i={i} />)
+        : data.emojis.map((emoji: Emoji, i: number) =>
+            emoji ? (
+              <div
+                key={i}
+                className={styles.emojiWrap}
+                onClick={handleEmojiClick(emoji.imgUrl)}
+              >
+                <img
+                  className={styles.emoji}
+                  src={emoji.imgUrl}
+                  id={emoji.imgUrl}
+                  alt={emoji.name}
+                  onContextMenu={() => false}
+                />
+                {!isTouchScreen && (
+                  <div className={styles.emojiOverlay}>{i + 1}</div>
+                )}
+              </div>
+            ) : (
+              <DefaultEmoji i={i} />
+            )
+          )}
     </div>
   );
+}
+
+function DefaultEmoji({ i }: { i: number }) {
+  return <div key={i} className={`${styles.emoji} ${styles.none}`}></div>;
 }

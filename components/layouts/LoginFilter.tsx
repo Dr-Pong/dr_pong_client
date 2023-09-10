@@ -13,8 +13,6 @@ import useModalProvider from 'hooks/useModalProvider';
 
 import { LayoutProps } from 'pages/_app';
 
-import LoadingSpinner from 'components/global/LoadingSpinner';
-
 export default function LoginFilter({ children }: LayoutProps) {
   const [user, setUser] = useRecoilState(userState);
   const setLogin = useSetRecoilState(loginState);
@@ -40,7 +38,7 @@ export default function LoginFilter({ children }: LayoutProps) {
     queryClient.invalidateQueries(['userMe']);
   }, [router.asPath]);
 
-  if (isLoading) return <LoadingSpinner />;
+  if (isLoading) return null;
 
   if (user.roleType !== 'noname' && router.asPath === '/signUp') {
     router.push('/');

@@ -39,15 +39,17 @@ export default function BgmField() {
     ),
   };
 
-  if (!loaded) return null;
-
-  return (
+  return loaded ? (
     <BasicButton
       style='basic'
       color='purple'
       handleButtonClick={bgmOn ? disableBgm : enableBgm}
     >
       {bgmOn ? contents.disable : contents.enable}
+    </BasicButton>
+  ) : (
+    <BasicButton style='basic' color='purple'>
+      {}
     </BasicButton>
   );
 }

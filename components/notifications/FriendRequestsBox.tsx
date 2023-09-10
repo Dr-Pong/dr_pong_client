@@ -12,7 +12,6 @@ import useChatSocket from 'hooks/useChatSocket';
 import useCustomQuery from 'hooks/useCustomQuery';
 
 import ErrorRefresher from 'components/global/ErrorRefresher';
-import LoadingSpinner from 'components/global/LoadingSpinner';
 
 import styles from 'styles/notifications/Notifications.module.scss';
 
@@ -39,13 +38,7 @@ export default function FriendRequestsBox() {
     };
   }, []);
 
-  if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorRefresher error={error} />;
-
-  const { requestCount } = data;
-
-  const totalCount =
-    requestCount + newFriendRequest > 99 ? 99 : requestCount + newFriendRequest;
 
   const handleRouterToFriends = () => {
     setSideBar(null);
@@ -53,15 +46,22 @@ export default function FriendRequestsBox() {
     router.push('/friends');
   };
 
+  const getTotalCount = () => {
+    if (!data || isLoading) return 0;
+    return data.requestCount + newFriendRequest > 99
+      ? 99
+      : data.requestCount + newFriendRequest;
+  };
+
   return (
     <div className={styles.friendRequestBox} onClick={handleRouterToFriends}>
       <span>{t('Friend requests')}</span>
       <span
         className={`${styles.requestCount} ${
-          totalCount === 0 && styles.noRequestCount
+          getTotalCount() === 0 && styles.noRequestCount
         }`}
       >
-        {totalCount}
+        {getTotalCount()}
       </span>
     </div>
   );

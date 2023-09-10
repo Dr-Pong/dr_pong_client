@@ -66,8 +66,6 @@ export default function InvitationList() {
     });
   };
 
-  if (gameInvitationsGet.isLoading || channelInvitationsGet.isLoading)
-    return <LoadingSpinner />;
   if (gameInvitationsGet.isError)
     return <ErrorRefresher error={gameInvitationsGet.error} />;
   if (channelInvitationsGet.isError)
@@ -75,10 +73,14 @@ export default function InvitationList() {
 
   return (
     <div className={styles.invitationsWrap}>
-      {combination.map((el) => {
-        const type = 'channelId' in el ? 'channel' : 'game';
-        return <InvitationBox key={el.id} type={type} invitation={el} />;
-      })}
+      {gameInvitationsGet.isLoading || channelInvitationsGet.isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        combination.map((el) => {
+          const type = 'channelId' in el ? 'channel' : 'game';
+          return <InvitationBox key={el.id} type={type} invitation={el} />;
+        })
+      )}
     </div>
   );
 }

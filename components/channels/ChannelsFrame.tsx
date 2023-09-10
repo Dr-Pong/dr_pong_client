@@ -11,7 +11,6 @@ import useCustomQuery from 'hooks/useCustomQuery';
 import ChannelBox from 'components/channels/ChannelBox';
 import ChannelFilter from 'components/channels/ChannelFilter';
 import MyChannel from 'components/channels/MyChannel';
-import ErrorRefresher from 'components/global/ErrorRefresher';
 import LoadingSpinner from 'components/global/LoadingSpinner';
 import Pagination from 'components/global/Pagination';
 
@@ -46,17 +45,11 @@ export default function ChannelsFrame() {
     );
   }, [keyword]);
 
-  if (channelListGet.isLoading || myChannelGet.isLoading)
-    return <LoadingSpinner />;
-  if (channelListGet.isError)
-    return <ErrorRefresher error={channelListGet.error} />;
-  if (login && myChannelGet.isError)
-    return <ErrorRefresher error={myChannelGet.error} />;
+  const haveMyChannel = login && !!myChannelGet.data?.myChannel;
 
-  const haveMyChannel = login && !!myChannelGet.data.myChannel;
   return (
     <div className={styles.channelsFrameContainer}>
-      {login && myChannelGet.data.myChannel && (
+      {!myChannelGet.isLoading && login && myChannelGet.data.myChannel && (
         <MyChannel channel={myChannelGet.data.myChannel} />
       )}
       <div className={styles.settingChannelListWrap}>
@@ -67,18 +60,22 @@ export default function ChannelsFrame() {
           haveMyChannel={haveMyChannel}
         />
         <div className={styles.channelList}>
-          {channels.map((eachChannel: Channel) => {
-            return (
-              <ChannelBox
-                key={eachChannel.id}
-                channel={eachChannel}
-                isMyChannel={
-                  eachChannel.id === myChannelGet.data?.myChannel?.id
-                }
-                haveMyChannel={haveMyChannel}
-              />
-            );
-          })}
+          {channelListGet.isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            channels.map((eachChannel: Channel) => {
+              return (
+                <ChannelBox
+                  key={eachChannel.id}
+                  channel={eachChannel}
+                  isMyChannel={
+                    eachChannel.id === myChannelGet.data?.myChannel?.id
+                  }
+                  haveMyChannel={haveMyChannel}
+                />
+              );
+            })
+          )}
         </div>
       </div>
       <Pagination total={totalPage} page={page} setPage={setPage} />
