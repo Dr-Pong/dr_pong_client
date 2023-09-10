@@ -41,8 +41,8 @@ const useChatQuery = (roomType: RoomType, roomId: string) => {
         );
   };
 
-  const participantsGet = () => {
-    return get(['participants'], `/channels/${roomId}/participants`);
+  const participantsGet = (setter?: (p: ParticipantsResponse) => void) => {
+    return get(['participants'], `/channels/${roomId}/participants`, setter);
   };
 
   const chatsGet = (handleChatJoin: (chats: Chat[]) => void, count: number) => {

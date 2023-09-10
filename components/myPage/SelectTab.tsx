@@ -15,7 +15,6 @@ import {
 import useMyPageQuery from 'hooks/useMyPageQuery';
 
 import ErrorRefresher from 'components/global/ErrorRefresher';
-import LoadingSpinner from 'components/global/LoadingSpinner';
 import SelectableItem from 'components/myPage/SelectableItem';
 
 import styles from 'styles/myPage/SelectTab.module.scss';
@@ -37,8 +36,10 @@ export default function SelectTab({ nickname, itemType }: SelectTabProps) {
     selectables.getQuery()
   );
   const editable = useRecoilValue(editableState);
-  const [selected, setSelected] = useState(new selectables([]));
-  const [all, setAll] = useState(new selectables([]));
+  const [selected, setSelected] = useState(
+    new selectables(Array(itemType === 'achieve' ? 3 : 4).fill(null))
+  );
+  const [all, setAll] = useState(new selectables(Array(10).fill(null)));
   const { mutate } = selectablesMutationPatch();
 
   useEffect(() => {
@@ -74,13 +75,9 @@ export default function SelectTab({ nickname, itemType }: SelectTabProps) {
     },
   };
 
-  const { isLoading: isSelectedLoading, isError: isSelectedError } =
-    selectedGet(setSelectedFromJson());
-  const { isLoading: isAllLoading, isError: isAllError } = allItemsGet(
-    setAllFromJSON()
-  );
+  const { isError: isSelectedError } = selectedGet(setSelectedFromJson());
+  const { isError: isAllError } = allItemsGet(setAllFromJSON());
 
-  if (isSelectedLoading || isAllLoading) return <LoadingSpinner />;
   if (isSelectedError || isAllError) return <ErrorRefresher />;
 
   return (
