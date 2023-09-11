@@ -4,8 +4,8 @@ import styles from 'styles/global/LoadingSpinner.module.scss';
 
 function LoadingSpinner() {
   return (
-    <div className={styles.loadingContainer}>
-      <div className={styles.loadingSpinner} />
+    <div className={styles.loadingSpinnerContainer}>
+      <div className={styles.spinner} />
     </div>
   );
 }

@@ -49,9 +49,6 @@ export default function DirectMessages() {
     };
   }, []);
 
-  if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher error={error} />;
-
   const handleEditClick = () => {
     setIsEditable(!isEditable);
   };
@@ -66,11 +63,21 @@ export default function DirectMessages() {
         {isEditable ? t('ok') : t('edit')}
       </BasicButton>
       <div className={styles.directMessagesWrap}>
-        {chatList.map((dmRoom: DMRoom, i: number) => {
-          return (
-            <DirectMessageBox key={i} dmRoom={dmRoom} isEditable={isEditable} />
-          );
-        })}
+        {isError ? (
+          <ErrorRefresher />
+        ) : isLoading ? (
+          <LoadingSpinner />
+        ) : (
+          chatList.map((dmRoom: DMRoom, i: number) => {
+            return (
+              <DirectMessageBox
+                key={i}
+                dmRoom={dmRoom}
+                isEditable={isEditable}
+              />
+            );
+          })
+        )}
       </div>
     </div>
   );

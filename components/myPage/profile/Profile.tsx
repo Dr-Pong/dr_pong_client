@@ -6,6 +6,7 @@ import { editableState, profileTabState } from 'recoils/user';
 
 import {
   Achievement,
+  Achievements,
   Image,
   ProfileStyle,
   Title,
@@ -63,9 +64,9 @@ export default function Profile({ nickname, style }: ProfileProps) {
     setStatusMessage(user.statusMessage);
   }, [user]);
 
-  return isError ? (
-    <ErrorRefresher />
-  ) : isLoading ? (
+  if (isError) return <ErrorRefresher />;
+
+  return isLoading ? (
     <LoadingSpinner />
   ) : (
     <div className={`${styles.profileContainer} ${styles[style]}`}>
@@ -96,21 +97,17 @@ function SelectedAchievements({
   style: ProfileStyle;
 }) {
   const { selectedGet } = useMyPageQuery(nickname, 'achievements');
-  const { data, isLoading, isError } = selectedGet();
+  const [{ achievements }, setAchievements] = useState<Achievements>({
+    achievements: Array(3).fill(null),
+  });
+  const achievementsGet = selectedGet(setAchievements);
 
-  if (isLoading || isError)
-    return (
-      <div className={`${styles.achievementsBox} ${styles[style]}`}>
-        <LoadingSpinner />
-      </div>
-    );
-
-  if (data.achievements.filter((el: Achievement | null) => el).length == 0)
+  if (achievements.filter((el: Achievement | null) => el).length == 0)
     return null;
 
   return (
     <div className={`${styles.achievementsBox} ${styles[style]}`}>
-      {data.achievements.map((item: Achievement | null) => (
+      {achievements.map((item: Achievement | null) => (
         <SelectableItem
           key={item?.id}
           itemType={'achieve'}

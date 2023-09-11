@@ -2,14 +2,19 @@ import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { FiUserPlus } from 'react-icons/fi';
 import { MdLogout } from 'react-icons/md';
 
 import { alertState } from 'recoils/alert';
 import { sideBarState } from 'recoils/sideBar';
 
-import { Participant, RoomType } from 'types/chatTypes';
+import {
+  Participant,
+  ParticipantsResponse,
+  RoleType,
+  RoomType,
+} from 'types/chatTypes';
 
 import useChatQuery from 'hooks/useChatQuery';
 import useCustomQuery from 'hooks/useCustomQuery';
@@ -27,6 +32,13 @@ export default function Participants() {
   const { roomType, roomId } = router.query;
   const setSideBar = useSetRecoilState(sideBarState);
   const setAlert = useSetRecoilState(alertState);
+  const [{ me, participants }, setParticipants] =
+    useState<ParticipantsResponse>({
+      me: defaultParticipant,
+      participants: [],
+      headCount: 0,
+      maxCount: 0,
+    });
   const { useChannelInvitationModal } = useModalProvider();
   const { mutationDelete } = useCustomQuery();
   const { participantsGet } = useChatQuery(
@@ -47,11 +59,8 @@ export default function Participants() {
     }
   );
 
-  const { data, isLoading, isError, error } = participantsGet();
-  if (isLoading) return <LoadingSpinner />;
+  const { data, isLoading, isError, error } = participantsGet(setParticipants);
   if (isError) return <ErrorRefresher error={error} />;
-
-  const { me, participants } = data;
 
   const handleFriendInvite = () => {
     useChannelInvitationModal(roomId as string);
@@ -63,22 +72,26 @@ export default function Participants() {
 
   return (
     <div className={styles.participantsContainer}>
-      <div className={styles.userList}>
-        <ParticipantBox
-          key={me?.nickname}
-          roomId={roomId as string}
-          myRoleType={me.roleType}
-          user={me}
-        />
-        {participants?.map((participant: Participant, i: number) => (
+      {!data || isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <div className={styles.userList}>
           <ParticipantBox
-            key={i}
+            key={me?.nickname}
             roomId={roomId as string}
             myRoleType={me.roleType}
-            user={participant}
+            user={me}
           />
-        ))}
-      </div>
+          {participants?.map((participant: Participant, i: number) => (
+            <ParticipantBox
+              key={i}
+              roomId={roomId as string}
+              myRoleType={me.roleType}
+              user={participant}
+            />
+          ))}
+        </div>
+      )}
       <div className={styles.footer}>
         <BasicButton
           style='fit'
@@ -98,3 +111,10 @@ export default function Participants() {
     </div>
   );
 }
+
+const defaultParticipant = {
+  nickname: '',
+  imgUrl: '',
+  roleType: 'normal' as RoleType,
+  isMuted: false,
+};

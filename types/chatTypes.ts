@@ -1,5 +1,6 @@
 export type ChatType = 'me' | 'others' | 'system' | 'fail';
 export type RoomType = 'channel' | 'dm';
+export type RoleType = 'owner' | 'admin' | 'normal';
 
 export interface ChatUser {
   imgUrl: string;
@@ -26,7 +27,7 @@ export interface ChatResponse {
 export interface Participant {
   nickname: string;
   imgUrl: string;
-  roleType: 'owner' | 'admin' | 'normal';
+  roleType: RoleType;
   isMuted: boolean;
 }
 

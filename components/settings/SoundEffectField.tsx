@@ -40,15 +40,17 @@ export default function SoundEffectField() {
     ),
   };
 
-  if (!loaded) return null;
-
-  return (
+  return loaded ? (
     <BasicButton
       style='basic'
       color='purple'
       handleButtonClick={soundEffectOn ? disableSoundEffect : enableSoundEffect}
     >
       {soundEffectOn ? contents.disable : contents.enable}
+    </BasicButton>
+  ) : (
+    <BasicButton style='basic' color='purple'>
+      {}
     </BasicButton>
   );
 }

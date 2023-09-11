@@ -1,15 +1,12 @@
 @import 'styles/common';
 
 .userImagesContainer {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.8rem;
-  :nth-child(odd) {
-    align-items: flex-end;
-  }
-  :nth-child(even) {
-    align-items: flex-start;
-  }
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .userImage {
@@ -31,4 +28,10 @@
     border: solid 3px $just-pink;
     opacity: 1;
   }
+}
+
+.emptyImage {
+  width: 6rem;
+  background: $light-grey;
+  aspect-ratio: 1;
 }

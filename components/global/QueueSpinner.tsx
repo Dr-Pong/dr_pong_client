@@ -7,17 +7,17 @@ import { alertState } from 'recoils/alert';
 
 import useChatSocket from 'hooks/useChatSocket';
 
-import LoadingSpinner from 'components/global/LoadingSpinner';
+import styles from 'styles/global/LoadingSpinner.module.scss';
 
-import styles from 'styles/global/QueueSpinner.module.scss';
+type QueueSpinnerProps = {
+  useTimer: boolean;
+  handleGameCancel: () => void;
+};
 
 export default function QueueSpinner({
   useTimer,
   handleGameCancel,
-}: {
-  useTimer: boolean;
-  handleGameCancel: () => void;
-}) {
+}: QueueSpinnerProps) {
   const { t } = useTranslation('game');
   const setAlert = useSetRecoilState(alertState);
   const [seconds, setSeconds] = useState(0);
@@ -31,7 +31,7 @@ export default function QueueSpinner({
       });
       handleGameCancel();
     };
-        
+
     socket.on('deleteInvite', handleGameDeclined);
     (document.activeElement as HTMLElement)?.blur();
 
@@ -45,8 +45,8 @@ export default function QueueSpinner({
   }, []);
 
   return (
-    <div className={styles.queueSpinnerContainer}>
-      <LoadingSpinner />
+    <div className={styles.loadingSpinnerContainer}>
+      <div className={`${styles.spinner} ${styles.queue}`} />
       {useTimer && <div className={styles.time}>{seconds}</div>}
     </div>
   );

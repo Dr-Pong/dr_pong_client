@@ -12,8 +12,6 @@ import useCustomQuery from 'hooks/useCustomQuery';
 import useModalProvider from 'hooks/useModalProvider';
 import useUpperModalProvider from 'hooks/useUpperModalProvider';
 
-import ErrorRefresher from 'components/global/ErrorRefresher';
-import LoadingSpinner from 'components/global/LoadingSpinner';
 import BasicButton from 'components/global/buttons/BasicButton';
 
 import styles from 'styles/settings/Settings.module.scss';
@@ -22,10 +20,7 @@ export default function TfaField() {
   const { t } = useTranslation('common');
   const { nickname } = useRecoilValue(userState);
   const { get, queryClient } = useCustomQuery();
-  const { data, isLoading, isError, error } = get(
-    'usersTfa',
-    `/users/${nickname}/tfa`
-  );
+  const { data, isLoading } = get('usersTfa', `/users/${nickname}/tfa`);
   const { mutationPost, mutationDelete } = useCustomQuery();
   const { useTfaRegisterModal } = useUpperModalProvider();
   const { closeModal } = useModalProvider();
@@ -53,11 +48,6 @@ export default function TfaField() {
       setAlert({ type: 'failure' });
     },
   });
-
-  if (isLoading) return <LoadingSpinner />;
-  if (isError) return <ErrorRefresher error={error} />;
-
-  const { tfaOn } = data;
 
   const enableTfa = () => {
     useTfaRegisterModal(inputRef, submitOTP);
@@ -87,13 +77,17 @@ export default function TfaField() {
     ),
   };
 
-  return (
+  return !data || isLoading ? (
+    <BasicButton style='basic' color='purple'>
+      {}
+    </BasicButton>
+  ) : (
     <BasicButton
       style='basic'
       color='purple'
-      handleButtonClick={tfaOn ? disableTfa : enableTfa}
+      handleButtonClick={data.tfaOn ? disableTfa : enableTfa}
     >
-      {tfaOn ? contents.disable : contents.enable}
+      {data.tfaOn ? contents.disable : contents.enable}
     </BasicButton>
   );
 }
