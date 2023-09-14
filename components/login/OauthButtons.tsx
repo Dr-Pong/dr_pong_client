@@ -19,12 +19,12 @@ export default function OauthButtons() {
       value: t('Login with 42Intra'),
       link: `https://api.intra.42.fr/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_FT_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_FT_REDIRECT_URI}&response_type=code`,
     },
-    // {
-    //   name: 'Google',
-    //   logo: <FcGoogle />,
-    //   value: t('Login with Google'),
-    //   link: `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GG_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GG_REDIRECT_URI}&response_type=code&include_granted_scopes=true&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20`,
-    // },
+    {
+      name: 'Google',
+      logo: <FcGoogle />,
+      value: t('Login with Google'),
+      link: `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GG_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GG_REDIRECT_URI}&response_type=code&include_granted_scopes=true&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20`,
+    },
   ];
   return (
     <div className={styles.oauthButtonsContainer}>
