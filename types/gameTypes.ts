@@ -12,9 +12,11 @@ export interface Ball {
   y: number;
   width: number;
   height: number;
+  frame?: number;
 }
 
 export interface posData {
+  frame: number;
   ballPos: { x: number; y: number };
   playerXPos: { me: number; opponent: number };
   gameTime: number;
