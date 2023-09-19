@@ -18,6 +18,7 @@ import CloseModalButton from 'components/global/buttons/CloseModalButton';
 import GoHomeCloseModalButton from 'components/global/buttons/GoHomeCloseModalButton';
 import ModalButton from 'components/global/buttons/ModalButton';
 import ButtonRow from 'components/global/buttons/buttonContainers/ButtonRow';
+import SeasonGuide from 'components/leaderboard/SeasonGuide';
 import ModalPhrase from 'components/modals/modalParts/ModalPhrase';
 import ModalTitle from 'components/modals/modalParts/ModalTitle';
 import Profile from 'components/myPage/profile/Profile';
@@ -161,6 +162,13 @@ const useModalProvider = () => {
       tail: null,
     });
   };
+  const useSeasonGuideModal = () => {
+    useModal({
+      head: null,
+      body: <SeasonGuide />,
+      tail: null,
+    });
+  };
 
   const useGameGuideModal = () => {
     useModal({
@@ -183,6 +191,7 @@ const useModalProvider = () => {
     useLoginRequiredModal,
     useChannelInvitationModal,
     useGameInvitationModal,
+    useSeasonGuideModal,
     useGameGuideModal,
   };
 };
