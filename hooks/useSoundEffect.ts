@@ -9,8 +9,8 @@ const effects: Map<string, AudioPlayer> = new Map();
 const data: { [key: string]: string } = {
   cork: '/sound/cork.mp3',
   pong: '/sound/pong.mp3',
-  bar_hit: '/sound/hit.mp3',
-  wall_hit: '/sound/hit.mp3',
+  bar_touch: '/sound/touch.mp3',
+  wall_touch: '/sound/touch.mp3',
   spin: '/sound/spin.mp3',
 };
 export function useSoundEffect(): {

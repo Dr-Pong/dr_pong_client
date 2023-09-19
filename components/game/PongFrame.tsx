@@ -51,12 +51,12 @@ export default function PongFrame({
     effects.get('spin')?.(isSoundEffectOn);
   };
 
-  const barHitSound = () => {
-    effects.get('bar_hit')?.(isSoundEffectOn);
+  const barTouchSound = () => {
+    effects.get('bar_touch')?.(isSoundEffectOn);
   };
 
-  const wallHitSound = () => {
-    effects.get('wall_hit')?.(isSoundEffectOn);
+  const wallTouchSound = () => {
+    effects.get('wall_touch')?.(isSoundEffectOn);
   };
 
   const invalidGameIdListener = () => {
@@ -94,16 +94,16 @@ export default function PongFrame({
     });
     socket.on('multiConnect', multiConnectListener);
     socket.on('spin', spinSound);
-    socket.on('barTouch', barHitSound);
-    socket.on('wallTouch', wallHitSound);
+    socket.on('barTouch', barTouchSound);
+    socket.on('wallTouch', wallTouchSound);
     socket.on('achievement', achievementListener);
     socket.on('title', titleListener);
     return () => {
       bgms.get('bgm')?.(bgmOn);
       socket.off('multiConnect', multiConnectListener);
       socket.off('spin', spinSound);
-      socket.off('barTouch', barHitSound);
-      socket.off('wallTouch', wallHitSound);
+      socket.off('barTouch', barTouchSound);
+      socket.off('wallTouch', wallTouchSound);
       socket.off('achievement', achievementListener);
       socket.off('title', titleListener);
       toasts.forEach((toastId) => {
