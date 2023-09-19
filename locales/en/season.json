@@ -1,0 +1,21 @@
+{
+  "season": "Season",
+  "season_description": "New season starts every Monday at 00:00 KST.",
+  "1": "January",
+  "2": "February",
+  "3": "March",
+  "4": "April",
+  "5": "May",
+  "6": "June",
+  "7": "July",
+  "8": "August",
+  "9": "September",
+  "10": "October",
+  "11": "November",
+  "12": "December",
+  "week1": "First Week of",
+  "week2": "Second Week of",
+  "week3": "Third Week of",
+  "week4": "Fourth Week of",
+  "week5": "Fifth Week of"
+}
