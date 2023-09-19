@@ -9,7 +9,7 @@ import { userState } from 'recoils/user';
 import useRecordsQuery from 'hooks/useRecordsQuery';
 
 import ExpProgressBar from 'components/game/result/ExpProgressBar';
-import LpProgressBar from 'components/game/result/LpProgressBar';
+import LpResultBar from 'components/game/result/LpResultBar';
 import ErrorRefresher from 'components/global/ErrorRefresher';
 import LoadingSpinner from 'components/global/LoadingSpinner';
 import RoundRecordsBox from 'components/records/RoundRecordsBox';
@@ -51,9 +51,7 @@ export default function GameResultDetail({
         <RoundRecordsBox rounds={rounds} theme={'transparent'} />
       </div>
       <ExpProgressBar gameId={gameId} setShowFireworks={setShowFireworks} />
-      {gameType === 'ladder' && (
-        <LpProgressBar lpData={me} setShowFireworks={setShowFireworks} />
-      )}
+      {gameType === 'ladder' && <LpResultBar lpData={me} />}
     </div>
   );
 }
