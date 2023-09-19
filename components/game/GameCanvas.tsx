@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import {
   Ball,
@@ -18,9 +18,9 @@ type GameCanvasProps = {
   canvasWidth: number;
 };
 
-const drawnFrames: number[] = [];
-
+let lastDrawnFrame = 0;
 let timer: NodeJS.Timeout | null = null;
+
 export default function GameCanvas({
   canvasHeight,
   canvasWidth,
@@ -226,7 +226,7 @@ export default function GameCanvas({
     const ballSize = ballWidthRatio * canvasHeight;
     setBallPath((prev) => {
       const ballPath = [...prev];
-      if (drawnFrames.includes(data.frame)) {
+      if (lastDrawnFrame >= data.frame) {
         return ballPath;
       }
       ballPath.push({
@@ -239,10 +239,7 @@ export default function GameCanvas({
       if (ballPath.length > 30) {
         ballPath.shift();
       }
-      if (drawnFrames.length > 30) {
-        drawnFrames.shift();
-      }
-      drawnFrames.push(data.frame);
+      lastDrawnFrame = data.frame;
       return ballPath;
     });
     positions.shift();
@@ -277,6 +274,7 @@ export default function GameCanvas({
       if (timer) clearTimeout(timer);
     };
   }, []);
+
   return (
     <canvas
       className={styles.gameCanvas}
