@@ -47,8 +47,16 @@ export default function PongFrame({
   const setAlert = useSetRecoilState(alertState);
   const { multiConnectWarningModal } = useUpperModalProvider();
 
-  const touchSound = () => {
-    effects.get('hit')?.(isSoundEffectOn);
+  const spinSound = () => {
+    effects.get('spin')?.(isSoundEffectOn);
+  };
+
+  const barHitSound = () => {
+    effects.get('bar_hit')?.(isSoundEffectOn);
+  };
+
+  const wallHitSound = () => {
+    effects.get('wall_hit')?.(isSoundEffectOn);
   };
 
   const invalidGameIdListener = () => {
@@ -85,15 +93,17 @@ export default function PongFrame({
       setIsEnd(true);
     });
     socket.on('multiConnect', multiConnectListener);
-    socket.on('barTouch', touchSound);
-    socket.on('wallTouch', touchSound);
+    socket.on('spin', spinSound);
+    socket.on('barTouch', barHitSound);
+    socket.on('wallTouch', wallHitSound);
     socket.on('achievement', achievementListener);
     socket.on('title', titleListener);
     return () => {
       bgms.get('bgm')?.(bgmOn);
       socket.off('multiConnect', multiConnectListener);
-      socket.off('barTouch', touchSound);
-      socket.off('wallTouch', touchSound);
+      socket.off('spin', spinSound);
+      socket.off('barTouch', barHitSound);
+      socket.off('wallTouch', wallHitSound);
       socket.off('achievement', achievementListener);
       socket.off('title', titleListener);
       toasts.forEach((toastId) => {
