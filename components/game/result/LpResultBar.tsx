@@ -19,6 +19,7 @@ export default function LpResultBar({ lpData }: LpResultBarProps) {
         <div className={styles.title}>{tGame('LP')}</div>
       </div>
       <div className={styles.lpChange}>
+        <div className={styles.lp}>{`${lp}`}</div>
         {lpChange === 0 || (
           <div className={styles.change}>
             {lpChange > 0 ? (
@@ -29,7 +30,6 @@ export default function LpResultBar({ lpData }: LpResultBarProps) {
             <div>{`${Math.abs(lpChange)}`}</div>
           </div>
         )}
-        <div className={styles.lp}>{`${lp}`}</div>
       </div>
     </div>
   );

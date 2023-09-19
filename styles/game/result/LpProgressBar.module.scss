@@ -21,18 +21,12 @@
 }
 
 .lp {
-  width: 50%;
   font-size: 1.3rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  gap: 1rem;
 }
 
 .change {
-  width: 50%;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
   align-items: center;
   padding-left: 0.3rem;
   font-size: 1.0rem;
