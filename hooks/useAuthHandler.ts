@@ -16,7 +16,7 @@ export interface TokenResponse {
   accessToken: string;
 }
 const useAuthHandler = () => {
-  const [cookies, setCookie, removeCookie] = useCookies([
+  const [, setCookie, removeCookie] = useCookies([
     'Authorization',
     'NEXT_LOCALE',
   ]);
@@ -31,7 +31,7 @@ const useAuthHandler = () => {
   const onAuthSuccess = (res: TokenResponse) => {
     const { accessToken } = res;
     const expires = new Date();
-    expires.setHours(expires.getHours() + 1);
+    expires.setHours(expires.getHours() + 24);
     setCookie('Authorization', `${accessToken}`, {
       path: '/',
       expires,
