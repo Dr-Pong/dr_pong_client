@@ -1,0 +1,10 @@
+.seasonGuideContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contents {
+  height: 20dvh;
+  overflow-y: auto;
+}
