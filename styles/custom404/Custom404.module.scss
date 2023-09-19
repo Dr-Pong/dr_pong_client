@@ -1,13 +1,13 @@
 @import 'styles/common';
 
 .custom404Container {
-  @include pageWithHeaderContainer;
+  @include pageContainer;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   text-align: center;
+  height: 100dvh;
 }
 
 .title {
