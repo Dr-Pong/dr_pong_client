@@ -18,6 +18,9 @@ type GameCanvasProps = {
   canvasWidth: number;
 };
 
+let lastDrawnFrame = 0;
+let timer: NodeJS.Timeout | null = null;
+
 export default function GameCanvas({
   canvasHeight,
   canvasWidth,
@@ -42,6 +45,8 @@ export default function GameCanvas({
   const [playerRatio, setPlayerRatio] = useState<Player>(initialData);
   const [ballWidthRatio, setWidthBallRatio] = useState(0);
   const [remainingTime, setRemainingTime] = useState(0);
+  let positions: posData[] = [];
+  let isGameEnd = false;
 
   const gameInitListener = (data: gameInit) => {
     setServer(data.server);
@@ -80,48 +85,14 @@ export default function GameCanvas({
     setCountdown(data.time);
   };
 
-  const updateListener = (data: posData) => {
-    let ballSize: number;
-    setMe((prevMe) => ({
-      ...prevMe,
-      x: data.playerXPos.me * canvasWidth,
-      y: playerRatio.y * canvasHeight,
-      width: playerRatio.width * canvasWidth,
-      height: playerRatio.height * canvasHeight,
-    }));
-    setOpponent((prevOpponent) => ({
-      ...prevOpponent,
-      x: data.playerXPos.opponent * canvasWidth,
-      width: playerRatio.width * canvasWidth,
-      height: playerRatio.height * canvasHeight,
-    }));
-    setBall((prevBall) => {
-      ballSize = ballWidthRatio * canvasHeight;
-      return {
-        ...prevBall,
-        x: data.ballPos.x * canvasWidth,
-        y: data.ballPos.y * canvasHeight,
-        width: ballWidthRatio * canvasHeight,
-        height: ballWidthRatio * canvasHeight,
-      };
-    });
-    setBallPath((prev) => {
-      const ballPath = [...prev];
-      ballPath.push({
-        x: data.ballPos.x * canvasWidth,
-        y: data.ballPos.y * canvasHeight,
-        width: ballSize,
-        height: ballSize,
-      });
-      if (ballPath.length > 30) {
-        ballPath.shift();
-      }
-      return ballPath;
-    });
-    if (data.gameTime !== remainingTime) setRemainingTime(data.gameTime);
+  const updateListener = (data: { data: posData[] }) => {
+    if (timer) clearTimeout(timer);
+    positions = data.data;
+    drawLoop();
   };
 
   const roundListener = (data: roundData) => {
+    if (timer) clearTimeout(timer);
     setServer(data.server);
     setRound(data.round);
     setMyScore(data.me);
@@ -129,8 +100,13 @@ export default function GameCanvas({
     setBallPath([]);
   };
 
+  const gameEndListener = () => {
+    isGameEnd = true;
+  };
+
   useEffect(() => {
     socket.once('gameInit', gameInitListener);
+    socket.once('gameEnd', gameEndListener);
     socket.on('time', countdownListener);
     socket.on('roundUpdate', roundListener);
     return () => {
@@ -219,6 +195,65 @@ export default function GameCanvas({
       ctx.fillText(`${time.toFixed(1)}`, 20, canvasHeight / 2 - 10);
   };
 
+  const draw = () => {
+    if (positions.length === 0) {
+      return;
+    }
+    const data = positions[0];
+    setMe((prevMe) => ({
+      ...prevMe,
+      x: data.playerXPos.me * canvasWidth,
+      y: playerRatio.y * canvasHeight,
+      width: playerRatio.width * canvasWidth,
+      height: playerRatio.height * canvasHeight,
+    }));
+    setOpponent((prevOpponent) => ({
+      ...prevOpponent,
+      x: data.playerXPos.opponent * canvasWidth,
+      width: playerRatio.width * canvasWidth,
+      height: playerRatio.height * canvasHeight,
+    }));
+    setBall((prevBall) => {
+      return {
+        ...prevBall,
+        x: data.ballPos.x * canvasWidth,
+        y: data.ballPos.y * canvasHeight,
+        width: ballWidthRatio * canvasHeight,
+        height: ballWidthRatio * canvasHeight,
+      };
+    });
+    if (data.gameTime !== remainingTime) setRemainingTime(data.gameTime);
+    const ballSize = ballWidthRatio * canvasHeight;
+    setBallPath((prev) => {
+      const ballPath = [...prev];
+      if (lastDrawnFrame >= data.frame) {
+        return ballPath;
+      }
+      ballPath.push({
+        x: data.ballPos.x * canvasWidth,
+        y: data.ballPos.y * canvasHeight,
+        width: ballSize,
+        height: ballSize,
+        frame: data.frame,
+      });
+      if (ballPath.length > 30) {
+        ballPath.shift();
+      }
+      lastDrawnFrame = data.frame;
+      return ballPath;
+    });
+    positions.shift();
+  };
+
+  const drawLoop = () => {
+    if (isGameEnd) {
+      setBallPath([]);
+      return;
+    }
+    draw();
+    timer = setTimeout(drawLoop, 1000 / 60);
+  };
+
   useEffect(() => {
     if (context) {
       context.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -233,6 +268,12 @@ export default function GameCanvas({
       }
     }
   }, [me, opponent, ball, countdown, server, round, myScore, opponentScore]);
+
+  useEffect(() => {
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, []);
 
   return (
     <canvas
@@ -260,9 +301,9 @@ const afterImage = (
     const currentBall = ballPath[i];
     const nextBall = ballPath[i + 1];
 
-    for (let j = 0; j < 4; j++) {
+    for (let j = 0; j < 8; j++) {
       // Calculate interpolation factor and position
-      const interpolationFactor = (j + 1) / 4;
+      const interpolationFactor = j / 8;
       const interpolatedPosition = {
         x: currentBall.x + (nextBall.x - currentBall.x) * interpolationFactor,
         y: currentBall.y + (nextBall.y - currentBall.y) * interpolationFactor,
@@ -270,7 +311,7 @@ const afterImage = (
 
       // Calculate ball size based on the interpolation level
       const ballSize =
-        (currentBall.width * (i * 4 + j)) / (ballPath.length * 4 - 1);
+        (currentBall.width * (i * 8 + j)) / (ballPath.length * 8 - 1);
 
       // Draw ball
       ctx.beginPath();
@@ -283,7 +324,7 @@ const afterImage = (
         2 * Math.PI
       );
       ctx.save();
-      ctx.globalAlpha = 0.2 * ((i * 4 + j) / (ballPath.length * 4 - 1));
+      ctx.globalAlpha = 0.1 * ((i * 8 + j) / (ballPath.length * 8 - 1));
       ctx.fill();
       ctx.stroke();
       ctx.restore();
