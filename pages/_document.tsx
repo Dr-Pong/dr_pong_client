@@ -6,10 +6,6 @@ export default function Document() {
   return (
     <Html lang='en'>
       <Head>
-        <meta
-          name='viewport'
-          content='width=device-width, initial-scale=1.0, user-scalable=no'
-        ></meta>
         <script
           async
           src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5861134754944224'
@@ -32,7 +28,6 @@ export default function Document() {
           `,
           }}
         />
-        <title>Dr. Pong</title>
       </Head>
       <body>
         <Main />

@@ -3,6 +3,7 @@ import { RecoilRoot } from 'recoil';
 
 import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
+import Head from 'next/head';
 
 import React, { ReactElement, ReactNode } from 'react';
 import { CookiesProvider } from 'react-cookie';
@@ -36,21 +37,30 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
-    <CookiesProvider>
-      <QueryClientProvider client={queryClient}>
-        <RecoilRoot>
-          <LoginFilter>
-            <SocketManager namespace={'global'} />
-            <PageConfig />
-            {getLayout(<Component {...pageProps} />)}
-          </LoginFilter>
-          <div id='sideBarRoot'></div>
-          <div id='modalRoot'></div>
-          <div id='upperModalRoot'></div>
-          <Toaster />
-          <div id='alertRoot'></div>
-        </RecoilRoot>
-      </QueryClientProvider>
-    </CookiesProvider>
+    <>
+      <Head>
+        <meta
+          name='viewport'
+          content='width=device-width, initial-scale=1.0, user-scalable=no'
+        ></meta>
+        <title>Dr. Pong</title>
+      </Head>
+      <CookiesProvider>
+        <QueryClientProvider client={queryClient}>
+          <RecoilRoot>
+            <LoginFilter>
+              <SocketManager namespace={'global'} />
+              <PageConfig />
+              {getLayout(<Component {...pageProps} />)}
+            </LoginFilter>
+            <div id='sideBarRoot'></div>
+            <div id='modalRoot'></div>
+            <div id='upperModalRoot'></div>
+            <Toaster />
+            <div id='alertRoot'></div>
+          </RecoilRoot>
+        </QueryClientProvider>
+      </CookiesProvider>
+    </>
   );
 }
