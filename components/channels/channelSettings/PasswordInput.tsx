@@ -29,6 +29,7 @@ export default function PasswordInput({
 
   return (
     <input
+      id='channelPassword'
       className={styles.input}
       type='password'
       value={password ? password : ''}
