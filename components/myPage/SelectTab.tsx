@@ -18,6 +18,7 @@ import ErrorRefresher from 'components/global/ErrorRefresher';
 import SelectableItem from 'components/myPage/SelectableItem';
 
 import styles from 'styles/myPage/SelectTab.module.scss';
+import { bool } from "prop-types";
 
 export interface SelectHandler {
   select: (item: Selectable | null) => void;
@@ -35,6 +36,7 @@ export default function SelectTab({ nickname, itemType }: SelectTabProps) {
     nickname,
     selectables.getQuery()
   );
+  const [editClicked, setEditClicked] = useState<boolean>(false);
   const editable = useRecoilValue(editableState);
   const [selected, setSelected] = useState(
     new selectables(Array(itemType === 'achieve' ? 3 : 4).fill(null))
@@ -43,10 +45,8 @@ export default function SelectTab({ nickname, itemType }: SelectTabProps) {
   const { mutate } = selectablesMutationPatch();
 
   useEffect(() => {
-    if (selected.isEmpty()) {
-      return;
-    }
-    if (!editable) {
+    if (editable) setEditClicked(true);
+    if (!editable && editClicked) {
       mutate({ ...selected.getSelected() });
     }
   }, [editable]);

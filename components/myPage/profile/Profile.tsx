@@ -34,6 +34,7 @@ export default function Profile({ nickname, style }: ProfileProps) {
   const editable = useRecoilValue(editableState);
   const profileTab = useRecoilValue(profileTabState);
   const [user, setUser] = useState<UserDetail>(defaultUser);
+  const [editClicked, setEditClicked] = useState<boolean>(false);
   const { profileGet, profileMutationPatch } = useMyPageQuery(nickname);
   const { patchImage, patchTitle, patchMessage } = profileMutationPatch();
   const { isLoading, isError } = profileGet(setUser);
@@ -42,7 +43,8 @@ export default function Profile({ nickname, style }: ProfileProps) {
   const [statusMessage, setStatusMessage] = useState<string>('');
 
   useEffect(() => {
-    if (!editable && profileTab === 'profile') {
+    if (editable) setEditClicked(true);
+    if (!editable && profileTab === 'profile' && editClicked) {
       if (image.id && image !== user.image)
         patchImage.mutate({
           id: image.id,
