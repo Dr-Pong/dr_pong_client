@@ -16,9 +16,7 @@ export default function Layout({ children }: LayoutProps) {
       <UpperModal />
       <Alert />
       <div className={styles.layoutContainer}>
-        <AdsLayout>
-          <div className={styles.pageContainer}>{children}</div>
-        </AdsLayout>
+        <div className={styles.pageContainer}>{children}</div>
       </div>
     </div>
   );
