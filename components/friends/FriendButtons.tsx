@@ -27,7 +27,7 @@ export default function FriendButtons({ tab, nickname }: FriendButtonsProps) {
   const buttons: { [key: string]: ReactNode } = {
     directMessage: (
       <BasicButton style='round' color='opaque'>
-        <Link href={`/chats/dm/${nickname}`}>
+        <Link className={styles.chatBoxIcon} href={`/chats/dm/${nickname}`}>
           <IoChatbox className={styles.chatBoxIcon} />
         </Link>
       </BasicButton>

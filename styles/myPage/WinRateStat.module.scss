@@ -20,18 +20,26 @@
 }
 
 .gaugeBar {
-  display: flex;
+  position: relative;
   width: 100%;
   height: 0.5rem;
   margin-block: 0.2rem;
 }
 
 .winGauge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0.5rem;
   background: linear-gradient(to bottom, $just-blue 60%, $dark-purple);
-  border-radius: 0.5rem 0 0 0.5rem;
+  border-radius: 0.5rem;
 }
 
 .loseGauge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 0.5rem;
   background: linear-gradient(to bottom, $just-pink 60%, $dark-purple);
-  border-radius: 0 0.5rem 0.5rem 0;
+  border-radius: 0.5rem;
 }

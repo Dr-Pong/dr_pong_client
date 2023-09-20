@@ -31,7 +31,7 @@ export default function UserBox({ children, type, friend }: UserBoxProps) {
       <div className={styles.nickname} onClick={handleNicknameClick}>
         {nickname}
       </div>
-      {children}
+      <div className={styles.button}>{children}</div>
     </div>
   );
 }
