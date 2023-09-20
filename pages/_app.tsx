@@ -43,6 +43,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           name='viewport'
           content='width=device-width, initial-scale=1.0, user-scalable=no'
         ></meta>
+        <link rel='drpong icon' href='/image/drpong_favicon.svg' />
         <title>Dr. Pong</title>
       </Head>
       <CookiesProvider>
