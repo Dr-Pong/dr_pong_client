@@ -24,10 +24,19 @@ export default function WinRateStat({
         'T'
       )} ${loses}${t('L')})`}</div>
       <div className={styles.gaugeBar}>
-        <div className={styles.winGauge} style={{ width: winRate + '%' }} />
+        <div
+          className={styles.winGauge}
+          style={{
+            width: `calc((100% - 0.5rem) * ${winRate / 100} + 0.5rem)`,
+            zIndex: winRate >= 50 ? 1 : 0,
+          }}
+        />
         <div
           className={styles.loseGauge}
-          style={{ width: 100 - winRate + '%' }}
+          style={{
+            width: `calc((100% - 0.5rem) * ${(100 - winRate) / 100} + 0.5rem)`,
+            zIndex: winRate < 50 ? 1 : 0,
+          }}
         />
       </div>
     </div>

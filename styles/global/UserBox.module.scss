@@ -36,3 +36,10 @@
   font-family: $bold-font;
   cursor: pointer;
 }
+
+.button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
