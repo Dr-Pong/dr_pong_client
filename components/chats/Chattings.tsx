@@ -23,7 +23,7 @@ import useChatQuery from 'hooks/useChatQuery';
 import useChatSocket from 'hooks/useChatSocket';
 import useCustomQuery from 'hooks/useCustomQuery';
 
-import { debouncer } from 'utils/debouncer';
+import { throttler } from 'utils/throttler';
 
 import ChatBox from 'components/chats/ChatBox';
 import ChatFailButtons from 'components/chats/ChatFailButtons';
@@ -170,14 +170,14 @@ export default function Chattings({
     setMessage('');
   }, []);
 
-  const handleScroll = debouncer(() => {
+  const handleScroll = throttler(() => {
     const ref = chattingsRef.current!;
 
     // 스크롤이 맨 위에 있는 경우
     if (
       hasNextPage &&
       !isFetchingNextPage &&
-      Math.abs(ref.scrollTop) > ref.scrollHeight - ref.clientHeight - 100
+      Math.abs(ref.scrollTop) > ref.scrollHeight - ref.clientHeight - 200
     )
       fetchNextPage();
 
