@@ -14,6 +14,25 @@ export default function WinRateStat({
   const { t } = useTranslation('myPage');
   const { winRate, wins, ties, loses } = winRateInfo;
 
+  const guages: { [key: string]: JSX.Element } = {
+    win: (
+      <div
+        className={styles.winGauge}
+        style={{
+          width: `calc((100% - 0.5rem) * ${winRate / 100} + 0.5rem)`,
+        }}
+      />
+    ),
+    lose: (
+      <div
+        className={styles.loseGauge}
+        style={{
+          width: `calc((100% - 0.5rem) * ${(100 - winRate) / 100} + 0.5rem)`,
+        }}
+      />
+    ),
+  };
+
   return (
     <div className={styles.winRateStatContainer}>
       <div className={styles.winRate}>
@@ -24,20 +43,8 @@ export default function WinRateStat({
         'T'
       )} ${loses}${t('L')})`}</div>
       <div className={styles.gaugeBar}>
-        <div
-          className={styles.winGauge}
-          style={{
-            width: `calc((100% - 0.5rem) * ${winRate / 100} + 0.5rem)`,
-            zIndex: winRate >= 50 ? 1 : 0,
-          }}
-        />
-        <div
-          className={styles.loseGauge}
-          style={{
-            width: `calc((100% - 0.5rem) * ${(100 - winRate) / 100} + 0.5rem)`,
-            zIndex: winRate < 50 ? 1 : 0,
-          }}
-        />
+        {guages[winRate >= 50 ? 'lose' : 'win']}
+        {guages[winRate >= 50 ? 'win' : 'lose']}
       </div>
     </div>
   );
