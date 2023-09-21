@@ -2,6 +2,7 @@
 
 .leaderboardPageContainer {
   @include pageWithHeaderContainer;
+  grid-template-rows: 2rem;
 }
 
 .leaderboardFrame {
@@ -9,7 +10,7 @@
   flex-direction: column;
   gap: 2.5rem;
   align-items: center;
-  padding-block: 2rem;
+  padding-block: 1rem;
   hr {
     width: 100%;
     max-width: 38rem;
