@@ -19,9 +19,7 @@ export default function AppLayout({ children }: LayoutProps) {
       <Alert />
       <div className={styles.appLayoutContainer}>
         <Header />
-        <AdsLayout>
-          <div className={styles.pageContainer}>{children}</div>
-        </AdsLayout>
+        <div className={styles.pageContainer}>{children}</div>
         <NavigationBar />
       </div>
     </div>
