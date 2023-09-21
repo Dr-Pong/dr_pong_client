@@ -57,7 +57,14 @@
 		color: $just-grey;
 		font-size: 1rem;
 		font-family: $bold-font;
-		height: 1.5rem;
+		height: 2rem;
+		word-break: break-all;
+		text-align: center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		line-height: 100%;
+		padding-inline: 0.3rem;
 	}
   .leaderImage {
     width: 3rem;
