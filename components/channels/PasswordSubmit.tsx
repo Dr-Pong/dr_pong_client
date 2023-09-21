@@ -4,7 +4,7 @@ import { useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 
 import { alertState } from 'recoils/alert';
 import { openModalState } from 'recoils/modal';
@@ -51,6 +51,10 @@ export default function PasswordSubmit({ roomId }: { roomId: string }) {
       },
     } as object);
   };
+
+  useEffect(() => {
+    (document.getElementById('channelPassword') as HTMLElement).focus();
+  }, []);
 
   return (
     <form className={styles.modalContainer} onSubmit={handlePasswordSubmit}>
