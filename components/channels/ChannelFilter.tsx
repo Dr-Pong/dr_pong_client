@@ -1,5 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 
+import { useRecoilValue } from 'recoil';
+
 import React, {
   Dispatch,
   FormEvent,
@@ -9,6 +11,8 @@ import React, {
 } from 'react';
 import { IoMdAdd } from 'react-icons/io';
 import { IoSearch } from 'react-icons/io5';
+
+import { loginState } from 'recoils/login';
 
 import useModalProvider from 'hooks/useModalProvider';
 
@@ -33,7 +37,8 @@ export default function ChannelFilter({
   haveMyChannel,
 }: ChannelFilterProps) {
   const { t } = useTranslation('channels');
-  const { useChannelCreateModal } = useModalProvider();
+  const login = useRecoilValue(loginState);
+  const { useChannelCreateModal, useLoginRequiredModal } = useModalProvider();
   const [channelTitle, setChannelTitle] = useState<string>('');
 
   const handleKeywordSubmit = useCallback(
@@ -45,7 +50,10 @@ export default function ChannelFilter({
   );
 
   const handleChannelCreate = () => {
-    useChannelCreateModal(haveMyChannel);
+    if (login)
+      useChannelCreateModal(haveMyChannel);
+    else
+      useLoginRequiredModal();
   };
 
   return (
