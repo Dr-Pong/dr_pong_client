@@ -25,8 +25,8 @@ export default function SeasonTitle() {
   const [month, week] = seasonName.split('-');
 
   const seasonNameMap: { [key: string]: string } = {
-    en: `${t('week' + week)} ${t(month)}`,
-    ko: `${t(month)} ${t('week' + week)}`,
+    en: `${t('week' + parseInt(week))} ${t(month)}`,
+    ko: `${t(month)} ${t('week' + parseInt(week))}`,
   };
 
   return (
