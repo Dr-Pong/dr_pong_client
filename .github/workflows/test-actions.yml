@@ -1,0 +1,68 @@
+name: Dr. Pong TEST Client CI/CD
+
+on:
+  push:
+    branches:
+      - test
+
+jobs:
+  CI-CD:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+
+      - name: Production ENV Setting
+        run: |
+          echo "NEXT_PUBLIC_API_ENDPOINT=${{ secrets.NEXT_PUBLIC_API_ENDPOINT_TEST }}" >> .env
+          echo "NEXT_PUBLIC_GAME_SOCKET=${{ secrets.NEXT_PUBLIC_GAME_SOCKET_TEST }}" >> .env
+          echo "NEXT_PUBLIC_CHAT_SOCKET=${{ secrets.NEXT_PUBLIC_CHAT_SOCKET_TEST }}" >> .env
+          echo "NEXT_PUBLIC_FT_CLIENT_ID=${{ secrets.NEXT_PUBLIC_FT_CLIENT_ID_TEST }}" >> .env
+          echo "NEXT_PUBLIC_FT_REDIRECT_URI=${{ secrets.NEXT_PUBLIC_FT_REDIRECT_URI_TEST }}" >> .env
+          echo "NEXT_PUBLIC_GG_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GG_CLIENT_ID_TEST }}" >> .env
+          echo "NEXT_PUBLIC_GG_REDIRECT_URI=${{ secrets.NEXT_PUBLIC_GG_REDIRECT_URI_TEST }}" >> .env
+          echo "NEXT_PUBLIC_GA_ID=${{ secrets.NEXT_PUBLIC_GA_ID_TEST }}" >> .env
+
+      - name: Get Github Actions IP
+        id: ip
+        uses: haythem/public-ip@v1.2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Add Github Actions IP to Security group
+        run: |
+          aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+
+      - name: Docker build & push to registry
+        run: |
+          export DOCKER_CLI_EXPERIMENTAL=enabled
+          docker buildx create --use --name multi-arch-builder
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_TEST }} --platform linux/arm64 . --push
+
+      - name: Deploy to AWS EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ${{ secrets.AWS_USERNAME }}
+          key: ${{ secrets.AWS_PRIVATE_KEY }}
+          script: |
+            cd docker
+            docker-compose down
+            docker rm -f $(docker ps -qa)
+            docker rmi -f ${{ secrets.DOCKER_TO_REMOVE_TEST }}
+            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+            docker-compose up -d
+
+      - name: Remove Github Actions IP From Security Group
+        run: |
+          aws ec2 revoke-security-group-ingress --group-id ${{ secrets.AWS_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
