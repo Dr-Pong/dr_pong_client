@@ -12,6 +12,7 @@ const data: { [key: string]: string } = {
   bar_touch: '/sound/touch.mp3',
   wall_touch: '/sound/touch.mp3',
   spin: '/sound/spin.mp3',
+  game_start: '/sound/game_start.mp3',
 };
 export function useSoundEffect(): {
   loaded: boolean;

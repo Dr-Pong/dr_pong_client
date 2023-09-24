@@ -1,17 +1,19 @@
 import { AxiosError } from 'axios';
 import useTranslation from 'next-translate/useTranslation';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useCallback, useState } from 'react';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 
 import { alertState } from 'recoils/alert';
+import { soundEffectState } from 'recoils/sound';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 import useGameSocket from 'hooks/useGameSocket';
 import useModalProvider from 'hooks/useModalProvider';
+import { useSoundEffect } from 'hooks/useSoundEffect';
 import useUpperModalProvider from 'hooks/useUpperModalProvider';
 
 import { GameButtons } from 'components/game/GameButtons';
@@ -32,6 +34,8 @@ export default function GameLobby({ handleGoBackClick }: GameLobbyProps) {
   const { useGameInvitationModal } = useModalProvider();
   const { closeUpperModal, useMatchWaitingUpperModal } =
     useUpperModalProvider();
+  const { effects } = useSoundEffect();
+  const isSoundEffectOn = useRecoilValue(soundEffectState);
   const { mutationPost, mutationDelete } = useCustomQuery();
   const exitQueue = mutationDelete(`/games/queue`, {
     onSuccess: () => {
@@ -72,10 +76,14 @@ export default function GameLobby({ handleGoBackClick }: GameLobbyProps) {
     setGameMode(value);
   };
 
-  const matchedListener = (data: { roomId: string }) => {
-    closeUpperModal();
-    router.push(`/game/${data.roomId}`);
-  };
+  const matchedListener = useCallback(
+    (data: { roomId: string }) => {
+      closeUpperModal();
+      effects.get('game_start')?.(isSoundEffectOn);
+      router.push(`/game/${data.roomId}`);
+    },
+    [isSoundEffectOn]
+  );
 
   const buttons = [
     { value: 'queue', color: 'pink', handleButtonClick: handleQueueClick },
