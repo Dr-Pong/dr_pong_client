@@ -54,7 +54,7 @@ jobs:
         with:
           host: ${{ secrets.AWS_HOST_TEST }}
           username: ${{ secrets.AWS_USERNAME }}
-          key: ${{ secrets.AWS_PRIVATE_KEY }}
+          key: ${{ secrets.AWS_PRIVATE_KEY_TEST }}
           script: |
             cd docker
             docker-compose down
