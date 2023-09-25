@@ -272,6 +272,7 @@ export default function GameCanvas({
   useEffect(() => {
     return () => {
       if (timer) clearTimeout(timer);
+      lastDrawnFrame = 0;
     };
   }, []);
 
