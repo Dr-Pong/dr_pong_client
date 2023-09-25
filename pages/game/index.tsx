@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import useTranslation from 'next-translate/useTranslation';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
@@ -8,10 +8,12 @@ import React, { ReactElement, useState } from 'react';
 import { BsQuestionSquare } from 'react-icons/bs';
 
 import { alertState } from 'recoils/alert';
+import { soundEffectState } from 'recoils/sound';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 import useGameSocket from 'hooks/useGameSocket';
 import useModalProvider from 'hooks/useModalProvider';
+import { useSoundEffect } from 'hooks/useSoundEffect';
 import useUpperModalProvider from 'hooks/useUpperModalProvider';
 
 import { GameButtons } from 'components/game/GameButtons';
@@ -28,6 +30,8 @@ export default function Game() {
   const { useGameGuideModal } = useModalProvider();
   const { closeUpperModal, useMatchWaitingUpperModal } =
     useUpperModalProvider();
+  const { effects } = useSoundEffect();
+  const isSoundEffectOn = useRecoilValue(soundEffectState);
   const [socket] = useGameSocket('matching');
   const [normalClicked, setNormalClicked] = useState(false);
   const { mutationPost, mutationDelete } = useCustomQuery();
@@ -54,6 +58,7 @@ export default function Game() {
 
   const matchedListener = (data: { roomId: string }) => {
     closeUpperModal();
+    effects.get('game_start')?.(isSoundEffectOn);
     router.push(`/game/${data.roomId}`);
   };
 
