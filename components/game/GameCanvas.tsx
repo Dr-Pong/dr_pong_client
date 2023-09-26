@@ -270,6 +270,7 @@ export default function GameCanvas({
   }, [me, opponent, ball, countdown, server, round, myScore, opponentScore]);
 
   useEffect(() => {
+    lastDrawnFrame = 0;
     return () => {
       if (timer) clearTimeout(timer);
     };

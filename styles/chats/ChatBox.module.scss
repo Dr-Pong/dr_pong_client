@@ -5,6 +5,8 @@
   align-items: center;
   justify-content: flex-end;
   width: 100%;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .othersContainer {
@@ -16,6 +18,8 @@
     margin-top: -0.7rem;
     margin-left: 2.5rem;
   }
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .systemContainer {
@@ -26,12 +30,16 @@
   font-size: 0.8rem;
   background: transparentize($light-grey, 0.9);
   padding-block: 0.3rem;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .failContainer {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .user {
