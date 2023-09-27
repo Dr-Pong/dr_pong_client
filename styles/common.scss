@@ -23,8 +23,8 @@ $basic-font-size: 0.9rem;
 
 /* font */
 $logo-font: 'SchizoidPersonality', serif;
-$regular-font: 'TTLakesNeueTrialRegular', 'LeeSeoyun', sans-serif;
-$bold-font: 'TTLakesNeueTrialBold', 'GeekbleMalang2WOFF2', sans-serif;
+$regular-font: 'TTLakesNeueTrialRegular', 'SUIT-Regular', sans-serif;
+$bold-font: 'TTLakesNeueTrialBold', 'SUIT-Bold', sans-serif;
 
 @mixin pageContainer {
   width: 100%;
@@ -38,19 +38,19 @@ $bold-font: 'TTLakesNeueTrialBold', 'GeekbleMalang2WOFF2', sans-serif;
   gap: 1rem;
   width: 100%;
   height: 100%;
-  padding-inline: 1.5rem;
   overflow-y: auto;
+  padding-inline: 1.5rem;
 
   &::-webkit-scrollbar {
     width: 5px;
     height: 8px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: $dark-purple;
     border-radius: 8px;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background: $just-purple;
     border-radius: 8px;

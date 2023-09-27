@@ -77,7 +77,7 @@ root {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'TTLakesNeueTrialRegular', 'LeeSeoyun', sans-serif;
+  font-family: 'TTLakesNeueTrialRegular', 'SUIT-Regular', sans-serif;
 }
 
 html,
@@ -128,18 +128,16 @@ a {
 
 @font-face {
   font-weight: normal;
-  font-family: 'LeeSeoyun';
+  font-family: 'SUIT-Regular';
   font-style: normal;
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff')
-    format('woff');
-  unicode-range: U+AC00-D7A3;
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2')
+    format('woff2');
 }
 
 @font-face {
-  font-weight: normal;
-  font-family: 'GeekbleMalang2WOFF2';
+  font-weight: 700;
+  font-family: 'SUIT-Bold';
   font-style: normal;
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/GeekbleMalang2WOFF2.woff2')
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Bold.woff2')
     format('woff2');
-  unicode-range: U+AC00-D7A3;
 }
