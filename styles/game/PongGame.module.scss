@@ -1,3 +1,5 @@
+@import 'styles/common';
+
 .pongGameContainer {
   position: relative;
   display: flex;
@@ -6,16 +8,74 @@
   justify-content: center;
 }
 
+.gameCanvasContainer {
+  position: relative;
+}
+
 .gameCanvas {
   background: transparentize(white, 0.8);
+}
+
+.remainingTimeContainer {
+  position: absolute;
+  top: 47%;
+  left: 3rem;
+  z-index: -1;
+  color: white;
+  font-size: 1.2rem;
+  transform: translate(-50%, -50%);
+}
+
+.roundCountdownContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  .round {
+    color: $just-green;
+    font-size: 1.5rem;
+  }
+  .countdown {
+    color: $just-yellow;
+    font-size: 2rem;
+    font-family: $bold-font;
+    &.start {
+      color: $just-pink;
+    }
+  }
+}
+
+.scoreContainer {
+  position: absolute;
+  top: 50%;
+  left: 3rem;
+  z-index: -1;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  justify-content: space-around;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  div {
+    color: white;
+    font-size: 3rem;
+    font-family: $bold-font;
+    opacity: 0.3;
+  }
 }
 
 .touchBox {
   position: absolute;
   top: 0;
+  z-index: 1;
   width: 50%;
   height: 100%;
-  z-index: 1;
 }
 
 .left {
