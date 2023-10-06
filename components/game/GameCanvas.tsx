@@ -150,51 +150,6 @@ export default function GameCanvas({
     afterImage(ballPath, '#00ff00', ctx);
   };
 
-  const drawRound = (ctx: CanvasRenderingContext2D) => {
-    ctx.font = '2rem TTLakesNeueTrialRegular';
-    ctx.fillStyle = '#49f60d';
-    ctx.fillText(`Round ${round}`, canvasWidth / 2 - 70, canvasHeight / 2 - 10);
-  };
-
-  const drawArrow = (ctx: CanvasRenderingContext2D) => {
-    ctx.font = '2rem TTLakesNeueTrialRegular';
-    ctx.fillStyle = '#49f60d';
-    ctx.fillText(
-      `${server ? '⬇️' : '⬆️'}`,
-      canvasWidth / 2 + 70,
-      canvasHeight / 2 - 10
-    );
-  };
-
-  const drawCountdown = (ctx: CanvasRenderingContext2D) => {
-    if (countdown) {
-      ctx.font = '3rem TTLakesNeueTrialRegular';
-      ctx.fillStyle = '#fdde2e';
-      ctx.fillText(`${countdown}`, canvasWidth / 2 - 15, canvasHeight / 2 + 55);
-    } else {
-      ctx.font = '2rem TTLakesNeueTrialRegular';
-      ctx.fillStyle = '#f71a6a';
-      ctx.fillText('Game Start!!', canvasWidth / 2 - 95, canvasHeight / 2 + 45);
-    }
-  };
-
-  const drawScore = (ctx: CanvasRenderingContext2D) => {
-    ctx.font = '4rem TTLakesNeueTrialRegular';
-    ctx.fillStyle = '#656887';
-    ctx.fillText(`${opponentScore}`, 20, canvasHeight / 2 - canvasHeight / 4);
-    ctx.fillText(`${myScore}`, 20, canvasHeight / 2 + canvasHeight / 4);
-  };
-
-  const drawGametime = (ctx: CanvasRenderingContext2D) => {
-    const time = remainingTime / 1000;
-
-    ctx.font = '1.2rem TTLakesNeueTrialRegular';
-    ctx.fillStyle = '#ffffff';
-    if (time <= 0) ctx.fillText(`0.0`, 20, canvasHeight / 2 - 10);
-    else if (time < 10)
-      ctx.fillText(`${time.toFixed(1)}`, 20, canvasHeight / 2 - 10);
-  };
-
   const draw = () => {
     if (positions.length === 0) {
       return;
@@ -259,13 +214,6 @@ export default function GameCanvas({
       context.clearRect(0, 0, canvasWidth, canvasHeight);
       drawNet(context);
       drawBarBall(context);
-      drawGametime(context);
-      drawScore(context);
-      if (countdown !== -1) {
-        drawRound(context);
-        drawCountdown(context);
-        drawArrow(context);
-      }
     }
   }, [me, opponent, ball, countdown, server, round, myScore, opponentScore]);
 
@@ -277,12 +225,69 @@ export default function GameCanvas({
   }, []);
 
   return (
-    <canvas
-      className={styles.gameCanvas}
-      ref={canvasRef}
-      width={canvasWidth}
-      height={canvasHeight}
-    />
+    <div className={styles.gameCanvasContainer}>
+      <RemainingTime remainingTime={remainingTime} />
+      <Score opponentScore={opponentScore} myScore={myScore} />
+      <RoundCountDown countdown={countdown} round={round} server={server} />
+      <canvas
+        className={styles.gameCanvas}
+        ref={canvasRef}
+        width={canvasWidth}
+        height={canvasHeight}
+      />
+    </div>
+  );
+}
+
+function RemainingTime({ remainingTime }: { remainingTime: number }) {
+  const time = remainingTime / 1000;
+
+  if (time > 10) return null;
+  return (
+    <div className={styles.remainingTimeContainer}>
+      {time ? time.toFixed(1) : '0.0'}
+    </div>
+  );
+}
+
+function RoundCountDown({
+  countdown,
+  round,
+  server,
+}: {
+  countdown: number;
+  round: number;
+  server: boolean;
+}) {
+  if (countdown === -1) return null;
+  return (
+    <div className={styles.roundCountdownContainer}>
+      <div className={styles.round}>{`Round ${round} ${
+        server ? '⬇️' : '⬆️'
+      }`}</div>
+      {countdown ? (
+        <div className={styles.countdown}>{countdown}</div>
+      ) : (
+        <div className={`${styles.countdown} ${styles.start}`}>
+          {'Game Start!'}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Score({
+  opponentScore,
+  myScore,
+}: {
+  opponentScore: number;
+  myScore: number;
+}) {
+  return (
+    <div className={styles.scoreContainer}>
+      <div>{opponentScore}</div>
+      <div>{myScore}</div>
+    </div>
   );
 }
 
