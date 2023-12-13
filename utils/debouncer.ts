@@ -1,17 +1,14 @@
-let timer: NodeJS.Timeout | null = null;
+export const debouncer = <T extends Function>(func: T, wait: number) => {
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
-export const debouncer = <F extends (...args: any[]) => any>(
-  func: F,
-  delay: number
-) => {
-  const debounced = (...args: Parameters<F>) => {
-    if (timer) {
-      clearTimeout(timer);
+  return function (this: any, ...args: any[]) {
+    const self = this;
+    if (timeoutId) {
+      clearTimeout(timeoutId);
     }
-    timer = setTimeout(() => {
-      func(...args);
-      timer = null;
-    }, delay);
+
+    timeoutId = setTimeout(() => {
+      func.apply(self, args);
+    }, wait);
   };
-  return debounced as (...args: Parameters<F>) => ReturnType<F>;
 };
