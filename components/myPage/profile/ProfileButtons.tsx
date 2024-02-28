@@ -3,13 +3,10 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useRouter } from 'next/router';
 
-import React, { useState } from 'react';
-
 import { sideBarState } from 'recoils/sideBar';
 import { userState } from 'recoils/user';
 
 import { ButtonDesign } from 'types/buttonTypes';
-import { Relation } from 'types/userTypes';
 
 import useCustomQuery from 'hooks/useCustomQuery';
 import useModalProvider from 'hooks/useModalProvider';
@@ -33,14 +30,14 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
   const { t } = useTranslation('common');
   const { nickname } = useRecoilValue(userState);
   const setSideBar = useSetRecoilState(sideBarState);
-  const [{ status }, setRelation] = useState<Relation>({ status: 'unset' });
   const router = useRouter();
   const { closeModal } = useModalProvider();
   const { get } = useCustomQuery();
-  const { isError } = get(
+  const { data, isLoading, isError } = get(
     '',
     `/users/${nickname}/relations/${target}`,
-    setRelation
+    null,
+    { cacheTime: 0 }
   );
 
   const myPageButton = () => {
@@ -124,13 +121,15 @@ export default function ProfileButtons({ target }: ProfileButtonsProps) {
     unset: [],
   };
 
-  return isError ? (
-    <ErrorRefresher />
+  if (isError) return <ErrorRefresher />;
+
+  return isLoading ? (
+    <></>
   ) : (
     <div className={styles.profileButtonsContainer}>
-      {relationStatuses[status].map((buttonName, i) => {
-        return <div key={`${target}${i}`}>{buttons[buttonName]()}</div>;
-      })}
+      {relationStatuses[data!.status].map((buttonName, i) => (
+        <div key={`${target}${i}`}>{buttons[buttonName]()}</div>
+      ))}
     </div>
   );
 }
